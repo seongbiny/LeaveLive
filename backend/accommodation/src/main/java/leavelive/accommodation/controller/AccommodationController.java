@@ -5,9 +5,8 @@ import leavelive.accommodation.service.AccommodationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -20,7 +19,12 @@ public class AccommodationController {
     @GetMapping("/")
     public ResponseEntity<List<AccommodationArticleDto>> getAllAccommodation(){
         List<AccommodationArticleDto> list=service.getAllAccommodation();
-        ResponseEntity<List<AccommodationArticleDto>> res=new ResponseEntity(list, HttpStatus.OK);
-        return res;
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
+
+    @PostMapping("/{accommodation_id}")
+    public ResponseEntity<AccommodationArticleDto> getAccommodation(@PathVariable("accommodation_id") Long id){
+        AccommodationArticleDto dto=service.getAccommodation(id);
+        return new ResponseEntity(dto, HttpStatus.OK);
     }
 }

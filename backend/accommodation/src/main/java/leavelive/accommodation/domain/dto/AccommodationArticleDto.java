@@ -2,7 +2,10 @@ package leavelive.accommodation.domain.dto;
 
 import leavelive.accommodation.domain.AccommodationArticle;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter

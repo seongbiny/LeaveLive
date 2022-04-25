@@ -3,10 +3,8 @@ package leavelive.accommodation.domain;
 import leavelive.accommodation.domain.dto.AccommodationArticleDto;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -15,14 +13,14 @@ import javax.persistence.Id;
 @Builder
 public class AccommodationArticle {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "accommodation_article_id")
     private Long id;
     private String loc;
     private String author;
     private int price;
     @Column(name = "pic_path")
-    private String picPath; //type 뭘로?
+    private String picPath; //,로 구분
     private int count;
     private int garden;
     private int cooking;

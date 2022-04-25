@@ -25,9 +25,9 @@ class AccommodationServiceTests {
 	@Transactional
 	public void saveAndGetAllAccommodationTest(){
 		// db 저장
-		for(int i=0; i<10; i++){
+		for(int i=1; i<=10; i++){
 			AccommodationArticleDto dto=new AccommodationArticleDto();
-			dto.setAuthor("test");
+			dto.setAuthor("test"+i);
 			dto.setCooking(1);
 			dto.setCount(12);
 			dto.setGarden(1);
@@ -38,5 +38,12 @@ class AccommodationServiceTests {
 			repo.save(entity.of(dto));
 		}
 		Assertions.assertThat(service.getAllAccommodation().size()).isEqualTo(10);
+	}
+
+	@Test
+	@Transactional
+	public void getAccommodationTest(){
+		saveAndGetAllAccommodationTest();
+		Assertions.assertThat(service.getAccommodation(1L).getAuthor()).isEqualTo("test1");
 	}
 }
