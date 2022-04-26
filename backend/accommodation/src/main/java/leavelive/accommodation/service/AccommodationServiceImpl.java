@@ -68,7 +68,7 @@ public class AccommodationServiceImpl implements AccommodationService{
         Optional<AccommodationArticle> entity=repo.findById(id);
         AccommodationArticle result=new AccommodationArticle();
         if(!entity.isPresent()) throw new NullPointerException("해당하는 숙소가 없습니다.");
-
+        if(!entity.get().getUserId().equals(userId)) throw new NullPointerException("자신이 등록한 숙소만 수정할 수 있습니다.");
         AccommodationArticleDto oriDto=new AccommodationArticleDto(); //현재 entity
         oriDto=oriDto.of(entity.get());
         oriDto.setId(id);

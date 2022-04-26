@@ -128,4 +128,25 @@ class AccommodationServiceTests {
 		System.out.println("수정 결과"+service.getAccommodation(1L));
 		Assertions.assertThat("수정한 이름").isEqualTo(service.getAccommodation(1L).getName());
 	}
+
+	@Test
+	@Transactional
+	@DisplayName("숙소 수정 실패")
+	public void updateAccommodationTestFail() throws NullPointerException {
+		saveAccommodationFavTest();
+		List<AccommodationArticleDto> list = service.getAllAccommodation();
+		AccommodationArticleDto dto=new AccommodationArticleDto();
+		dto.setName("수정한 이름");
+		dto.setCooking(1);
+		try{
+			service.update(dto,1L,"2");
+			System.out.println("수정 결과"+service.getAccommodation(1L));
+			Assertions.assertThat("수정한 이름").isEqualTo(service.getAccommodation(1L).getName());
+		}catch(NullPointerException e){
+			e.printStackTrace();
+			Assertions.assertThatNullPointerException();
+		}
+
+
+	}
 }

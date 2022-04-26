@@ -44,7 +44,7 @@ public class AccommodationController {
 
     @PatchMapping("/{accommodation_id}")
     public ResponseEntity<AccommodationArticleDto> updateAccommodation(@PathVariable("accommodation_id") Long id, @RequestBody AccommodationArticleDto request){
-        String userId="1";
+        String userId="1"; // 임시로 부여한 userId
         AccommodationArticleDto dto=service.update(request,id,userId);
         return new ResponseEntity(dto,HttpStatus.OK);
     }
