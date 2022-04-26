@@ -31,7 +31,8 @@ public class AccommodationController {
 
     @DeleteMapping("/{accommodation_id}")
     public ResponseEntity<Long> deleteAccommodation(@PathVariable("accommodation_id") Long id){
-        Long result=service.delete(id);
+        String userId="1"; // 임시로 부여한 userId
+        Long result=service.delete(id,userId);
         return new ResponseEntity(result, HttpStatus.OK);
     }
 

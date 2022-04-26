@@ -90,12 +90,29 @@ class AccommodationServiceTests {
 	@DisplayName("숙소 삭제")
 	public void DeleteAccommodationTest(){
 		saveAccommodationFavTest();
-		service.delete(1L);
+		service.delete(1L,"1");
 		List<AccommodationArticleDto> list = service.getAllAccommodation();
 		List<AccommodationFavDto> favList=favService.findAll();
 		System.out.println(list);
 		System.out.println(favList);
 		Assertions.assertThat(list.size()).isEqualTo(9);
+	}
+	@Test
+	@Transactional
+	@DisplayName("숙소 삭제 실패")
+	public void DeleteAccommodationTestFail() throws NullPointerException{
+		saveAccommodationFavTest();
+		try{
+			service.delete(2L,"1");
+			List<AccommodationArticleDto> list = service.getAllAccommodation();
+			List<AccommodationFavDto> favList=favService.findAll();
+			System.out.println(list);
+			System.out.println(favList);
+			Assertions.assertThat(list.size()).isEqualTo(9);
+		}catch(NullPointerException e){
+			e.printStackTrace();
+			Assertions.assertThatNullPointerException();
+		}
 	}
 
 	@Test

@@ -39,7 +39,11 @@ public class AccommodationServiceImpl implements AccommodationService{
     }
 
     @Override
-    public Long delete(Long id) {
+    public Long delete(Long id,String userId) {
+        // 내가 작성한 숙소가 맞는지 확인
+        Optional<AccommodationArticle> accommodationArticle=repo.findById(id);
+        if(!accommodationArticle.isPresent()) throw new NullPointerException("해당하는 숙소가 없습니다.");
+        if(!accommodationArticle.get().getUserId().equals(userId)) throw new NullPointerException("자신이 등록한 숙소만 삭제할 수 있습니다.");
         // 연결되어있는거 먼저 삭제
         // id를 가지고 있는 모든 favRepo 찾고, 삭제
         List<AccommodationFav> list=favRepo.findAllByAcommodationId(id);
