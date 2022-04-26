@@ -30,7 +30,8 @@ public class AccommodationFavController {
 
     @DeleteMapping("/{accommodation_fav_id}")
     public ResponseEntity<Long> deleteAccommodationFav(@PathVariable("accommodation_fav_id") Long id){
-        service.delete(id);
+        String userId="1"; //임시로 준 유저아이디
+        service.delete(id,userId);
         return new ResponseEntity<>(id,HttpStatus.OK);
     }
 

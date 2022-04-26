@@ -79,7 +79,7 @@ class AccommodationServiceTests {
 	@DisplayName("즐겨찾기 삭제")
 	public void DeleteAccommodationFavTest(){
 		saveAccommodationFavTest();
-		favService.delete(1L);
+		favService.delete(1L,"1");
 		List<AccommodationFavDto> list = favService.findAll();
 		Assertions.assertThat(favService.findAll().size()).isEqualTo(9);
 	}
