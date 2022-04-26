@@ -5,7 +5,7 @@ import MainNavigator from "./MainNavigator";
 const Tab = createBottomTabNavigator();
 
 const TabNav = () => {
-    return <Tab.Navigator>
+    return <Tab.Navigator screenOptions={{ headerShown: false }}>
         <Tab.Screen name="MainNavigator" component={MainNavigator} />
         <Tab.Screen name="Camera" component={Camera} />
         <Tab.Screen name="Bookmark" component={Bookmark} />
