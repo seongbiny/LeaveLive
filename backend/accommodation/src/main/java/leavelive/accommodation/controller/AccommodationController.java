@@ -27,4 +27,10 @@ public class AccommodationController {
         AccommodationArticleDto dto=service.getAccommodation(id);
         return new ResponseEntity(dto, HttpStatus.OK);
     }
+
+    @DeleteMapping("/{accommodation_id}")
+    public ResponseEntity<Long> deleteAccommodation(@PathVariable("accommodation_id") Long id){
+        Long result=service.delete(id);
+        return new ResponseEntity(result, HttpStatus.OK);
+    }
 }

@@ -7,4 +7,5 @@ import java.util.List;
 public interface AccommodationService {
     List<AccommodationArticleDto> getAllAccommodation();
     AccommodationArticleDto getAccommodation(Long id);
+    Long delete(Long id);
 }

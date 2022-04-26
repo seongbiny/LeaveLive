@@ -23,7 +23,7 @@ public class AccommodationFavController {
 
     @PostMapping("/{accommodation_id}")
     public ResponseEntity<AccommodationFavDto> saveAccommodationFav(@PathVariable("accommodation_id") Long id){
-        Long userId=1L; //임시로 준 유저아이디
+        String userId="1"; //임시로 준 유저아이디
         AccommodationFavDto dto=service.save(id,userId);
         return new ResponseEntity<>(dto,HttpStatus.OK);
     }

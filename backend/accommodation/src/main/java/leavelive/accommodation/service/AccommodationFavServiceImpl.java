@@ -27,7 +27,7 @@ public class AccommodationFavServiceImpl {
         }
         return list;
     }
-    public AccommodationFavDto save(Long id,Long userId){
+    public AccommodationFavDto save(Long id,String userId){
         Optional<AccommodationArticle> accommodationArticle= repo.findById(id);
         if(!accommodationArticle.isPresent()) throw new NullPointerException("해당하는 숙소가 없습니다.");
         AccommodationFavDto dto=new AccommodationFavDto();

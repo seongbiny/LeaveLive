@@ -19,10 +19,11 @@ public class AccommodationFav {
     private Long id;
 
     @Column(name="user_id")
-    private Long userId;
+    private String userId;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "accommodation_article_id")
+
     private AccommodationArticle accommodationArticle;
 
     public AccommodationFav of(AccommodationFavDto dto){

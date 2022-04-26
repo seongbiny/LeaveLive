@@ -1,7 +1,9 @@
 package leavelive.accommodation.service;
 
 import leavelive.accommodation.domain.AccommodationArticle;
+import leavelive.accommodation.domain.AccommodationFav;
 import leavelive.accommodation.domain.dto.AccommodationArticleDto;
+import leavelive.accommodation.repository.AccommodationFavRepository;
 import leavelive.accommodation.repository.AccommodationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AccommodationServiceImpl implements AccommodationService{
     private final AccommodationRepository repo;
+    private final AccommodationFavRepository favRepo;
     @Override
     public List<AccommodationArticleDto> getAllAccommodation() {
         List<AccommodationArticle> entities=repo.findAll();
@@ -33,5 +36,21 @@ public class AccommodationServiceImpl implements AccommodationService{
         //entity를 dto로 변환
         AccommodationArticleDto dto=new AccommodationArticleDto();
         return dto.of(entity.get());
+    }
+
+    @Override
+    public Long delete(Long id) {
+        // 연결되어있는거 먼저 삭제
+        // id를 가지고 있는 모든 favRepo 찾고, 삭제
+        List<AccommodationFav> list=favRepo.findAllByAcommodationId(id);
+        if(list!=null) {
+            System.out.println("해당 숙소에 등록된 즐겨찾기가 있습니다.");
+//            favRepo.deleteByAccommodationId(id);
+            for(AccommodationFav entity:list){
+                favRepo.deleteById(entity.getId());
+            }
+        }
+        repo.deleteById(id);
+        return id;
     }
 }

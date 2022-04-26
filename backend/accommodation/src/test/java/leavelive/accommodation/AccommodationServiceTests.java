@@ -41,7 +41,7 @@ class AccommodationServiceTests {
 			AccommodationArticleDto dto=new AccommodationArticleDto();
 			dto.setAuthor("test"+i);
 			dto.setCooking(1);
-			dto.setCount(12);
+			dto.setCnt(12);
 			dto.setGarden(1);
 			dto.setLoc("test");
 			dto.setPicPath("test");
@@ -64,7 +64,7 @@ class AccommodationServiceTests {
 	public void saveAndGetAllAccommodationFavTest(){
 		saveAndGetAllAccommodationTest();
 		for (long i=1L; i<=10L; i++) {
-			favService.save(i,i);
+			favService.save(i,i+"");
 		}
 		Assertions.assertThat(favService.findAll().size()).isEqualTo(10);
 	}
@@ -76,5 +76,17 @@ class AccommodationServiceTests {
 		favService.delete(1L);
 		List<AccommodationFavDto> list = favService.findAll();
 		Assertions.assertThat(favService.findAll().size()).isEqualTo(9);
+	}
+
+	@Test
+	@Transactional
+	public void DeleteAccommodationTest(){
+		saveAndGetAllAccommodationFavTest();
+		service.delete(1L);
+		List<AccommodationArticleDto> list = service.getAllAccommodation();
+		List<AccommodationFavDto> favList=favService.findAll();
+		System.out.println(list);
+		System.out.println(favList);
+		Assertions.assertThat(list.size()).isEqualTo(9);
 	}
 }

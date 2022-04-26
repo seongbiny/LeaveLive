@@ -1,6 +1,7 @@
 package leavelive.accommodation.domain.dto;
 
 import leavelive.accommodation.domain.AccommodationArticle;
+import leavelive.accommodation.domain.AccommodationFav;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,7 +22,7 @@ public class AccommodationArticleDto {
     private String author;
     private int price;
     private String picPath; //type 뭘로?
-    private int count;
+    private int cnt;
     private int garden;
     private int cooking;
     private String contents;
@@ -35,7 +36,7 @@ public class AccommodationArticleDto {
                 .author(article.getAuthor())
                 .price(article.getPrice())
                 .picPath(article.getPicPath())
-                .count(article.getCount())
+                .cnt(article.getCnt())
                 .garden(article.getGarden())
                 .cooking(article.getCooking())
                 .contents(article.getContents())

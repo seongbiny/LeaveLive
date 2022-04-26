@@ -12,7 +12,7 @@ import lombok.*;
 @Builder
 public class AccommodationFavDto {
     private Long id;
-    private Long userId;
+    private String userId;
     private AccommodationArticle accommodationArticle;
 
     public AccommodationFavDto of(AccommodationFav entity){

@@ -4,6 +4,7 @@ import leavelive.accommodation.domain.dto.AccommodationArticleDto;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,12 +22,15 @@ public class AccommodationArticle {
     private int price;
     @Column(name = "pic_path")
     private String picPath; //,로 구분
-    private int count;
+    private int cnt;
     private int garden;
     private int cooking;
     @Column(columnDefinition = "TEXT")
     private String contents;
     private String name;
+
+//    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
+//    private List<AccommodationFav> favorite=new ArrayList<>();
 
     // dto -> entity
     public AccommodationArticle of(AccommodationArticleDto dto){
@@ -35,7 +39,7 @@ public class AccommodationArticle {
                 .loc(dto.getLoc())
                 .price(dto.getPrice())
                 .picPath(dto.getPicPath())
-                .count(dto.getCount())
+                .cnt(dto.getCnt())
                 .cooking(dto.getCooking())
                 .garden(dto.getGarden())
                 .contents(dto.getContents())

@@ -5,7 +5,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 public interface AccommodationFavRepository extends JpaRepository<AccommodationFav,Long> {
-//    @Query(value = "delete from AccommodationFav i where i.accommodationArticle.id=:accommodation_id")
-//    void deleteByAccommodationId(@Param("accommodation_article_id") Long id);
+    @Query(value = "delete from AccommodationFav i where i.accommodationArticle.id=:id")
+    void deleteByAccommodationId(@Param("id") Long id);
+
+    @Query(value="select i from AccommodationFav i where i.accommodationArticle.id=:id")
+    List<AccommodationFav> findAllByAcommodationId(@Param("id") Long id);
 }
