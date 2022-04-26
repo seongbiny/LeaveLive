@@ -1,16 +1,14 @@
 import React, { useContext } from "react";
 import { ThemeContext } from "styled-components/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Search, Camera, Bookmark, Diary } from "../screens";
-import MainNavigator from "./MainNavigator";
-import { AntDesign } from "@expo/vector-icons";
-import { Entypo } from "@expo/vector-icons";
+import { CeoMain, CeoBnbList, CeoReservationList } from "../screens";
+import { CeoTabParamList, TabBarIconProp } from "./TabTypes";
 import { FontAwesome } from "@expo/vector-icons";
-import { UserTabParamList, TabBarIconProp } from "./TabTypes";
+import { Entypo } from "@expo/vector-icons";
 
-const Tab = createBottomTabNavigator<UserTabParamList>();
+const Tab = createBottomTabNavigator<CeoTabParamList>();
 
-const UserTabNav = () => {
+const CeoTabNav = () => {
   const theme = useContext(ThemeContext);
   return (
     <Tab.Navigator
@@ -21,8 +19,8 @@ const UserTabNav = () => {
       }}
     >
       <Tab.Screen
-        name="MainNavigator"
-        component={MainNavigator}
+        name="CeoMain"
+        component={CeoMain}
         options={{
           tabBarIcon: (props: TabBarIconProp) => (
             <FontAwesome
@@ -34,25 +32,12 @@ const UserTabNav = () => {
         }}
       />
       <Tab.Screen
-        name="Search"
-        component={Search}
-        options={{
-          tabBarIcon: (props: TabBarIconProp) => (
-            <FontAwesome
-              name="search"
-              size={23}
-              color={props.focused ? props.color : "gray"}
-            />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Camera"
-        component={Camera}
+        name="CeoBnbList"
+        component={CeoBnbList}
         options={{
           tabBarIcon: (props: TabBarIconProp) => (
             <Entypo
-              name="camera"
+              name="list"
               size={24}
               color={props.focused ? props.color : "gray"}
             />
@@ -60,21 +45,8 @@ const UserTabNav = () => {
         }}
       />
       <Tab.Screen
-        name="Bookmark"
-        component={Bookmark}
-        options={{
-          tabBarIcon: (props: TabBarIconProp) => (
-            <AntDesign
-              name="star"
-              size={24}
-              color={props.focused ? props.color : "gray"}
-            />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Diary"
-        component={Diary}
+        name="CeoReservationList"
+        component={CeoReservationList}
         options={{
           tabBarIcon: (props: TabBarIconProp) => (
             <Entypo
@@ -89,4 +61,4 @@ const UserTabNav = () => {
   );
 };
 
-export default UserTabNav;
+export default CeoTabNav;
