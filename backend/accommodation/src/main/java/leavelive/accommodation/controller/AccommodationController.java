@@ -38,7 +38,8 @@ public class AccommodationController {
 
     @PostMapping("/")
     public ResponseEntity<AccommodationArticleDto> saveAccomodation(@RequestBody AccommodationArticleDto request){
-        AccommodationArticleDto dto=service.save(request);
+        String userId="1"; // 임시로 부여한 userId
+        AccommodationArticleDto dto=service.save(request,userId);
         return new ResponseEntity(dto,HttpStatus.OK);
     }
 

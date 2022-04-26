@@ -57,7 +57,8 @@ public class AccommodationServiceImpl implements AccommodationService{
     }
 
     @Override
-    public AccommodationArticleDto save(AccommodationArticleDto dto) {
+    public AccommodationArticleDto save(AccommodationArticleDto dto,String userId) {
+        dto.setUserId(userId);
         AccommodationArticle entity=new AccommodationArticle();
         repo.save(entity.of(dto));
         return dto;
