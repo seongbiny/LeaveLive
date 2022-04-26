@@ -6,6 +6,7 @@ const Colors = {
 
 export const theme = {
   // Default Colors
+  background: Colors.white,
   main: Colors.main,
   text: Colors.text,
   white: Colors.white,
