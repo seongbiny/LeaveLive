@@ -4,6 +4,7 @@ import leavelive.accommodation.domain.AccommodationArticle;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.Column;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,6 +24,8 @@ public class AccommodationArticleDto {
     private int count;
     private int garden;
     private int cooking;
+    private String contents;
+    private String name;
 
     // entity -> dto
     public static AccommodationArticleDto of(AccommodationArticle article) {
@@ -35,6 +38,8 @@ public class AccommodationArticleDto {
                 .count(article.getCount())
                 .garden(article.getGarden())
                 .cooking(article.getCooking())
+                .contents(article.getContents())
+                .name(article.getName())
                 .build();
     }
 }

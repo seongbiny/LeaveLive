@@ -24,6 +24,9 @@ public class AccommodationArticle {
     private int count;
     private int garden;
     private int cooking;
+    @Column(columnDefinition = "TEXT")
+    private String contents;
+    private String name;
 
     // dto -> entity
     public AccommodationArticle of(AccommodationArticleDto dto){
@@ -35,6 +38,8 @@ public class AccommodationArticle {
                 .count(dto.getCount())
                 .cooking(dto.getCooking())
                 .garden(dto.getGarden())
+                .contents(dto.getContents())
+                .name(dto.getName())
                 .build();
     }
 
