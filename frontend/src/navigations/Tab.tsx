@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { ThemeContext } from "styled-components/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Search, Camera, Bookmark, Diary } from "../screens";
 import MainNavigator from "./MainNavigator";
@@ -24,12 +25,13 @@ type TabBarIconProp = {
 const Tab = createBottomTabNavigator<TabParamList>();
 
 const TabNav = () => {
+  const theme = useContext(ThemeContext);
   return (
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
-        tabBarActiveTintColor: "red",
+        tabBarActiveTintColor: theme.main,
       }}
     >
       <Tab.Screen
