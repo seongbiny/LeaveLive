@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class AccommodationArticleDto {
     private Long id;
     private String loc;
-    private String author;
+//    private String author;
     private int price;
     private String picPath; //type 뭘로?
     private int cnt;
@@ -27,13 +27,14 @@ public class AccommodationArticleDto {
     private int cooking;
     private String contents;
     private String name;
+    private String userId;
 
     // entity -> dto
     public static AccommodationArticleDto of(AccommodationArticle article) {
         return AccommodationArticleDto.builder()
                 .id(article.getId())
                 .loc(article.getLoc())
-                .author(article.getAuthor())
+//                .author(article.getAuthor())
                 .price(article.getPrice())
                 .picPath(article.getPicPath())
                 .cnt(article.getCnt())
@@ -41,6 +42,7 @@ public class AccommodationArticleDto {
                 .cooking(article.getCooking())
                 .contents(article.getContents())
                 .name(article.getName())
+                .userId(article.getUserId())
                 .build();
     }
 }

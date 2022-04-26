@@ -9,5 +9,5 @@ public interface AccommodationService {
     AccommodationArticleDto getAccommodation(Long id);
     Long delete(Long id);
     AccommodationArticleDto save(AccommodationArticleDto dto);
-    AccommodationArticleDto update(AccommodationArticleDto dto, Long id);
+    AccommodationArticleDto update(AccommodationArticleDto dto, Long id, String userId);
 }

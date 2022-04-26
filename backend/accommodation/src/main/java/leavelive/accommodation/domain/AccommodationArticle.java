@@ -19,7 +19,10 @@ public class AccommodationArticle {
     @Column(name = "accommodation_article_id")
     private Long id;
     private String loc;
-    private String author;
+//    @Column(name = "nickname")
+//    private String author;
+    @Column(name = "user_id")
+    private String userId;
     private int price;
     @Column(name = "pic_path")
     private String picPath; //,로 구분
@@ -36,7 +39,6 @@ public class AccommodationArticle {
     // dto -> entity
     public AccommodationArticle of(AccommodationArticleDto dto){
         return AccommodationArticle.builder()
-                .author(dto.getAuthor())
                 .loc(dto.getLoc())
                 .price(dto.getPrice())
                 .picPath(dto.getPicPath())
@@ -45,6 +47,7 @@ public class AccommodationArticle {
                 .garden(dto.getGarden())
                 .contents(dto.getContents())
                 .name(dto.getName())
+                .userId(dto.getUserId())
                 .build();
     }
     // update용 dto -> entity

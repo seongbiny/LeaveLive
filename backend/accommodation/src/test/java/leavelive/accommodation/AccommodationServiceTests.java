@@ -41,7 +41,7 @@ class AccommodationServiceTests {
 		// db 저장
 		for(int i=1; i<=10; i++){
 			AccommodationArticleDto dto=new AccommodationArticleDto();
-			dto.setAuthor("test"+i);
+//			dto.setAuthor("test"+i);
 			dto.setCooking(1);
 			dto.setCnt(12);
 			dto.setGarden(1);
@@ -50,6 +50,7 @@ class AccommodationServiceTests {
 			dto.setPrice(100000);
 			dto.setName("숙소"+i);
 			dto.setContents("숙소 내용"+i);
+			dto.setUserId(i+"");
 			service.save(dto);
 		}
 		Assertions.assertThat(service.getAllAccommodation().size()).isEqualTo(10);
@@ -60,7 +61,7 @@ class AccommodationServiceTests {
 	@DisplayName("숙소 목록")
 	public void getAccommodationTest(){
 		saveAccommodationTest();
-		Assertions.assertThat(service.getAccommodation(1L).getAuthor()).isEqualTo("test1");
+		Assertions.assertThat(service.getAccommodation(1L).getName()).isEqualTo("숙소1");
 	}
 
 	@Test
@@ -106,7 +107,7 @@ class AccommodationServiceTests {
 		AccommodationArticleDto dto=new AccommodationArticleDto();
 		dto.setName("수정한 이름");
 		dto.setCooking(1);
-		service.update(dto,1L);
+		service.update(dto,1L,"1");
 		System.out.println("수정 결과"+service.getAccommodation(1L));
 		Assertions.assertThat("수정한 이름").isEqualTo(service.getAccommodation(1L).getName());
 	}

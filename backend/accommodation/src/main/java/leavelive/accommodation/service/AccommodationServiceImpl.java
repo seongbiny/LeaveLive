@@ -60,7 +60,7 @@ public class AccommodationServiceImpl implements AccommodationService{
     }
 
     @Override
-    public AccommodationArticleDto update(AccommodationArticleDto dto,Long id) {
+    public AccommodationArticleDto update(AccommodationArticleDto dto,Long id,String userId) {
         Optional<AccommodationArticle> entity=repo.findById(id);
         AccommodationArticle result=new AccommodationArticle();
         if(!entity.isPresent()) throw new NullPointerException("해당하는 숙소가 없습니다.");
@@ -68,7 +68,7 @@ public class AccommodationServiceImpl implements AccommodationService{
         AccommodationArticleDto oriDto=new AccommodationArticleDto(); //현재 entity
         oriDto=oriDto.of(entity.get());
         oriDto.setId(id);
-        oriDto.setAuthor(entity.get().getAuthor());
+        oriDto.setUserId(userId);
         // 바뀐 부분
         if(dto.getCnt()!=0){
             oriDto.setCnt(dto.getCnt());
