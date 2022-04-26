@@ -53,4 +53,11 @@ public class AccommodationServiceImpl implements AccommodationService{
         repo.deleteById(id);
         return id;
     }
+
+    @Override
+    public AccommodationArticleDto save(AccommodationArticleDto dto) {
+        AccommodationArticle entity=new AccommodationArticle();
+        repo.save(entity.of(dto));
+        return dto;
+    }
 }

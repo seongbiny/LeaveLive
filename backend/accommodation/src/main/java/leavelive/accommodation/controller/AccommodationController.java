@@ -1,5 +1,6 @@
 package leavelive.accommodation.controller;
 
+import leavelive.accommodation.domain.AccommodationArticle;
 import leavelive.accommodation.domain.dto.AccommodationArticleDto;
 import leavelive.accommodation.service.AccommodationService;
 import lombok.RequiredArgsConstructor;
@@ -32,5 +33,11 @@ public class AccommodationController {
     public ResponseEntity<Long> deleteAccommodation(@PathVariable("accommodation_id") Long id){
         Long result=service.delete(id);
         return new ResponseEntity(result, HttpStatus.OK);
+    }
+
+    @PostMapping("/accommodation")
+    public ResponseEntity<AccommodationArticleDto> saveAccomodation(@RequestBody AccommodationArticleDto request){
+        AccommodationArticleDto dto=service.save(request);
+        return new ResponseEntity(dto,HttpStatus.OK);
     }
 }
