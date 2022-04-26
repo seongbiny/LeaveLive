@@ -1,8 +1,12 @@
 package leavelive.accommodation;
 
 import leavelive.accommodation.domain.AccommodationArticle;
+import leavelive.accommodation.domain.AccommodationFav;
 import leavelive.accommodation.domain.dto.AccommodationArticleDto;
+import leavelive.accommodation.domain.dto.AccommodationFavDto;
+import leavelive.accommodation.repository.AccommodationFavRepository;
 import leavelive.accommodation.repository.AccommodationRepository;
+import leavelive.accommodation.service.AccommodationFavServiceImpl;
 import leavelive.accommodation.service.AccommodationService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -19,7 +23,13 @@ class AccommodationServiceTests {
 	AccommodationService service;
 
 	@Autowired
+	AccommodationFavServiceImpl favService;
+
+	@Autowired
 	AccommodationRepository repo;
+
+	@Autowired
+	AccommodationFavRepository favRepo;
 
 	@Test
 	@Transactional
@@ -45,5 +55,15 @@ class AccommodationServiceTests {
 	public void getAccommodationTest(){
 		saveAndGetAllAccommodationTest();
 		Assertions.assertThat(service.getAccommodation(1L).getAuthor()).isEqualTo("test1");
+	}
+
+	@Test
+	@Transactional
+	public void saveAndGetAllAccommodationFavTest(){
+		saveAndGetAllAccommodationTest();
+		for (long i=1L; i<=10L; i++) {
+			favService.save(i,i);
+		}
+		Assertions.assertThat(favService.findAll().size()).isEqualTo(10);
 	}
 }
