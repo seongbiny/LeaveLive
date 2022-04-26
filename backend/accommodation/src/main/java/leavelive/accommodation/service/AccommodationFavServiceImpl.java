@@ -37,4 +37,8 @@ public class AccommodationFavServiceImpl {
         favRepo.save(entity.of(dto));
         return dto;
     }
+    public Long delete(Long id){
+        favRepo.deleteById(id);
+        return id;
+    }
 }

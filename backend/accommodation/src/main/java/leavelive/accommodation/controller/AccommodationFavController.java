@@ -28,4 +28,10 @@ public class AccommodationFavController {
         return new ResponseEntity<>(dto,HttpStatus.OK);
     }
 
+    @DeleteMapping("/{accommodation_fav_id}")
+    public ResponseEntity<Long> deleteAccommodationFav(@PathVariable("accommodation_fav_id") Long id){
+        service.delete(id);
+        return new ResponseEntity<>(id,HttpStatus.OK);
+    }
+
 }

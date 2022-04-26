@@ -16,6 +16,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 class AccommodationServiceTests {
@@ -65,5 +67,14 @@ class AccommodationServiceTests {
 			favService.save(i,i);
 		}
 		Assertions.assertThat(favService.findAll().size()).isEqualTo(10);
+	}
+
+	@Test
+	@Transactional
+	public void DeleteAccommodationFavTest(){
+		saveAndGetAllAccommodationFavTest();
+		favService.delete(1L);
+		List<AccommodationFavDto> list = favService.findAll();
+		Assertions.assertThat(favService.findAll().size()).isEqualTo(9);
 	}
 }
