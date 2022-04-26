@@ -35,7 +35,7 @@ public class AccommodationController {
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
-    @PostMapping("/accommodation")
+    @PostMapping("/")
     public ResponseEntity<AccommodationArticleDto> saveAccomodation(@RequestBody AccommodationArticleDto request){
         AccommodationArticleDto dto=service.save(request);
         return new ResponseEntity(dto,HttpStatus.OK);
