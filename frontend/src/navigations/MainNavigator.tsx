@@ -22,13 +22,14 @@ const StackNav = () => {
         headerTitleStyle: {
           //   color: theme.text,
         },
-        headerLeft: () => {
+        headerLeft: ({ onPress }) => {
           return (
             <MaterialIcons
               name="keyboard-arrow-left"
               size={30}
               style={{ marginLeft: 8 }}
               color={theme.main}
+              onPress={onPress}
             />
           );
         },

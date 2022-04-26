@@ -24,7 +24,7 @@ type TabBarIconProp = {
 
 const Tab = createBottomTabNavigator<TabParamList>();
 
-const TabNav = () => {
+const UserTabNav = () => {
   const theme = useContext(ThemeContext);
   return (
     <Tab.Navigator
@@ -103,4 +103,4 @@ const TabNav = () => {
   );
 };
 
-export default TabNav;
+export default UserTabNav;
