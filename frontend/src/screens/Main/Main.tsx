@@ -19,7 +19,7 @@ const Main = ({ navigation }: Props) => {
       <Text>리브리브</Text>
       <Button
         title="로그인 페이지(테스트용)"
-        onPress={() => navigation.navigate("Login", { type: "user" })}
+        onPress={() => navigation.navigate("Login")}
       ></Button>
     </Container>
   );
