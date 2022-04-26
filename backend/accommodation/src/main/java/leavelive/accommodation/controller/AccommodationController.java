@@ -22,7 +22,7 @@ public class AccommodationController {
         return new ResponseEntity(list, HttpStatus.OK);
     }
 
-    @PostMapping("/{accommodation_id}")
+    @GetMapping("/{accommodation_id}")
     public ResponseEntity<AccommodationArticleDto> getAccommodation(@PathVariable("accommodation_id") Long id){
         AccommodationArticleDto dto=service.getAccommodation(id);
         return new ResponseEntity(dto, HttpStatus.OK);
