@@ -3,7 +3,7 @@ import TabNav from "./Tab";
 
 const Navigation = () => {
     return <NavigationContainer>
-
+        <TabNav />
     </NavigationContainer>
 }
 
