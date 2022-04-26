@@ -48,6 +48,8 @@ class AccommodationServiceTests {
 			dto.setLoc("test");
 			dto.setPicPath("test");
 			dto.setPrice(100000);
+			dto.setName("숙소"+i);
+			dto.setContents("숙소 내용"+i);
 			service.save(dto);
 		}
 		Assertions.assertThat(service.getAllAccommodation().size()).isEqualTo(10);
@@ -93,5 +95,19 @@ class AccommodationServiceTests {
 		System.out.println(list);
 		System.out.println(favList);
 		Assertions.assertThat(list.size()).isEqualTo(9);
+	}
+
+	@Test
+	@Transactional
+	@DisplayName("숙소 수정")
+	public void updateAccommodationTest(){
+		saveAccommodationFavTest();
+		List<AccommodationArticleDto> list = service.getAllAccommodation();
+		AccommodationArticleDto dto=new AccommodationArticleDto();
+		dto.setName("수정한 이름");
+		dto.setCooking(1);
+		service.update(dto,1L);
+		System.out.println("수정 결과"+service.getAccommodation(1L));
+		Assertions.assertThat("수정한 이름").isEqualTo(service.getAccommodation(1L).getName());
 	}
 }

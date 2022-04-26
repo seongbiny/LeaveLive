@@ -12,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ToString
 public class AccommodationArticle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,6 +47,18 @@ public class AccommodationArticle {
                 .name(dto.getName())
                 .build();
     }
-
-
+    // update용 dto -> entity
+    public AccommodationArticle updateOf(AccommodationArticleDto dto){
+        return AccommodationArticle.builder()
+                .id(dto.getId())
+                .loc(dto.getLoc())
+                .price(dto.getPrice())
+                .picPath(dto.getPicPath())
+                .cnt(dto.getCnt())
+                .cooking(dto.getCooking())
+                .garden(dto.getGarden())
+                .contents(dto.getContents())
+                .name(dto.getName())
+                .build();
+    }
 }

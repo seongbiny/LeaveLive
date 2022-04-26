@@ -40,4 +40,10 @@ public class AccommodationController {
         AccommodationArticleDto dto=service.save(request);
         return new ResponseEntity(dto,HttpStatus.OK);
     }
+
+    @PatchMapping("/{accommodation_id}")
+    public ResponseEntity<AccommodationArticleDto> updateAccommodation(@PathVariable("accommodation_id") Long id, @RequestBody AccommodationArticleDto request){
+        AccommodationArticleDto dto=service.update(request,id);
+        return new ResponseEntity(dto,HttpStatus.OK);
+    }
 }

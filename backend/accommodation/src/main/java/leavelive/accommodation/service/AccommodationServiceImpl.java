@@ -44,8 +44,6 @@ public class AccommodationServiceImpl implements AccommodationService{
         // id를 가지고 있는 모든 favRepo 찾고, 삭제
         List<AccommodationFav> list=favRepo.findAllByAcommodationId(id);
         if(list!=null) {
-            System.out.println("해당 숙소에 등록된 즐겨찾기가 있습니다.");
-//            favRepo.deleteByAccommodationId(id);
             for(AccommodationFav entity:list){
                 favRepo.deleteById(entity.getId());
             }
@@ -58,6 +56,45 @@ public class AccommodationServiceImpl implements AccommodationService{
     public AccommodationArticleDto save(AccommodationArticleDto dto) {
         AccommodationArticle entity=new AccommodationArticle();
         repo.save(entity.of(dto));
+        return dto;
+    }
+
+    @Override
+    public AccommodationArticleDto update(AccommodationArticleDto dto,Long id) {
+        Optional<AccommodationArticle> entity=repo.findById(id);
+        AccommodationArticle result=new AccommodationArticle();
+        if(!entity.isPresent()) throw new NullPointerException("해당하는 숙소가 없습니다.");
+
+        AccommodationArticleDto oriDto=new AccommodationArticleDto(); //현재 entity
+        oriDto=oriDto.of(entity.get());
+        oriDto.setId(id);
+        oriDto.setAuthor(entity.get().getAuthor());
+        // 바뀐 부분
+        if(dto.getCnt()!=0){
+            oriDto.setCnt(dto.getCnt());
+        }
+        if(dto.getContents()!=null){
+            oriDto.setContents(dto.getContents());
+        }
+        if(dto.getPrice()!=0){
+            oriDto.setPrice(dto.getPrice());
+        }
+        if(dto.getLoc()!=null){
+            oriDto.setLoc(dto.getLoc());
+        }
+        if(dto.getName()!=null){
+            oriDto.setName(dto.getName());
+        }
+        if(dto.getPicPath()!=null){
+            oriDto.setPicPath(dto.getPicPath());
+        }
+        if(dto.getCooking()!=oriDto.getCooking()){
+            oriDto.setCooking(dto.getCooking());
+        }
+        if(dto.getGarden()!=oriDto.getGarden()){
+            oriDto.setGarden(dto.getGarden());
+        }
+        repo.save(result.updateOf(oriDto));
         return dto;
     }
 }
