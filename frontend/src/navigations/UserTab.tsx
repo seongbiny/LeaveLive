@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 import { ThemeContext } from "styled-components/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import HomeStack from "./HomeStack";
-import DiaryStack from "./DiaryStack";
-import CameraStack from "./CameraStack";
-import BookmarkStack from "./BookmarkStack";
-import SearchStack from "./SearchStack";
+import HomeStack from "./UserStack/HomeStack";
+import DiaryStack from "./UserStack/DiaryStack";
+import CameraStack from "./UserStack/CameraStack";
+import BookmarkStack from "./UserStack/BookmarkStack";
+import SearchStack from "./UserStack/SearchStack";
 import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";

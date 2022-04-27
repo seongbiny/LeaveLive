@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { ThemeContext } from "styled-components/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { Home, Login } from "../screens";
+import { Home, Login } from "../../screens";
 import { MaterialIcons } from "@expo/vector-icons";
 
 // Screen에 넘길 파라미터가 없으면 undefined, 있다면 파라미터 객체를 작성해 주세요!

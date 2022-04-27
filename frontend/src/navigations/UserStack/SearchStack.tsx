@@ -1,14 +1,14 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import activityList from '../screens/Search/activityDetail';
-import activityDetail from '../screens/Search/activityDetail';
-import BnbDetail from '../screens/Search/BnbDetail';
-import BnbList from '../screens/Search/BnbList';
-import mainSelection from '../screens/Search/mainSelection';
-import regionSelection from '../screens/Search/regionSelection';
-import reservation from '../screens/Search/reservation';
-import reservationComplete from '../screens/Search/reservationComplete';
+import activityList from '../../screens/Search/activityDetail';
+import activityDetail from '../../screens/Search/activityDetail';
+import BnbDetail from '../../screens/Search/BnbDetail';
+import BnbList from '../../screens/Search/BnbList';
+import mainSelection from '../../screens/Search/mainSelection';
+import regionSelection from '../../screens/Search/regionSelection';
+import reservation from '../../screens/Search/reservation';
+import reservationComplete from '../../screens/Search/reservationComplete';
 
 const Stack = createStackNavigator();
 
