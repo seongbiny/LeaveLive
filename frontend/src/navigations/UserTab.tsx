@@ -9,6 +9,7 @@ import SearchStack from "./UserStack/SearchStack";
 import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
+// import { UserTabParamList, TabBarIconProp } from "./TabTypes";
 
 
 // Screen에 넘길 파라미터가 없으면 undefined, 있다면 파라미터 객체를 작성해 주세요!
