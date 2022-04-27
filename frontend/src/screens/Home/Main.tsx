@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, Button } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { MainParamList } from "../../navigations/MainNavigator";
+import { MainParamList } from "../../navigations/HomeNavigator";
 import styled from "styled-components/native";
 
 type MainScreenNavigationProp = StackNavigationProp<MainParamList, "Main">;
