@@ -50,7 +50,7 @@ class AccommodationServiceTests {
 			dto.setPrice(100000);
 			dto.setName("숙소"+i);
 			dto.setContents("숙소 내용"+i);
-			service.save(dto,i+"");
+			service.save(dto,i+"",null);
 		}
 		Assertions.assertThat(service.getAllAccommodation().size()).isEqualTo(10);
 	}

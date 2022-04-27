@@ -6,6 +6,7 @@ import leavelive.accommodation.domain.dto.AccommodationArticleDto;
 import leavelive.accommodation.repository.AccommodationFavRepository;
 import leavelive.accommodation.repository.AccommodationRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.io.IOUtils;
 import org.apache.tomcat.jni.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -13,6 +14,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.Null;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.FileSystemException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -65,11 +69,16 @@ public class AccommodationServiceImpl implements AccommodationService{
     }
 
     @Override
-    public AccommodationArticleDto save(AccommodationArticleDto dto,String userId) {
+    public AccommodationArticleDto save(AccommodationArticleDto dto,String userId, List<MultipartFile> files) {
         dto.setUserId(userId);
         AccommodationArticle entity=new AccommodationArticle();
-        repo.save(entity.of(dto));
-        return dto;
+        // 이미지 파일 저장
+        if(files!=null){
+            String img_path=saveImage(files);
+            dto.setPicPath(img_path);
+        }
+        AccommodationArticle accommodationArticle=repo.save(entity.of(dto));
+        return AccommodationArticleDto.of(accommodationArticle);
     }
 
     @Override
@@ -112,14 +121,10 @@ public class AccommodationServiceImpl implements AccommodationService{
     }
 
     @Override
-    public AccommodationArticleDto saveImage(List<MultipartFile> files,Long id) {
-        System.out.println("saveImage 서비스");
+    public String saveImage(List<MultipartFile> files) {
         for (MultipartFile file:files){
             System.out.println(file.getOriginalFilename());
         }
-        Optional<AccommodationArticle> entity=repo.findById(id);
-        if(!entity.isPresent()) throw new NullPointerException("해당하는 숙소가 없습니다.");
-        AccommodationArticleDto oriDto=new AccommodationArticleDto(); //현재 entity
         String images="";
         if(files!=null){
             LocalDateTime now= LocalDateTime.now(); //현재 시간 저장
@@ -176,12 +181,21 @@ public class AccommodationServiceImpl implements AccommodationService{
             }
             // 마지막 콤마는 빼기
             images=images.substring(0,images.length()-1);
-            System.out.println(images);
-            oriDto=oriDto.of(entity.get());
-            oriDto.setPicPath(images);
-            AccommodationArticle result=new AccommodationArticle();
-            repo.save(result.updateOf(oriDto));
         }
-        return oriDto;
+        return images;
+    }
+
+    @Override
+    public byte[] findImage(String imagePath) throws IOException {
+        InputStream imageStream;
+        try{
+            imageStream = new FileInputStream(imagePath);
+        }catch(Exception e){
+            e.printStackTrace();
+            throw new NullPointerException("해당하는 파일이 없습니다.");
+        }
+        byte[] imageByteArray = IOUtils.toByteArray(imageStream);
+        imageStream.close();
+        return imageByteArray;
     }
 }
