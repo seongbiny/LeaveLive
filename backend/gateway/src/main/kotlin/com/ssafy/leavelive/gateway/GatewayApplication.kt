@@ -9,18 +9,7 @@ import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder
 import org.springframework.context.annotation.Bean
 
 @SpringBootApplication
-class GatewayApplication {
-	@Bean
-	fun myRoutes(builder: RouteLocatorBuilder) : RouteLocator {
-		return builder
-			.routes()
-			.route({p:PredicateSpec -> p
-				.path("/get")
-				.filters({f:GatewayFilterSpec -> f.addRequestHeader("Hello", "World")})
-				.uri("http://httpbin.org:80")})
-			.build()
-	}
-}
+class GatewayApplication
 
 fun main(args: Array<String>) {
 	runApplication<GatewayApplication>(*args)
