@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, Button } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { MainParamList } from "../../navigations/HomeNavigator";
+import { MainParamList } from "../../navigations/HomeStack";
 import styled from "styled-components/native";
 
 type MainScreenNavigationProp = StackNavigationProp<MainParamList, "Main">;
@@ -13,7 +13,7 @@ const Container = styled.View`
   align-items: center;
 `;
 
-const Main = ({ navigation }: Props) => {
+const Home = ({ navigation }: Props) => {
   return (
     <Container>
       <Text>리브리브</Text>
@@ -25,4 +25,4 @@ const Main = ({ navigation }: Props) => {
   );
 };
 
-export default Main;
+export default Home;

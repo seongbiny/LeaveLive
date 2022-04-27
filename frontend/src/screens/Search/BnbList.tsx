@@ -4,15 +4,11 @@ import { View, Text, StyleSheet } from 'react-native';
 const BnbList = () => {
     return (
         <View>
-            <Text style={styles.text}>BnbList</Text>
+            <Text>BnbList</Text>
         </View>
     )
 }
 
-const styles = StyleSheet.create({
-    text: {
-        color: 'red'
-    }
-})
+const styles = StyleSheet.create({})
 
 export default BnbList;
