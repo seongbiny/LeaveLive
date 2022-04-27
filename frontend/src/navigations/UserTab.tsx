@@ -1,19 +1,23 @@
 import React, { useContext } from "react";
 import { ThemeContext } from "styled-components/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Search, Camera, Bookmark, Diary } from "../screens";
-import MainNavigator from "./HomeNavigator";
+import HomeStack from "./UserStack/HomeStack";
+import DiaryStack from "./UserStack/DiaryStack";
+import CameraStack from "./UserStack/CameraStack";
+import BookmarkStack from "./UserStack/BookmarkStack";
+import SearchStack from "./UserStack/SearchStack";
 import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 
+
 // Screen에 넘길 파라미터가 없으면 undefined, 있다면 파라미터 객체를 작성해 주세요!
 export type TabParamList = {
-  MainNavigator: undefined;
-  Search: undefined;
-  Camera: undefined;
-  Bookmark: undefined;
-  Diary: undefined;
+  HomeStack: undefined;
+  SearchStack: undefined;
+  CameraStack: undefined;
+  BookmarkStack: undefined;
+  DiaryStack: undefined;
 };
 
 type TabBarIconProp = {
@@ -35,8 +39,8 @@ const UserTabNav = () => {
       }}
     >
       <Tab.Screen
-        name="MainNavigator"
-        component={MainNavigator}
+        name="HomeStack"
+        component={HomeStack}
         options={{
           tabBarIcon: (props: TabBarIconProp) => (
             <FontAwesome
@@ -48,8 +52,8 @@ const UserTabNav = () => {
         }}
       />
       <Tab.Screen
-        name="Search"
-        component={Search}
+        name="SearchStack"
+        component={SearchStack}
         options={{
           tabBarIcon: (props: TabBarIconProp) => (
             <FontAwesome
@@ -61,8 +65,8 @@ const UserTabNav = () => {
         }}
       />
       <Tab.Screen
-        name="Camera"
-        component={Camera}
+        name="CameraStack"
+        component={CameraStack}
         options={{
           tabBarIcon: (props: TabBarIconProp) => (
             <Entypo
@@ -74,8 +78,8 @@ const UserTabNav = () => {
         }}
       />
       <Tab.Screen
-        name="Bookmark"
-        component={Bookmark}
+        name="BookmarkStack"
+        component={BookmarkStack}
         options={{
           tabBarIcon: (props: TabBarIconProp) => (
             <AntDesign
@@ -87,8 +91,8 @@ const UserTabNav = () => {
         }}
       />
       <Tab.Screen
-        name="Diary"
-        component={Diary}
+        name="DiaryStack"
+        component={DiaryStack}
         options={{
           tabBarIcon: (props: TabBarIconProp) => (
             <Entypo
