@@ -6,8 +6,16 @@ import leavelive.accommodation.domain.dto.AccommodationArticleDto;
 import leavelive.accommodation.repository.AccommodationFavRepository;
 import leavelive.accommodation.repository.AccommodationRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.jni.Local;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.Null;
+import java.io.File;
+import java.nio.file.FileSystemException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -101,5 +109,79 @@ public class AccommodationServiceImpl implements AccommodationService{
         }
         repo.save(result.updateOf(oriDto));
         return dto;
+    }
+
+    @Override
+    public AccommodationArticleDto saveImage(List<MultipartFile> files,Long id) {
+        System.out.println("saveImage 서비스");
+        for (MultipartFile file:files){
+            System.out.println(file.getOriginalFilename());
+        }
+        Optional<AccommodationArticle> entity=repo.findById(id);
+        if(!entity.isPresent()) throw new NullPointerException("해당하는 숙소가 없습니다.");
+        AccommodationArticleDto oriDto=new AccommodationArticleDto(); //현재 entity
+        String images="";
+        if(files!=null){
+            LocalDateTime now= LocalDateTime.now(); //현재 시간 저장
+            DateTimeFormatter dateTimeFormatter =
+                    DateTimeFormatter.ofPattern("yyyyMMdd");
+            String current_date = now.format(dateTimeFormatter);
+
+            String abPath=new File("").getAbsolutePath()+File.separator;
+            System.out.println("경로 "+abPath);
+
+            // 세부 경로
+            String path="images"+File.separator+current_date;
+            File file=new File(path);
+            System.out.println("세부 경로 "+path);
+
+            if(!file.exists()){
+                boolean success=file.mkdir();
+                if(!success){
+                    throw new NullPointerException("파일 경로를 생성하지 못했습니다.");
+                }
+            }
+            for (MultipartFile multipartFile:files){
+                String originalFileExtension;
+                String contentType=multipartFile.getContentType();
+                if(ObjectUtils.isEmpty(contentType)){
+                    continue;
+                }
+                if(contentType.contains("image/PNG")){
+                    originalFileExtension=".PNG";
+                }else if(contentType.contains("image/png")){
+                    originalFileExtension=".png";
+                }else if(contentType.contains("image/jpeg")){
+                    originalFileExtension=".jpeg";
+                }else if(contentType.contains("image/JPEG")){
+                    originalFileExtension=".JPEG";
+                }else{
+                    System.out.println("이미지 파일만 올릴 수 있습니다.");
+                    continue;
+                }
+                String new_file_name=System.nanoTime()+multipartFile.getName()+originalFileExtension;
+
+                // 업로드 한 파일 데이터를 지정한 파일에 저장
+                try{
+                    file = new File(abPath + path + File.separator + new_file_name);
+                    multipartFile.transferTo(file);
+                }catch (Exception e){
+                    e.printStackTrace();
+                    throw new NullPointerException("이미지 저장에 실패했습니다.");
+                }
+                file.setWritable(true);
+                file.setReadable(true);
+
+                images+=abPath + path + File.separator + new_file_name+",";
+            }
+            // 마지막 콤마는 빼기
+            images=images.substring(0,images.length()-1);
+            System.out.println(images);
+            oriDto=oriDto.of(entity.get());
+            oriDto.setPicPath(images);
+            AccommodationArticle result=new AccommodationArticle();
+            repo.save(result.updateOf(oriDto));
+        }
+        return oriDto;
     }
 }

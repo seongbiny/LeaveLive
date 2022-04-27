@@ -24,7 +24,7 @@ public class AccommodationArticle {
     @Column(name = "user_id")
     private String userId;
     private int price;
-    @Column(name = "pic_path")
+    @Column(name = "pic_path", columnDefinition = "TEXT")
     private String picPath; //,로 구분
     private int cnt;
     private int garden;

@@ -37,4 +37,8 @@ spring:
     level:
       org.hibernate.SQL: debug
       org.hibernate.type: trace
-
+# 파일 업로드 설정
+  servlet:
+    multipart:
+      maxFileSize: 10MB
+      maxRequestSize: 20MB

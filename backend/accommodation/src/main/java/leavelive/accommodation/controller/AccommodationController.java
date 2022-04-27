@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -47,6 +48,17 @@ public class AccommodationController {
     public ResponseEntity<AccommodationArticleDto> updateAccommodation(@PathVariable("accommodation_id") Long id, @RequestBody AccommodationArticleDto request){
         String userId="1"; // 임시로 부여한 userId
         AccommodationArticleDto dto=service.update(request,id,userId);
+        return new ResponseEntity(dto,HttpStatus.OK);
+    }
+
+    @PostMapping("/images")
+    public ResponseEntity<AccommodationArticleDto> saveImage(@RequestPart(value="image", required=false) List<MultipartFile> files) throws Exception{
+//        for (MultipartFile file:files){
+//            System.out.println(file.getOriginalFilename());
+//        }
+        Long id=1L; //임시 숙소 번호
+        AccommodationArticleDto dto=service.saveImage(files,1L);
+        System.out.println("dto "+dto);
         return new ResponseEntity(dto,HttpStatus.OK);
     }
 }
