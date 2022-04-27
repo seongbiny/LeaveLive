@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("api")
+@RequestMapping("/api/test")
 class ApiController {
 
     // some important info request validated through filter

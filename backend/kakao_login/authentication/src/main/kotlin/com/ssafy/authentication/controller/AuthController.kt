@@ -1,24 +1,18 @@
 package com.ssafy.authentication.controller
 
-import com.ssafy.authentication.util.JwtTokenManager
-import jdk.nashorn.internal.runtime.logging.Logger
+import com.ssafy.authentication.utils.JwtUtil
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.*
 import org.springframework.util.LinkedMultiValueMap
 import org.springframework.util.MultiValueMap
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.client.RestTemplate
-import org.springframework.web.client.exchange
-import org.springframework.web.client.getForObject
 import org.springframework.web.client.postForEntity
-import org.springframework.web.util.UriComponents
-import org.springframework.web.util.UriComponentsBuilder
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/auth")
-class AuthController(private val restTemplate: RestTemplate, private val jwtTokenManager: JwtTokenManager) {
+@RequestMapping("/api/auth")
+class AuthController(private val restTemplate: RestTemplate) {
 
     private val logger = LoggerFactory.getLogger(javaClass)
 
@@ -55,8 +49,8 @@ class AuthController(private val restTemplate: RestTemplate, private val jwtToke
 
         //create jwt token with user info and response to client
         val jwtAccessToken =
-            jwtTokenManager.createAccessToken(info.body?.get("id").toString()) // token includes user info
-        val jwtRefreshToken = jwtTokenManager.createRefreshToken()
+            JwtUtil.createJwtAccessToken(info.body?.get("id") as Long) // token includes user info
+        val jwtRefreshToken = JwtUtil.createJwtRefreshToken()
         println("Token from Server : $jwtAccessToken")
         val result: MutableMap<String, Any> = HashMap()
         result["access_token"] = jwtAccessToken
