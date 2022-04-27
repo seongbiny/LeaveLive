@@ -10,9 +10,9 @@ export type UserTabParamList = {
 
 // 사장님 탭 네비게이션
 export type CeoTabParamList = {
-  CeoMain: undefined;
-  CeoBnbList: undefined;
-  CeoReservationList: undefined;
+  CeoHomeStack: undefined;
+  CeoListStack: undefined;
+  CeoReservationStack: undefined;
 };
 
 // 탭 네비게이션 아이콘 props
@@ -21,3 +21,7 @@ export type TabBarIconProp = {
   color: string;
   size: number;
 };
+
+export const headerTitleStyle: object = {
+  fontWeight: "bold",
+}

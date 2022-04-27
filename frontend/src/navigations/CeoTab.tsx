@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { ThemeContext } from "styled-components/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { CeoMain, CeoBnbList, CeoReservationList } from "../screens";
+import { CeoHomeStack, CeoListStack, CeoReservationStack } from "./CeoStack";
 import { CeoTabParamList, TabBarIconProp } from "./TabTypes";
 import { FontAwesome } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
@@ -19,8 +19,8 @@ const CeoTabNav = () => {
       }}
     >
       <Tab.Screen
-        name="CeoMain"
-        component={CeoMain}
+        name="CeoHomeStack"
+        component={CeoHomeStack}
         options={{
           tabBarIcon: (props: TabBarIconProp) => (
             <FontAwesome
@@ -32,8 +32,8 @@ const CeoTabNav = () => {
         }}
       />
       <Tab.Screen
-        name="CeoBnbList"
-        component={CeoBnbList}
+        name="CeoListStack"
+        component={CeoListStack}
         options={{
           tabBarIcon: (props: TabBarIconProp) => (
             <Entypo
@@ -45,8 +45,8 @@ const CeoTabNav = () => {
         }}
       />
       <Tab.Screen
-        name="CeoReservationList"
-        component={CeoReservationList}
+        name="CeoReservationStack"
+        component={CeoReservationStack}
         options={{
           tabBarIcon: (props: TabBarIconProp) => (
             <Entypo

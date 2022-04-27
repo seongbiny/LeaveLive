@@ -1,12 +1,12 @@
-import Main from "./Main/Main";
-import Search from "./Search";
-import Camera from "./Camera";
-import Bookmark from "./Bookmark";
-import Diary from "./Diary";
+import Main from "./Home/Main";
+import Search from "./Search/Search";
+import Camera from "./Camera/Camera";
+import Bookmark from "./Bookmark/Bookmark";
+import Diary from "./Diary/Diary";
 
 import Login from "./Login";
 import {
-  CeoMain,
+  CeoHome,
   CeoBnbList,
   CeoBnbDetail,
   CeoBnbCreate,
@@ -19,7 +19,7 @@ export { Login };
 
 // 사장님 페이지
 export {
-  CeoMain,
+  CeoHome,
   CeoBnbList,
   CeoBnbDetail,
   CeoBnbCreate,
