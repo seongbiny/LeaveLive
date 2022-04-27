@@ -19,6 +19,15 @@ public class AccommodationFavServiceImpl {
     private final AccommodationFavRepository favRepo;
     private final AccommodationRepository repo;
 
+    public List<AccommodationFavDto> getAllByUserId(String userId){
+        List<AccommodationFav> entities=favRepo.findByUserId(userId);
+        List<AccommodationFavDto> list=new ArrayList<>();
+        for (int i=0; i<entities.size(); i++){
+            AccommodationFavDto dto=new AccommodationFavDto();
+            list.add(dto.of(entities.get(i)));
+        }
+        return list;
+    }
     public List<AccommodationFavDto> findAll(){
         List<AccommodationFav> entities=favRepo.findAll();
         List<AccommodationFavDto> list=new ArrayList<>();
@@ -28,6 +37,7 @@ public class AccommodationFavServiceImpl {
         }
         return list;
     }
+
     public AccommodationFavDto save(Long id,String userId){
         Optional<AccommodationArticle> accommodationArticle= repo.findById(id);
         if(!accommodationArticle.isPresent()) throw new NullPointerException("해당하는 숙소가 없습니다.");

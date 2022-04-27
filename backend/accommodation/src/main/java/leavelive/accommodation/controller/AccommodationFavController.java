@@ -17,7 +17,8 @@ public class AccommodationFavController {
 
     @GetMapping("/")
     public ResponseEntity<List<AccommodationFavDto>> getAllAccommodationFav(){
-        List<AccommodationFavDto> list=service.findAll();
+        String userId="1"; //임시로 준 유저아이디
+        List<AccommodationFavDto> list=service.getAllByUserId(userId);
         return new ResponseEntity(list, HttpStatus.OK);
     }
 

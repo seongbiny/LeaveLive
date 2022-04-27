@@ -67,9 +67,10 @@ class AccommodationServiceTests {
 	@Transactional
 	@DisplayName("즐겨찾기 저장")
 	public void saveAccommodationFavTest(){
+		String userId="1";
 		saveAccommodationTest();
 		for (long i=1L; i<=10L; i++) {
-			favService.save(i,i+"");
+			favService.save(i,userId);
 		}
 		Assertions.assertThat(favService.findAll().size()).isEqualTo(10);
 	}
@@ -91,9 +92,9 @@ class AccommodationServiceTests {
 		saveAccommodationFavTest();
 		service.delete(1L,"1");
 		List<AccommodationArticleDto> list = service.getAllAccommodation();
-		List<AccommodationFavDto> favList=favService.findAll();
-		System.out.println(list);
-		System.out.println(favList);
+//		List<AccommodationFavDto> favList=favService.findAll("1");
+//		System.out.println(list);
+//		System.out.println(favList);
 		Assertions.assertThat(list.size()).isEqualTo(9);
 	}
 	@Test
@@ -104,9 +105,9 @@ class AccommodationServiceTests {
 		try{
 			service.delete(2L,"1");
 			List<AccommodationArticleDto> list = service.getAllAccommodation();
-			List<AccommodationFavDto> favList=favService.findAll();
+//			List<AccommodationFavDto> favList=favService.findAll();
 			System.out.println(list);
-			System.out.println(favList);
+//			System.out.println(favList);
 			Assertions.assertThat(list.size()).isEqualTo(9);
 		}catch(NullPointerException e){
 			e.printStackTrace();
@@ -145,7 +146,15 @@ class AccommodationServiceTests {
 			e.printStackTrace();
 			Assertions.assertThatNullPointerException();
 		}
+	}
 
-
+	@Test
+	@Transactional
+	@DisplayName("즐겨찾기 조회")
+	public void getAccommodationFavTest(){
+		saveAccommodationFavTest();
+		System.out.println("즐겨찾기 리스트"+favService.findAll());
+		List<AccommodationFavDto> list = favService.getAllByUserId("1");
+		Assertions.assertThat(list.size()).isEqualTo(10);
 	}
 }
