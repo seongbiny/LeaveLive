@@ -2,6 +2,7 @@ import React, { Dispatch, SetStateAction } from "react";
 import styled from "styled-components/native";
 import { TouchableWithoutFeedback } from "react-native";
 import { Text, BoldMainText, BoldText, UnderlineText } from "../Text";
+import Button from "../Button";
 
 interface IPropTypes {
   setIsUser: Dispatch<SetStateAction<boolean>>;
@@ -25,6 +26,9 @@ const UserLogin = ({ setIsUser }: IPropTypes) => {
         <BoldText size={20}>국내여행 한달살기, 앱 하나로 끝!</BoldText>
         <BoldMainText size={28}>리브리브</BoldMainText>
       </TitleText>
+
+      <Button title="카카오 계정으로 로그인" onPress={() => {}} />
+      <Button title="네이버 계정으로 로그인" onPress={() => {}} />
       <Text>
         사장님이세요?&nbsp;
         <TouchableWithoutFeedback onPress={() => setIsUser((prev) => !prev)}>

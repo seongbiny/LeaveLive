@@ -1,18 +1,35 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React from "react";
+import styled from "styled-components/native";
+import { TouchableOpacity } from "react-native";
 
-const BnbList = () => {
-    return (
-        <View>
-            <Text style={styles.text}>BnbList</Text>
-        </View>
-    )
+interface IPropTypes {
+  title: string;
+  onPress: () => void;
 }
 
-const styles = StyleSheet.create({
-    text: {
-        color: 'red'
-    }
-})
+const Container = styled.View`
+  background-color: ${({ theme }) => theme.main};
+  padding: 10px;
+  margin: 10px;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+`;
 
-export default BnbList;
+const Title = styled.Text`
+  font-size: 20px;
+  color: ${({ theme }) => theme.white};
+`;
+
+const Button = ({ title, onPress }: IPropTypes) => {
+  return (
+    <TouchableOpacity onPress={onPress} style={{ flexDirection: "row" }}>
+      <Container>
+        <Title>{title}</Title>
+      </Container>
+    </TouchableOpacity>
+  );
+};
+
+export default Button;
