@@ -4,9 +4,11 @@ import leavelive.accommodation.domain.AccommodationArticle;
 import leavelive.accommodation.domain.AccommodationFav;
 import leavelive.accommodation.domain.dto.AccommodationArticleDto;
 import leavelive.accommodation.domain.dto.AccommodationFavDto;
+import leavelive.accommodation.domain.dto.AccommodationResDto;
 import leavelive.accommodation.repository.AccommodationFavRepository;
 import leavelive.accommodation.repository.AccommodationRepository;
 import leavelive.accommodation.service.AccommodationFavServiceImpl;
+import leavelive.accommodation.service.AccommodationResServiceImpl;
 import leavelive.accommodation.service.AccommodationService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -27,6 +29,9 @@ class AccommodationServiceTests {
 
 	@Autowired
 	AccommodationFavServiceImpl favService;
+
+	@Autowired
+	AccommodationResServiceImpl resService;
 
 	@Autowired
 	AccommodationRepository repo;
@@ -156,5 +161,15 @@ class AccommodationServiceTests {
 		System.out.println("즐겨찾기 리스트"+favService.findAll());
 		List<AccommodationFavDto> list = favService.getAllByUserId("1");
 		Assertions.assertThat(list.size()).isEqualTo(10);
+	}
+
+	@Test
+	@Transactional
+	@DisplayName("예약 조회")
+	public void getAccommodationResTest(){
+		saveAccommodationTest();
+		String userId="1";
+		List<AccommodationResDto> list = resService.findByUserId(userId);
+		System.out.println("내 예약 리스트"+list);
 	}
 }
