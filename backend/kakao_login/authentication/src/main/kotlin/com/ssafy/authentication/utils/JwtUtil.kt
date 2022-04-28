@@ -7,8 +7,8 @@ import java.util.*
 class JwtUtil {
 
     companion object {
-        private val EXPIRE_DATE: Long = 1000 * 60 * 30
-        private val SECRET_KEY: String = "blahblahblahblahblahblahblahblahblah"
+        private const val EXPIRE_DATE: Long = 1000 * 60 * 30
+        private const val SECRET_KEY: String = "blahblahblahblahblahblahblahblahblah"
 
         fun createJwtAccessToken(thirdPartyId: Long): String {
             return JWT.create()

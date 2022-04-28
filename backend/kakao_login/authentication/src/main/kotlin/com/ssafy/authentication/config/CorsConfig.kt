@@ -9,10 +9,9 @@ class CorsConfig : WebMvcConfigurer {
 
     override fun addCorsMappings(registry: CorsRegistry) {
         registry.addMapping("/**")
-            .allowedOriginPatterns("*")
             .allowedHeaders("*")
             .allowedMethods("*")
-            .allowCredentials(true)
+            .allowedOriginPatterns("*")
     }
 
 }
