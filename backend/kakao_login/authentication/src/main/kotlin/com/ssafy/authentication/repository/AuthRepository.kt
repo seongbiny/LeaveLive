@@ -1,5 +1,6 @@
 package com.ssafy.authentication.repository
 
+import org.slf4j.LoggerFactory
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
@@ -8,16 +9,19 @@ import org.springframework.stereotype.Repository
 import org.springframework.util.LinkedMultiValueMap
 import org.springframework.util.MultiValueMap
 import org.springframework.web.client.RestTemplate
+import org.springframework.web.client.getForEntity
 import org.springframework.web.client.postForEntity
 
 @Repository
 class AuthRepository(private val restTemplate: RestTemplate) {
 
-    private val GATEWAY_URL_PREFIX = "http://localhost:8080/api"
+    private val logger = LoggerFactory.getLogger(javaClass)
+
+    private val USER_API_URL = "http://localhost:8083/api/user"
 
     fun getKakaoAccessTokenWithCode(code: String?): String {
-        val header: HttpHeaders = HttpHeaders()
-        header.contentType = MediaType.APPLICATION_FORM_URLENCODED
+        val headers: HttpHeaders = HttpHeaders()
+        headers.contentType = MediaType.APPLICATION_FORM_URLENCODED
 
         val body = LinkedMultiValueMap<String, String>()
         body["grant_type"] = "authorization_code"
@@ -25,7 +29,7 @@ class AuthRepository(private val restTemplate: RestTemplate) {
         body["redirect_uri"] = "http://www.localhost:5500/oauth.html" // redirect url
         body["code"] = code
 
-        val request = HttpEntity<MultiValueMap<String, String>>(body, header)
+        val request = HttpEntity<MultiValueMap<String, String>>(body, headers)
         val response: ResponseEntity<Map<String, Any>> =
             restTemplate.postForEntity("https://kauth.kakao.com/oauth/token", request)
 
@@ -33,17 +37,32 @@ class AuthRepository(private val restTemplate: RestTemplate) {
     }
 
     fun getKakaoUserIdWithToken(accessToken: String?): Long {
-        val header = HttpHeaders()
-        header.contentType = MediaType.APPLICATION_FORM_URLENCODED
-        header["Authorization"] = "Bearer $accessToken"
+        val headers = HttpHeaders()
+        headers.contentType = MediaType.APPLICATION_FORM_URLENCODED
+        headers["Authorization"] = "Bearer $accessToken"
 
         val body = LinkedMultiValueMap<String, Any>()
-        val request = HttpEntity(body, header)
+        val request = HttpEntity(body, headers)
         val response: ResponseEntity<Map<String, Any>> =
             restTemplate.postForEntity("https://kapi.kakao.com/v2/user/me", request)
 
         return response.body?.get("id") as Long
     }
 
+    fun getOrRegisterUser(userId: String): String {
+        val headers = HttpHeaders()
+        val body = LinkedMultiValueMap<String, Any>()
+        val request = HttpEntity(body, headers)
+        val response: ResponseEntity<Boolean> = restTemplate.getForEntity("$USER_API_URL/$userId", request)
+        // if response is not null and true return userid
+        if(response.body == true) {
+            logger.debug("this kakao user id registered")
+            return userId
+        }
+        // else generate new user and return userid
+        logger.debug("this kakao user is not registered")
+        // do something register id then return userid
+        return ""
+    }
 
 }
