@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Button } from "react-native";
 import styled from "styled-components/native";
+import UserLogin from "../components/Login/UserLogin";
+import CeoLogin from "../components/Login/CeoLogin";
 
 const Container = styled.View`
   flex: 1;
@@ -14,13 +15,17 @@ const StyledText = styled.Text`
   font-size: 30px;
 `;
 const Login = () => {
-  const [isUser, setIsUser] = useState(true);
+  const [isUser, setIsUser] = useState<boolean>(true);
+
   return (
     <Container>
       <StyledText>
-        {isUser ? "오늘은 어디서 살아볼까?" : "반갑습니다, 사장님!"}
+        {isUser ? (
+          <UserLogin setIsUser={setIsUser} />
+        ) : (
+          <CeoLogin setIsUser={setIsUser} />
+        )}
       </StyledText>
-      <Button title="버튼" onPress={() => setIsUser((prev) => !prev)} />
     </Container>
   );
 };
