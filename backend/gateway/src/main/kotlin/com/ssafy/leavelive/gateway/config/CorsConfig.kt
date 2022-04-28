@@ -26,4 +26,5 @@ class CorsConfig {
     fun corsWebFilter() : CorsWebFilter {
         return CorsWebFilter(corsConfigurationSource())
     }
+
 }
