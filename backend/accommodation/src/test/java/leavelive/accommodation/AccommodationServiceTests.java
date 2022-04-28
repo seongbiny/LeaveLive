@@ -14,6 +14,8 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -24,6 +26,8 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 class AccommodationServiceTests {
+	Logger log = LoggerFactory.getLogger(this.getClass());
+
 	@Autowired
 	AccommodationService service;
 
@@ -50,14 +54,16 @@ class AccommodationServiceTests {
 			dto.setCooking(1);
 			dto.setCnt(12);
 			dto.setGarden(1);
-			dto.setLoc("test");
+			if(i>5) dto.setLoc("경기 광주시");
+			else dto.setLoc("광주");
 			dto.setPicPath("test");
 			dto.setPrice(100000);
 			dto.setName("숙소"+i);
 			dto.setContents("숙소 내용"+i);
 			service.save(dto,i+"",null);
 		}
-		Assertions.assertThat(service.getAllAccommodation().size()).isEqualTo(10);
+		log.info("숙소 리스트 "+service.getAllAccommodation());
+		Assertions.assertThat(service.getAllAccommodationByLoc("광주").size()).isEqualTo(5);
 	}
 
 	@Test

@@ -30,6 +30,17 @@ public class AccommodationServiceImpl implements AccommodationService{
     private final AccommodationRepository repo;
     private final AccommodationFavRepository favRepo;
     @Override
+    public List<AccommodationArticleDto> getAllAccommodationByLoc(String loc) {
+        List<AccommodationArticle> entities=repo.findByLocEndingWith(loc);
+        //entity를 dto로 변환
+        List<AccommodationArticleDto> list=new ArrayList<>();
+        for (int i=0; i<entities.size(); i++){
+            AccommodationArticleDto dto=new AccommodationArticleDto();
+            list.add(dto.of(entities.get(i)));
+        }
+        return list;
+    }
+    @Override
     public List<AccommodationArticleDto> getAllAccommodation() {
         List<AccommodationArticle> entities=repo.findAll();
         //entity를 dto로 변환
