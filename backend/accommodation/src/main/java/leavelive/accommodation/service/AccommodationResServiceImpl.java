@@ -47,4 +47,11 @@ public class AccommodationResServiceImpl {
         AccommodationRes result=repo.save(accommodationRes.of(dto));
         return result.getId();
     }
+    public String deleteReservation(String userId,Long id){
+        Optional<AccommodationArticle> entity=articleRepo.findById(id);
+        if(!entity.isPresent()) throw new NullPointerException("해당하는 숙소가 없습니다.");
+        if(!entity.get().getUserId().equals(userId)) throw new NullPointerException("자신이 등록한 예약만 삭제할 수 있습니다.");
+        repo.deleteById(id);
+        return "ok";
+    }
 }

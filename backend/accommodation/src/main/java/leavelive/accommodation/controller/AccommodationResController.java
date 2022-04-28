@@ -29,4 +29,11 @@ public class AccommodationResController {
         Long result=service.saveReservation(userId,id,request);
         return new ResponseEntity(result, HttpStatus.OK);
     }
+
+    @DeleteMapping("/{accommodation_res_id}")
+    public ResponseEntity<Long> deleteAccommodationRes(@PathVariable("accommodation_res_id") Long id){
+        String userId="1"; //임시로 준 유저아이디
+        String result=service.deleteReservation(userId,id);
+        return new ResponseEntity(result, HttpStatus.OK);
+    }
 }
