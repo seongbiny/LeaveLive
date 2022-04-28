@@ -1,5 +1,6 @@
 package com.ssafy.leavelive.business.user.model
 
+import lombok.Builder
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.Id
@@ -9,17 +10,17 @@ import javax.persistence.Table
 @Table(name = "USER")
 class User(
     @Id
-    var userId: String? = null,
+    var userId: String,
 
     @Column(name = "NICKNAME")
-    var nickname: String? = null,
+    var nickname: String,
 
     @Column(name = "PIC_PATH")
     var picPath: String? = null,
 
     @Column(name = "IS_PROVIDER")
-    var isProvider: UserType? = UserType.USER,
+    var isProvider: UserType = UserType.USER,
 
     @Column(name = "IS_TRAVELING")
-    var isTraveling: Status? = Status.NONE
+    var isTraveling: Status = Status.NONE
 )
