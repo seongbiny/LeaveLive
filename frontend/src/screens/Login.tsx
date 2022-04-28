@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components/native";
-import UserLogin from "../components/UserLogin";
-import CeoLogin from "../components/CeoLogin";
+import UserLogin from "../components/Login/UserLogin";
+import CeoLogin from "../components/Login/CeoLogin";
 
 const Container = styled.View`
   flex: 1;
