@@ -34,6 +34,8 @@ public class AccommodationRes {
     @Column(name="schedule_id")
     private Long scheduleId;
 
+    private int cnt;
+
     public AccommodationRes of(AccommodationResDto dto){
         return AccommodationRes.builder()
                 .userId(dto.getUserId())
@@ -41,6 +43,7 @@ public class AccommodationRes {
                 .endDate(dto.getEndDate())
                 .startDate(dto.getStartDate())
                 .scheduleId(dto.getScheduleId())
+                .cnt(dto.getCnt())
                 .build();
     }
 }

@@ -17,6 +17,7 @@ public class AccommodationResDto {
     private LocalDate startDate;
     private LocalDate endDate;
     private String userId;
+    private int cnt;
     private AccommodationArticle accommodationArticle;
     private Long scheduleId;
 
@@ -26,6 +27,7 @@ public class AccommodationResDto {
                 .startDate(entity.getStartDate())
                 .endDate(entity.getEndDate())
                 .userId(entity.getUserId())
+                .cnt(entity.getCnt())
                 .accommodationArticle(entity.getAccommodationArticle())
                 .scheduleId(entity.getScheduleId())
                 .build();

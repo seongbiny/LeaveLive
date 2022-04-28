@@ -8,6 +8,7 @@ import leavelive.accommodation.repository.AccommodationRepository;
 import leavelive.accommodation.repository.AccommodationResRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.jni.Local;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -34,13 +35,48 @@ public class AccommodationResServiceImpl {
     }
     public Long saveReservation(String userId, Long id, AccommodationResDto request){
         Optional<AccommodationArticle> entity=articleRepo.findById(id);
+        LocalDate myStart=request.getStartDate();
+        LocalDate myEnd=request.getEndDate();
         if(!entity.isPresent()) throw new NullPointerException("해당하는 숙소가 없습니다.");
-        if(request.getStartDate().isAfter(request.getEndDate())) throw new NullPointerException("종료일이 시작일보다 앞입니다.");
+        if(myStart.isAfter(myEnd)) throw new NullPointerException("종료일이 시작일보다 앞입니다.");
+        if(request.getCnt()<=0 || request.getCnt()>entity.get().getCnt()) throw new NullPointerException("인원수가 0이하거나 수용할 수 있는 인원을 초과했습니다.");
+        // 예약이 되어있는지 확인
+        List<AccommodationRes> list=repo.findByAccommodationArticleId(id);
+        log.info("AccommodationServiceTest.saveReservation.list:"+list);
+        if(list!=null || list.size()>0){
+            boolean flag=true;
+            for (AccommodationRes res:list){
+                LocalDate start=res.getStartDate();
+                LocalDate end=res.getEndDate();
+                if(!start.isEqual(myStart) && !end.isEqual(myEnd)){
+                    /**
+                     * myStart와 myEnd가 구간 안에 있으면 이미 예약되어있으므로 예약 불가
+                     * start<=myStart<end ->x
+                     * start<myEnd<=end ->x
+                     */            
+                    if(!myStart.isBefore(start) && myStart.isBefore(end)){
+                        log.info("AccommodationServiceTest.saveReservation:시작날짜가 잘못되었음");
+                        flag=false;
+                        break;
+                    }
+                    if(!myEnd.isBefore(start) && myEnd.isBefore(end)){
+                        log.info("AccommodationServiceTest.saveReservation:종료날짜가 잘못되었음");
+                        flag=false;
+                        break;
+                    }
+                }else{
+                    flag=false;
+                    break;
+                }
+            }
+            if(!flag) throw new NullPointerException("이미 해당 기간에 예약되어 있는 숙소입니다.");
+        }
         AccommodationResDto dto=new AccommodationResDto();
         dto.setAccommodationArticle(entity.get());
         dto.setUserId(userId);
-        dto.setStartDate(request.getStartDate());
-        dto.setEndDate(request.getEndDate());
+        dto.setStartDate(myStart);
+        dto.setEndDate(myEnd);
+        dto.setCnt(request.getCnt());
         dto.setScheduleId(request.getScheduleId());
         log.info("AccommodationServiceTest.saveReservation.dto:"+dto);
         AccommodationRes accommodationRes=new AccommodationRes();
