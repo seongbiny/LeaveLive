@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration
 class RouteConfig(private val authenticationFilter: AuthenticationFilter) {
 
     @Bean
-    fun routeLeaveLiveConfig(builder: RouteLocatorBuilder): RouteLocator {
+    fun routeLeaveLiveGatewayConfig(builder: RouteLocatorBuilder): RouteLocator {
         return builder
             .routes()
             .route("kakao_auth_route") { p: PredicateSpec ->
