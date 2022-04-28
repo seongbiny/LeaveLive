@@ -8,6 +8,7 @@ class JwtUtil {
 
     companion object {
         private const val EXPIRE_DATE: Long = 1000 * 60 * 30
+
         private const val SECRET_KEY: String = "blahblahblahblahblahblahblahblahblah"
 
         fun createJwtAccessToken(thirdPartyId: Long): String {
