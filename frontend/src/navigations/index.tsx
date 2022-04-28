@@ -5,8 +5,8 @@ import CeoTabNav from "./CeoTab";
 const Navigation = () => {
   return (
     <NavigationContainer>
-      {/* <UserTabNav /> */}
-      <CeoTabNav />
+      <UserTabNav />
+      {/* <CeoTabNav /> */}
     </NavigationContainer>
   );
 };

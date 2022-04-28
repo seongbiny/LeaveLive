@@ -16,16 +16,16 @@ const SearchStack: React.FunctionComponent = () => {
     return (
         <Stack.Navigator>
             <Stack.Screen
+                name="BnbList"
+                component={BnbList}
+            />
+            <Stack.Screen
                 name="regionSelection"
                 component={regionSelection}
             />
             <Stack.Screen
                 name="mainSelection"
                 component={mainSelection}
-            />
-            <Stack.Screen
-                name="BnbList"
-                component={BnbList}
             />
             <Stack.Screen
                 name="BnbDetail"
