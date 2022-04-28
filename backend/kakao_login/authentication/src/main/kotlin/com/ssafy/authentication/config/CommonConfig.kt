@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.web.client.RestTemplate
 
 @Configuration
-class AuthConfig {
+class CommonConfig {
     @Bean
     fun restTemplate() : RestTemplate = RestTemplateBuilder().build()
 }

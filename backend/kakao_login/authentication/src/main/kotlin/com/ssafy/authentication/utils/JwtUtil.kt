@@ -23,7 +23,7 @@ class JwtUtil {
                 .sign(Algorithm.HMAC512(SECRET_KEY))
         }
 
-        fun isValid(token: String): Boolean {
+        fun isValid(token: String?): Boolean {
             return try {
                 val decodedToken = JWT.require(Algorithm.HMAC512(SECRET_KEY))
                     .build()

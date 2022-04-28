@@ -18,40 +18,26 @@ class AuthController(private val restTemplate: RestTemplate) {
 
     @GetMapping("/kakao/code")
     fun getAccessToken(@RequestParam params: Map<String, String>): ResponseEntity<Map<String, Any>> {
+        // parse code from payload
         val code = params["code"]
         logger.debug("Kakao Code : $code")
 
         // get access token with code
-        var header: HttpHeaders = HttpHeaders()
-        header.contentType = MediaType.APPLICATION_FORM_URLENCODED
-        var body = LinkedMultiValueMap<String, Any>()
-        body["grant_type"] = "authorization_code"
-        body["client_id"] = "80161aeec9b53c1dd5c367be40966be2"
-        body["redirect_uri"] = "http://www.localhost:5500/oauth.html"
-        body["code"] = code
-        var request = HttpEntity<MultiValueMap<String, Any>>(body, header)
-        val response: ResponseEntity<Map<String, Any>> =
-            restTemplate.postForEntity("https://kauth.kakao.com/oauth/token", request)
-        val accessToken = response.body?.get("access_token")
-        //println("access token is $accessToken")
-        logger.debug("Kakao Access Token : $accessToken")
-        // get user info with access token
-        header = HttpHeaders()
-        header.contentType = MediaType.APPLICATION_FORM_URLENCODED
-        header["Authorization"] = "${response.body?.get("token_type")} $accessToken"
-        body = LinkedMultiValueMap()
-        request = HttpEntity(body, header)
-        val info: ResponseEntity<Map<String, Any>> =
-            restTemplate.postForEntity("https://kapi.kakao.com/v2/user/me", request)
-        //println("user id is ${info.body?.get("id")}")
-        logger.debug("User ID : ${info.body?.get("id")}")
-        //check if id exists in DB, if it does return data else create new user info and put it to db
+        val kakaoAccessToken = getKakaoAccessTokenWithCode(code)
+        logger.debug("Kakao Access Token : $kakaoAccessToken")
 
-        //create jwt token with user info and response to client
+        // get user info with access token
+        val kakaoUserId = getKakaoUserIdWithToken(kakaoAccessToken)
+        logger.debug("Kakao ID Value : $kakaoUserId")
+
+        // check if id exists in DB, if it does return data else create new user info and put it to db
+
+        // create jwt token with user info and response to client
         val jwtAccessToken =
-            JwtUtil.createJwtAccessToken(info.body?.get("id") as Long) // token includes user info
+            JwtUtil.createJwtAccessToken(kakaoUserId) // token includes user info
         val jwtRefreshToken = JwtUtil.createJwtRefreshToken()
-        println("Token from Server : $jwtAccessToken")
+
+        // put tokens to result map
         val result: MutableMap<String, Any> = HashMap()
         result["access_token"] = jwtAccessToken
         result["refresh_token"] = jwtRefreshToken
@@ -59,4 +45,34 @@ class AuthController(private val restTemplate: RestTemplate) {
         return ResponseEntity(result, HttpStatus.OK)
     }
 
+
+    private fun getKakaoAccessTokenWithCode(code: String?): String {
+        val header: HttpHeaders = HttpHeaders()
+        header.contentType = MediaType.APPLICATION_FORM_URLENCODED
+
+        val body = LinkedMultiValueMap<String, String>()
+        body["grant_type"] = "authorization_code"
+        body["client_id"] = "80161aeec9b53c1dd5c367be40966be2" // kakao api key
+        body["redirect_uri"] = "http://www.localhost:5500/oauth.html" // redirect url
+        body["code"] = code
+
+        val request = HttpEntity<MultiValueMap<String, String>>(body, header)
+        val response: ResponseEntity<Map<String, Any>> =
+            restTemplate.postForEntity("https://kauth.kakao.com/oauth/token", request)
+
+        return response.body?.get("access_token") as String
+    }
+
+    private fun getKakaoUserIdWithToken(accessToken: String?): Long {
+        val header = HttpHeaders()
+        header.contentType = MediaType.APPLICATION_FORM_URLENCODED
+        header["Authorization"] = "Bearer $accessToken"
+
+        val body = LinkedMultiValueMap<String, Any>()
+        val request = HttpEntity(body, header)
+        val response: ResponseEntity<Map<String, Any>> =
+            restTemplate.postForEntity("https://kapi.kakao.com/v2/user/me", request)
+
+        return response.body?.get("id") as Long
+    }
 }
