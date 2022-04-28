@@ -21,6 +21,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -169,8 +170,22 @@ class AccommodationServiceTests {
 	@DisplayName("예약 조회")
 	public void getAccommodationResTest(){
 		saveAccommodationTest();
+		saveAccommodationResTest();
 		String userId="1";
 		List<AccommodationResDto> list = resService.findByUserId(userId);
 		log.info("getAccommodationResTest.findByUserId.list:"+list);
+	}
+
+	@Test
+	@Transactional
+	@DisplayName("숙소 예약")
+	public void saveAccommodationResTest(){
+		String userId="1";
+		AccommodationResDto dto=new AccommodationResDto();
+		dto.setScheduleId(1L);
+		dto.setStartDate(LocalDate.parse("2022-04-27"));
+		dto.setEndDate(LocalDate.parse("2022-04-29"));
+		Long id = resService.saveReservation(userId,1L,dto);
+		log.info("saveAccommodationResTest.saveReservation.id:"+id);
 	}
 }

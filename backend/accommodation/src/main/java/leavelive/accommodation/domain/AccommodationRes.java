@@ -1,6 +1,7 @@
 package leavelive.accommodation.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import leavelive.accommodation.domain.dto.AccommodationResDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -33,7 +34,7 @@ public class AccommodationRes {
     @Column(name="schedule_id")
     private Long scheduleId;
 
-    public AccommodationRes of(AccommodationRes dto){
+    public AccommodationRes of(AccommodationResDto dto){
         return AccommodationRes.builder()
                 .userId(dto.getUserId())
                 .accommodationArticle(dto.getAccommodationArticle())
