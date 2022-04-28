@@ -6,6 +6,7 @@ import leavelive.accommodation.domain.dto.AccommodationArticleDto;
 import leavelive.accommodation.repository.AccommodationFavRepository;
 import leavelive.accommodation.repository.AccommodationRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.apache.tomcat.jni.Local;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AccommodationServiceImpl implements AccommodationService{
     private final AccommodationRepository repo;
     private final AccommodationFavRepository favRepo;
@@ -84,6 +86,7 @@ public class AccommodationServiceImpl implements AccommodationService{
         dto.setUserId(userId);
         AccommodationArticle entity=new AccommodationArticle();
         // 이미지 파일 저장
+        log.info("AccommodationServiceImpl.save.files:"+files);
         if(files!=null){
             String img_path=saveImage(files);
             dto.setPicPath(img_path);
@@ -134,7 +137,7 @@ public class AccommodationServiceImpl implements AccommodationService{
     @Override
     public String saveImage(List<MultipartFile> files) {
         for (MultipartFile file:files){
-            System.out.println(file.getOriginalFilename());
+            log.info("AccommodationServiceImpl.saveImage.file:"+file.getOriginalFilename());
         }
         String images="";
         if(files!=null){
@@ -144,12 +147,12 @@ public class AccommodationServiceImpl implements AccommodationService{
             String current_date = now.format(dateTimeFormatter);
 
             String abPath=new File("").getAbsolutePath()+File.separator;
-            System.out.println("경로 "+abPath);
+            log.info("AccommodationServiceImpl.saveImage.abPath:"+abPath);
 
             // 세부 경로
             String path="images"+File.separator+current_date;
             File file=new File(path);
-            System.out.println("세부 경로 "+path);
+            log.info("AccommodationServiceImpl.saveImage.path:"+path);
 
             if(!file.exists()){
                 boolean success=file.mkdir();
@@ -172,7 +175,7 @@ public class AccommodationServiceImpl implements AccommodationService{
                 }else if(contentType.contains("image/JPEG")){
                     originalFileExtension=".JPEG";
                 }else{
-                    System.out.println("이미지 파일만 올릴 수 있습니다.");
+                    log.error("AccommodationServiceImpl.saveImage:이미지 파일만 올릴 수 있습니다.");
                     continue;
                 }
                 String new_file_name=System.nanoTime()+multipartFile.getName()+originalFileExtension;

@@ -62,7 +62,7 @@ class AccommodationServiceTests {
 			dto.setContents("숙소 내용"+i);
 			service.save(dto,i+"",null);
 		}
-		log.info("숙소 리스트 "+service.getAllAccommodation());
+		log.info("saveAccommodationTest.getAllAcommodation.list:"+service.getAllAccommodation());
 		Assertions.assertThat(service.getAllAccommodationByLoc("광주").size()).isEqualTo(5);
 	}
 
@@ -103,9 +103,6 @@ class AccommodationServiceTests {
 		saveAccommodationFavTest();
 		service.delete(1L,"1");
 		List<AccommodationArticleDto> list = service.getAllAccommodation();
-//		List<AccommodationFavDto> favList=favService.findAll("1");
-//		System.out.println(list);
-//		System.out.println(favList);
 		Assertions.assertThat(list.size()).isEqualTo(9);
 	}
 	@Test
@@ -116,9 +113,7 @@ class AccommodationServiceTests {
 		try{
 			service.delete(2L,"1");
 			List<AccommodationArticleDto> list = service.getAllAccommodation();
-//			List<AccommodationFavDto> favList=favService.findAll();
-			System.out.println(list);
-//			System.out.println(favList);
+			log.info("숙소 목록"+list);
 			Assertions.assertThat(list.size()).isEqualTo(9);
 		}catch(NullPointerException e){
 			e.printStackTrace();
@@ -136,7 +131,7 @@ class AccommodationServiceTests {
 		dto.setName("수정한 이름");
 		dto.setCooking(1);
 		service.update(dto,1L,"1");
-		System.out.println("수정 결과"+service.getAccommodation(1L));
+		log.info("updateAccommodationTest.getAccommodation.list:"+service.getAccommodation(1L));
 		Assertions.assertThat("수정한 이름").isEqualTo(service.getAccommodation(1L).getName());
 	}
 
@@ -151,7 +146,7 @@ class AccommodationServiceTests {
 		dto.setCooking(1);
 		try{
 			service.update(dto,1L,"2");
-			System.out.println("수정 결과"+service.getAccommodation(1L));
+			log.info("updateAccommodationTestFail.getAccommodation.list:"+service.getAccommodation(1L));
 			Assertions.assertThat("수정한 이름").isEqualTo(service.getAccommodation(1L).getName());
 		}catch(NullPointerException e){
 			e.printStackTrace();
@@ -164,7 +159,7 @@ class AccommodationServiceTests {
 	@DisplayName("즐겨찾기 조회")
 	public void getAccommodationFavTest(){
 		saveAccommodationFavTest();
-		System.out.println("즐겨찾기 리스트"+favService.findAll());
+		log.info("getAccommodationFavTest.findAll.list:"+favService.findAll());
 		List<AccommodationFavDto> list = favService.getAllByUserId("1");
 		Assertions.assertThat(list.size()).isEqualTo(10);
 	}
@@ -176,6 +171,6 @@ class AccommodationServiceTests {
 		saveAccommodationTest();
 		String userId="1";
 		List<AccommodationResDto> list = resService.findByUserId(userId);
-		System.out.println("내 예약 리스트"+list);
+		log.info("getAccommodationResTest.findByUserId.list:"+list);
 	}
 }

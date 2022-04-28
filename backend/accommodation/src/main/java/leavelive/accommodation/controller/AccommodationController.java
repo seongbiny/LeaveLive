@@ -4,6 +4,7 @@ import leavelive.accommodation.domain.AccommodationArticle;
 import leavelive.accommodation.domain.dto.AccommodationArticleDto;
 import leavelive.accommodation.service.AccommodationService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/accommodation")
 @RequiredArgsConstructor
+@Slf4j
 public class AccommodationController {
     private final AccommodationService service;
 
@@ -57,7 +59,7 @@ public class AccommodationController {
 
     @GetMapping(value = "/images")
     public ResponseEntity<byte[]> getImage(@RequestParam("image_path") String imagePath) throws IOException {
-        System.out.println("파일 경로 "+imagePath);
+        log.info("AccommodationController.getImage.imagePath:"+imagePath);
         byte[] imageByteArray = service.findImage(imagePath);
         return new ResponseEntity(imageByteArray, HttpStatus.OK);
     }
