@@ -1,6 +1,7 @@
 package com.ssafy.leavelive.business.user.controller
 
 import com.ssafy.leavelive.business.user.model.User
+import com.ssafy.leavelive.business.user.model.payload.UserResponse
 import com.ssafy.leavelive.business.user.service.UserService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.*
 class UserController(private val userService: UserService) {
 
     @PostMapping
-    fun register(@RequestBody body: Map<String, Any>) :ResponseEntity<String>{
+    fun register(@RequestBody body: Map<String, Any>) :ResponseEntity<UserResponse>{
         return ResponseEntity(userService.saveUser(body), HttpStatus.OK)
     }
     @PatchMapping

@@ -1,6 +1,5 @@
 package com.ssafy.leavelive.business.user.model
 
-import lombok.Builder
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.Id
