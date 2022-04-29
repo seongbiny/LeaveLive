@@ -1,13 +1,20 @@
 {
-  "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "allowJs": true, //js파일 사용 허용
-    "checkJs": true,
-    "module": "commonjs",
-    "noImplicitAny": true,
-    "noUnusedLocals": true,
-    "strict": true, // 타입을 얼마나 엄격하게 할 것인가 기본값이 false
     "target": "es5",
-    "alwaysStrict": true,
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true
   },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"]
 }
