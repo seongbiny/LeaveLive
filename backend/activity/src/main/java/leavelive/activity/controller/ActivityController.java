@@ -6,10 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,6 +24,13 @@ public class ActivityController {
     @GetMapping("/{activity_id}")
     public ResponseEntity<ActivityDto> getActivity(@PathVariable("activity_id") Long id){
         ActivityDto response=service.getAct(id);
+        return new ResponseEntity(response, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{activity_id}")
+    public ResponseEntity<String> delActivity(@PathVariable("activity_id") Long id){
+        String userId="1";
+        String response=service.delAct(id,userId);
         return new ResponseEntity(response, HttpStatus.OK);
     }
 

@@ -38,4 +38,13 @@ class ActivityServiceTests {
 		log.info("ActivityServiceTests.getActTest.dto:"+dto);
 	}
 
+	@Test
+	@Transactional
+	public void delActTest() {
+		Long id=2L;
+		String userId="1";
+		String response=service.delAct(id,userId);
+		log.info("ActivityServiceTests.delActTest.response:"+response);
+	}
+
 }
