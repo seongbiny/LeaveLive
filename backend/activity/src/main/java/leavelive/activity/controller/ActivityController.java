@@ -24,6 +24,11 @@ public class ActivityController {
         List<ActivityDto> list=service.getAllAct(loc);
         return new ResponseEntity(list, HttpStatus.OK);
     }
+    @GetMapping("/{activity_id}")
+    public ResponseEntity<ActivityDto> getActivity(@PathVariable("activity_id") Long id){
+        ActivityDto response=service.getAct(id);
+        return new ResponseEntity(response, HttpStatus.OK);
+    }
 
 
 }

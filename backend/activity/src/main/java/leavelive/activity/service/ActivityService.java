@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,5 +26,11 @@ public class ActivityService {
             dtos.add(dto.of(entity));
         }
         return dtos;
+    }
+    public ActivityDto getAct(Long id){
+        Optional<Activity> entity=repo.findById(id);
+        if(!entity.isPresent()) throw new NullPointerException("해당하는 액티비티가 없습니다.");
+        ActivityDto dto=new ActivityDto();
+        return dto.of(entity.get());
     }
 }

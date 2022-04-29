@@ -30,4 +30,12 @@ class ActivityServiceTests {
 		log.info("ActivityServiceTests.getAllActByLocTest.dtos:"+dtos);
 	}
 
+	@Test
+	@Transactional
+	public void getActTest() {
+		Long id=2L;
+		ActivityDto dto=service.getAct(id);
+		log.info("ActivityServiceTests.getActTest.dto:"+dto);
+	}
+
 }
