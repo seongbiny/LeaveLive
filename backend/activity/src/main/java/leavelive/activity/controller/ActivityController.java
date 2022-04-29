@@ -19,10 +19,11 @@ import java.util.List;
 @Slf4j
 public class ActivityController {
     private final ActivityService service;
-    @GetMapping("/{activity_loc}")
-    public ResponseEntity<ActivityDto> getAllActivity(@PathVariable("activity_loc") String loc){
+    @GetMapping("/all/{activity_loc}")
+    public ResponseEntity<List<ActivityDto>> getAllActivity(@PathVariable("activity_loc") String loc){
         List<ActivityDto> list=service.getAllAct(loc);
         return new ResponseEntity(list, HttpStatus.OK);
     }
+
 
 }
