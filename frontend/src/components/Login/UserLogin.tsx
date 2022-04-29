@@ -3,6 +3,8 @@ import styled from "styled-components/native";
 import { TouchableWithoutFeedback } from "react-native";
 import { Text, BoldMainText, BoldText, UnderlineText } from "../Text";
 import Button from "../Button";
+import LoginTest from "./LoginTest";
+import LoginButton from "./LoginButton";
 
 interface IPropTypes {
   setIsUser: Dispatch<SetStateAction<boolean>>;
@@ -35,6 +37,8 @@ const UserLogin = ({ setIsUser }: IPropTypes) => {
           <UnderlineText>사장님 로그인</UnderlineText>
         </TouchableWithoutFeedback>
       </Text>
+      <LoginTest />
+      <LoginButton />
     </Container>
   );
 };
