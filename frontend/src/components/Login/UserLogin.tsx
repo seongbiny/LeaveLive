@@ -4,6 +4,7 @@ import { TouchableWithoutFeedback } from "react-native";
 import { Text, BoldMainText, BoldText, UnderlineText } from "../Text";
 import Button from "../Button";
 import LoginTest from "./LoginTest";
+import LoginButton from "./LoginButton";
 
 interface IPropTypes {
   setIsUser: Dispatch<SetStateAction<boolean>>;
@@ -37,6 +38,7 @@ const UserLogin = ({ setIsUser }: IPropTypes) => {
         </TouchableWithoutFeedback>
       </Text>
       <LoginTest />
+      <LoginButton />
     </Container>
   );
 };
