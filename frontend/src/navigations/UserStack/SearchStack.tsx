@@ -14,10 +14,14 @@ const Stack = createStackNavigator();
 
 const SearchStack: React.FunctionComponent = () => {
     return (
-        <Stack.Navigator>
+        <Stack.Navigator initialRouteName='BnbList'>
             <Stack.Screen
                 name="BnbList"
                 component={BnbList}
+                options={{ 
+                    headerTitle: '제주도',
+                    headerTitleAlign: 'center',
+                }}
             />
             <Stack.Screen
                 name="regionSelection"
@@ -30,6 +34,9 @@ const SearchStack: React.FunctionComponent = () => {
             <Stack.Screen
                 name="BnbDetail"
                 component={BnbDetail}
+                options={{
+                    headerTitle: ''
+                }}
             />
             <Stack.Screen
                 name="activityList"
