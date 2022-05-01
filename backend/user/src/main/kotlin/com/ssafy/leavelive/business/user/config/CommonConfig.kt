@@ -1,5 +1,6 @@
 package com.ssafy.leavelive.business.user.config
 
+import org.modelmapper.Conditions
 import org.modelmapper.ModelMapper
 import org.springframework.boot.web.client.RestTemplateBuilder
 import org.springframework.context.annotation.Bean
@@ -16,6 +17,7 @@ class CommonConfig {
     fun modelMapper() : ModelMapper {
         val modelMapper = ModelMapper()
         modelMapper.configuration.isFieldMatchingEnabled = true
+        modelMapper.configuration.propertyCondition = Conditions.isNotNull()
         modelMapper.configuration.fieldAccessLevel = org.modelmapper.config.Configuration.AccessLevel.PRIVATE
         return modelMapper
     }

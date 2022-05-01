@@ -1,9 +1,6 @@
 package com.ssafy.leavelive.business.user.model
 
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.Table
+import javax.persistence.*
 
 @Entity
 @Table(name = "USER")
@@ -18,8 +15,10 @@ class User(
     var picPath: String? = null,
 
     @Column(name = "IS_PROVIDER")
+    @Enumerated(EnumType.STRING)
     var isProvider: UserType = UserType.USER,
 
     @Column(name = "IS_TRAVELING")
+    @Enumerated(EnumType.STRING)
     var isTraveling: Status = Status.NONE
 )
