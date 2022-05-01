@@ -13,6 +13,7 @@ class CommonConfig {
     @Bean
     fun restTemplate() : RestTemplate = RestTemplateBuilder().build()
 
+    // reason to prevent modelmapper : hard to catch error at compile time
     @Bean
     fun modelMapper() : ModelMapper {
         val modelMapper = ModelMapper()

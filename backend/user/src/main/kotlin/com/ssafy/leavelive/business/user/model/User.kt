@@ -14,11 +14,11 @@ class User(
     @Column(name = "PIC_PATH")
     var picPath: String? = null,
 
-    @Column(name = "IS_PROVIDER")
+    @Column(name = "TYPE")
     @Enumerated(EnumType.STRING)
-    var isProvider: UserType = UserType.USER,
+    var type: UserType = UserType.USER,
 
-    @Column(name = "IS_TRAVELING")
+    @Column(name = "STATUS")
     @Enumerated(EnumType.STRING)
-    var isTraveling: Status = Status.NONE
+    var status: Status = Status.NONE
 )
