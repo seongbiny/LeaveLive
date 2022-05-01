@@ -11,10 +11,10 @@ class JwtUtil {
 
         private const val SECRET_KEY: String = "blahblahblahblahblahblahblahblahblah"
 
-        fun createJwtAccessToken(thirdPartyId: Long): String {
+        fun createJwtAccessToken(hashedId: String): String {
             return JWT.create()
                 .withExpiresAt(Date(System.currentTimeMillis() + EXPIRE_DATE))
-                .withClaim("id", thirdPartyId)
+                .withClaim("id", hashedId)
                 .sign(Algorithm.HMAC512(SECRET_KEY))
         }
 
@@ -28,7 +28,7 @@ class JwtUtil {
             return try {
                 val decodedToken = JWT.require(Algorithm.HMAC512(SECRET_KEY))
                     .build()
-                    .verify(token)
+                    .verify(token?.substring(7))
                 true
             } catch (e: Exception) {
                 false

@@ -1,16 +1,15 @@
 package com.ssafy.authentication.repository
 
 import org.slf4j.LoggerFactory
-import org.springframework.http.HttpEntity
-import org.springframework.http.HttpHeaders
-import org.springframework.http.MediaType
-import org.springframework.http.ResponseEntity
+import org.springframework.http.*
 import org.springframework.stereotype.Repository
 import org.springframework.util.LinkedMultiValueMap
 import org.springframework.util.MultiValueMap
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.client.getForEntity
 import org.springframework.web.client.postForEntity
+import java.util.*
+import kotlin.collections.HashMap
 
 @Repository
 class AuthRepository(private val restTemplate: RestTemplate) {
@@ -49,20 +48,28 @@ class AuthRepository(private val restTemplate: RestTemplate) {
         return response.body?.get("id") as Long
     }
 
-    fun getOrRegisterUser(userId: String): String {
+    fun checkUser(userId: String, token: String) {
         val headers = HttpHeaders()
-        val body = LinkedMultiValueMap<String, Any>()
+        val body = HashMap<String, Any>()
         val request = HttpEntity(body, headers)
         val response: ResponseEntity<Boolean> = restTemplate.getForEntity("$USER_API_URL/$userId", request)
         // if response is not null and true return userid
-        if(response.body == true) {
+        if (response.body == true) {
             logger.debug("this kakao user id registered")
-            return userId
+            return
         }
-        // else generate new user and return userid
-        logger.debug("this kakao user is not registered")
-        // do something register id then return userid
-        return ""
+        // else generate new user
+        logger.debug("this kakao user is not registered, trying create new user")
+        headers["Authorization"] = token
+        headers.contentType = MediaType.APPLICATION_JSON
+
+        body["nickname"] = "random nickname created at ${Date().time}"
+        val userCreateRequest = HttpEntity(body, headers)
+        val userCreateResponse: ResponseEntity<Map<String, Any>> =
+            restTemplate.postForEntity("$USER_API_URL", userCreateRequest)
+        if (userCreateResponse.statusCode == HttpStatus.OK) return
+
+        throw RuntimeException("failed to create new user")
     }
 
 }

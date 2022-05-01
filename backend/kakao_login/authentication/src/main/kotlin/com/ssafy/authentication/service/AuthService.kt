@@ -20,13 +20,16 @@ class AuthService(private val authRepository: AuthRepository) {
         // get user info with access token
         val kakaoUserId = authRepository.getKakaoUserIdWithToken(kakaoAccessToken)
         logger.debug("Kakao ID Value : $kakaoUserId")
+        // create hashed id with salt to prevent overwriting google id : SALT = KAKAO
+        val hashedId = "${kakaoUserId}KAKAO"
 
-        // check if id exists in DB, if it does return data else create new user info and put it to db
-
-        // create jwt token with user info and response to client
+        // create jwt token with hashed userid
         val jwtAccessToken =
-            JwtUtil.createJwtAccessToken(kakaoUserId) // token includes user info
+            JwtUtil.createJwtAccessToken(hashedId) // token includes userid
         val jwtRefreshToken = JwtUtil.createJwtRefreshToken()
+
+        // check if id exists in DB, if it doesn't create new user
+        authRepository.checkUser(hashedId, jwtAccessToken)
 
         // put tokens to result map
         val result: MutableMap<String, Any> = HashMap()
