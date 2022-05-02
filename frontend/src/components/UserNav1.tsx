@@ -17,10 +17,10 @@ export default function LabelBottomNavigation() {
   };
 
   return (
-    <BottomNavigation sx={{ width: 500 }} value={value} onChange={handleChange}>
+    <BottomNavigation value={value} onChange={handleChange}>
       <BottomNavigationAction
-        label="Home"
-        value=""
+        label="Main"
+        value="main"
         icon={<RestoreIcon />}
       />
       <BottomNavigationAction
@@ -28,12 +28,12 @@ export default function LabelBottomNavigation() {
         value="bookmark"
         icon={<FavoriteIcon />}
       />
+      <BottomNavigationAction label="diary" value="diary" icon={<FolderIcon />} />
       <BottomNavigationAction
         label="reservation"
         value="reservation"
         icon={<LocationOnIcon />}
       />
-      <BottomNavigationAction label="diary" value="diary" icon={<FolderIcon />} />
     </BottomNavigation>
   );
 }

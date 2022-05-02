@@ -6,6 +6,12 @@ import styled from 'styled-components';
 
 const Container = styled.div`
   border: 1px solid;
+  height: 95vh;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
 `;
 interface Props {
   step?: number;

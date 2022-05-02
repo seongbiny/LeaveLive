@@ -2,14 +2,14 @@ import SimpleBottomNavigation from "./UserNav1";
 import styled from 'styled-components';
 
 const Container = styled.div`
-    display: grid;
+    width: 100%;
 `;
 
 export default function Layout({children}: any){
     return(
-        <Container>
+        <div>
             <div>{children}</div>
             <SimpleBottomNavigation />
-        </Container>
+        </div>
     )
 }

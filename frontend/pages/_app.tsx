@@ -5,16 +5,22 @@ import { store } from "../store";
 import { Provider } from "react-redux";
 import Layout from "../src/components/Layout";
 import CssBaseline from "@mui/material/CssBaseline";
+import useIsMobile from "../util/hooks";
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const isMobile = useIsMobile();
   return (
-    <Layout>
-      <Provider store={store}>
-        <GlobalStyle />
-        <CssBaseline />
-        <Component {...pageProps} />
-      </Provider>
-    </Layout>
+    <div>
+      { isMobile ?
+        <Layout>
+          <Provider store={store}>
+            <GlobalStyle />
+            <CssBaseline />
+            <Component {...pageProps} />
+          </Provider>
+        </Layout> : <div>모바일로 접속해주세요.</div>
+      }
+    </div>
   );
 }
 
