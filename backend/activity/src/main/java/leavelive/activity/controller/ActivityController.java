@@ -4,10 +4,13 @@ import leavelive.activity.domain.dto.ActivityDto;
 import leavelive.activity.service.ActivityService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -47,5 +50,9 @@ public class ActivityController {
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
-
+    @GetMapping("/images")
+    public ResponseEntity<byte[]> getActImg(@RequestParam("image_path") String imagePath) throws IOException {
+        byte[] imageByteArray=service.findImage(imagePath);
+        return new ResponseEntity(imageByteArray,HttpStatus.OK);
+    }
 }

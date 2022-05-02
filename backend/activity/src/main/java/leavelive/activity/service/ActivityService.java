@@ -5,11 +5,15 @@ import leavelive.activity.domain.dto.ActivityDto;
 import leavelive.activity.repository.ActivityRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -74,6 +78,18 @@ public class ActivityService {
         }
         Activity response=repo.save(entity.get().updateOf(ori));
         return dto.of(response);
+    }
+    public byte[] findImage(String imgPath) throws IOException {
+        InputStream imageStream;
+        try{
+            imageStream=new FileInputStream(imgPath);
+        }catch(Exception e){
+            e.printStackTrace();
+            throw new NullPointerException("해당하는 파일이 없습니다.");
+        }
+        byte[] imageByteArray= IOUtils.toByteArray(imageStream);
+        imageStream.close();
+        return imageByteArray;
     }
     public String saveImage(List<MultipartFile> files){
         String picPath="";
