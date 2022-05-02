@@ -1,7 +1,13 @@
 import React from "react";
+import Seo from "../../src/components/Seo";
 
-const Login = () => {
-  return <div>테스트</div>;
+const Bookmark = () => {
+  return (
+    <>
+      <Seo title="bookmark" />
+      <div>bookmark</div>
+    </>
+  )
 };
 
-export default Login;
+export default Bookmark;
