@@ -43,7 +43,10 @@ class UserController(private val userService: UserService) {
     }
 
     @GetMapping("/refresh-token")
-    fun validateRefreshToken(@RequestHeader(name = "Refresh-Token") token: String): ResponseEntity<Boolean> =
+    fun validateRefreshToken(@RequestParam token: String): ResponseEntity<Boolean> =
         ResponseEntity(userService.validateRefreshToken(token), HttpStatus.OK)
 
+    @GetMapping("/refresh-token/{userId}")
+    fun getRefreshToken(@PathVariable userId: String): ResponseEntity<String> =
+        ResponseEntity(userService.getRefreshToken(userId), HttpStatus.OK)
 }

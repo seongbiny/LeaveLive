@@ -49,4 +49,8 @@ class UserService(private val userRepository: UserRepository, private val modelM
 
     fun validateRefreshToken(token: String): Boolean = userRepository.existsByToken(token)
 
+    fun getRefreshToken(userId: String): String {
+        return userRepository.findById(userId).get().token
+    }
+
 }
