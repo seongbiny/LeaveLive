@@ -1,5 +1,5 @@
 import React from "react";
-import Seo from "../../src/components/Seo";
+import Seo from "../../components/Seo";
 
 const Main = () => {
   return (

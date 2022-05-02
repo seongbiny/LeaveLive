@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import Seo from "../src/components/Seo";
+import Seo from "../components/Seo";
 import styled from 'styled-components';
 
 const Main = styled.div`
