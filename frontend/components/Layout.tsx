@@ -1,6 +1,6 @@
 import SimpleBottomNavigation from "./UserNav1";
 import styled from 'styled-components';
-import useIsMobile from "../../util/hooks";
+import useIsMobile from "../util/hooks";
 
 const Container = styled.div`
     width: 100%;
