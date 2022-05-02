@@ -40,5 +40,17 @@ public class Activity {
                 .userId(dto.getUserId())
                 .build();
     }
+    public Activity updateOf(ActivityDto dto){
+        return Activity.builder()
+                .id(dto.getId())
+                .name(dto.getName())
+                .contents(dto.getContents())
+                .cnt(dto.getCnt())
+                .loc(dto.getLoc())
+                .picPath(dto.getPicPath())
+                .price(dto.getPrice())
+                .userId(dto.getUserId())
+                .build();
+    }
 
 }

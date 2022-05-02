@@ -53,7 +53,28 @@ public class ActivityService {
         Activity response=repo.save(activity.of(dto));
         return dto.of(response);
     }
-
+    public ActivityDto updateAct(Long id, ActivityDto dto, String userId){
+        Optional<Activity> entity=repo.findById(id);
+        if(!entity.isPresent()) throw new NullPointerException("해당하는 액티비티가 없습니다.");
+        if(!entity.get().getUserId().equals(userId)) throw new NullPointerException("직접 등록한 액티비티만 삭제할 수 있습니다.");
+        // 수정 logic
+        log.info("ActivityService.updateAct.dto:"+dto);
+        ActivityDto ori=new ActivityDto();
+        ori=ori.of(entity.get()); // 원래 정보
+        if(dto.getLoc()!=null){
+            ori.setLoc(dto.getLoc());
+        }if(dto.getCnt()!=0){
+            ori.setCnt(dto.getCnt());
+        }if(dto.getPrice()!=0){
+            ori.setPrice(dto.getPrice());
+        }if(dto.getContents()!=null){
+            ori.setContents(dto.getContents());
+        }if(dto.getName()!=null){
+            ori.setName(dto.getName());
+        }
+        Activity response=repo.save(entity.get().updateOf(ori));
+        return dto.of(response);
+    }
     public String saveImage(List<MultipartFile> files){
         String picPath="";
         if(files!=null){

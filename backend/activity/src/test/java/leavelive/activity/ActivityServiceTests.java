@@ -46,5 +46,15 @@ class ActivityServiceTests {
 		String response=service.delAct(id,userId);
 		log.info("ActivityServiceTests.delActTest.response:"+response);
 	}
+	@Test
+	@Transactional
+	public void updateActTest(){
+		ActivityDto dto=new ActivityDto();
+		dto.setPrice(1);
+		dto.setContents("내용 수정");
+		service.updateAct(3L,dto,"2");
+
+		log.info("ActivityApplicationTests.updateActTest.Activity:"+service.getAct(3L));
+	}
 
 }

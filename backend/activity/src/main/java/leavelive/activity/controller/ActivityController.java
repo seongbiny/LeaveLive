@@ -40,5 +40,12 @@ public class ActivityController {
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
+    @PatchMapping("/{activity_id}")
+    public ResponseEntity<ActivityDto> updateActivity(@PathVariable("activity_id") Long id, @RequestBody ActivityDto request){
+        String userId="1";
+        ActivityDto response=service.updateAct(id,request,userId);
+        return new ResponseEntity(response, HttpStatus.OK);
+    }
+
 
 }
