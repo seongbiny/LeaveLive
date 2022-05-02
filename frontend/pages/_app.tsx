@@ -5,10 +5,9 @@ import { store } from "../store";
 import { Provider } from "react-redux";
 import Layout from "../src/components/Layout";
 import CssBaseline from "@mui/material/CssBaseline";
-import useIsMobile from "../util/hooks";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const isMobile = useIsMobile();
+
   return (
       <Layout>
         <Provider store={store}>
