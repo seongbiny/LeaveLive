@@ -1,5 +1,6 @@
 package com.ssafy.leavelive.gateway.filter
 
+import com.ssafy.leavelive.gateway.model.TokenStatus
 import com.ssafy.leavelive.gateway.utils.JwtUtil
 import org.springframework.cloud.gateway.filter.GatewayFilter
 import org.springframework.cloud.gateway.filter.GatewayFilterChain
@@ -18,6 +19,21 @@ class AuthenticationFilter : GatewayFilter {
             response.statusCode = HttpStatus.UNAUTHORIZED
             return response.setComplete()
         }
+
+        when(JwtUtil.validateToken(request.headers["Authorization"]?.get(0))) {
+            TokenStatus.VALID -> {
+                return chain.filter(exchange)
+            }
+            TokenStatus.EXPIRED -> {
+                // check refresh token
+                
+            }
+            TokenStatus.INVALID -> {
+                response.statusCode = HttpStatus.UNAUTHORIZED
+                return response.setComplete()
+            }
+        }
+
         return chain.filter(exchange)
     }
 }

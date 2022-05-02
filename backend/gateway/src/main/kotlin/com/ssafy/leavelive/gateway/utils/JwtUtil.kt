@@ -2,6 +2,8 @@ package com.ssafy.leavelive.gateway.utils
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
+import com.auth0.jwt.exceptions.TokenExpiredException
+import com.ssafy.leavelive.gateway.model.TokenStatus
 import java.util.*
 
 class JwtUtil {
@@ -31,6 +33,20 @@ class JwtUtil {
                 true
             } catch (e: Exception) {
                 false
+            }
+        }
+
+        fun validateToken(token: String?) : TokenStatus {
+            // input token is "Bearer alsdkjaslkdjksladjklasjdklasjdlkasjdl" so substring it from index 7
+            return try {
+                JWT.require(Algorithm.HMAC512(SECRET_KEY))
+                    .build()
+                    .verify(token?.substring(7))
+                TokenStatus.VALID
+            } catch (e: TokenExpiredException) {
+                TokenStatus.EXPIRED
+            } catch (e: Exception) {
+                TokenStatus.INVALID
             }
         }
     }
