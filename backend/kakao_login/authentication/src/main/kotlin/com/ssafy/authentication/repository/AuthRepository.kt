@@ -53,12 +53,12 @@ class AuthRepository(private val restTemplate: RestTemplate) {
         val body = HashMap<String, Any>()
         val request = HttpEntity(body, headers)
         val response: ResponseEntity<Boolean> = restTemplate.getForEntity("$USER_API_URL/$userId", request)
-        // if response is not null and true return userid
+        // if response is not null and true, get refresh token
         if (response.body == true) {
             logger.debug("this kakao user id registered")
             return
         }
-        // else generate new user
+        // else generate new user with refresh token
         logger.debug("this kakao user is not registered, trying create new user")
         headers["Authorization"] = token
         headers.contentType = MediaType.APPLICATION_JSON

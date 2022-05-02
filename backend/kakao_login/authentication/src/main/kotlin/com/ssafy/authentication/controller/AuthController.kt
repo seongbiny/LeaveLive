@@ -6,11 +6,10 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@CrossOrigin("*")
 @RequestMapping("/api/auth")
 class AuthController(private val authService: AuthService) {
 
-    @GetMapping("/kakao/code")
+    @GetMapping("/kakao")
     fun getAccessToken(@RequestParam params: Map<String, String>): ResponseEntity<Map<String, Any>> {
         // parse code from payload
         val code = params["code"] as String

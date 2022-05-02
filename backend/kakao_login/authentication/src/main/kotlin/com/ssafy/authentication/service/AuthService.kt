@@ -26,10 +26,14 @@ class AuthService(private val authRepository: AuthRepository) {
         // create jwt token with hashed userid
         val jwtAccessToken =
             JwtUtil.createJwtAccessToken(hashedId) // token includes userid
-        val jwtRefreshToken = JwtUtil.createJwtRefreshToken()
 
         // check if id exists in DB, if it doesn't create new user
         authRepository.checkUser(hashedId, jwtAccessToken)
+
+        // if user is already exists, use it's existing refresh token else create new one
+        val jwtRefreshToken = JwtUtil.createJwtRefreshToken()
+
+
 
         // put tokens to result map
         val result: MutableMap<String, Any> = HashMap()
