@@ -16,10 +16,14 @@
       href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=80161aeec9b53c1dd5c367be40966be2&redirect_uri=http://www.localhost:5500/oauth.html"
       >카카오 로그인</a
     >
-    <button onclick="callApi()">로그인 전에 누르면 에러</button>
+    <button onclick="callApi()">
+      토큰이 유효하지 않으면 에러(토큰이 없거나, 토큰이 만료되었거나 등)
+    </button>
+    <br />
+    <button onclick="refreshAccessToken()">토큰 갱신</button>
   </body>
   <script>
-    let accessToken;
+    let accessToken, refreshToken;
     window.onload = function () {
       let code = getParameterByName("code");
       if (code) {
@@ -35,6 +39,7 @@
           console.log(res);
           // request access with token
           accessToken = res.access_token;
+          refreshToken = res.refresh_token;
         });
       }
     };
@@ -48,13 +53,25 @@
     }
     function callApi() {
       $.ajax({
-        url: "http://localhost:8080/api/test/something",
+        url: "http://localhost:8080/api/user",
         headers: {
           Authorization: accessToken,
         },
         method: "GET",
       }).done(function (res) {
         console.log(res);
+      });
+    }
+    function refreshAccessToken() {
+      $.ajax({
+        url: "http://localhost:8080/api/auth/token/refresh",
+        headers: {
+          Authorization: accessToken,
+          "Refresh-Token": refreshToken,
+        },
+        method: "GET",
+      }).done(function (res) {
+        accessToken = res;
       });
     }
   </script>
