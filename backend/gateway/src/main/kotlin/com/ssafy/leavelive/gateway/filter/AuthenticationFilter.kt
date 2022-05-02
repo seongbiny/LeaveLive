@@ -15,25 +15,27 @@ class AuthenticationFilter : GatewayFilter {
         val request = exchange.request
         val response = exchange.response
 
-        if (!JwtUtil.isValid(request.headers["Authorization"]?.get(0))) {
-            response.statusCode = HttpStatus.UNAUTHORIZED
-            return response.setComplete()
+        val accessToken = request.headers["Authorization"]
+        // if access token is not null
+        accessToken?.let {
+            return when (JwtUtil.validateToken(it[0])) {
+                TokenStatus.VALID -> {
+                    chain.filter(exchange)
+                }
+                TokenStatus.EXPIRED -> {
+                    // when client got response with forbidden code, client must republish access token with refresh token at header
+                    response.statusCode = HttpStatus.FORBIDDEN
+                    response.setComplete()
+                }
+                TokenStatus.INVALID -> {
+                    response.statusCode = HttpStatus.UNAUTHORIZED
+                    response.setComplete()
+                }
+            }
         }
+        // else if access token is null
+        response.statusCode = HttpStatus.UNAUTHORIZED
+        return response.setComplete()
 
-        when(JwtUtil.validateToken(request.headers["Authorization"]?.get(0))) {
-            TokenStatus.VALID -> {
-                return chain.filter(exchange)
-            }
-            TokenStatus.EXPIRED -> {
-                // check refresh token
-                
-            }
-            TokenStatus.INVALID -> {
-                response.statusCode = HttpStatus.UNAUTHORIZED
-                return response.setComplete()
-            }
-        }
-
-        return chain.filter(exchange)
     }
 }

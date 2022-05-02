@@ -41,7 +41,7 @@ class JwtUtil {
             return try {
                 JWT.require(Algorithm.HMAC512(SECRET_KEY))
                     .build()
-                    .verify(token?.substring(7))
+                    .verify(token)
                 TokenStatus.VALID
             } catch (e: TokenExpiredException) {
                 TokenStatus.EXPIRED
