@@ -14,12 +14,10 @@ const Home: NextPage = () => {
 
   return <div>
       <Seo title="Home" />
-      <Main>
         <div>낯선 천장이다..</div>
         <div>기억이 하나도 안나.. 나는 누구였지..?</div>
         <div>여행을 가려고 했다.</div>
         <div>집을 가지고 있다.</div>
-      </Main> : <>모바일로 접속해주세요.</>
     </div>
 };
 

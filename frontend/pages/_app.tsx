@@ -10,17 +10,13 @@ import useIsMobile from "../util/hooks";
 function MyApp({ Component, pageProps }: AppProps) {
   const isMobile = useIsMobile();
   return (
-    <div>
-      { isMobile ?
-        <Layout>
-          <Provider store={store}>
-            <GlobalStyle />
-            <CssBaseline />
-            <Component {...pageProps} />
-          </Provider>
-        </Layout> : <div>모바일로 접속해주세요.</div>
-      }
-    </div>
+      <Layout>
+        <Provider store={store}>
+          <GlobalStyle />
+          <CssBaseline />
+          <Component {...pageProps} />
+        </Provider>
+      </Layout>
   );
 }
 
