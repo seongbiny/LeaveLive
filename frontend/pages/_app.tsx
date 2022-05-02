@@ -4,12 +4,14 @@ import GlobalStyle from "../styles/GlobalStyle";
 import { store } from "../store";
 import { Provider } from "react-redux";
 import Layout from "../src/components/Layout";
+import CssBaseline from "@mui/material/CssBaseline";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Layout>
       <Provider store={store}>
         <GlobalStyle />
+        <CssBaseline />
         <Component {...pageProps} />
       </Provider>
     </Layout>
