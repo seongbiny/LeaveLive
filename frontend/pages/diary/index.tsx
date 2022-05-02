@@ -1,7 +1,13 @@
 import React from "react";
+import Seo from "../../src/components/Seo";
 
-const Login = () => {
-  return <div>테스트</div>;
+const Diary = () => {
+  return (
+    <>
+      <Seo title="Diary" />
+      <div>Diary</div>
+    </>
+  )
 };
 
-export default Login;
+export default Diary;
