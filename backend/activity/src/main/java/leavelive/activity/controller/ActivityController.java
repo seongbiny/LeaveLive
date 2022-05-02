@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @RestController
@@ -31,6 +31,12 @@ public class ActivityController {
     public ResponseEntity<String> delActivity(@PathVariable("activity_id") Long id){
         String userId="1";
         String response=service.delAct(id,userId);
+        return new ResponseEntity(response, HttpStatus.OK);
+    }
+    @PostMapping("/")
+    public ResponseEntity<ActivityDto> delActivity(@RequestPart(value="dto") ActivityDto dto, @RequestPart(value="image", required=false) List<MultipartFile> files){
+        String userId="1";
+        ActivityDto response=service.saveAct(dto,files,userId);
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
