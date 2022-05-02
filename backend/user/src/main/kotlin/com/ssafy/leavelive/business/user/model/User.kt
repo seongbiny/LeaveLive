@@ -20,5 +20,8 @@ class User(
 
     @Column(name = "STATUS")
     @Enumerated(EnumType.STRING)
-    var status: Status = Status.NONE
+    var status: Status = Status.NONE,
+
+    @Column(name = "REFRESH_TOKEN")
+    var token: String
 )

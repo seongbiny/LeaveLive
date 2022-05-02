@@ -22,9 +22,9 @@ class UserService(private val userRepository: UserRepository, private val modelM
     fun saveUser(token: String, userRequest: UserRequest): UserResponse {
         // extract decodeToken to token util
         val userId = JwtUtil.decodeToken(token)
-        val user = User(userId = userId, nickname = "")
+        val user = User(userId = userId, nickname = "", token = "")
         modelMapper.map(userRequest, user)
-        return  modelMapper.map(
+        return modelMapper.map(
             userRepository.save(
                 user
             ), UserResponse::class.java
@@ -46,5 +46,7 @@ class UserService(private val userRepository: UserRepository, private val modelM
 
     // validate user id, whether it exists or not
     fun exists(userId: String): Boolean = userRepository.existsById(userId)
+
+    fun validateRefreshToken(token: String): Boolean = userRepository.existsByToken(token)
 
 }

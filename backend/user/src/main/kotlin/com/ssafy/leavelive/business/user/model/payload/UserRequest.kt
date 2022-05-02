@@ -7,5 +7,6 @@ data class UserRequest(
     val nickname: String?,
     val picPath: String?,
     val type: UserType?,
-    val status: Status?
+    val status: Status?,
+    val token: String?
 )
