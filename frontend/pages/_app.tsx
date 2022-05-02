@@ -3,15 +3,16 @@ import type { AppProps } from "next/app";
 import GlobalStyle from "../styles/GlobalStyle";
 import { store } from "../store";
 import { Provider } from "react-redux";
+import Layout from "../src/components/Layout";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <>
+    <Layout>
       <Provider store={store}>
         <GlobalStyle />
         <Component {...pageProps} />
       </Provider>
-    </>
+    </Layout>
   );
 }
 
