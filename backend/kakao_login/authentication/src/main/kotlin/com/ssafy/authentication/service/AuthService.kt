@@ -10,7 +10,7 @@ class AuthService(private val authRepository: AuthRepository) {
 
     private val logger = LoggerFactory.getLogger(javaClass)
 
-    fun publishAccessToken(code: String) : Map<String, Any> {
+    fun publishAccessToken(code: String): Map<String, Any> {
         logger.debug("Kakao Code : $code")
 
         // get access token with code
@@ -28,12 +28,8 @@ class AuthService(private val authRepository: AuthRepository) {
             JwtUtil.createJwtAccessToken(hashedId) // token includes userid
 
         // check if id exists in DB, if it doesn't create new user
-        authRepository.checkUser(hashedId, jwtAccessToken)
-
         // if user is already exists, use it's existing refresh token else create new one
-        val jwtRefreshToken = JwtUtil.createJwtRefreshToken()
-
-
+        val jwtRefreshToken = authRepository.checkUserAndGetRefreshToken(hashedId, jwtAccessToken)
 
         // put tokens to result map
         val result: MutableMap<String, Any> = HashMap()
@@ -41,6 +37,15 @@ class AuthService(private val authRepository: AuthRepository) {
         result["refresh_token"] = jwtRefreshToken
 
         return result
+    }
+
+    fun republishAccessToken(accessToken: String, refreshToken: String): String {
+        // token format : Bearer alkdjaskldsajkldjaslkdjaslkdj
+        println(accessToken)
+        val userId = JwtUtil.decodeToken(accessToken)
+        if(authRepository.validateRefreshToken(refreshToken))
+            return JwtUtil.createJwtAccessToken(userId)
+        throw RuntimeException("Something goes wrong...")
     }
 
 }

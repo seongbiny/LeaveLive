@@ -16,4 +16,12 @@ class AuthController(private val authService: AuthService) {
         return ResponseEntity(authService.publishAccessToken(code), HttpStatus.OK)
     }
 
+    @GetMapping("/token/refresh")
+    fun getAccessTokenUsingRefreshToken(
+        @RequestHeader(name = "Authorization") accessToken: String,
+        @RequestHeader(name = "Refresh-Token") refreshToken: String
+    ): ResponseEntity<String> =
+        ResponseEntity(authService.republishAccessToken(accessToken, refreshToken), HttpStatus.OK)
+
+
 }
