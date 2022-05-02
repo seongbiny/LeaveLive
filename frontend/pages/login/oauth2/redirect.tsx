@@ -14,10 +14,10 @@ const Redirect = () => {
       localStorage.setItem("refreshtoken", refreshtoken);
 
       // todo: user 정보를 불러옴
-
-      // 메인 화면으로 이동
-      router.push("/");
     }
+
+    // 메인 화면으로 이동
+    router.push("/");
   }, []);
 
   return null;
