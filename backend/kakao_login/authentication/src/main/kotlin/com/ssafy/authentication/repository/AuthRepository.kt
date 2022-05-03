@@ -26,7 +26,7 @@ class AuthRepository(private val restTemplate: RestTemplate) {
         val body = LinkedMultiValueMap<String, String>()
         body["grant_type"] = "authorization_code"
         body["client_id"] = "80161aeec9b53c1dd5c367be40966be2" // kakao api key
-        body["redirect_uri"] = "http://www.localhost:3000/oauth2/redirect" // redirect url
+        body["redirect_uri"] = "http://www.localhost:3000/login/oauth2/redirect" // redirect url
         body["code"] = code
 
         val request = HttpEntity<MultiValueMap<String, String>>(body, headers)
