@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -20,7 +21,7 @@ import java.util.*;
 public class JwtCreateController {
     private final String SECRET_KEY = "blahblahblahblahblahblahblahblahblah";
 
-    @GetMapping("/auth/google")
+    @PostMapping("/auth/google")
     public List<String> jwtCreate(@RequestBody Map<String, Object> data) {
         List<String> tokens = new ArrayList<>();
         log.info("jwtCreateController 실행");
