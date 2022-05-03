@@ -1,4 +1,4 @@
-import SimpleBottomNavigation from "./UserNav1";
+import SimpleBottomNavigation from "./UserNav";
 import styled from 'styled-components';
 import useIsMobile from "../util/hooks";
 
