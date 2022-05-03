@@ -1,7 +1,7 @@
 import React from "react";
-// ceo 메인
-const Login = () => {
+
+const Ceo = () => {
   return <div>테스트</div>;
 };
 
-export default Login;
+export default Ceo;
