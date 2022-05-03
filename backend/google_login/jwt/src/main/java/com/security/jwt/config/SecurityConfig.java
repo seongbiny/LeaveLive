@@ -1,6 +1,5 @@
 package com.security.jwt.config;
 
-import com.security.jwt.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,7 +17,6 @@ import org.springframework.web.filter.CorsFilter;
 @EnableGlobalMethodSecurity(securedEnabled = true,prePostEnabled = true) //secured 어노테이션 활성화, controller에서 @Secured 사용 가능 / preRole 어노테이션 활성화
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final CorsFilter corsFilter;
-    private final UserRepository repo;
 
     // 해당 메서드의 리턴되는 오브젝트를 IoC로 등록해줌
     @Bean
