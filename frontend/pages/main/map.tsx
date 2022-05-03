@@ -1,13 +1,13 @@
 import React from "react";
 import Seo from "../../components/Seo";
 
-const Diary = () => {
+const Main = () => {
   return (
     <>
-      <Seo title="Diary" />
-      <div>Diary</div>
+      <Seo title="Main" />
+      <div>Main</div>
     </>
   )
 };
 
-export default Diary;
+export default Main;

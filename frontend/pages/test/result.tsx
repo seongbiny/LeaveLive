@@ -1,7 +1,15 @@
 import React from "react";
+import { useRouter } from 'next/router'
 
-const Login = () => {
-  return <div>테스트</div>;
+const Result = () => {
+  const router = useRouter();
+  return (
+    <>
+      <div>
+        {router.query.region}
+      </div>
+    </>
+  )
 };
 
-export default Login;
+export default Result;
