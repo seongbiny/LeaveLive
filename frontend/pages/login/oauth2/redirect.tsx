@@ -1,24 +1,32 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { useRouter } from "next/router";
 import { KakaoLoginRequest } from "../../../api/user";
 
 const Redirect = () => {
   const router = useRouter();
+
+  const getCode = useCallback((code: string) => {
+    console.log(code);
+    KakaoLoginRequest(
+      code,
+      (response: any) => {
+        console.log(response);
+      },
+      (error: Error) => {
+        console.log(error);
+      }
+    );
+  }, []);
+
   useEffect(() => {
+    if (router) console.log(router);
+
     if (router.query.code) {
       const code = String(router.query.code);
-      console.log(code);
-      KakaoLoginRequest(
-        code,
-        (response: any) => {
-          console.log(response);
-        },
-        (error: Error) => {
-          console.log(error);
-        }
-      );
+      getCode(code);
     }
   }, [router]);
+
   // useEffect(() => {
   //   const router = useRouter();
 
