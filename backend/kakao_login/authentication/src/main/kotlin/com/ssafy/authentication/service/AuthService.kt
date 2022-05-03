@@ -10,15 +10,10 @@ class AuthService(private val authRepository: AuthRepository) {
 
     private val logger = LoggerFactory.getLogger(javaClass)
 
-    fun publishAccessToken(code: String): Map<String, Any> {
-        logger.debug("Kakao Code : $code")
-
-        // get access token with code
-        val kakaoAccessToken = authRepository.getKakaoAccessTokenWithCode(code)
-        logger.debug("Kakao Access Token : $kakaoAccessToken")
+    fun publishAccessToken(token: String): Map<String, Any> {
 
         // get user info with access token
-        val kakaoUserId = authRepository.getKakaoUserIdWithToken(kakaoAccessToken)
+        val kakaoUserId = authRepository.getKakaoUserIdWithToken(token)
         logger.debug("Kakao ID Value : $kakaoUserId")
         // create hashed id with salt to prevent overwriting google id : SALT = KAKAO
         val hashedId = "${kakaoUserId}KAKAO"

@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/api/auth")
 class AuthController(private val authService: AuthService) {
 
-    @GetMapping("/kakao")
-    fun getAccessToken(@RequestParam params: Map<String, String>): ResponseEntity<Map<String, Any>> {
+    @PostMapping("/kakao")
+    fun getAccessToken(@RequestBody body: Map<String, String>): ResponseEntity<Map<String, Any>> {
         // parse code from payload
-        val code = params["code"] as String
-        return ResponseEntity(authService.publishAccessToken(code), HttpStatus.OK)
+        val token = body["token"] as String
+        return ResponseEntity(authService.publishAccessToken(token), HttpStatus.OK)
     }
 
     @GetMapping("/token")
