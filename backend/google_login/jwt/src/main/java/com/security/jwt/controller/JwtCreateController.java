@@ -11,6 +11,7 @@ import org.springframework.http.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,7 +28,7 @@ import java.util.*;
 public class JwtCreateController {
     private final String SECRET_KEY = "blahblahblahblahblahblahblahblahblah";
 
-    @PostMapping("/api/auth/google")
+    @GetMapping("/auth/google")
     public List<String> jwtCreate(@RequestBody Map<String, Object> data) {
         List<String> tokens = new ArrayList<>();
         log.info("jwtCreateController 실행");
@@ -55,7 +56,6 @@ public class JwtCreateController {
         String baseUrl = "http://localhost:8083/api/user";
         String url = baseUrl + "/" + userId;
         try {
-            //요청하기
             ResponseEntity<Boolean> responseEntity = restTemplate.getForEntity(url, Boolean.class, requestMessage);
             log.info("JwtCreateController.jwtCreate.response_body:" + responseEntity.getBody());
             if (!responseEntity.getBody()) {
