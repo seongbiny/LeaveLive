@@ -6,7 +6,12 @@ import { useState, useEffect } from "react";
 import CeoNav from "./CeoNav";
 
 const Container = styled.div`
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
+const Main = styled.main`
+  flex: 1;
 `;
 
 export default function Layout({ children }: any) {
@@ -19,15 +24,15 @@ export default function Layout({ children }: any) {
 
   const isMobile = useIsMobile();
   return (
-    <div>
+    <Container>
       {isMobile ? (
         <>
-          <div>{children}</div>
+          <Main>{children}</Main>
           {isUser ? <SimpleBottomNavigation /> : <CeoNav />}
         </>
       ) : (
         <div>모바일로 접속해주세요.</div>
       )}
-    </div>
+    </Container>
   );
 }
