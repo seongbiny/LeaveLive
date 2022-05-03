@@ -1,35 +1,19 @@
-import React, { useCallback } from "react";
-import { GoogleLogin } from "react-google-login";
+import React, { useState, useCallback } from "react";
+
 import { GoogleLoginRequest } from "../../api/user";
+import UserLogin from "../../components/login/UserLogin";
+import CeoLogin from "../../components/login/CeoLogin";
 
 const Login = () => {
-  const onSuccess = useCallback((response: object) => {
-    console.log(response);
-    GoogleLoginRequest(
-      JSON.stringify(response),
-      ({ data }: any) => {
-        console.log(response);
-
-        const authorization = `Bearer ${data[0]}`;
-        const refreshtoken = `Refresh Bearer ${data[1]}`;
-
-        localStorage.setItem("authorization", authorization);
-        localStorage.setItem("refreshtoken", refreshtoken);
-      },
-      (error: any) => console.log(error)
-    );
-  }, []);
-
+  const [isUser, setIsUser] = useState<boolean>(true);
   return (
-    <main>
-      <GoogleLogin
-        clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID as string}
-        buttonText="Google 로그인"
-        onSuccess={onSuccess}
-        onFailure={(error) => console.log(error)}
-        cookiePolicy={"single_host_origin"}
-      />
-    </main>
+    <>
+      {isUser ? (
+        <UserLogin setIsUser={setIsUser} />
+      ) : (
+        <CeoLogin setIsUser={setIsUser} />
+      )}
+    </>
   );
 };
 
