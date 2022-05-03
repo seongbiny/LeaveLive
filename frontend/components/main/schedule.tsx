@@ -1,10 +1,16 @@
 import MainSlider from "./MainSlider";
-// import Card from "./Card";
+import styled from 'styled-components';
 
-const Schedule = (): JSX.Element => {
+interface Props {
+    day: string;
+}
+
+const Schedule = (props: Props) => {
+    const {day} = props;
     return (
         <>
-            <div>hihi</div>
+            <div style={{marginBottom:'2vh', marginLeft: '2vh'}}>{day} 나의 일정</div>
+            <MainSlider />
         </>
     )
 }

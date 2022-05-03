@@ -9,6 +9,9 @@ const theme = createTheme({
       contrastText: "#fff",
     },
   },
+  typography: {
+    fontFamily: "Noto Sans KR",
+  },
 });
 
 export default theme;

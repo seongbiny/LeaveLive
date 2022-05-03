@@ -9,6 +9,7 @@ const Menu = styled.div`
     display: flex;
     justify-content: space-evenly;
     margin-top: 2vh;
+    margin-bottom: 3vh;
 `;
 
 const MenuTab: NextPage = () => {

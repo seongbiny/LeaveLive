@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import MenuTab from '../../components/main/MenuTab';
 import Schedule from "../../components/main/schedule";
 import MainSlider from "../../components/main/MainSlider";
-import Card from "../../components/main/Card";
+
 
 
 const Main = () => {
@@ -14,14 +14,13 @@ const Main = () => {
     <Container>
       <Seo title="Main" />
       <Box>
-        {/* <Image src="/main-background.png" alt="main" title="main" width="100%" height="56%" layout="responsive" objectFit="contain"/> */}
+        <Image src="/main-background.png" alt="main" title="main" width="100%" height="56%" layout="responsive" objectFit="contain"/>
       </Box>
       {/* <Text>김당당님, 즐거운 여행 되고 계신가요?</Text> */}
       <Body>
         <MenuTab/>
-        <MainSlider cardList={Card} slidesPerView={3} />
-        {/* <Schedule day={'오늘'}/>
-        <Schedule day={'내일'}/> */}
+        <Schedule day={'오늘'}/>
+        <Schedule day={'내일'}/>
       </Body>
     </Container>
   )
@@ -34,7 +33,7 @@ const Box = styled.div`
   // right: 0;
   // position: absolute;
   width: 100%;
-  height: 20vh;
+  height: 25vh;
   box-sizing: border;
   background: green;
 `;

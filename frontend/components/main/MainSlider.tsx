@@ -1,98 +1,37 @@
-import 'swiper/swiper.min.css';
-// import Image from 'next/image';
-import { ReactElement, useEffect, useRef, useState } from 'react';
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import NextArrow from "./NextArrow";
+import Item from "./Item";
 import styled from 'styled-components';
-import SwiperCore, { Navigation, Scrollbar } from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/react';
 
-interface MainSliderProps {
-//   cardList: ReactElement[]; // 슬라이드에는 컴포넌트가 들어갑니다
-  slidesPerView: 3 | 4; // 한 번에 보이는 카드 수
+function MainSlider() {
+	const settings = {
+    	dots: true,
+        infinite: true,
+        speed: 300,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 5000,
+        // nextArrow: <NextArrow />
+    }
+    // 사용할 Carousel의 기본 세팅을 해준다. props로 받아 와야 하기 때문에 객체에 넣어서 받아온다.
+    // 더 많은 설정이 있지만, 그것은 직접 코드를 뜯어 보면 쉽게 알 수 있다.
+    // 위의 설정은 홈페이지에 나와있는 기본 설정을 한번에 보여줄 갯수만 1개로 바꾼 것이다.
+    return (
+        <Container>
+            <Slider {...settings}>
+                <Item />
+                <Item />
+                <Item />
+            </Slider>
+        </Container>
+    )
 }
-
-function MainSlider(props: MainSliderProps) {
-//   const { cardList, slidesPerView } = props;
-  const { slidesPerView } = props;
-
-  SwiperCore.use([Navigation, Scrollbar]);
-
-  const prevRef = useRef<HTMLButtonElement>(null);
-  const nextRef = useRef<HTMLButtonElement>(null);
-  const [swiperSetting, setSwiperSetting] = useState<Swiper | null>(null);
-
-  useEffect(() => {
-    if (!swiperSetting) {
-      setSwiperSetting({
-        spaceBetween: 24,
-        navigation: {
-          prevEl: prevRef.current, // 이전 버튼
-          nextEl: nextRef.current, // 다음 버튼
-        },
-        scrollbar: { draggable: true, el: null },
-        slidesPerView,
-        onBeforeInit: (swiper: SwiperCore) => {
-          if (typeof swiper.params.navigation !== 'boolean') {
-            if (swiper.params.navigation) {
-              swiper.params.navigation.prevEl = prevRef.current;
-              swiper.params.navigation.nextEl = nextRef.current;
-            }
-          }
-          swiper.navigation.update();
-        },
-      });
-    }
-  }, [swiperSetting, slidesPerView]);
-
-  return (
-    <StyledRoot>
-        {/* <StyledButton ref={prevRef}>
-          <Image src={'/assets/ic_prev.svg'} width={12} height={24} alt="prev" />
-        </StyledButton> */}
-        {swiperSetting && (
-          <Swiper {...swiperSetting}>
-            {/* {cardList.map((card) => (
-              <SwiperSlide key={card.key}>{card}</SwiperSlide>
-            ))} */}
-            <SwiperSlide><div>카드1</div></SwiperSlide>
-            <SwiperSlide><div>카드1</div></SwiperSlide>
-            <SwiperSlide><div>카드1</div></SwiperSlide>
-            <SwiperSlide><div>카드1</div></SwiperSlide>
-            <SwiperSlide><div>카드1</div></SwiperSlide>
-            <SwiperSlide><div>카드1</div></SwiperSlide>
-            <SwiperSlide><div>카드1</div></SwiperSlide>
-          </Swiper>
-        )}
-        {/* <StyledButton ref={nextRef}>
-          <Image src={'/assets/ic_next.svg'} width={12} height={24} alt="next" />
-        </StyledButton> */}
-    </StyledRoot>
-  );
-}
-
-const StyledRoot = styled.div`
-  width: 128.8rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: -8.8rem;
-  button {
-    padding: 0;
-    background: none;
-    border: none;
-  }
-  .swiper {
-    // &-wrapper,
-    &-container {
-      width: 120rem;
-      margin: 0;
-    }
-    &-container {
-      margin: 0 3.2rem;
-    }
-    &-button-disabled {
-      visibility: hidden;
-    }
-  }
-`;
+const Container = styled.div`
+    // border: 1px solid;
+    margin-bottom: 3vh;
+`
 
 export default MainSlider;
