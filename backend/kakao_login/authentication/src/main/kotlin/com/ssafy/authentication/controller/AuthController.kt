@@ -16,6 +16,10 @@ class AuthController(private val authService: AuthService) {
         return ResponseEntity(authService.publishAccessToken(code), HttpStatus.OK)
     }
 
+    @GetMapping("/token")
+    fun getAccessTokenForGoogle(@RequestParam userId: String): ResponseEntity<Map<String, Any>> =
+        ResponseEntity(authService.publishAccessTokenForGoogle(userId), HttpStatus.OK)
+
     @GetMapping("/token/refresh")
     fun getAccessTokenUsingRefreshToken(
         @RequestHeader(name = "Authorization") accessToken: String,

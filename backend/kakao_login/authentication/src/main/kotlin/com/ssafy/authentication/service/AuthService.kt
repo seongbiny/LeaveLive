@@ -39,11 +39,20 @@ class AuthService(private val authRepository: AuthRepository) {
         return result
     }
 
+    fun publishAccessTokenForGoogle(userId: String): Map<String, Any> {
+        val jwtAccessToken = JwtUtil.createJwtAccessToken(userId)
+        val jwtRefreshToken = authRepository.checkUserAndGetRefreshToken(userId, jwtAccessToken)
+        val result: MutableMap<String, Any> = HashMap()
+        result["access_token"] = jwtAccessToken
+        result["refresh_token"] = jwtRefreshToken
+        return result
+    }
+
     fun republishAccessToken(accessToken: String, refreshToken: String): String {
         // token format : Bearer alkdjaskldsajkldjaslkdjaslkdj
         println(accessToken)
         val userId = JwtUtil.decodeToken(accessToken)
-        if(authRepository.validateRefreshToken(refreshToken))
+        if (authRepository.validateRefreshToken(refreshToken))
             return JwtUtil.createJwtAccessToken(userId)
         throw RuntimeException("Something goes wrong...")
     }
