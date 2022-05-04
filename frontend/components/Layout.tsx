@@ -1,5 +1,5 @@
 import LabelBottomNavigation from "./UserNav";
-import styled from 'styled-components';
+import styled from "styled-components";
 import useIsMobile from "../util/hooks";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
@@ -19,10 +19,15 @@ const Main = styled.main`
 export default function Layout({ children }: any) {
   const router = useRouter();
   const [isUser, setIsUser] = useState<boolean>(true);
+  const [showNav, setShowNav] = useState<boolean>(true);
+
   useEffect(() => {
-    if (router.pathname.startsWith("/ceo") && isUser) setIsUser(false);
-    if (!router.pathname.startsWith("/ceo") && !isUser) setIsUser(true);
-  }, [router, isUser]);
+    if (router.pathname.startsWith("/login")) setShowNav(false);
+    else setShowNav(true);
+
+    if (router.pathname.startsWith("/ceo")) setIsUser(false);
+    else setIsUser(true);
+  }, [router]);
 
   const isMobile = useIsMobile();
   return (
@@ -30,7 +35,7 @@ export default function Layout({ children }: any) {
       {isMobile ? (
         <>
           <Main>{children}</Main>
-          {isUser ? <LabelBottomNavigation /> : <CeoNav />}
+          {showNav ? isUser ? <LabelBottomNavigation /> : <CeoNav /> : null}
         </>
       ) : (
         <div>모바일로 접속해주세요.</div>
