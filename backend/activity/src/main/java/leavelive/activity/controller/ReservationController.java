@@ -20,8 +20,7 @@ public class ReservationController {
 
     @GetMapping("/")
     public ResponseEntity<List<ReservationDto>> getAllReservation(HttpServletResponse response) {
-//        String userId = response.getHeader("userId");
-        String userId = "114760122369855290515GOOGLE";
+        String userId = response.getHeader("userId");
         log.info("ReservationController.getAllReservation.userId:" + userId);
         List<ReservationDto> list = service.getAllRes(userId);
         return new ResponseEntity(list, HttpStatus.OK);
@@ -29,8 +28,7 @@ public class ReservationController {
 
     @DeleteMapping("/{activity_reservation_id}")
     public ResponseEntity<String> delReservation(HttpServletResponse response, @PathVariable("activity_reservation_id") Long id) {
-//        String userId = response.getHeader("userId");
-        String userId = "114760122369855290515GOOGLE";
+        String userId = response.getHeader("userId");
         log.info("ReservationController.delReservation.userId:" + userId);
         String result = service.delRes(id, userId);
         return new ResponseEntity(result, HttpStatus.OK);
@@ -38,8 +36,7 @@ public class ReservationController {
 
     @PostMapping("/{activity_id}")
     public ResponseEntity<Long> saveReservation(HttpServletResponse response, @PathVariable("activity_id") Long id, @RequestBody ReservationDto dto) {
-//        String userId = response.getHeader("userId");
-        String userId = "114760122369855290515GOOGLE";
+        String userId = response.getHeader("userId");
         log.info("ReservationController.saveReservation.userId:" + userId);
         Long result = service.saveRes(id, userId, dto);
         return new ResponseEntity(result, HttpStatus.OK);

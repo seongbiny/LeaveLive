@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
@@ -19,40 +20,47 @@ import java.util.List;
 @Slf4j
 public class ActivityController {
     private final ActivityService service;
+
     @GetMapping("/all/{activity_loc}")
-    public ResponseEntity<List<ActivityDto>> getAllActivity(@PathVariable("activity_loc") String loc){
-        List<ActivityDto> list=service.getAllAct(loc);
+    public ResponseEntity<List<ActivityDto>> getAllActivity(@PathVariable("activity_loc") String loc) {
+        log.info("activity loc"+loc);
+        List<ActivityDto> list = service.getAllAct(loc);
         return new ResponseEntity(list, HttpStatus.OK);
     }
+
     @GetMapping("/detail/{activity_id}")
-    public ResponseEntity<ActivityDto> getActivity(@PathVariable("activity_id") Long id){
-        ActivityDto response=service.getAct(id);
+    public ResponseEntity<ActivityDto> getActivity(@PathVariable("activity_id") Long id) {
+        ActivityDto response = service.getAct(id);
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
     @DeleteMapping("/{activity_id}")
-    public ResponseEntity<String> delActivity(@PathVariable("activity_id") Long id){
-        String userId="1";
-        String response=service.delAct(id,userId);
-        return new ResponseEntity(response, HttpStatus.OK);
+    public ResponseEntity<String> delActivity(HttpServletResponse response, @PathVariable("activity_id") Long id) {
+        String userId = response.getHeader("userId");
+        log.info("ReservationController.getAllReservation.userId:" + userId);
+        String result = service.delAct(id, userId);
+        return new ResponseEntity(result, HttpStatus.OK);
     }
+
     @PostMapping("/")
-    public ResponseEntity<ActivityDto> delActivity(@RequestPart(value="dto") ActivityDto dto, @RequestPart(value="image", required=false) List<MultipartFile> files){
-        String userId="1";
-        ActivityDto response=service.saveAct(dto,files,userId);
-        return new ResponseEntity(response, HttpStatus.OK);
+    public ResponseEntity<ActivityDto> delActivity(HttpServletResponse response, @RequestPart(value = "dto") ActivityDto dto, @RequestPart(value = "image", required = false) List<MultipartFile> files) {
+        String userId = response.getHeader("userId");
+        log.info("ReservationController.getAllReservation.userId:" + userId);
+        ActivityDto result = service.saveAct(dto, files, userId);
+        return new ResponseEntity(result, HttpStatus.OK);
     }
 
     @PatchMapping("/{activity_id}")
-    public ResponseEntity<ActivityDto> updateActivity(@PathVariable("activity_id") Long id, @RequestBody ActivityDto request){
-        String userId="1";
-        ActivityDto response=service.updateAct(id,request,userId);
-        return new ResponseEntity(response, HttpStatus.OK);
+    public ResponseEntity<ActivityDto> updateActivity(HttpServletResponse response, @PathVariable("activity_id") Long id, @RequestBody ActivityDto request) {
+        String userId = response.getHeader("userId");
+        log.info("ReservationController.getAllReservation.userId:" + userId);
+        ActivityDto result = service.updateAct(id, request, userId);
+        return new ResponseEntity(result, HttpStatus.OK);
     }
 
     @GetMapping("/images")
     public ResponseEntity<byte[]> getActImg(@RequestParam("image_path") String imagePath) throws IOException {
-        byte[] imageByteArray=service.findImage(imagePath);
-        return new ResponseEntity(imageByteArray,HttpStatus.OK);
+        byte[] imageByteArray = service.findImage(imagePath);
+        return new ResponseEntity(imageByteArray, HttpStatus.OK);
     }
 }
