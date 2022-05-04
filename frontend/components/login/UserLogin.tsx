@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction } from "react";
 import GoogleLoginButton from "./GoogleLoginButton";
 import KakaoLoginButton from "./KakaoLoginButton";
-import { ColoredText, BoldText, UnderlineText } from "../../styles/Text";
+import { ColoredText, UnderlineText } from "../../styles/Text";
 import { Typography } from "@mui/material";
 import styled from "styled-components";
 
@@ -9,27 +9,27 @@ interface IPropTypes {
   setIsUser: Dispatch<SetStateAction<boolean>>;
 }
 
-const TextContainer = styled.div`
+export const TextContainer = styled.div`
   width: 100%;
   margin-bottom: 20%;
 `;
 
-const Title = styled.div`
+export const Title = styled.div`
   align-items: flex-start;
   margin-bottom: 10%;
 `;
 
-const SubTitleContainer = styled.div`
+export const SubTitleContainer = styled.div`
   line-height: 1.6rem;
 `;
 
-const ButtonContainer = styled.div`
+export const ButtonContainer = styled.div`
   width: 100%;
   margin-bottom: 15%;
   text-align: center;
 `;
 
-const NavigatorContainer = styled.div`
+export const NavigatorContainer = styled.div`
   font-size: 0.9rem;
 `;
 
