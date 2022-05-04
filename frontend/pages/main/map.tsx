@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useEffect } from "react";
+import { KakaoLoginRequest } from '../../api/user';
 
 declare global {
   interface Window {
@@ -16,6 +17,9 @@ function Map() {
   let latitude: number = 0;
   let longitude: number = 0;
 
+  // let infowindow = new window.kakao.maps.InfoWindow({zIndex:1});
+
+  // 현재 위치 경도 위도 얻는 함수
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
       // console.log(position.coords.latitude, position.coords.longitude);
@@ -24,6 +28,7 @@ function Map() {
     });
   },[])
 
+  // 현재 위치에 대한 맵 반환하는 함수
   useEffect(() => {
     const mapScript = document.createElement("script");
 
