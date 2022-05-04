@@ -1,30 +1,35 @@
-import React from "react";
-import Seo from "../../components/Seo";
 import styled from 'styled-components';
-import { useEffect } from 'react';
-
+import { useEffect } from "react";
 
 declare global {
   interface Window {
     kakao: any;
   }
 }
-interface MapProps {
-  latitude: number;
-  longitude: number;
-}
+// interface MapProps {
+//   latitude: number;
+//   longitude: number;
+// }
 
-const MapContainer = styled.div`
-  aspect-ratio: 320 / 220;
-`
+// function Map({ latitude, longitude }: MapProps) {
+function Map() {
+  let latitude: number = 0;
+  let longitude: number = 0;
 
-const Map = ({ latitude, longitude }: MapProps) => {
   useEffect(() => {
-    const mapScript = document.createElement('script');
+    navigator.geolocation.getCurrentPosition((position) => {
+      // console.log(position.coords.latitude, position.coords.longitude);
+      latitude = position.coords.latitude;
+      longitude = position.coords.longitude;
+    });
+  },[])
+
+  useEffect(() => {
+    const mapScript = document.createElement("script");
 
     mapScript.async = true;
     mapScript.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAOMAP_APPKEY}&autoload=false`;
-    
+
     document.head.appendChild(mapScript);
 
     const onLoadKakaoMap = () => {
@@ -45,13 +50,17 @@ const Map = ({ latitude, longitude }: MapProps) => {
 
     return () => mapScript.removeEventListener("load", onLoadKakaoMap);
   }, [latitude, longitude]);
-  
+
   return (
-    <MapContainer id="Map">
-      <Seo title="Map" />
-      <div>Main</div>
-    </MapContainer>
-  )
-};
+    <MapContainer id="map" />
+  );
+}
+
+const MapContainer = styled.div`
+  // aspect-ratio: 320 / 220;
+  width: 100%;
+  display: inline-block;
+  height: 100%;
+`;
 
 export default Map;
