@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.List;
 
@@ -30,29 +31,32 @@ public class AccommodationController {
         return new ResponseEntity(list, HttpStatus.OK);
     }
 
-    @GetMapping("/{accommodation_id}")
+    @GetMapping("/detail/{accommodation_id}")
     public ResponseEntity<AccommodationArticleDto> getAccommodation(@PathVariable("accommodation_id") Long id){
         AccommodationArticleDto dto=service.getAccommodation(id);
         return new ResponseEntity(dto, HttpStatus.OK);
     }
 
     @DeleteMapping("/{accommodation_id}")
-    public ResponseEntity<Long> deleteAccommodation(@PathVariable("accommodation_id") Long id){
-        String userId="1"; // 임시로 부여한 userId
+    public ResponseEntity<Long> deleteAccommodation(HttpServletResponse response, @PathVariable("accommodation_id") Long id){
+        String userId = response.getHeader("userId");
+        log.info("AcommodationResController.getAllAccommodationFav.userId:" + userId);
         Long result=service.delete(id,userId);
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity<AccommodationArticleDto> saveAccomodation(@RequestPart(value="dto") AccommodationArticleDto request, @RequestPart(value="image", required=false) List<MultipartFile> files){
-        String userId="1"; // 임시로 부여한 userId
+    public ResponseEntity<AccommodationArticleDto> saveAccomodation(HttpServletResponse response, @RequestPart(value="dto") AccommodationArticleDto request, @RequestPart(value="image", required=false) List<MultipartFile> files){
+        String userId = response.getHeader("userId");
+        log.info("AcommodationResController.getAllAccommodationFav.userId:" + userId);
         AccommodationArticleDto dto=service.save(request,userId,files);
         return new ResponseEntity(dto,HttpStatus.OK);
     }
 
     @PatchMapping("/{accommodation_id}")
-    public ResponseEntity<AccommodationArticleDto> updateAccommodation(@PathVariable("accommodation_id") Long id, @RequestBody AccommodationArticleDto request){
-        String userId="1"; // 임시로 부여한 userId
+    public ResponseEntity<AccommodationArticleDto> updateAccommodation(HttpServletResponse response, @PathVariable("accommodation_id") Long id, @RequestBody AccommodationArticleDto request){
+        String userId = response.getHeader("userId");
+        log.info("AcommodationResController.getAllAccommodationFav.userId:" + userId);
         AccommodationArticleDto dto=service.update(request,id,userId);
         return new ResponseEntity(dto,HttpStatus.OK);
     }
