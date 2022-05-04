@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Seo from "../../components/Seo";
 import Image from "next/image";
 import styled from 'styled-components';

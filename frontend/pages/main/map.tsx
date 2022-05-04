@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useEffect } from "react";
+import { useRouter } from 'next/router';
 
 declare global {
   interface Window {
@@ -8,8 +9,12 @@ declare global {
 }
 
 function Map() {
-  let latitude: number = 0;
-  let longitude: number = 0;
+  const router = useRouter();
+  // let latitude: number = 0;
+  // let longitude: number = 0;
+  let latitude: any = router.query.latitude;
+  let longitude: any = router.query.longitude;
+  let tag: any = router.query.tag;
 
   // 현재 위치 경도 위도 얻는 함수
   useEffect(() => {
@@ -41,7 +46,7 @@ function Map() {
         const map = new window.kakao.maps.Map(mapContainer, mapOptions);
         // 장소 검색 객체를 생성
         const ps = new window.kakao.maps.services.Places(map);
-        ps.categorySearch('CE7', placesSearchCB, {useMapBounds:true}); 
+        ps.categorySearch(`${tag}`, placesSearchCB, {useMapBounds:true}); 
 
         // 장소검색이 완료됐을 때 호출되는 콜백함수
         function placesSearchCB(data: any, status: any, pagination: any) {
