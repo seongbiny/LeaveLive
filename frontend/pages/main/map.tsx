@@ -10,20 +10,9 @@ declare global {
 
 function Map() {
   const router = useRouter();
-  // let latitude: number = 0;
-  // let longitude: number = 0;
   let latitude: any = router.query.latitude;
   let longitude: any = router.query.longitude;
   let tag: any = router.query.tag;
-
-  // 현재 위치 경도 위도 얻는 함수
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      // console.log(position.coords.latitude, position.coords.longitude);
-      latitude = position.coords.latitude;
-      longitude = position.coords.longitude;
-    });
-  },[])
 
   // 현재 위치에 대한 맵 반환하는 함수
   useEffect(() => {
@@ -37,6 +26,7 @@ function Map() {
 
     const onLoadKakaoMap = () => {
       window.kakao.maps.load(() => {
+        
         const mapContainer = document.getElementById("map");
         const mapOptions = {
           center: new window.kakao.maps.LatLng(latitude, longitude), // 지도의 중심좌표
@@ -44,6 +34,13 @@ function Map() {
         };
         // 지도 생성
         const map = new window.kakao.maps.Map(mapContainer, mapOptions);
+
+
+        const locPosition = new window.kakao.maps.LatLng(latitude, longitude);
+        const message = '<div style="padding:5px;">여기에 계신가요?!</div>';
+        currMarker(locPosition, message);
+
+
         // 장소 검색 객체를 생성
         const ps = new window.kakao.maps.services.Places(map);
         ps.categorySearch(`${tag}`, placesSearchCB, {useMapBounds:true}); 
@@ -70,13 +67,32 @@ function Map() {
             map: map,
             position: new window.kakao.maps.LatLng(place.y, place.x)
           });
+          const iwRemoveable = true;
           // 마커에 클릭이벤트를 등록합니다
+          const infowindow = new window.kakao.maps.InfoWindow({
+            removable: iwRemoveable
+          })
           window.kakao.maps.event.addListener(marker, 'click', function() {
             // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
             const content = '<div style="padding:5px;z-index:1;" class="marker-title">' + place.place_name + '</div>';
             infowindow.setContent(content);
             infowindow.open(map, marker);
-  });
+          });
+        }
+
+        function currMarker(locPosition: any, message: any) {
+          let marker = new window.kakao.maps.Marker({
+            map: map,
+            position: locPosition,
+            image: new window.kakao.maps.MarkerImage('https://i1.daumcdn.net/dmaps/apis/n_local_blit_04.png', new window.kakao.maps.Size(31, 35))
+          });
+          const iwContent = message;
+          const iwRemoveable = true;
+          const infowindow = new window.kakao.maps.InfoWindow({
+            content: iwContent,
+            removable: iwRemoveable
+          })
+          infowindow.open(map, marker);
         }
   
         // function displayInfowindow(marker: any, title: string) {
@@ -99,11 +115,12 @@ function Map() {
 
 
 
-        const markerPosition = new window.kakao.maps.LatLng(latitude, longitude);
-        const marker = new window.kakao.maps.Marker({
-          position: markerPosition,
-        });
-        marker.setMap(map);
+        // const markerPosition = new window.kakao.maps.LatLng(latitude, longitude);
+        // const marker = new window.kakao.maps.Marker({
+        //   position: markerPosition,
+        // });
+
+        // marker.setMap(map);
       });
     };
     mapScript.addEventListener("load", onLoadKakaoMap);

@@ -8,6 +8,7 @@ const Result = () => {
       <div>
         {router.query.region}
       </div>
+      <button>여행가기</button>
     </>
   )
 };
