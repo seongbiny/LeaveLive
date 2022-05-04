@@ -15,11 +15,10 @@ class DiaryController(private val diaryService: DiaryService) {
     @GetMapping
     fun get(
         @RequestHeader(name = "Authorization") token: String,
-        @RequestParam date: LocalDate
-    ) {
-    }
+        @RequestParam date: String
+    ): ResponseEntity<DiaryResponse> = ResponseEntity(diaryService.get(token, date), HttpStatus.OK)
 
-    @GetMapping
+    @GetMapping("/test")
     fun getAllPublicDiaries() {
     }
 
@@ -30,8 +29,11 @@ class DiaryController(private val diaryService: DiaryService) {
     ): ResponseEntity<DiaryResponse> = ResponseEntity(diaryService.register(token, diaryRequest), HttpStatus.OK)
 
     @PatchMapping("/{diaryId}")
-    fun edit() {
-    }
+    fun edit(
+        @RequestHeader(name = "Authorization") token: String,
+        @RequestBody diaryRequest: DiaryRequest,
+        @PathVariable diaryId : Long
+    ): ResponseEntity<DiaryResponse> = ResponseEntity(diaryService.edit(token, diaryRequest, diaryId), HttpStatus.OK)
 
     @DeleteMapping("/{diaryId}")
     fun remove() {
