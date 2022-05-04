@@ -1,5 +1,16 @@
-import React, { Dispatch, SetStateAction, useCallback } from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import GoogleLoginButton from "./GoogleLoginButton";
+import KakaoLoginButton from "./KakaoLoginButton";
+import { ColoredText, UnderlineText } from "../../styles/Text";
+import { Typography } from "@mui/material";
+import styled from "styled-components";
+import {
+  TextContainer,
+  Title,
+  SubTitleContainer,
+  ButtonContainer,
+  NavigatorContainer,
+} from "./UserLogin";
 
 interface IPropTypes {
   setIsUser: Dispatch<SetStateAction<boolean>>;
@@ -7,13 +18,32 @@ interface IPropTypes {
 
 const CeoLogin = ({ setIsUser }: IPropTypes) => {
   return (
-    <div>
-      사장님 <GoogleLoginButton />
-      <div>
-        사용자이신가요?
-        <span onClick={() => setIsUser(true)}>사용자 로그인</span>
-      </div>
-    </div>
+    <>
+      <TextContainer>
+        <Title>
+          <Typography variant="h5">
+            <ColoredText>반갑습니다, 사장님!</ColoredText>
+          </Typography>
+        </Title>
+
+        <SubTitleContainer>
+          <ColoredText>리브리브</ColoredText>가<br />
+          <ColoredText>편한 예약 관리</ColoredText>를<br />
+          도와드려요.
+        </SubTitleContainer>
+      </TextContainer>
+
+      <ButtonContainer>
+        <GoogleLoginButton />
+        <KakaoLoginButton />
+      </ButtonContainer>
+      <NavigatorContainer>
+        사용자이신가요?&nbsp;
+        <UnderlineText onClick={() => setIsUser(true)}>
+          사용자 로그인
+        </UnderlineText>
+      </NavigatorContainer>
+    </>
   );
 };
 
