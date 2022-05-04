@@ -6,6 +6,7 @@ import com.leavelive.diary.service.DiaryService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.multipart.MultipartFile
 
 @RestController
 @RequestMapping("/api/diary")
@@ -24,8 +25,9 @@ class DiaryController(private val diaryService: DiaryService) {
     @PostMapping
     fun register(
         @RequestHeader(name = "Authorization") token: String,
-        @RequestBody diaryRequest: DiaryRequest
-    ): ResponseEntity<DiaryResponse> = ResponseEntity(diaryService.register(token, diaryRequest), HttpStatus.OK)
+        @RequestPart(value = "diaryRequest") diaryRequest: DiaryRequest,
+        @RequestPart(value = "image", required = false) images: List<MultipartFile>
+    ): ResponseEntity<DiaryResponse> = ResponseEntity(diaryService.register(token, diaryRequest, images), HttpStatus.OK)
 
     @PatchMapping("/{diaryId}")
     fun edit(

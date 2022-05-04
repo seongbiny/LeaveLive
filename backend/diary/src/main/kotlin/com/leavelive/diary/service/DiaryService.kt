@@ -8,8 +8,12 @@ import com.leavelive.diary.repository.DiaryRepository
 import com.leavelive.diary.utils.JwtUtil
 import org.modelmapper.ModelMapper
 import org.springframework.stereotype.Service
+import org.springframework.web.multipart.MultipartFile
+import java.io.File
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.io.path.Path
 
 @Service
 class DiaryService(private val diaryRepository: DiaryRepository, private val modelMapper: ModelMapper) {
@@ -27,10 +31,13 @@ class DiaryService(private val diaryRepository: DiaryRepository, private val mod
     fun getAllPublicDiaries(): List<DiaryResponse> =
         diaryRepository.findAllByStatus(Status.PUBLIC).map { modelMapper.map(it, DiaryResponse::class.java) }
 
-    fun register(token: String, diaryRequest: DiaryRequest): DiaryResponse {
+    fun register(token: String, diaryRequest: DiaryRequest, images: List<MultipartFile>): DiaryResponse {
         val userId = JwtUtil.decodeToken(token)
         val diary = modelMapper.map(diaryRequest, Diary::class.java)
         diary.userId = userId // foreign key set
+        images.let {
+            diary.picPath = saveImages(it)
+        }
         return modelMapper.map(
             diaryRepository.save(diary), DiaryResponse::class.java
         )
@@ -50,5 +57,21 @@ class DiaryService(private val diaryRepository: DiaryRepository, private val mod
         if (diary.userId != userId) throw RuntimeException("user id doesn't match")
         diaryRepository.delete(diary)
         return true
+    }
+
+    private fun saveImages(images: List<MultipartFile>): String {
+        var picPath = ""
+        images.map {
+            val uniquePath = "${LocalDate.now().format(DateTimeFormatter.ISO_DATE)}${UUID.randomUUID()}"
+            var path = "${File("").absolutePath}${File.separator}images${File.separator}${uniquePath}"
+            when (it.contentType?.lowercase()) {
+                "image/png" -> path += ".png"
+                "image/jpeg" -> path += ".jpeg"
+            }
+            it.transferTo(Path(path))
+            picPath += "$path, "
+        }
+
+        return picPath.substring(0, picPath.length - 1)
     }
 }
