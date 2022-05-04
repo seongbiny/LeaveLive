@@ -1,12 +1,15 @@
 package leavelive.activity.service;
 
+import leavelive.activity.domain.Activity;
 import leavelive.activity.domain.Reservation;
 import leavelive.activity.domain.dto.ReservationDto;
+import leavelive.activity.repository.ActivityRepo;
 import leavelive.activity.repository.ReservationRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -16,6 +19,7 @@ import java.util.Optional;
 @Slf4j
 public class ReservationService {
     private final ReservationRepo repo;
+    private final ActivityRepo activityRepo;
 
     public List<ReservationDto> getAllRes(String userId){
         List<ReservationDto> result=new ArrayList<>();
@@ -33,5 +37,62 @@ public class ReservationService {
         if(!entity.get().getUserId().equals(userId)) throw new NullPointerException("자신이 예약한 액티비티만 삭제할 수 있습니다.");
         repo.deleteById(id);
         return "ok";
+    }
+
+    /**
+     * 예약 날짜에 따라 예약 여부가 결정됨
+     * @param id
+     * @param userId
+     * @return 예약된 아이디
+     */
+    public Long saveRes(Long id, String userId, ReservationDto request){
+        Optional<Activity> entity=activityRepo.findById(id);
+        if(!entity.isPresent()) throw new NullPointerException("해당하는 액티비티가 없습니다.");
+        LocalDate myStart=request.getStartDate();
+        LocalDate myEnd=request.getEndDate();
+        if(myStart.isAfter(myEnd)) throw new NullPointerException("종료일이 시작일보다 앞입니다.");
+        if(request.getCnt()<=0 || request.getCnt()>entity.get().getCnt()) throw new NullPointerException("인원수가 0이하거나 수용할 수 있는 인원을 초과했습니다.");
+        List<Reservation> list=repo.findByActivityId(id);
+        log.info("ReservationService.saveRes.list:"+list);
+        if(list!=null || list.size()>0){
+            boolean flag=true;
+            for (Reservation res:list){
+                LocalDate start=res.getStartDate();
+                LocalDate end=res.getEndDate();
+                if(!start.isEqual(myStart) && !end.isEqual(myEnd)){
+                    /**
+                     * myStart와 myEnd가 구간 안에 있으면 이미 예약되어있으므로 예약 불가
+                     * start= 0419  myStart= 0421
+                     * end= 0421  myEnd= 0422
+                     * start<=myStart<end ->x
+                     * start<myEnd<=end ->x
+                     */
+                    log.info("ReservationService.saveRes:"+start+"<="+myStart+"<"+end);
+                    // 범위 안에 포함되면 X
+                    if(!myStart.isBefore(start) && myStart.isBefore(end)){
+                        log.info("ReservationService.saveRes:시작날짜가 잘못되었음");
+                        flag=false;
+                        break;
+                    }
+                    start=start.plusDays(1);
+                    log.info("ReservationService.saveRes:"+start+"<"+myEnd+"<="+end);
+                    if(!myEnd.isBefore(start) && myEnd.isBefore(end)){
+                        log.info("ReservationService.saveRes:종료날짜가 잘못되었음");
+                        flag=false;
+                        break;
+                    }
+                }else{
+                    flag=false;
+                    break;
+                }
+            }
+            if(!flag) throw new NullPointerException("이미 해당 기간에 예약되어 있는 숙소입니다.");
+        }
+        request.setActivity(entity.get());
+        request.setUserId(userId);
+        log.info("ReservationService.saveRes.request:"+request);
+        Reservation reservation=new Reservation();
+        Reservation result=repo.save(reservation.of(request));
+        return result.getId();
     }
 }
