@@ -10,7 +10,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new HttpInterceptor())
-                .addPathPatterns(new String[]{"/api/accommodation/reservation/**", "/api/accommodation/favorite/**","/api/accommodation/**"})
-                .excludePathPatterns(new String[]{"/api/accommodation/all", "/api/accommodation/images","/api/accommodation/detail"});
+                .addPathPatterns(new String[]{"/accommodation/**"})
+                .excludePathPatterns(new String[]{"/accommodation/all/**", "/accommodation/images/**","/accommodation/detail/**"});
     }
 }

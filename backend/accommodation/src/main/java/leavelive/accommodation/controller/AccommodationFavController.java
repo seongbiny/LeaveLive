@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/accommodation/favorite")
+@RequestMapping("/accommodation/favorite")
 @RequiredArgsConstructor
 @Slf4j
 public class AccommodationFavController {
@@ -27,19 +27,19 @@ public class AccommodationFavController {
     }
 
     @PostMapping("/{accommodation_id}")
-    public ResponseEntity<AccommodationFavDto> saveAccommodationFav(HttpServletResponse response, @PathVariable("accommodation_id") Long id) {
+    public ResponseEntity<Long> saveAccommodationFav(HttpServletResponse response, @PathVariable("accommodation_id") Long id) {
         String userId = response.getHeader("userId");
         log.info("AcommodationResController.getAllAccommodationFav.userId:" + userId);
-        AccommodationFavDto dto = service.save(id, userId);
-        return new ResponseEntity<>(dto, HttpStatus.OK);
+        Long result = service.save(id, userId);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @DeleteMapping("/{accommodation_fav_id}")
-    public ResponseEntity<Long> deleteAccommodationFav(HttpServletResponse response, @PathVariable("accommodation_fav_id") Long id) {
+    public ResponseEntity<String> deleteAccommodationFav(HttpServletResponse response, @PathVariable("accommodation_fav_id") Long id) {
         String userId = response.getHeader("userId");
         log.info("AcommodationResController.getAllAccommodationFav.userId:" + userId);
-        service.delete(id, userId);
-        return new ResponseEntity<>(id, HttpStatus.OK);
+        String result=service.delete(id, userId);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
 }

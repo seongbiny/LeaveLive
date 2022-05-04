@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/accommodation/reservation")
+@RequestMapping("/accommodation/reservation")
 @RequiredArgsConstructor
 @Slf4j
 public class AccommodationResController {

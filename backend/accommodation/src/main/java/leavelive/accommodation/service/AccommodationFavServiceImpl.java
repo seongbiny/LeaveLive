@@ -38,21 +38,21 @@ public class AccommodationFavServiceImpl {
         return list;
     }
 
-    public AccommodationFavDto save(Long id,String userId){
+    public Long save(Long id,String userId){
         Optional<AccommodationArticle> accommodationArticle= repo.findById(id);
         if(!accommodationArticle.isPresent()) throw new NullPointerException("해당하는 숙소가 없습니다.");
         AccommodationFavDto dto=new AccommodationFavDto();
         dto.setUserId(userId); //임의로 준 userId
         dto.setAccommodationArticle(accommodationArticle.get());
         AccommodationFav entity=new AccommodationFav();
-        favRepo.save(entity.of(dto));
-        return dto;
+        AccommodationFav result=favRepo.save(entity.of(dto));
+        return result.getId();
     }
-    public Long delete(Long id,String userId){
+    public String delete(Long id,String userId){
         Optional<AccommodationFav> accommodationFav=favRepo.findById(id);
         if(!accommodationFav.isPresent()) throw new NullPointerException("해당하는 숙소가 없습니다.");
         if(!accommodationFav.get().getUserId().equals(userId)) throw new NullPointerException("자신이 등록한 숙소만 삭제할 수 있습니다.");
         favRepo.deleteById(id);
-        return id;
+        return "ok";
     }
 }

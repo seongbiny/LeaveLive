@@ -64,7 +64,7 @@ public class AccommodationServiceImpl implements AccommodationService{
     }
 
     @Override
-    public Long delete(Long id,String userId) {
+    public String delete(Long id,String userId) {
         // 내가 작성한 숙소가 맞는지 확인
         Optional<AccommodationArticle> accommodationArticle=repo.findById(id);
         if(!accommodationArticle.isPresent()) throw new NullPointerException("해당하는 숙소가 없습니다.");
@@ -78,11 +78,11 @@ public class AccommodationServiceImpl implements AccommodationService{
             }
         }
         repo.deleteById(id);
-        return id;
+        return "ok";
     }
 
     @Override
-    public AccommodationArticleDto save(AccommodationArticleDto dto,String userId, List<MultipartFile> files) {
+    public Long save(AccommodationArticleDto dto,String userId, List<MultipartFile> files) {
         dto.setUserId(userId);
         AccommodationArticle entity=new AccommodationArticle();
         // 이미지 파일 저장
@@ -92,7 +92,7 @@ public class AccommodationServiceImpl implements AccommodationService{
             dto.setPicPath(img_path);
         }
         AccommodationArticle accommodationArticle=repo.save(entity.of(dto));
-        return AccommodationArticleDto.of(accommodationArticle);
+        return accommodationArticle.getId();
     }
 
     @Override

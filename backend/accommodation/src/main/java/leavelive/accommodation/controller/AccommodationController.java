@@ -19,8 +19,8 @@ import java.io.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/accommodation")
 @RequiredArgsConstructor
+@RequestMapping("/accommodation")
 @Slf4j
 public class AccommodationController {
     private final AccommodationService service;
@@ -38,19 +38,19 @@ public class AccommodationController {
     }
 
     @DeleteMapping("/{accommodation_id}")
-    public ResponseEntity<Long> deleteAccommodation(HttpServletResponse response, @PathVariable("accommodation_id") Long id){
+    public ResponseEntity<String> deleteAccommodation(HttpServletResponse response, @PathVariable("accommodation_id") Long id){
         String userId = response.getHeader("userId");
         log.info("AcommodationResController.getAllAccommodationFav.userId:" + userId);
-        Long result=service.delete(id,userId);
+        String result=service.delete(id,userId);
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity<AccommodationArticleDto> saveAccomodation(HttpServletResponse response, @RequestPart(value="dto") AccommodationArticleDto request, @RequestPart(value="image", required=false) List<MultipartFile> files){
+    public ResponseEntity<Long> saveAccomodation(HttpServletResponse response, @RequestPart(value="dto") AccommodationArticleDto request, @RequestPart(value="image", required=false) List<MultipartFile> files){
         String userId = response.getHeader("userId");
         log.info("AcommodationResController.getAllAccommodationFav.userId:" + userId);
-        AccommodationArticleDto dto=service.save(request,userId,files);
-        return new ResponseEntity(dto,HttpStatus.OK);
+        Long result=service.save(request,userId,files);
+        return new ResponseEntity(result,HttpStatus.OK);
     }
 
     @PatchMapping("/{accommodation_id}")
