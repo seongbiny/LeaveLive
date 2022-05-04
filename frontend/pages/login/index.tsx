@@ -1,12 +1,20 @@
-import React from "react";
-import { useAppSelector, useAppDispatch } from "../../hooks";
-import { setIsLogin } from "../../store/slices/userSlice";
+import React, { useState, useCallback } from "react";
+
+import { GoogleLoginRequest } from "../../api/user";
+import UserLogin from "../../components/login/UserLogin";
+import CeoLogin from "../../components/login/CeoLogin";
 
 const Login = () => {
-  const isLogin = useAppSelector((state) => state.user.isLogin);
-  const dispatch = useAppDispatch();
-  dispatch(setIsLogin(true));
-  return <div>테스트 {isLogin ? "true" : "false"}</div>;
+  const [isUser, setIsUser] = useState<boolean>(true);
+  return (
+    <>
+      {isUser ? (
+        <UserLogin setIsUser={setIsUser} />
+      ) : (
+        <CeoLogin setIsUser={setIsUser} />
+      )}
+    </>
+  );
 };
 
 export default Login;

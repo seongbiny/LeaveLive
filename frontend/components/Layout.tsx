@@ -4,6 +4,7 @@ import useIsMobile from "../util/hooks";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import CeoNav from "./CeoNav";
+import { flexCenter } from "../styles/Basic";
 
 const Container = styled.div`
   display: flex;
@@ -12,6 +13,7 @@ const Container = styled.div`
 
 const Main = styled.main`
   flex: 1;
+  ${flexCenter}
 `;
 
 export default function Layout({ children }: any) {
