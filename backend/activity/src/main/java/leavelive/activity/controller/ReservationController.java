@@ -6,9 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -24,9 +22,18 @@ public class ReservationController {
     public ResponseEntity<List<ReservationDto>> getAllReservation(HttpServletResponse response){
 //        String userId = response.getHeader("userId");
         String userId = "114760122369855290515GOOGLE";
-        log.info("AcommodationResController.getAllAccommodationFav.userId:" + userId);
+        log.info("ReservationController.getAllReservation.userId:" + userId);
         List<ReservationDto> list = service.getAllRes(userId);
         return new ResponseEntity(list, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{activity_reservation_id}")
+    public ResponseEntity<String> delReservation(HttpServletResponse response, @PathVariable("activity_reservation_id") Long id){
+//        String userId = response.getHeader("userId");
+        String userId = "114760122369855290515GOOGLE";
+        log.info("ReservationController.delReservation.userId:" + userId);
+        String result = service.delRes(id,userId);
+        return new ResponseEntity(result, HttpStatus.OK);
     }
 
 }
