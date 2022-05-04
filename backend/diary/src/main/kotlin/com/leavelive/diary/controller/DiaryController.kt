@@ -6,7 +6,6 @@ import com.leavelive.diary.service.DiaryService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import java.time.LocalDate
 
 @RestController
 @RequestMapping("/api/diary")
@@ -18,9 +17,9 @@ class DiaryController(private val diaryService: DiaryService) {
         @RequestParam date: String
     ): ResponseEntity<DiaryResponse> = ResponseEntity(diaryService.get(token, date), HttpStatus.OK)
 
-    @GetMapping("/test")
-    fun getAllPublicDiaries() {
-    }
+    @GetMapping("/public")
+    fun getAllPublicDiaries(): ResponseEntity<List<DiaryResponse>> =
+        ResponseEntity(diaryService.getAllPublicDiaries(), HttpStatus.OK)
 
     @PostMapping
     fun register(
@@ -32,10 +31,11 @@ class DiaryController(private val diaryService: DiaryService) {
     fun edit(
         @RequestHeader(name = "Authorization") token: String,
         @RequestBody diaryRequest: DiaryRequest,
-        @PathVariable diaryId : Long
+        @PathVariable diaryId: Long
     ): ResponseEntity<DiaryResponse> = ResponseEntity(diaryService.edit(token, diaryRequest, diaryId), HttpStatus.OK)
 
     @DeleteMapping("/{diaryId}")
-    fun remove() {
-    }
+    fun remove(
+        @RequestHeader(name = "Authorization") token: String, @PathVariable diaryId: Long
+    ): ResponseEntity<Boolean> = ResponseEntity(diaryService.remove(token, diaryId), HttpStatus.OK)
 }

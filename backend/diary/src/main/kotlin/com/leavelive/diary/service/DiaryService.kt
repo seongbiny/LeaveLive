@@ -1,6 +1,7 @@
 package com.leavelive.diary.service
 
 import com.leavelive.diary.model.Diary
+import com.leavelive.diary.model.Status
 import com.leavelive.diary.model.payload.DiaryRequest
 import com.leavelive.diary.model.payload.DiaryResponse
 import com.leavelive.diary.repository.DiaryRepository
@@ -23,12 +24,13 @@ class DiaryService(private val diaryRepository: DiaryRepository, private val mod
         )
     }
 
-    fun getAllPublicDiaries() {}
+    fun getAllPublicDiaries(): List<DiaryResponse> =
+        diaryRepository.findAllByStatus(Status.PUBLIC).map { modelMapper.map(it, DiaryResponse::class.java) }
 
     fun register(token: String, diaryRequest: DiaryRequest): DiaryResponse {
         val userId = JwtUtil.decodeToken(token)
         val diary = modelMapper.map(diaryRequest, Diary::class.java)
-        diary.userId = userId
+        diary.userId = userId // foreign key set
         return modelMapper.map(
             diaryRepository.save(diary), DiaryResponse::class.java
         )
@@ -37,9 +39,16 @@ class DiaryService(private val diaryRepository: DiaryRepository, private val mod
     fun edit(token: String, diaryRequest: DiaryRequest, diaryId: Long): DiaryResponse {
         val userId = JwtUtil.decodeToken(token)
         val diary = diaryRepository.findById(diaryId).get()
+        if (diary.userId != userId) throw RuntimeException("user id doesn't match")
         modelMapper.map(diaryRequest, diary)
         return modelMapper.map(diaryRepository.save(diary), DiaryResponse::class.java)
     }
 
-    fun remove() {}
+    fun remove(token: String, diaryId: Long): Boolean {
+        val userId = JwtUtil.decodeToken(token)
+        val diary = diaryRepository.findById(diaryId).get()
+        if (diary.userId != userId) throw RuntimeException("user id doesn't match")
+        diaryRepository.delete(diary)
+        return true
+    }
 }
