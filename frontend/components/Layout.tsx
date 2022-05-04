@@ -22,7 +22,7 @@ export default function Layout({ children }: any) {
   useEffect(() => {
     if (router.pathname.startsWith("/ceo") && isUser) setIsUser(false);
     if (!router.pathname.startsWith("/ceo") && !isUser) setIsUser(true);
-  }, [router]);
+  }, [router, isUser]);
 
   const isMobile = useIsMobile();
   return (
