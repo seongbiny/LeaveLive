@@ -1,5 +1,5 @@
-import SimpleBottomNavigation from "./UserNav1";
-import styled from "styled-components";
+import LabelBottomNavigation from "./UserNav";
+import styled from 'styled-components';
 import useIsMobile from "../util/hooks";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
@@ -30,7 +30,7 @@ export default function Layout({ children }: any) {
       {isMobile ? (
         <>
           <Main>{children}</Main>
-          {isUser ? <SimpleBottomNavigation /> : <CeoNav />}
+          {isUser ? <LabelBottomNavigation /> : <CeoNav />}
         </>
       ) : (
         <div>모바일로 접속해주세요.</div>
