@@ -27,9 +27,7 @@ public class ActivityService {
     private final ActivityRepo repo;
 
     public List<ActivityDto> getAllAct(String loc){
-        log.info("ActivityService.getAllAct:서비스");
-        List<Activity> entities=repo.findByLocStartsWith(loc);
-        System.out.println(entities);
+        List<Activity> entities=repo.findAllByLocStartsWith(loc);
         List<ActivityDto> dtos=new ArrayList<>();
         ActivityDto dto=new ActivityDto();
         for(Activity entity:entities){

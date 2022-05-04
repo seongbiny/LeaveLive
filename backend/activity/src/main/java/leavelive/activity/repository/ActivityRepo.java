@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface ActivityRepo extends JpaRepository<Activity,Long> {
-    List<Activity> findByLocStartsWith(String loc);
+    List<Activity> findAllByLocStartsWith(String loc);
 //    @Query(value="select i from Activity i where i.loc like :loc%")
 //    List<Activity> findByLikeLoc(@Param("loc") String loc);
 }

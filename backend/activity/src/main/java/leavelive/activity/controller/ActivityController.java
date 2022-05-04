@@ -21,8 +21,8 @@ import java.util.List;
 public class ActivityController {
     private final ActivityService service;
 
-    @GetMapping("/all/{activity_loc}")
-    public ResponseEntity<List<ActivityDto>> getAllActivity(@PathVariable("activity_loc") String loc) {
+    @GetMapping("/all")
+    public ResponseEntity<List<ActivityDto>> getAllActivity(@RequestParam("activity_loc") String loc) {
         log.info("activity loc"+loc);
         List<ActivityDto> list = service.getAllAct(loc);
         return new ResponseEntity(list, HttpStatus.OK);
