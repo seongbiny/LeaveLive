@@ -43,11 +43,14 @@ class DiaryService(private val diaryRepository: DiaryRepository, private val mod
         )
     }
 
-    fun edit(token: String, diaryRequest: DiaryRequest, diaryId: Long): DiaryResponse {
+    fun edit(token: String, diaryRequest: DiaryRequest, images: List<MultipartFile>, diaryId: Long): DiaryResponse {
         val userId = JwtUtil.decodeToken(token)
         val diary = diaryRepository.findById(diaryId).get()
         if (diary.userId != userId) throw RuntimeException("user id doesn't match")
         modelMapper.map(diaryRequest, diary)
+        images.let {
+            diary.picPath = saveImages(it)
+        }
         return modelMapper.map(diaryRepository.save(diary), DiaryResponse::class.java)
     }
 

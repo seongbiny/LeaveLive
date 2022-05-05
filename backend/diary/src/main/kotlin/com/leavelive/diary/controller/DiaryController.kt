@@ -32,9 +32,11 @@ class DiaryController(private val diaryService: DiaryService) {
     @PatchMapping("/{diaryId}")
     fun edit(
         @RequestHeader(name = "Authorization") token: String,
-        @RequestBody diaryRequest: DiaryRequest,
+        @RequestPart(value = "diaryRequest") diaryRequest: DiaryRequest,
+        @RequestPart(value = "image") images: List<MultipartFile>,
         @PathVariable diaryId: Long
-    ): ResponseEntity<DiaryResponse> = ResponseEntity(diaryService.edit(token, diaryRequest, diaryId), HttpStatus.OK)
+    ): ResponseEntity<DiaryResponse> =
+        ResponseEntity(diaryService.edit(token, diaryRequest, images, diaryId), HttpStatus.OK)
 
     @DeleteMapping("/{diaryId}")
     fun remove(
