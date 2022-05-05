@@ -13,7 +13,7 @@ const Container = styled.div`
 
 const Main = styled.main`
   flex: 1;
-  ${flexCenter}
+  // ${flexCenter}
 `;
 
 export default function Layout({ children }: any) {
