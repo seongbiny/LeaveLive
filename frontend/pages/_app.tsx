@@ -1,7 +1,6 @@
 import type { AppProps } from "next/app";
 import GlobalStyle from "../styles/GlobalStyle";
-import { store } from "../store";
-import { Provider } from "react-redux";
+import { store, wrapper } from "../store";
 import Layout from "../components/Layout";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material";
@@ -22,8 +21,8 @@ function MyApp({ Component, pageProps }: AppProps) {
       const isLogin = store.getState().user.isLogin;
       const access_token = localStorage.getItem("access_token");
       const refresh_token = localStorage.getItem("refresh_token");
-
       // console.log(access_token + " " + refresh_token);
+
       if (access_token && refresh_token && !isLogin) {
         // getRefreshToken(
         //   null,
@@ -34,7 +33,6 @@ function MyApp({ Component, pageProps }: AppProps) {
       }
 
       if (!isLogin && !allowedURLs.includes(router.pathname)) {
-        console.log(isLogin);
         router.push("/");
       }
     }
@@ -45,14 +43,12 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider theme={theme}>
       <Layout>
-        <Provider store={store}>
-          <GlobalStyle />
-          <CssBaseline />
-          <Component {...pageProps} />
-        </Provider>
+        <GlobalStyle />
+        <CssBaseline />
+        <Component {...pageProps} />
       </Layout>
     </ThemeProvider>
   );
 }
 
-export default MyApp;
+export default wrapper.withRedux(MyApp);
