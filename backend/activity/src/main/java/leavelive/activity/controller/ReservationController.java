@@ -27,10 +27,10 @@ public class ReservationController {
     }
 
     @DeleteMapping("/{activity_reservation_id}")
-    public ResponseEntity<String> delReservation(HttpServletResponse response, @PathVariable("activity_reservation_id") Long id) {
+    public ResponseEntity<Boolean> delReservation(HttpServletResponse response, @PathVariable("activity_reservation_id") Long id) {
         String userId = response.getHeader("userId");
         log.info("ReservationController.delReservation.userId:" + userId);
-        String result = service.delRes(id, userId);
+        Boolean result = service.delRes(id, userId);
         return new ResponseEntity(result, HttpStatus.OK);
     }
 

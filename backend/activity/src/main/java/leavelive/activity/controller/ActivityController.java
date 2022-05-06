@@ -35,10 +35,10 @@ public class ActivityController {
     }
 
     @DeleteMapping("/{activity_id}")
-    public ResponseEntity<String> delActivity(HttpServletResponse response, @PathVariable("activity_id") Long id) {
+    public ResponseEntity<Boolean> delActivity(HttpServletResponse response, @PathVariable("activity_id") Long id) {
         String userId = response.getHeader("userId");
         log.info("ReservationController.getAllReservation.userId:" + userId);
-        String result = service.delAct(id, userId);
+        Boolean result = service.delAct(id, userId);
         return new ResponseEntity(result, HttpStatus.OK);
     }
 

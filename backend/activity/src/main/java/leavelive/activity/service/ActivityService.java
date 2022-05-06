@@ -42,13 +42,13 @@ public class ActivityService {
         ActivityDto dto=new ActivityDto();
         return dto.of(entity.get());
     }
-    public String delAct(Long id,String userId){
+    public Boolean delAct(Long id,String userId){
         // userId 있는지 확인
         Optional<Activity> entity=repo.findById(id);
         if(!entity.isPresent()) throw new NullPointerException("해당하는 액티비티가 없습니다.");
         if(!entity.get().getUserId().equals(userId)) throw new NullPointerException("직접 등록한 액티비티만 삭제할 수 있습니다.");
         repo.deleteById(id);
-        return "ok";
+        return true;
     }
     public ActivityDto saveAct(ActivityDto dto, List<MultipartFile> files, String userId){
         if(files!=null) dto.setPicPath(saveImage(files));

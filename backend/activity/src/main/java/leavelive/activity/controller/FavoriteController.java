@@ -29,10 +29,10 @@ public class FavoriteController {
     }
 
     @DeleteMapping("/{activity_favorite_id}")
-    public ResponseEntity<String> delFavorite(HttpServletResponse response,@PathVariable("activity_favorite_id") Long id) {
+    public ResponseEntity<Boolean> delFavorite(HttpServletResponse response,@PathVariable("activity_favorite_id") Long id) {
         String userId = response.getHeader("userId");
         log.info("FavoriteController.delFavorite.userId:" + userId);
-        String result = service.delFav(id,userId);
+        Boolean result = service.delFav(id,userId);
         return new ResponseEntity(result, HttpStatus.OK);
     }
 

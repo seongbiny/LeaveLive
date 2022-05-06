@@ -31,12 +31,12 @@ public class ReservationService {
         }
         return result;
     }
-    public String delRes(Long id, String userId){
+    public Boolean delRes(Long id, String userId){
         Optional<Reservation> entity=repo.findById(id);
         if(!entity.isPresent()) throw new NullPointerException("해당하는 액티비티가 없습니다.");
         if(!entity.get().getUserId().equals(userId)) throw new NullPointerException("자신이 예약한 액티비티만 삭제할 수 있습니다.");
         repo.deleteById(id);
-        return "ok";
+        return true;
     }
 
     /**
