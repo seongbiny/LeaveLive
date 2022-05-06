@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.js"
+      integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <a
+      href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=80161aeec9b53c1dd5c367be40966be2&redirect_uri=http://www.localhost:5500/oauth.html"
+      >카카오 로그인</a
+    >
+    <button onclick="callApi()">
+      토큰이 유효하지 않으면 에러(토큰이 없거나, 토큰이 만료되었거나 등)
+    </button>
+    <br />
+    <button onclick="refreshAccessToken()">토큰 갱신</button>
+  </body>
+  <script>
+    let accessToken, refreshToken;
+    window.onload = function () {
+      let code = getParameterByName("code");
+      if (code) {
+        console.log("kakao code : ", code);
+        // get leavelive token with kakao code
+        $.ajax({
+          url: "http://localhost:8080/api/auth/kakao",
+          data: {
+            code,
+          },
+          method: "GET",
+        }).done(function (res) {
+          console.log(res);
+          // request access with token
+          accessToken = res.access_token;
+          refreshToken = res.refresh_token;
+        });
+      }
+    };
+    function getParameterByName(name) {
+      name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+
+      var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+
+      return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+    function callApi() {
+      $.ajax({
+        url: "http://localhost:8080/api/user",
+        headers: {
+          Authorization: accessToken,
+        },
+        method: "GET",
+      }).done(function (res) {
+        console.log(res);
+      });
+    }
+    function refreshAccessToken() {
+      $.ajax({
+        url: "http://localhost:8080/api/auth/token/refresh",
+        headers: {
+          Authorization: accessToken,
+          "Refresh-Token": refreshToken,
+        },
+        method: "GET",
+      }).done(function (res) {
+        accessToken = res;
+      });
+    }
+  </script>
+</html>
