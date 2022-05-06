@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface AccommodationResRepository extends JpaRepository<AccommodationRes,Long> {
+public interface ReservationRepository extends JpaRepository<AccommodationRes,Long> {
     @Query(value = "select i from AccommodationRes i where i.userId=:userId")
     List<AccommodationRes> findByUserId(@Param("userId") String userId);
     List<AccommodationRes> findByAccommodationArticleId(@Param("id") Long id);

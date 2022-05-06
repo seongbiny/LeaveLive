@@ -2,14 +2,12 @@ package leavelive.accommodation.service;
 
 import leavelive.accommodation.domain.AccommodationArticle;
 import leavelive.accommodation.domain.AccommodationRes;
-import leavelive.accommodation.domain.dto.AccommodationFavDto;
 import leavelive.accommodation.domain.dto.AccommodationResDto;
 import leavelive.accommodation.exception.MyResourceNotFoundException;
 import leavelive.accommodation.repository.AccommodationRepository;
-import leavelive.accommodation.repository.AccommodationResRepository;
+import leavelive.accommodation.repository.ReservationRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.jni.Local;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -20,8 +18,8 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class AccommodationResServiceImpl {
-    private final AccommodationResRepository repo;
+public class ReservationServiceImpl {
+    private final ReservationRepository repo;
     private final AccommodationRepository articleRepo;
 
     public List<AccommodationResDto> findByUserId(String userId) {

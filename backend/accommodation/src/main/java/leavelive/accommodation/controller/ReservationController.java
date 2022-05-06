@@ -1,33 +1,21 @@
 package leavelive.accommodation.controller;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.TokenExpiredException;
-import com.auth0.jwt.interfaces.DecodedJWT;
-import leavelive.accommodation.domain.dto.AccommodationFavDto;
 import leavelive.accommodation.domain.dto.AccommodationResDto;
-import leavelive.accommodation.service.AccommodationResServiceImpl;
+import leavelive.accommodation.service.ReservationServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.nio.charset.Charset;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/accommodation/reservation")
 @RequiredArgsConstructor
 @Slf4j
-public class AccommodationResController {
-    private final AccommodationResServiceImpl service;
+public class ReservationController {
+    private final ReservationServiceImpl service;
 
     @GetMapping("/")
     public ResponseEntity<List<AccommodationResDto>> getAllAccommodationFav(HttpServletResponse response) {

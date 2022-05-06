@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface AccommodationFavRepository extends JpaRepository<AccommodationFav,Long> {
+public interface FavoriteRepository extends JpaRepository<AccommodationFav,Long> {
     @Query(value = "delete from AccommodationFav i where i.accommodationArticle.id=:id")
     void deleteByAccommodationId(@Param("id") Long id);
 

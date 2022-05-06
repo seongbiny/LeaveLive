@@ -5,22 +5,19 @@ import leavelive.accommodation.domain.AccommodationFav;
 import leavelive.accommodation.domain.dto.AccommodationArticleDto;
 import leavelive.accommodation.exception.FileNotFoundException;
 import leavelive.accommodation.exception.MyResourceNotFoundException;
-import leavelive.accommodation.repository.AccommodationFavRepository;
+import leavelive.accommodation.repository.FavoriteRepository;
 import leavelive.accommodation.repository.AccommodationRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
-import org.apache.tomcat.jni.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.Null;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.FileSystemException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -30,10 +27,10 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class AccommodationServiceImpl implements AccommodationService{
+public class AccommodationServiceImpl{
     private final AccommodationRepository repo;
-    private final AccommodationFavRepository favRepo;
-    @Override
+    private final FavoriteRepository favRepo;
+
     public List<AccommodationArticleDto> getAllAccommodationByLoc(String loc) {
         List<AccommodationArticle> entities=repo.findAllByLocStartsWith(loc);
         //entity를 dto로 변환
@@ -44,7 +41,6 @@ public class AccommodationServiceImpl implements AccommodationService{
         }
         return list;
     }
-    @Override
     public List<AccommodationArticleDto> getAllAccommodation() {
         List<AccommodationArticle> entities=repo.findAll();
         //entity를 dto로 변환
@@ -55,8 +51,6 @@ public class AccommodationServiceImpl implements AccommodationService{
         }
         return list;
     }
-
-    @Override
     public AccommodationArticleDto getAccommodation(Long id) {
         Optional<AccommodationArticle> entity=repo.findById(id);
         if(!entity.isPresent())throw new MyResourceNotFoundException("해당하는 숙소가 없습니다.");
@@ -65,7 +59,6 @@ public class AccommodationServiceImpl implements AccommodationService{
         return dto.of(entity.get());
     }
 
-    @Override
     public Boolean delete(Long id,String userId) {
         // 내가 작성한 숙소가 맞는지 확인
         Optional<AccommodationArticle> accommodationArticle=repo.findById(id);
@@ -83,7 +76,6 @@ public class AccommodationServiceImpl implements AccommodationService{
         return true;
     }
 
-    @Override
     public Long save(AccommodationArticleDto dto,String userId, List<MultipartFile> files) {
         dto.setUserId(userId);
         AccommodationArticle entity=new AccommodationArticle();
@@ -97,7 +89,6 @@ public class AccommodationServiceImpl implements AccommodationService{
         return accommodationArticle.getId();
     }
 
-    @Override
     public AccommodationArticleDto update(AccommodationArticleDto dto,Long id,String userId) {
         Optional<AccommodationArticle> entity=repo.findById(id);
         AccommodationArticle result=new AccommodationArticle();
@@ -136,11 +127,7 @@ public class AccommodationServiceImpl implements AccommodationService{
         return dto;
     }
 
-    @Override
     public String saveImage(List<MultipartFile> files) {
-        for (MultipartFile file:files){
-            log.info("AccommodationServiceImpl.saveImage.file:"+file.getOriginalFilename());
-        }
         String images="";
         if(files!=null){
             LocalDateTime now= LocalDateTime.now(); //현재 시간 저장
@@ -201,7 +188,6 @@ public class AccommodationServiceImpl implements AccommodationService{
         return images;
     }
 
-    @Override
     public byte[] findImage(String imagePath) throws IOException {
         InputStream imageStream;
         try{

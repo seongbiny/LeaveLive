@@ -1,7 +1,7 @@
 package leavelive.accommodation.controller;
 
 import leavelive.accommodation.domain.dto.AccommodationFavDto;
-import leavelive.accommodation.service.AccommodationFavServiceImpl;
+import leavelive.accommodation.service.FavoriteServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -15,8 +15,8 @@ import java.util.List;
 @RequestMapping("/accommodation/favorite")
 @RequiredArgsConstructor
 @Slf4j
-public class AccommodationFavController {
-    private final AccommodationFavServiceImpl service;
+public class FavoriteController {
+    private final FavoriteServiceImpl service;
 
     @GetMapping("/")
     public ResponseEntity<List<AccommodationFavDto>> getAllAccommodationFav(HttpServletResponse response) {

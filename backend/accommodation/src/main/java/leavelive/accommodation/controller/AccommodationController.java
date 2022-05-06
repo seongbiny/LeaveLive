@@ -1,17 +1,12 @@
 package leavelive.accommodation.controller;
 
-import leavelive.accommodation.domain.AccommodationArticle;
 import leavelive.accommodation.domain.dto.AccommodationArticleDto;
-import leavelive.accommodation.service.AccommodationService;
+import leavelive.accommodation.service.AccommodationServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.IOUtils;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -23,7 +18,7 @@ import java.util.List;
 @RequestMapping("/accommodation")
 @Slf4j
 public class AccommodationController {
-    private final AccommodationService service;
+    private final AccommodationServiceImpl service;
 
     @GetMapping("/all")
     public ResponseEntity<List<AccommodationArticleDto>> getAllAccommodation(@RequestParam("accommodation_loc") String loc){

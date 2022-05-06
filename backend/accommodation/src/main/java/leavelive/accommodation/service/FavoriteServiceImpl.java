@@ -4,20 +4,19 @@ import leavelive.accommodation.domain.AccommodationArticle;
 import leavelive.accommodation.domain.AccommodationFav;
 import leavelive.accommodation.domain.dto.AccommodationFavDto;
 import leavelive.accommodation.exception.MyResourceNotFoundException;
-import leavelive.accommodation.repository.AccommodationFavRepository;
+import leavelive.accommodation.repository.FavoriteRepository;
 import leavelive.accommodation.repository.AccommodationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class AccommodationFavServiceImpl {
-    private final AccommodationFavRepository favRepo;
+public class FavoriteServiceImpl {
+    private final FavoriteRepository favRepo;
     private final AccommodationRepository repo;
 
     public List<AccommodationFavDto> getAllByUserId(String userId){
