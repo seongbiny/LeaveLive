@@ -64,6 +64,13 @@ class ActivityServiceTests {
 	@Test
 	@Transactional
 	public void getAllFavTest(){
-		log.info("ActivityApplicationTests.getAllFavTest.list:"+favService.getAllFav("1"));
+		log.info("ActivityApplicationTests.getAllFavTest.list:"+favService.getAllFav("114760122369855290515GOOGLE"));
+	}
+
+	@Test
+	@Transactional
+	public void delFavTest(){
+		favService.delFav(1L,"114760122369855290515GOOGLE");
+		log.info("ActivityApplicationTests.delFavTest.list:"+favService.getAllFav("114760122369855290515GOOGLE"));
 	}
 }

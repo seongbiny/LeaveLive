@@ -27,4 +27,12 @@ public class FavoriteController {
         List<FavoriteDto> list = service.getAllFav(userId);
         return new ResponseEntity(list, HttpStatus.OK);
     }
+
+    @DeleteMapping("/{activity_favorite_id}")
+    public ResponseEntity<String> delFavorite(HttpServletResponse response,@PathVariable("activity_favorite_id") Long id) {
+        String userId = response.getHeader("userId");
+        log.info("FavoriteController.delFavorite.userId:" + userId);
+        String result = service.delFav(id,userId);
+        return new ResponseEntity(result, HttpStatus.OK);
+    }
 }
