@@ -67,7 +67,7 @@ class DiaryService(private val diaryRepository: DiaryRepository, private val mod
         images.map {
             val uniquePath = "${LocalDate.now().format(DateTimeFormatter.ISO_DATE)}${UUID.randomUUID()}"
             var path =
-                "${File.separator}home${File.separator}ubuntu${File.separator}images${File.separator}diary${File.separator}${uniquePath}"
+                "/home/ubuntu/images/diary/${uniquePath}"
             when (it.contentType?.lowercase()) {
                 "image/png" -> path += ".png"
                 "image/jpeg" -> path += ".jpeg"
