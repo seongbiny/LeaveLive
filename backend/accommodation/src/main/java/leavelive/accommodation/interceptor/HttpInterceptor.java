@@ -34,6 +34,7 @@ public class HttpInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         System.out.println("preHandler 실행--------");
         String userId=null;
+//        String userId="114760122369855290515GOOGLE";
         String token=request.getHeader("Authorization");
         try{
             DecodedJWT decodeToken = JWT.require(Algorithm.HMAC512(SECRET_KEY))

@@ -42,7 +42,7 @@ public class AccommodationResServiceImpl {
         if(request.getCnt()<=0 || request.getCnt()>entity.get().getCnt()) throw new NullPointerException("인원수가 0이하거나 수용할 수 있는 인원을 초과했습니다.");
         // 예약이 되어있는지 확인
         List<AccommodationRes> list=repo.findByAccommodationArticleId(id);
-        log.info("AccommodationServiceTest.saveReservation.list:"+list);
+        log.info("AccommodationResService.saveReservation.list:"+list);
         if(list!=null || list.size()>0){
             boolean flag=true;
             for (AccommodationRes res:list){
@@ -55,12 +55,13 @@ public class AccommodationResServiceImpl {
                      * start<myEnd<=end ->x
                      */            
                     if(!myStart.isBefore(start) && myStart.isBefore(end)){
-                        log.info("AccommodationServiceTest.saveReservation:시작날짜가 잘못되었음");
+                        log.info("AccommodationResService.saveReservation:시작날짜가 잘못되었음");
                         flag=false;
                         break;
                     }
+                    start=start.plusDays(1);
                     if(!myEnd.isBefore(start) && myEnd.isBefore(end)){
-                        log.info("AccommodationServiceTest.saveReservation:종료날짜가 잘못되었음");
+                        log.info("AccommodationResService.saveReservation:종료날짜가 잘못되었음");
                         flag=false;
                         break;
                     }
