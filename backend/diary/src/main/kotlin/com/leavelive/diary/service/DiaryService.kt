@@ -75,7 +75,7 @@ class DiaryService(private val diaryRepository: DiaryRepository, private val mod
             val file = File(path)
             if (!file.exists()) file.mkdirs()
             it.transferTo(File("$path/${uniquePath}"))
-            picPath += "$path, "
+            picPath += "diary/${uniquePath}, "
         }
 
         return picPath.substring(0, picPath.length - 1)
