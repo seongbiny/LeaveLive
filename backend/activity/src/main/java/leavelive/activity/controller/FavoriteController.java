@@ -35,4 +35,12 @@ public class FavoriteController {
         String result = service.delFav(id,userId);
         return new ResponseEntity(result, HttpStatus.OK);
     }
+
+    @PostMapping("/{activity_id}")
+    public ResponseEntity<Long> saveFavorite(HttpServletResponse response,@PathVariable("activity_id") Long id) {
+        String userId = response.getHeader("userId");
+        log.info("FavoriteController.delFavorite.userId:" + userId);
+        Long result = service.saveFav(id,userId);
+        return new ResponseEntity(result, HttpStatus.OK);
+    }
 }
