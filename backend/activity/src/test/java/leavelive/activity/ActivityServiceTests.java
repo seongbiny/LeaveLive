@@ -2,6 +2,7 @@ package leavelive.activity;
 
 import leavelive.activity.domain.dto.ActivityDto;
 import leavelive.activity.service.ActivityService;
+import leavelive.activity.service.FavoriteService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -21,6 +22,9 @@ class ActivityServiceTests {
 
 	@Autowired
 	ActivityService service;
+
+	@Autowired
+	FavoriteService favService;
 
 	@Test
 	@Transactional
@@ -57,4 +61,9 @@ class ActivityServiceTests {
 		log.info("ActivityApplicationTests.updateActTest.Activity:"+service.getAct(3L));
 	}
 
+	@Test
+	@Transactional
+	public void getAllFavTest(){
+		log.info("ActivityApplicationTests.getAllFavTest.list:"+favService.getAllFav("1"));
+	}
 }
