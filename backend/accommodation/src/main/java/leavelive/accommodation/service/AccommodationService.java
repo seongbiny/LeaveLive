@@ -10,7 +10,7 @@ public interface AccommodationService {
     List<AccommodationArticleDto> getAllAccommodationByLoc(String loc);
     List<AccommodationArticleDto> getAllAccommodation();
     AccommodationArticleDto getAccommodation(Long id);
-    String delete(Long id,String userId);
+    Boolean delete(Long id,String userId);
     Long save(AccommodationArticleDto dto,String userId,List<MultipartFile> files);
     AccommodationArticleDto update(AccommodationArticleDto dto, Long id, String userId);
     String saveImage(List<MultipartFile> files);

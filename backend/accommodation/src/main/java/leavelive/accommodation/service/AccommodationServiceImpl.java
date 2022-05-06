@@ -66,7 +66,7 @@ public class AccommodationServiceImpl implements AccommodationService{
     }
 
     @Override
-    public String delete(Long id,String userId) {
+    public Boolean delete(Long id,String userId) {
         // 내가 작성한 숙소가 맞는지 확인
         Optional<AccommodationArticle> accommodationArticle=repo.findById(id);
         if(!accommodationArticle.isPresent()) throw new MyResourceNotFoundException("해당하는 숙소가 없습니다.");
@@ -80,7 +80,7 @@ public class AccommodationServiceImpl implements AccommodationService{
             }
         }
         repo.deleteById(id);
-        return "ok";
+        return true;
     }
 
     @Override

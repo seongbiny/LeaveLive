@@ -54,11 +54,11 @@ public class AccommodationFavServiceImpl {
         AccommodationFav entity=new AccommodationFav();
         return favRepo.save(entity.of(dto)).getId();
     }
-    public String delete(Long id,String userId){
+    public Boolean delete(Long id,String userId){
         Optional<AccommodationFav> accommodationFav=favRepo.findById(id);
         if(!accommodationFav.isPresent()) throw new MyResourceNotFoundException("해당하는 숙소가 없습니다.");
         if(!accommodationFav.get().getUserId().equals(userId)) throw new MyResourceNotFoundException("자신이 등록한 숙소만 삭제할 수 있습니다.");
         favRepo.deleteById(id);
-        return "ok";
+        return true;
     }
 }

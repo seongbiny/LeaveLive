@@ -35,10 +35,10 @@ public class AccommodationFavController {
     }
 
     @DeleteMapping("/{accommodation_fav_id}")
-    public ResponseEntity<String> deleteAccommodationFav(HttpServletResponse response, @PathVariable("accommodation_fav_id") Long id) {
+    public ResponseEntity<Boolean> deleteAccommodationFav(HttpServletResponse response, @PathVariable("accommodation_fav_id") Long id) {
         String userId = response.getHeader("userId");
         log.info("AcommodationResController.getAllAccommodationFav.userId:" + userId);
-        String result=service.delete(id, userId);
+        Boolean result=service.delete(id, userId);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

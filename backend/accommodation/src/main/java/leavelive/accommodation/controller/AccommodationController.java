@@ -38,10 +38,10 @@ public class AccommodationController {
     }
 
     @DeleteMapping("/{accommodation_id}")
-    public ResponseEntity<String> deleteAccommodation(HttpServletResponse response, @PathVariable("accommodation_id") Long id){
+    public ResponseEntity<Boolean> deleteAccommodation(HttpServletResponse response, @PathVariable("accommodation_id") Long id){
         String userId = response.getHeader("userId");
         log.info("AcommodationResController.getAllAccommodationFav.userId:" + userId);
-        String result=service.delete(id,userId);
+        Boolean result=service.delete(id,userId);
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
