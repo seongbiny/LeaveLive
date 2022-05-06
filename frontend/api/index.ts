@@ -1,6 +1,12 @@
 import axios from "axios";
 
+export const FRONTEND_URL =
+  process.env.NODE_ENV === "production"
+    ? "http://k6c105.p.ssafy.io"
+    : "http://localhost:3000";
+
 export const BACKEND_URL = "http://k6c105.p.ssafy.io:8080/api";
+
 // export const BACKEND_URL =
 //   process.env.NODE_ENV === "production"
 //     ? "http://k6c105.p.ssafy.io:8080/api"
@@ -14,24 +20,24 @@ function apiInstance() {
     },
   });
 
-  //   // 요청 인터셉터 추가
-  // instance.interceptors.request.use(
-  //   // 요청을 보내기 전 수행해야 할 일
-  //   (config: any) => {
-  //     // 모든 요청에 헤더 토큰 추가
-  //     const authorization = localStorage.getItem("authorization");
-  //     const refreshtoken = localStorage.getItem("refreshtoken");
-  //     if (authorization && refreshtoken) {
-  //       config.headers.authorization = authorization;
-  //       config.headers.refreshtoken = refreshtoken;
-  //     }
-  //     return config;
-  //   },
-  //   // 오류 요청을 보내기 전 수행해야 할 일
-  //   (error) => {
-  //     return Promise.reject(error);
-  //   }
-  // );
+    // 요청 인터셉터 추가
+  instance.interceptors.request.use(
+    // 요청을 보내기 전 수행해야 할 일
+    (config: any) => {
+      // 모든 요청에 헤더 토큰 추가
+      const access_token = localStorage.getItem("access_token");
+      const refresh_token = localStorage.getItem("refresh_token");
+      if (access_token && refresh_token) {
+        config.headers.authorization = access_token;
+        config.headers.refreshtoken = refresh_token;
+      }
+      return config;
+    },
+    // 오류 요청을 보내기 전 수행해야 할 일
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
 
   // // 응답 인터셉터 추가
   // instance.interceptors.response.use(
