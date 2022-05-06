@@ -20,7 +20,7 @@ public class AccommodationFavServiceImpl {
     private final AccommodationRepository repo;
 
     public List<AccommodationFavDto> getAllByUserId(String userId){
-        List<AccommodationFav> entities=favRepo.findByUserId(userId);
+        List<AccommodationFav> entities=favRepo.findAllByUserId(userId);
         List<AccommodationFavDto> list=new ArrayList<>();
         for (int i=0; i<entities.size(); i++){
             AccommodationFavDto dto=new AccommodationFavDto();
@@ -41,12 +41,17 @@ public class AccommodationFavServiceImpl {
     public Long save(Long id,String userId){
         Optional<AccommodationArticle> accommodationArticle= repo.findById(id);
         if(!accommodationArticle.isPresent()) throw new NullPointerException("해당하는 숙소가 없습니다.");
+        List<AccommodationFav> entities=favRepo.findAllByUserId(userId);
+        for(AccommodationFav entity:entities){
+            if(entity.getAccommodationArticle().getId()==id){
+                return 0L;
+            }
+        }
         AccommodationFavDto dto=new AccommodationFavDto();
-        dto.setUserId(userId); //임의로 준 userId
+        dto.setUserId(userId);
         dto.setAccommodationArticle(accommodationArticle.get());
         AccommodationFav entity=new AccommodationFav();
-        AccommodationFav result=favRepo.save(entity.of(dto));
-        return result.getId();
+        return favRepo.save(entity.of(dto)).getId();
     }
     public String delete(Long id,String userId){
         Optional<AccommodationFav> accommodationFav=favRepo.findById(id);

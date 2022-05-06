@@ -14,6 +14,5 @@ public interface AccommodationFavRepository extends JpaRepository<AccommodationF
     @Query(value="select i from AccommodationFav i where i.accommodationArticle.id=:id")
     List<AccommodationFav> findAllByAcommodationId(@Param("id") Long id);
 
-    @Query(value="select i from AccommodationFav i where i.userId=:userId")
-    List<AccommodationFav> findByUserId(@Param("userId") String userId);
+    List<AccommodationFav> findAllByUserId(String userId);
 }
