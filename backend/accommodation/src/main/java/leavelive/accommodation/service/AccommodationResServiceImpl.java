@@ -4,6 +4,7 @@ import leavelive.accommodation.domain.AccommodationArticle;
 import leavelive.accommodation.domain.AccommodationRes;
 import leavelive.accommodation.domain.dto.AccommodationFavDto;
 import leavelive.accommodation.domain.dto.AccommodationResDto;
+import leavelive.accommodation.exception.MyResourceNotFoundException;
 import leavelive.accommodation.repository.AccommodationRepository;
 import leavelive.accommodation.repository.AccommodationResRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,7 @@ public class AccommodationResServiceImpl {
 
     public List<AccommodationResDto> findByUserId(String userId) {
         List<AccommodationRes> entities=repo.findByUserId(userId);
-        if(entities==null) throw new NullPointerException("예약한 숙소가 없습니다.");
+        if(entities==null) throw new MyResourceNotFoundException("예약한 숙소가 없습니다.");
         List<AccommodationResDto> list=new ArrayList<>();
         for (int i=0; i<entities.size(); i++){
             AccommodationResDto dto=new AccommodationResDto();
@@ -37,9 +38,9 @@ public class AccommodationResServiceImpl {
         Optional<AccommodationArticle> entity=articleRepo.findById(id);
         LocalDate myStart=request.getStartDate();
         LocalDate myEnd=request.getEndDate();
-        if(!entity.isPresent()) throw new NullPointerException("해당하는 숙소가 없습니다.");
-        if(myStart.isAfter(myEnd)) throw new NullPointerException("종료일이 시작일보다 앞입니다.");
-        if(request.getCnt()<=0 || request.getCnt()>entity.get().getCnt()) throw new NullPointerException("인원수가 0이하거나 수용할 수 있는 인원을 초과했습니다.");
+        if(!entity.isPresent()) throw new MyResourceNotFoundException("해당하는 숙소가 없습니다.");
+        if(myStart.isAfter(myEnd)) throw new MyResourceNotFoundException("종료일이 시작일보다 앞입니다.");
+        if(request.getCnt()<=0 || request.getCnt()>entity.get().getCnt()) throw new MyResourceNotFoundException("인원수가 0이하거나 수용할 수 있는 인원을 초과했습니다.");
         // 예약이 되어있는지 확인
         List<AccommodationRes> list=repo.findByAccommodationArticleId(id);
         log.info("AccommodationResService.saveReservation.list:"+list);
@@ -70,7 +71,7 @@ public class AccommodationResServiceImpl {
                     break;
                 }
             }
-            if(!flag) throw new NullPointerException("이미 해당 기간에 예약되어 있는 숙소입니다.");
+            if(!flag) throw new MyResourceNotFoundException("이미 해당 기간에 예약되어 있는 숙소입니다.");
         }
         AccommodationResDto dto=new AccommodationResDto();
         dto.setAccommodationArticle(entity.get());
@@ -86,9 +87,9 @@ public class AccommodationResServiceImpl {
     }
     public String deleteReservation(String userId,Long id){
         Optional<AccommodationRes> entity=repo.findById(id);
-        if(!entity.isPresent()) throw new NullPointerException("해당하는 숙소가 없습니다.");
+        if(!entity.isPresent()) throw new MyResourceNotFoundException("해당하는 숙소가 없습니다.");
         log.info("비교"+entity.get().getUserId());
-        if(!entity.get().getUserId().equals(userId)) throw new NullPointerException("자신이 등록한 예약만 삭제할 수 있습니다.");
+        if(!entity.get().getUserId().equals(userId)) throw new MyResourceNotFoundException("자신이 등록한 예약만 삭제할 수 있습니다.");
         repo.deleteById(id);
         return "ok";
     }

@@ -2,6 +2,9 @@ server:
   port: 8084
   servlet:
     context-path: /api
+  error:
+    include-exception: false
+    include-stacktrace: never
 
 spring:
   # DB 설정

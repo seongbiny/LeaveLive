@@ -3,6 +3,7 @@ package leavelive.accommodation.service;
 import leavelive.accommodation.domain.AccommodationArticle;
 import leavelive.accommodation.domain.AccommodationFav;
 import leavelive.accommodation.domain.dto.AccommodationFavDto;
+import leavelive.accommodation.exception.MyResourceNotFoundException;
 import leavelive.accommodation.repository.AccommodationFavRepository;
 import leavelive.accommodation.repository.AccommodationRepository;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +41,7 @@ public class AccommodationFavServiceImpl {
 
     public Long save(Long id,String userId){
         Optional<AccommodationArticle> accommodationArticle= repo.findById(id);
-        if(!accommodationArticle.isPresent()) throw new NullPointerException("해당하는 숙소가 없습니다.");
+        if(!accommodationArticle.isPresent()) throw new MyResourceNotFoundException("해당하는 숙소가 없습니다.");
         List<AccommodationFav> entities=favRepo.findAllByUserId(userId);
         for(AccommodationFav entity:entities){
             if(entity.getAccommodationArticle().getId()==id){
@@ -55,8 +56,8 @@ public class AccommodationFavServiceImpl {
     }
     public String delete(Long id,String userId){
         Optional<AccommodationFav> accommodationFav=favRepo.findById(id);
-        if(!accommodationFav.isPresent()) throw new NullPointerException("해당하는 숙소가 없습니다.");
-        if(!accommodationFav.get().getUserId().equals(userId)) throw new NullPointerException("자신이 등록한 숙소만 삭제할 수 있습니다.");
+        if(!accommodationFav.isPresent()) throw new MyResourceNotFoundException("해당하는 숙소가 없습니다.");
+        if(!accommodationFav.get().getUserId().equals(userId)) throw new MyResourceNotFoundException("자신이 등록한 숙소만 삭제할 수 있습니다.");
         favRepo.deleteById(id);
         return "ok";
     }
