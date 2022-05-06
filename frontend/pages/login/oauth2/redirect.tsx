@@ -3,9 +3,12 @@ import { useRouter } from "next/router";
 import { KakaoLoginRequest } from "../../../api/user";
 import axios from "axios";
 import { FRONTEND_URL } from "../../../api";
+import { useAppDispatch } from "../../../hooks";
+import { setIsLogin } from "../../../store/slices/userSlice";
 
 const Redirect = () => {
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
   // 회원가입/로그인 성공시 callback 함수
   const onLoginSuccess = useCallback(
@@ -13,8 +16,10 @@ const Redirect = () => {
     ({ data: { access_token, refresh_token } }: any) => {
       localStorage.setItem("access_token", access_token);
       localStorage.setItem("refresh_token", refresh_token);
+
+      dispatch(setIsLogin(true));
     },
-    []
+    [dispatch]
   );
 
   // kakao 토큰 성공 시 callback 함수
