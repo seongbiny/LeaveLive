@@ -2,6 +2,7 @@ import React, { useEffect, useCallback } from "react";
 import { useRouter } from "next/router";
 import { KakaoLoginRequest } from "../../../api/user";
 import axios from "axios";
+import { FRONTEND_URL } from "../../../api";
 
 const Redirect = () => {
   const router = useRouter();
@@ -31,31 +32,34 @@ const Redirect = () => {
       // 메인 화면으로 이동
       router.push("/");
     },
-    []
+    [router, onLoginSuccess]
   );
 
   // kakao에서 토큰 받아오는 함수
-  const kakaoGetToken = useCallback((code: string) => {
-    const params: any = {
-      grant_type: "authorization_code",
-      client_id: process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID,
-      redirect_uri: "http://www.localhost:3000/login/oauth2/redirect",
-      code,
-    };
+  const kakaoGetToken = useCallback(
+    (code: string) => {
+      const params: any = {
+        grant_type: "authorization_code",
+        client_id: process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID,
+        redirect_uri: `${FRONTEND_URL}/login/oauth2/redirect`,
+        code,
+      };
 
-    const queryParams = Object.keys(params)
-      .map((k) => encodeURIComponent(k) + "=" + encodeURI(params[k]))
-      .join("&");
+      const queryParams = Object.keys(params)
+        .map((k) => encodeURIComponent(k) + "=" + encodeURI(params[k]))
+        .join("&");
 
-    axios
-      .post(`https://kauth.kakao.com/oauth/token`, queryParams, {
-        headers: {
-          "Content-type": "application/x-www-form-urlencoded",
-        },
-      })
-      .then(onKakaoGetTokenSuccess)
-      .catch((error: Error) => console.log(error));
-  }, []);
+      axios
+        .post(`https://kauth.kakao.com/oauth/token`, queryParams, {
+          headers: {
+            "Content-type": "application/x-www-form-urlencoded",
+          },
+        })
+        .then(onKakaoGetTokenSuccess)
+        .catch((error: Error) => console.log(error));
+    },
+    [onKakaoGetTokenSuccess]
+  );
 
   useEffect(() => {
     if (router.query.code) {
@@ -63,7 +67,7 @@ const Redirect = () => {
       // getCode(code);
       kakaoGetToken(code);
     }
-  }, [router]);
+  }, [router, kakaoGetToken]);
 
   return null;
 };

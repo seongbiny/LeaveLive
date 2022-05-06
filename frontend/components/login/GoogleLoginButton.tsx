@@ -2,6 +2,9 @@ import React, { useCallback } from "react";
 import { GoogleLogin } from "react-google-login";
 import { GoogleLoginRequest } from "../../api/user";
 import styled from "styled-components";
+import { useRouter } from "next/router";
+import { useAppDispatch } from "../../hooks";
+import { setIsLogin } from "../../store/slices/userSlice";
 
 const GoogleButton = styled.button`
   width: 191px;
@@ -12,22 +15,25 @@ const GoogleButton = styled.button`
 `;
 
 const GoogleLoginButton = () => {
-  const onSuccess = useCallback((response: object) => {
-    console.log(response);
-    GoogleLoginRequest(
-      JSON.stringify(response),
-      ({ data }: any) => {
-        console.log(response);
+  const router = useRouter();
+  const dispatch = useAppDispatch();
 
-        const authorization = `Bearer ${data[0]}`;
-        const refreshtoken = `Refresh Bearer ${data[1]}`;
+  const onSuccess = useCallback(
+    (response: object) => {
+      GoogleLoginRequest(
+        JSON.stringify(response),
+        ({ data }: any) => {
+          localStorage.setItem("access_token", data[0]);
+          localStorage.setItem("refresh_token", data[1]);
 
-        localStorage.setItem("authorization", authorization);
-        localStorage.setItem("refreshtoken", refreshtoken);
-      },
-      (error: Error) => console.log(error)
-    );
-  }, []);
+          dispatch(setIsLogin(true));
+          router.push("/");
+        },
+        (error: Error) => console.log(error)
+      );
+    },
+    [router, dispatch]
+  );
 
   return (
     <GoogleLogin
