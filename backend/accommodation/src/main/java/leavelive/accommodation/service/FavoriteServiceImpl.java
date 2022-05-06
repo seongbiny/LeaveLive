@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -21,21 +22,11 @@ public class FavoriteServiceImpl {
 
     public List<AccommodationFavDto> getAllByUserId(String userId){
         List<AccommodationFav> entities=favRepo.findAllByUserId(userId);
-        List<AccommodationFavDto> list=new ArrayList<>();
-        for (int i=0; i<entities.size(); i++){
-            AccommodationFavDto dto=new AccommodationFavDto();
-            list.add(dto.of(entities.get(i)));
-        }
-        return list;
+        return entities.stream().map(AccommodationFavDto::of).collect(Collectors.toList());
     }
     public List<AccommodationFavDto> findAll(){
         List<AccommodationFav> entities=favRepo.findAll();
-        List<AccommodationFavDto> list=new ArrayList<>();
-        for (int i=0; i<entities.size(); i++){
-            AccommodationFavDto dto=new AccommodationFavDto();
-            list.add(dto.of(entities.get(i)));
-        }
-        return list;
+        return entities.stream().map(AccommodationFavDto::of).collect(Collectors.toList());
     }
 
     public Long save(Long id,String userId){
@@ -50,8 +41,7 @@ public class FavoriteServiceImpl {
         AccommodationFavDto dto=new AccommodationFavDto();
         dto.setUserId(userId);
         dto.setAccommodationArticle(accommodationArticle.get());
-        AccommodationFav entity=new AccommodationFav();
-        return favRepo.save(entity.of(dto)).getId();
+        return favRepo.save(AccommodationFav.of(dto)).getId();
     }
     public Boolean delete(Long id,String userId){
         Optional<AccommodationFav> accommodationFav=favRepo.findById(id);

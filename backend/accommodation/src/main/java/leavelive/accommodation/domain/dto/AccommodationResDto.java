@@ -21,7 +21,7 @@ public class AccommodationResDto {
     private AccommodationArticle accommodationArticle;
     private Long scheduleId;
 
-    public AccommodationResDto of(AccommodationRes entity){
+    public static AccommodationResDto of(AccommodationRes entity){
         return AccommodationResDto.builder()
                 .id(entity.getId())
                 .startDate(entity.getStartDate())

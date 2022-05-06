@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -25,13 +26,16 @@ public class ReservationServiceImpl {
     public List<AccommodationResDto> findByUserId(String userId) {
         List<AccommodationRes> entities=repo.findByUserId(userId);
         if(entities==null) throw new MyResourceNotFoundException("예약한 숙소가 없습니다.");
-        List<AccommodationResDto> list=new ArrayList<>();
-        for (int i=0; i<entities.size(); i++){
-            AccommodationResDto dto=new AccommodationResDto();
-            list.add(dto.of(entities.get(i)));
-        }
+        List<AccommodationResDto> list=entities.stream().map(AccommodationResDto::of).collect(Collectors.toList());
         return list;
     }
+
+    /**
+     * 예약할 수 있는 날짜인지 확인
+     * myStart와 myEnd가 구간 안에 있으면 이미 예약되어있으므로 예약 불가
+     * start<=myStart<end ->x
+     * start<myEnd<=end ->x
+     */
     public Long saveReservation(String userId, Long id, AccommodationResDto request){
         Optional<AccommodationArticle> entity=articleRepo.findById(id);
         LocalDate myStart=request.getStartDate();
@@ -39,7 +43,6 @@ public class ReservationServiceImpl {
         if(!entity.isPresent()) throw new MyResourceNotFoundException("해당하는 숙소가 없습니다.");
         if(myStart.isAfter(myEnd)) throw new MyResourceNotFoundException("종료일이 시작일보다 앞입니다.");
         if(request.getCnt()<=0 || request.getCnt()>entity.get().getCnt()) throw new MyResourceNotFoundException("인원수가 0이하거나 수용할 수 있는 인원을 초과했습니다.");
-        // 예약이 되어있는지 확인
         List<AccommodationRes> list=repo.findByAccommodationArticleId(id);
         log.info("AccommodationResService.saveReservation.list:"+list);
         if(list!=null || list.size()>0){
@@ -48,11 +51,6 @@ public class ReservationServiceImpl {
                 LocalDate start=res.getStartDate();
                 LocalDate end=res.getEndDate();
                 if(!start.isEqual(myStart) && !end.isEqual(myEnd)){
-                    /**
-                     * myStart와 myEnd가 구간 안에 있으면 이미 예약되어있으므로 예약 불가
-                     * start<=myStart<end ->x
-                     * start<myEnd<=end ->x
-                     */            
                     if(!myStart.isBefore(start) && myStart.isBefore(end)){
                         log.info("AccommodationResService.saveReservation:시작날짜가 잘못되었음");
                         flag=false;
@@ -71,22 +69,13 @@ public class ReservationServiceImpl {
             }
             if(!flag) throw new MyResourceNotFoundException("이미 해당 기간에 예약되어 있는 숙소입니다.");
         }
-        AccommodationResDto dto=new AccommodationResDto();
-        dto.setAccommodationArticle(entity.get());
-        dto.setUserId(userId);
-        dto.setStartDate(myStart);
-        dto.setEndDate(myEnd);
-        dto.setCnt(request.getCnt());
-        dto.setScheduleId(request.getScheduleId());
-        log.info("AccommodationServiceTest.saveReservation.dto:"+dto);
-        AccommodationRes accommodationRes=new AccommodationRes();
-        AccommodationRes result=repo.save(accommodationRes.of(dto));
-        return result.getId();
+        request.setAccommodationArticle(entity.get());
+        request.setUserId(userId);
+        return repo.save(AccommodationRes.of(request)).getId();
     }
     public Boolean deleteReservation(String userId,Long id){
         Optional<AccommodationRes> entity=repo.findById(id);
         if(!entity.isPresent()) throw new MyResourceNotFoundException("해당하는 숙소가 없습니다.");
-        log.info("비교"+entity.get().getUserId());
         if(!entity.get().getUserId().equals(userId)) throw new MyResourceNotFoundException("자신이 등록한 예약만 삭제할 수 있습니다.");
         repo.deleteById(id);
         return true;

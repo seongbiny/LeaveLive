@@ -36,7 +36,7 @@ public class AccommodationRes {
 
     private int cnt;
 
-    public AccommodationRes of(AccommodationResDto dto){
+    public static AccommodationRes of(AccommodationResDto dto){
         return AccommodationRes.builder()
                 .userId(dto.getUserId())
                 .accommodationArticle(dto.getAccommodationArticle())

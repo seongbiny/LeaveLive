@@ -15,7 +15,7 @@ public class AccommodationFavDto {
     private String userId;
     private AccommodationArticle accommodationArticle;
 
-    public AccommodationFavDto of(AccommodationFav entity){
+    public static AccommodationFavDto of(AccommodationFav entity){
         return AccommodationFavDto.builder()
                 .id(entity.getId())
                 .userId(entity.getUserId())

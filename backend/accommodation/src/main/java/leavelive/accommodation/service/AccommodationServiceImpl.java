@@ -23,6 +23,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -33,30 +34,16 @@ public class AccommodationServiceImpl{
 
     public List<AccommodationArticleDto> getAllAccommodationByLoc(String loc) {
         List<AccommodationArticle> entities=repo.findAllByLocStartsWith(loc);
-        //entity를 dto로 변환
-        List<AccommodationArticleDto> list=new ArrayList<>();
-        for (int i=0; i<entities.size(); i++){
-            AccommodationArticleDto dto=new AccommodationArticleDto();
-            list.add(dto.of(entities.get(i)));
-        }
-        return list;
+        return entities.stream().map(AccommodationArticleDto::of).collect(Collectors.toList());
     }
     public List<AccommodationArticleDto> getAllAccommodation() {
         List<AccommodationArticle> entities=repo.findAll();
-        //entity를 dto로 변환
-        List<AccommodationArticleDto> list=new ArrayList<>();
-        for (int i=0; i<entities.size(); i++){
-            AccommodationArticleDto dto=new AccommodationArticleDto();
-            list.add(dto.of(entities.get(i)));
-        }
-        return list;
+        return entities.stream().map(AccommodationArticleDto::of).collect(Collectors.toList());
     }
     public AccommodationArticleDto getAccommodation(Long id) {
         Optional<AccommodationArticle> entity=repo.findById(id);
         if(!entity.isPresent())throw new MyResourceNotFoundException("해당하는 숙소가 없습니다.");
-        //entity를 dto로 변환
-        AccommodationArticleDto dto=new AccommodationArticleDto();
-        return dto.of(entity.get());
+        return AccommodationArticleDto.of(entity.get());
     }
 
     public Boolean delete(Long id,String userId) {
@@ -68,9 +55,7 @@ public class AccommodationServiceImpl{
         // id를 가지고 있는 모든 favRepo 찾고, 삭제
         List<AccommodationFav> list=favRepo.findAllByAcommodationId(id);
         if(list!=null) {
-            for(AccommodationFav entity:list){
-                favRepo.deleteById(entity.getId());
-            }
+            for(AccommodationFav entity:list) favRepo.deleteById(entity.getId());
         }
         repo.deleteById(id);
         return true;
@@ -85,8 +70,7 @@ public class AccommodationServiceImpl{
             String img_path=saveImage(files);
             dto.setPicPath(img_path);
         }
-        AccommodationArticle accommodationArticle=repo.save(entity.of(dto));
-        return accommodationArticle.getId();
+        return repo.save(entity.of(dto)).getId();
     }
 
     public AccommodationArticleDto update(AccommodationArticleDto dto,Long id,String userId) {

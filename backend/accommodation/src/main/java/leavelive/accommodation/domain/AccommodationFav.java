@@ -26,7 +26,7 @@ public class AccommodationFav {
 
     private AccommodationArticle accommodationArticle;
 
-    public AccommodationFav of(AccommodationFavDto dto){
+    public static AccommodationFav of(AccommodationFavDto dto){
         return AccommodationFav.builder()
                 .id(dto.getId())
                 .userId(dto.getUserId())

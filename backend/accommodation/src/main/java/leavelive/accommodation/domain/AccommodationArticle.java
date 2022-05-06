@@ -37,7 +37,7 @@ public class AccommodationArticle {
 //    private List<AccommodationFav> favorite=new ArrayList<>();
 
     // dto -> entity
-    public AccommodationArticle of(AccommodationArticleDto dto){
+    public static AccommodationArticle of(AccommodationArticleDto dto){
         return AccommodationArticle.builder()
                 .loc(dto.getLoc())
                 .price(dto.getPrice())
