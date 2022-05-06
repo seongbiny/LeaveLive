@@ -12,5 +12,5 @@ public interface AccommodationRepository extends JpaRepository<AccommodationArti
 
 //    @Query(value = "select i from AccommodationArticle i where i.loc like ':loc%'")
 //    List<AccommodationArticle> findAllByLoc(@Param("loc") String loc);
-    List<AccommodationArticle> findByLocEndingWith(String loc);
+    List<AccommodationArticle> findAllByLocStartsWith(String loc);
 }

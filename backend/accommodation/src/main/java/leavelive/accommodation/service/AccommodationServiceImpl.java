@@ -33,7 +33,7 @@ public class AccommodationServiceImpl implements AccommodationService{
     private final AccommodationFavRepository favRepo;
     @Override
     public List<AccommodationArticleDto> getAllAccommodationByLoc(String loc) {
-        List<AccommodationArticle> entities=repo.findByLocEndingWith(loc);
+        List<AccommodationArticle> entities=repo.findAllByLocStartsWith(loc);
         //entity를 dto로 변환
         List<AccommodationArticleDto> list=new ArrayList<>();
         for (int i=0; i<entities.size(); i++){

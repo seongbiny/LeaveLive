@@ -25,8 +25,8 @@ import java.util.List;
 public class AccommodationController {
     private final AccommodationService service;
 
-    @GetMapping("/all/{accommodation_loc}")
-    public ResponseEntity<List<AccommodationArticleDto>> getAllAccommodation(@PathVariable("accommodation_loc") String loc){
+    @GetMapping("/all")
+    public ResponseEntity<List<AccommodationArticleDto>> getAllAccommodation(@RequestParam("accommodation_loc") String loc){
         List<AccommodationArticleDto> list=service.getAllAccommodationByLoc(loc);
         return new ResponseEntity(list, HttpStatus.OK);
     }
