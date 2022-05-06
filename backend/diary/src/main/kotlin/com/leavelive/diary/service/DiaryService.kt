@@ -66,11 +66,11 @@ class DiaryService(private val diaryRepository: DiaryRepository, private val mod
     private fun saveImages(images: List<MultipartFile>): String {
         var picPath = ""
         images.map {
-            val uniquePath = "${LocalDate.now().format(DateTimeFormatter.ISO_DATE)}${UUID.randomUUID()}"
-            var path = "/home/ubuntu/images/diary"
+            var uniquePath = "${LocalDate.now().format(DateTimeFormatter.ISO_DATE)}${UUID.randomUUID()}"
+            val path = "/home/ubuntu/images/diary"
             when (it.contentType?.lowercase()) {
-                "image/png" -> path += ".png"
-                "image/jpeg" -> path += ".jpeg"
+                "image/png" -> uniquePath += ".png"
+                "image/jpeg" -> uniquePath += ".jpeg"
             }
             val file = File(path)
             if (!file.exists()) file.mkdirs()
