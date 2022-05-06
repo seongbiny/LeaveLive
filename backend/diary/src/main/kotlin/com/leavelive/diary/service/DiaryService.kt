@@ -78,6 +78,6 @@ class DiaryService(private val diaryRepository: DiaryRepository, private val mod
             picPath += "diary/${uniquePath}, "
         }
 
-        return picPath.substring(0, picPath.length - 1)
+        return picPath.substring(0, picPath.length - 2)
     }
 }
