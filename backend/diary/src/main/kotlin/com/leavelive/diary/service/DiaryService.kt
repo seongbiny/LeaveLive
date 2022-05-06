@@ -10,6 +10,7 @@ import org.modelmapper.ModelMapper
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
 import java.io.File
+import java.nio.file.Paths
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -72,7 +73,9 @@ class DiaryService(private val diaryRepository: DiaryRepository, private val mod
                 "image/png" -> path += ".png"
                 "image/jpeg" -> path += ".jpeg"
             }
-            it.transferTo(Path(path))
+            val file = File(path)
+            if(!file.exists()) file.createNewFile()
+            it.transferTo(file)
             picPath += "$path, "
         }
 
