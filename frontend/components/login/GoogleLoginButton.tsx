@@ -27,7 +27,7 @@ const GoogleLoginButton = () => {
           localStorage.setItem("refresh_token", data[1]);
 
           dispatch(setIsLogin(true));
-          router.push("/");
+          router.push("/main");
         },
         (error: Error) => console.log(error)
       );

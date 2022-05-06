@@ -35,7 +35,7 @@ const Redirect = () => {
       );
 
       // 메인 화면으로 이동
-      router.push("/");
+      router.push("/main");
     },
     [router, onLoginSuccess]
   );
