@@ -1,6 +1,5 @@
 package leavelive.activity.config;
 
-import leavelive.activity.config.jwt.JwtAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -22,7 +21,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .addFilter(corsFilter)
                 .formLogin().disable()
-                .addFilter(new JwtAuthorizationFilter(authenticationManager()))
                 .httpBasic().disable()
                 .authorizeRequests()
                 .anyRequest().permitAll();

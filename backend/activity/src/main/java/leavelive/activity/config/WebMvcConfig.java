@@ -10,7 +10,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new HttpInterceptor())
-                .addPathPatterns(new String[]{"/activity/**"})
+                .addPathPatterns("/activity/**")
                 .excludePathPatterns(new String[]{"/activity/all/**", "/activity/images/**","/activity/detail/**"});
     }
 }
