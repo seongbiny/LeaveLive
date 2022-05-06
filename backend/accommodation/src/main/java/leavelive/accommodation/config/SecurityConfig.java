@@ -1,6 +1,5 @@
 package leavelive.accommodation.config;
 
-import leavelive.accommodation.config.jwt.JwtAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -24,7 +23,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .addFilter(corsFilter) //corsConfig에 등록된 필터를 거쳐감
                 .formLogin().disable() //기본적인 http session 로그인 form X
-                .addFilter(new JwtAuthorizationFilter(authenticationManager())) //AuthenticationManager 던져줘야함
                 .httpBasic().disable() //Authorization에 token을 들고가겠다.
                 .authorizeRequests()
                 .anyRequest().permitAll();
