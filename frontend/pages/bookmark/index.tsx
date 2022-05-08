@@ -1,69 +1,38 @@
-import React from "react";
-import Seo from "../../components/Seo";
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import List from "../../components/bookmark/list";
+import { useState } from "react";
+import BnbList from "../../components/bookmark/bnb";
+import ActivityList from "../../components/bookmark/activity";
+import styled from "styled-components";
 
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
-}
+const TabBox = styled.div`
+  &:hover{
+    color: skyblue;
+  }
+  height: 7vh;
+  border-bottom: 1px solid;
+  line-height: 7vh;
+  text-align: center;
+`;
 
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-function a11yProps(index: number) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
-}
+const Tabs = styled.div`
+  display: flex;
+  div {
+    width: 50%;
+  }
+  margin-bottom: 3vh;
+`;
 
 const Bookmark = () => {
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-  };
+  const [index, setIndex] = useState(0);
 
   return (
-    <Box sx={{ width: '100%', height: '100%', border: '1px solid' }}>
-      <Seo title="bookmark" />
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs  value={value} onChange={handleChange} variant="fullWidth" aria-label="basic tabs example" centered>
-          <Tab label="숙소" {...a11yProps(0)} />
-          <Tab label="액티비티" {...a11yProps(1)} />
-        </Tabs>
-      </Box>
-      <TabPanel value={value} index={0} >
-        <List />
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        Item Two
-      </TabPanel>
-      <div>총 금액</div>
-    </Box>
+    <div>
+      <Tabs>
+        <TabBox onClick={()=>(setIndex(0))} >숙소</TabBox>
+        <TabBox onClick={()=>(setIndex(1))}>액티비티</TabBox>
+      </Tabs>
+      {index === 0 && <BnbList />}
+      {index === 1 && <ActivityList />}
+    </div>
   )
 };
-
 export default Bookmark;
