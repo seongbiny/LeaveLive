@@ -39,16 +39,8 @@ const ImageContainer = styled.div<IImageContainerTypes>`
 `;
 
 const ImageForm = ({ images, setImages }: IPropTypes) => {
-  const [test, setTest] = useState<any>("");
   const handleImage = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      // const reader = new FileReader();
-      // reader.onload = () => {
-      //   setTest(reader.result);
-      // };
-
-      // if (test) console.log(test);
-
       const files = event.target.files;
       const nextImages = [];
       if (!files) return;
@@ -58,7 +50,6 @@ const ImageForm = ({ images, setImages }: IPropTypes) => {
         nextImages.push({ files: files[i], previewURL: imageURL });
       }
 
-      console.log(nextImages);
       setImages(nextImages);
     },
     [setImages]

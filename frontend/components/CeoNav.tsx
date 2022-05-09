@@ -19,7 +19,15 @@ const CeoNav = () => {
   );
 
   return (
-    <Paper sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}>
+    <Paper
+      sx={{
+        position: "sticky",
+        bottom: 0,
+        left: 0,
+        right: 0,
+        zIndex: 2,
+      }}
+    >
       <BottomNavigation value={value} onChange={handleChange}>
         <BottomNavigationAction value="/ceo" icon={<HomeRoundedIcon />} />
         <BottomNavigationAction
