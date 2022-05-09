@@ -49,17 +49,10 @@ public class AccommodationController {
     }
 
     @PatchMapping("/{accommodation_id}")
-    public ResponseEntity<AccommodationArticleDto> updateAccommodation(HttpServletResponse response, @PathVariable("accommodation_id") Long id, @RequestBody AccommodationArticleDto request){
+    public ResponseEntity<AccommodationArticleDto> updateAccommodation(HttpServletResponse response, @PathVariable("accommodation_id") Long id, @RequestPart(value="request") AccommodationArticleDto request, @RequestPart(value="image", required=false) List<MultipartFile> files){
         String userId = response.getHeader("userId");
         log.info("AcommodationResController.getAllAccommodationFav.userId:" + userId);
-        AccommodationArticleDto dto=service.update(request,id,userId);
+        AccommodationArticleDto dto=service.update(request,id,userId,files);
         return new ResponseEntity(dto,HttpStatus.OK);
-    }
-
-    @GetMapping(value = "/images")
-    public ResponseEntity<byte[]> getImage(@RequestParam("image_path") String imagePath) throws IOException {
-        log.info("AccommodationController.getImage.imagePath:"+imagePath);
-        byte[] imageByteArray = service.findImage(imagePath);
-        return new ResponseEntity(imageByteArray, HttpStatus.OK);
     }
 }

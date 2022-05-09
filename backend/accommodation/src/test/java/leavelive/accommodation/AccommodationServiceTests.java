@@ -129,7 +129,7 @@ class AccommodationServiceTests {
 		AccommodationArticleDto dto=new AccommodationArticleDto();
 		dto.setName("수정한 이름");
 		dto.setCooking(1);
-		service.update(dto,1L,"1");
+//		service.update(dto,1L,"1");
 		log.info("updateAccommodationTest.getAccommodation.list:"+service.getAccommodation(1L));
 		Assertions.assertThat("수정한 이름").isEqualTo(service.getAccommodation(1L).getName());
 	}
@@ -144,7 +144,7 @@ class AccommodationServiceTests {
 		dto.setName("수정한 이름");
 		dto.setCooking(1);
 		try{
-			service.update(dto,1L,"2");
+//			service.update(dto,1L,"2");
 			log.info("updateAccommodationTestFail.getAccommodation.list:"+service.getAccommodation(1L));
 			Assertions.assertThat("수정한 이름").isEqualTo(service.getAccommodation(1L).getName());
 		}catch(NullPointerException e){

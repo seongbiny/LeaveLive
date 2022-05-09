@@ -71,7 +71,7 @@ public class AccommodationServiceImpl{
         return repo.save(entity.of(dto)).getId();
     }
 
-    public AccommodationArticleDto update(AccommodationArticleDto dto,Long id,String userId) {
+    public AccommodationArticleDto update(AccommodationArticleDto dto,Long id,String userId,List<MultipartFile> files) {
         Optional<AccommodationArticle> entity=repo.findById(id);
         AccommodationArticle result=new AccommodationArticle();
         if(!entity.isPresent()) throw new MyResourceNotFoundException("해당하는 숙소가 없습니다.");
@@ -104,6 +104,10 @@ public class AccommodationServiceImpl{
         }
         if(dto.getGarden()!=oriDto.getGarden()){
             oriDto.setGarden(dto.getGarden());
+        }
+        if (files!=null){
+            String picPath=saveImage(files);
+            oriDto.setPicPath(picPath);
         }
         repo.save(result.updateOf(oriDto));
         return dto;
