@@ -90,19 +90,6 @@ public class ActivityService {
         return dto.of(response);
     }
 
-    public byte[] findImage(String imgPath) throws IOException {
-        InputStream imageStream;
-        try {
-            imageStream = new FileInputStream(imgPath);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new NullPointerException("해당하는 파일이 없습니다.");
-        }
-        byte[] imageByteArray = IOUtils.toByteArray(imageStream);
-        imageStream.close();
-        return imageByteArray;
-    }
-
     public String saveImage(List<MultipartFile> files) {
         String picPath = "";
         String abPath = "/home/ubuntu/images/activity";
@@ -156,4 +143,17 @@ public class ActivityService {
         }
         return picPath;
     }
+
+//    public byte[] findImage(String imgPath) throws IOException {
+//        InputStream imageStream;
+//        try {
+//            imageStream = new FileInputStream(imgPath);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            throw new NullPointerException("해당하는 파일이 없습니다.");
+//        }
+//        byte[] imageByteArray = IOUtils.toByteArray(imageStream);
+//        imageStream.close();
+//        return imageByteArray;
+//    }
 }

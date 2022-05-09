@@ -58,9 +58,9 @@ public class ActivityController {
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
-    @GetMapping("/images")
-    public ResponseEntity<byte[]> getActImg(@RequestParam("image_path") String imagePath) throws IOException {
-        byte[] imageByteArray = service.findImage(imagePath);
-        return new ResponseEntity(imageByteArray, HttpStatus.OK);
-    }
+//    @GetMapping("/images")
+//    public ResponseEntity<byte[]> getActImg(@RequestParam("image_path") String imagePath) throws IOException {
+//        byte[] imageByteArray = service.findImage(imagePath);
+//        return new ResponseEntity(imageByteArray, HttpStatus.OK);
+//    }
 }
