@@ -14,7 +14,6 @@ class AuthenticationFilter : GatewayFilter {
     override fun filter(exchange: ServerWebExchange, chain: GatewayFilterChain): Mono<Void> {
         val request = exchange.request
         val response = exchange.response
-
         val accessToken = request.headers["Authorization"]
         // if access token is not null
         accessToken?.let {

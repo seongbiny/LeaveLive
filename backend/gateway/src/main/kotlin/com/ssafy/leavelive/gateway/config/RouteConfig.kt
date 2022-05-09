@@ -3,7 +3,6 @@ package com.ssafy.leavelive.gateway.config
 import com.ssafy.leavelive.gateway.filter.AuthenticationFilter
 import org.springframework.cloud.gateway.route.RouteLocator
 import org.springframework.cloud.gateway.route.builder.GatewayFilterSpec
-import org.springframework.cloud.gateway.route.builder.PredicateSpec
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -40,23 +39,33 @@ class RouteConfig(private val authenticationFilter: AuthenticationFilter) {
                     .path("/api/accommodation/**")
                     .filters { f: GatewayFilterSpec -> f.filter(authenticationFilter) }
                     .uri("http://localhost:8084")
-            }.route("activity_route") {
+
+            }
+            .route("accommodation_exclude_auth") {
+                it
+                    .order(-1)
+                    .path("/api/accommodation/all/**", "/api/accommodation/detail/**")
+                    .uri("http://localhost:8084")
+            }
+            .route("activity_route") {
                 it
                     .path("/api/activity/**")
                     .filters { f: GatewayFilterSpec -> f.filter(authenticationFilter) }
                     .uri("http://localhost:8085")
-            }.route("diary_route") {
+            }
+            .route("activity_exclude_path") {
+                it
+                    .order(-1)
+                    .path("/api/activity/all/**", "/api/activity/detail/**")
+                    .uri("http://localhost:8085")
+            }
+            .route("diary_route") {
                 it
                     .path("/api/diary/**")
                     .filters { f: GatewayFilterSpec -> f.filter(authenticationFilter) }
                     .uri("http://localhost:8086")
             }
-            .route("filter_test") {
-                it
-                    .path("/api/test/**")
-                    .filters { f: GatewayFilterSpec -> f.filter(authenticationFilter) }
-                    .uri("http://localhost:8081")
-            }
+
             .build()
     }
 
