@@ -1,5 +1,6 @@
 import React, { useCallback } from "react";
 import styled from "styled-components";
+import { FRONTEND_URL } from "../../api";
 
 const KakaoButton = styled.button`
   width: 183px;
@@ -11,7 +12,7 @@ const KakaoButton = styled.button`
 
 const KakaoLoginButton = () => {
   const onLoginRequest = useCallback(() => {
-    location.href = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}&redirect_uri=http://www.localhost:3000/login/oauth2/redirect`;
+    location.href = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}&redirect_uri=${FRONTEND_URL}/login/oauth2/redirect`;
   }, []);
 
   return <KakaoButton onClick={onLoginRequest}> </KakaoButton>;

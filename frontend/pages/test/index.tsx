@@ -5,13 +5,15 @@ import {useRouter} from 'next/router';
 import styled from 'styled-components';
 
 const Container = styled.div`
-  border: 1px solid;
-  // height: 95vh;
+  // border: 1px solid;
+  height: 100vh;
   width: 100vw;
-  justify-content: center;
+  // justify-content: center;
+  padding-top: 30vh;
   align-items: center;
   display: flex;
   flex-direction: column;
+  font-size: 20px;
 `;
 interface Props {
   step?: number;
@@ -20,7 +22,7 @@ interface Props {
 }
 
 const Test: NextPage = () => {
-  
+
   const [step, setStep] = useState<number>(0);
 
   useEffect(() => {
@@ -41,30 +43,42 @@ const Test: NextPage = () => {
 };
 
 const Test1: NextPage<Props> = ({setStep}) => {
+  const router = useRouter();
 
   return(
     <>
-      <div>자연에서 쉬고싶다.</div>
-      <div onClick={()=>(setStep(1))}>Yes</div>
-      <div onClick={()=>(setStep(2))}>No</div>
+      <div style={{textAlign:'center', marginBottom:'45vh'}}>
+        <div>자연에서 쉬고싶다.</div>
+        <div onClick={()=>(setStep(1))}>Yes</div>
+        <div onClick={()=>(setStep(2))}>No</div>
+      </div>
+      <div style={{fontSize: '15px'}} onClick={()=>{router.push('/search/map')}}>skip</div>
     </>
   )
 }
 
 const Test2: NextPage<Props> = ({setStep}) => {
+  const router = useRouter();
   return (
     <>
-      <div onClick={()=>(setStep(3))}>산이 좋다.</div>
-      <div onClick={()=>(setStep(4))}>바다가 좋다.</div>
+      <div style={{textAlign:'center', marginBottom:'45vh'}}>
+        <div onClick={()=>(setStep(3))}>산이 좋다.</div>
+        <div onClick={()=>(setStep(4))}>바다가 좋다.</div>
+      </div>
+      <div style={{fontSize: '15px'}} onClick={()=>{router.push('/search/map')}}>skip</div>
     </>
   )
 }
 
 const Test3: NextPage<Props> = ({setStep}) => {
+  const router = useRouter();
   return (
     <>
-      <div onClick={()=>(setStep(5))}>도시가 좋다.</div>
-      <div onClick={()=>(setStep(6))}>조용한 휴양지가 좋다.</div>
+      <div style={{textAlign:'center', marginBottom:'45vh'}}>
+        <div onClick={()=>(setStep(5))}>도시가 좋다.</div>
+        <div onClick={()=>(setStep(6))}>조용한 휴양지가 좋다.</div>
+      </div>
+      <div style={{fontSize: '15px'}} onClick={()=>{router.push('/search/map')}}>skip</div>
     </>
   )
 }
@@ -90,9 +104,12 @@ const Test4: NextPage = () => {
 
   return (
     <>
-      <div>여행은 역시 맛집탐방이다.</div>
-      <div onClick={handleClick_5}>Yes</div>
-      <div onClick={handleClick_6}>No</div>
+      <div style={{textAlign:'center', marginBottom:'45vh'}}>
+        <div>여행은 역시 맛집탐방이다.</div>
+        <div onClick={handleClick_5}>Yes</div>
+        <div onClick={handleClick_6}>No</div>
+      </div>
+      <div style={{fontSize: '15px'}} onClick={()=>{router.push('/search/map')}}>skip</div>
     </>
   )
 }
@@ -117,9 +134,12 @@ const Test5: NextPage = () => {
   }
   return (
     <>
-      <div>이색적이고 특별한 곳이 좋다.</div>
-      <div onClick={handleClick_7}>Yes</div>
-      <div onClick={handleClick_8}>No</div>
+      <div style={{textAlign:'center', marginBottom:'45vh'}}>
+        <div>이색적이고 특별한 곳이 좋다.</div>
+        <div onClick={handleClick_7}>Yes</div>
+        <div onClick={handleClick_8}>No</div>
+      </div>
+      <div style={{fontSize: '15px'}} onClick={()=>{router.push('/search/map')}}>skip</div>
     </>
   )
 }
@@ -144,8 +164,11 @@ const Test6: NextPage = () => {
   }
   return (
     <>
-      <div onClick={handleClick_9}>역사 유적 탐방이 좋다.</div>
-      <div onClick={handleClick_10}>유명한 곳이 좋다.</div>
+      <div style={{textAlign:'center', marginBottom:'45vh'}}>
+        <div onClick={handleClick_9}>역사 유적 탐방이 좋다.</div>
+        <div onClick={handleClick_10}>유명한 곳이 좋다.</div>
+      </div>
+      <div style={{fontSize: '15px'}} onClick={()=>{router.push('/search/map')}}>skip</div>
     </>
   )
 }
@@ -170,9 +193,12 @@ const Test7: NextPage = () => {
   }
   return (
     <>
-      <div>수도권기준!</div>
-      <div onClick={handleClick_11}>가까운게 좋다.</div>
-      <div onClick={handleClick_12}>먼게 좋다.</div>
+      <div style={{textAlign:'center', marginBottom:'45vh'}}>
+        <div>수도권기준!</div>
+        <div onClick={handleClick_11}>가까운게 좋다.</div>
+        <div onClick={handleClick_12}>먼게 좋다.</div>
+      </div>
+      <div style={{fontSize: '15px'}} onClick={()=>{router.push('/search/map')}}>skip</div>
     </>
   )
 }

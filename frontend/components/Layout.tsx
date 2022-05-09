@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import CeoNav from "./CeoNav";
 import { flexCenter } from "../styles/Basic";
+import { allowedURLs } from "../pages/_app";
 
 const Container = styled.div`
   display: flex;
@@ -13,7 +14,7 @@ const Container = styled.div`
 
 const Main = styled.main`
   flex: 1;
-  ${flexCenter}
+  // ${flexCenter}
 `;
 
 export default function Layout({ children }: any) {
@@ -22,7 +23,7 @@ export default function Layout({ children }: any) {
   const [showNav, setShowNav] = useState<boolean>(true);
 
   useEffect(() => {
-    if (router.pathname.startsWith("/login")) setShowNav(false);
+    if (allowedURLs.includes(router.pathname)) setShowNav(false);
     else setShowNav(true);
 
     if (router.pathname.startsWith("/ceo")) setIsUser(false);
