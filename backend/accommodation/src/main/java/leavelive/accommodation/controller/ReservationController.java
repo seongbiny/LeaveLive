@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
-@RequestMapping("/accommodation/reservation")
+@RequestMapping("/api/accommodation/reservation")
 @RequiredArgsConstructor
 @Slf4j
 public class ReservationController {

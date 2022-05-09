@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
-@RequestMapping("/accommodation/favorite")
+@RequestMapping("/api/accommodation/favorite")
 @RequiredArgsConstructor
 @Slf4j
 public class FavoriteController {

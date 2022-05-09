@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/accommodation")
+@RequestMapping("/api/accommodation")
 @Slf4j
 public class AccommodationController {
     private final AccommodationServiceImpl service;
