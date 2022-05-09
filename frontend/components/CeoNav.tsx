@@ -5,14 +5,10 @@ import Router from "next/router";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import FormatListBulletedRoundedIcon from "@mui/icons-material/FormatListBulletedRounded";
 import CalendarMonthRoundedIcon from "@mui/icons-material/CalendarMonthRounded";
-import { useRouter } from "next/router";
+import Paper from "@mui/material/Paper";
 
 const CeoNav = () => {
   const [value, setValue] = useState<string>();
-  // const router = useRouter();
-  // useEffect(() => {
-  //   setValue(router.pathname);
-  // }, [router]);
 
   const handleChange = useCallback(
     (event: React.SyntheticEvent, newValue: string) => {
@@ -23,17 +19,19 @@ const CeoNav = () => {
   );
 
   return (
-    <BottomNavigation value={value} onChange={handleChange}>
-      <BottomNavigationAction value="/ceo" icon={<HomeRoundedIcon />} />
-      <BottomNavigationAction
-        value="/ceo/bnb"
-        icon={<FormatListBulletedRoundedIcon />}
-      />
-      <BottomNavigationAction
-        value="/ceo/reservation"
-        icon={<CalendarMonthRoundedIcon />}
-      />
-    </BottomNavigation>
+    <Paper sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}>
+      <BottomNavigation value={value} onChange={handleChange}>
+        <BottomNavigationAction value="/ceo" icon={<HomeRoundedIcon />} />
+        <BottomNavigationAction
+          value="/ceo/bnb"
+          icon={<FormatListBulletedRoundedIcon />}
+        />
+        <BottomNavigationAction
+          value="/ceo/reservation"
+          icon={<CalendarMonthRoundedIcon />}
+        />
+      </BottomNavigation>
+    </Paper>
   );
 };
 
