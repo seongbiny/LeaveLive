@@ -59,7 +59,7 @@ public class ActivityService {
         return dto.of(response);
     }
 
-    public ActivityDto updateAct(Long id, ActivityDto dto, String userId) {
+    public ActivityDto updateAct(Long id, ActivityDto dto, String userId, List<MultipartFile> files) {
         Optional<Activity> entity = repo.findById(id);
         if (!entity.isPresent()) throw new NullPointerException("해당하는 액티비티가 없습니다.");
         if (!entity.get().getUserId().equals(userId)) throw new NullPointerException("직접 등록한 액티비티만 삭제할 수 있습니다.");
@@ -81,6 +81,10 @@ public class ActivityService {
         }
         if (dto.getName() != null) {
             ori.setName(dto.getName());
+        }
+        if (files!=null){
+            String picPath=saveImage(files);
+            ori.setPicPath(picPath);
         }
         Activity response = repo.save(entity.get().updateOf(ori));
         return dto.of(response);

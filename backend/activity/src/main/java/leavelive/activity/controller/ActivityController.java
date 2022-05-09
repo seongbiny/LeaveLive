@@ -51,10 +51,10 @@ public class ActivityController {
     }
 
     @PatchMapping("/{activity_id}")
-    public ResponseEntity<ActivityDto> updateActivity(HttpServletResponse response, @PathVariable("activity_id") Long id, @RequestBody ActivityDto request) {
+    public ResponseEntity<ActivityDto> updateActivity(HttpServletResponse response, @PathVariable("activity_id") Long id, @RequestPart(value = "request") ActivityDto request, @RequestPart(value = "image", required = false) List<MultipartFile> files) {
         String userId = response.getHeader("userId");
         log.info("ReservationController.getAllReservation.userId:" + userId);
-        ActivityDto result = service.updateAct(id, request, userId);
+        ActivityDto result = service.updateAct(id, request, userId, files);
         return new ResponseEntity(result, HttpStatus.OK);
     }
 

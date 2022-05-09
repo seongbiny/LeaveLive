@@ -47,7 +47,7 @@ class ActivityServiceTests {
 	public void delActTest() {
 		Long id=2L;
 		String userId="1";
-		String response=service.delAct(id,userId);
+		boolean response=service.delAct(id,userId);
 		log.info("ActivityServiceTests.delActTest.response:"+response);
 	}
 	@Test
@@ -56,7 +56,7 @@ class ActivityServiceTests {
 		ActivityDto dto=new ActivityDto();
 		dto.setPrice(1);
 		dto.setContents("내용 수정");
-		service.updateAct(3L,dto,"2");
+//		service.updateAct(3L,dto,"2");
 
 		log.info("ActivityApplicationTests.updateActTest.Activity:"+service.getAct(3L));
 	}
