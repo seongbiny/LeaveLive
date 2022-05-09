@@ -11,12 +11,16 @@ const StyledZZ = styled.svg`
       fill: skyblue;
     }
   }
+  color: white;
+`
+const Container = styled.div`
+  background-color: green;
 `
 
 const KoreaMap = () => {
   const region = ['부산', '대구', '대전', '강원', '광주', '경기', '인천', '제주', '충청북도', '경상북도', '전라북도', '세종', '서울', '충청남도', '경상남도', '전라남도', '울산']
   return (
-    <>
+    <Container>
       <StyledZZ
         xmlns="south-korea.svg"
         viewBox="0 0 450 700"
@@ -135,7 +139,7 @@ const KoreaMap = () => {
           background-color: skyblue;
         }
       `}</style> */}
-    </>
+    </Container>
   )
 };
 
