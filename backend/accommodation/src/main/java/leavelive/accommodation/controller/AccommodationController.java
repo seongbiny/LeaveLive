@@ -41,10 +41,10 @@ public class AccommodationController {
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity<Long> saveAccomodation(HttpServletResponse response, @RequestPart(value="dto") AccommodationArticleDto request, @RequestPart(value="image", required=false) List<MultipartFile> files){
+    public ResponseEntity<AccommodationArticleDto> saveAccomodation(HttpServletResponse response, @RequestPart(value="dto") AccommodationArticleDto request, @RequestPart(value="image", required=false) List<MultipartFile> files){
         String userId = response.getHeader("userId");
         log.info("AcommodationResController.getAllAccommodationFav.userId:" + userId);
-        Long result=service.save(request,userId,files);
+        AccommodationArticleDto result=service.save(request,userId,files);
         return new ResponseEntity(result,HttpStatus.OK);
     }
 

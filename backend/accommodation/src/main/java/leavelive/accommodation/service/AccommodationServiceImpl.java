@@ -63,7 +63,7 @@ public class AccommodationServiceImpl {
         return true;
     }
 
-    public Long save(AccommodationArticleDto dto, String userId, List<MultipartFile> files) {
+    public AccommodationArticleDto save(AccommodationArticleDto dto, String userId, List<MultipartFile> files) {
         dto.setUserId(userId);
         AccommodationArticle entity = new AccommodationArticle();
         // 이미지 파일 저장
@@ -78,7 +78,8 @@ public class AccommodationServiceImpl {
             String img_path = saveImage(files);
             dto.setPicPath(img_path);
         }
-        return repo.save(entity.of(dto)).getId();
+        log.info("------------------dto확인"+dto);
+        return AccommodationArticleDto.of(repo.save(entity.of(dto)));
     }
 
     public AccommodationArticleDto update(AccommodationArticleDto dto, Long id, String userId, List<MultipartFile> files) {
