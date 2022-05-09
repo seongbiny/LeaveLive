@@ -34,16 +34,16 @@ public class HttpInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         System.out.println("preHandler 실행--------");
         String userId="114760122369855290515GOOGLE";
-//        String token=request.getHeader("Authorization");
-//        try{
-//            DecodedJWT decodeToken = JWT.require(Algorithm.HMAC512(SECRET_KEY))
-//                    .build().verify(token);
-//            userId = decodeToken.getClaim("id").asString();
-//            log.info("interceptor id:"+userId);
-//        }catch(TokenExpiredException e){
-//            e.printStackTrace();
-//            log.error("HttpInterceptor.preHandle:error");
-//        }
+        String token=request.getHeader("Authorization");
+        try{
+            DecodedJWT decodeToken = JWT.require(Algorithm.HMAC512(SECRET_KEY))
+                    .build().verify(token);
+            userId = decodeToken.getClaim("id").asString();
+            log.info("interceptor id:"+userId);
+        }catch(TokenExpiredException e){
+            e.printStackTrace();
+            log.error("HttpInterceptor.preHandle:error");
+        }
 
         // 유저가 DB에 있는지 확인
         HttpHeaders httpHeaders = new HttpHeaders();
