@@ -14,7 +14,7 @@ const StyledZZ = styled.svg`
   color: white;
 `
 const Container = styled.div`
-  background-color: green;
+  // background-color: green;
 `
 
 const KoreaMap = () => {
