@@ -20,9 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -113,20 +111,14 @@ public class AccommodationServiceImpl{
 
     public String saveImage(List<MultipartFile> files) {
         String images="";
+        String abPath = "/home/ubuntu/images/accommodation";
         if(files!=null){
             LocalDateTime now= LocalDateTime.now(); //현재 시간 저장
             DateTimeFormatter dateTimeFormatter =
                     DateTimeFormatter.ofPattern("yyyyMMdd");
             String current_date = now.format(dateTimeFormatter);
 
-            String abPath=new File("").getAbsolutePath()+File.separator;
-            log.info("AccommodationServiceImpl.saveImage.abPath:"+abPath);
-
-            // 세부 경로
-            String path="images"+File.separator+current_date;
-            File file=new File(path);
-            log.info("AccommodationServiceImpl.saveImage.path:"+path);
-
+            File file=new File(abPath);
             if(!file.exists()){
                 boolean success=file.mkdir();
                 if(!success){
@@ -139,23 +131,21 @@ public class AccommodationServiceImpl{
                 if(ObjectUtils.isEmpty(contentType)){
                     continue;
                 }
-                if(contentType.contains("image/PNG")){
-                    originalFileExtension=".PNG";
-                }else if(contentType.contains("image/png")){
-                    originalFileExtension=".png";
-                }else if(contentType.contains("image/jpeg")){
-                    originalFileExtension=".jpeg";
-                }else if(contentType.contains("image/JPEG")){
-                    originalFileExtension=".JPEG";
-                }else{
+                if (contentType.toLowerCase(Locale.ROOT).contains("image/png")) {
+                    originalFileExtension = ".png";
+                } else if (contentType.toLowerCase(Locale.ROOT).contains("image/jpeg")) {
+                    originalFileExtension = ".jpeg";
+                } else if (contentType.toLowerCase(Locale.ROOT).contains("image/jpg")) {
+                    originalFileExtension = ".jpg";
+                } else{
                     log.error("AccommodationServiceImpl.saveImage:이미지 파일만 올릴 수 있습니다.");
                     continue;
                 }
-                String new_file_name=System.nanoTime()+multipartFile.getName()+originalFileExtension;
+                String new_file_name=current_date + UUID.randomUUID() + originalFileExtension;
 
                 // 업로드 한 파일 데이터를 지정한 파일에 저장
                 try{
-                    file = new File(abPath + path + File.separator + new_file_name);
+                    file = new File(abPath + File.separator + new_file_name);
                     multipartFile.transferTo(file);
                 }catch (Exception e){
                     e.printStackTrace();
@@ -164,24 +154,11 @@ public class AccommodationServiceImpl{
                 file.setWritable(true);
                 file.setReadable(true);
 
-                images+=abPath + path + File.separator + new_file_name+",";
+                images+="accommodation" +  File.separator + new_file_name+",";
             }
             // 마지막 콤마는 빼기
             images=images.substring(0,images.length()-1);
         }
         return images;
-    }
-
-    public byte[] findImage(String imagePath) throws IOException {
-        InputStream imageStream;
-        try{
-            imageStream = new FileInputStream(imagePath);
-        }catch(Exception e){
-            e.printStackTrace();
-            throw new MyResourceNotFoundException("해당하는 파일이 없습니다.");
-        }
-        byte[] imageByteArray = IOUtils.toByteArray(imageStream);
-        imageStream.close();
-        return imageByteArray;
     }
 }
