@@ -2,16 +2,19 @@ import { Button } from "@mui/material";
 import Link from "next/link";
 
 interface IPropTypes {
-  href: string;
   text: string;
+  onClick: () => void;
 }
 
-export const WideButton = ({ href, text }: IPropTypes) => {
+export const WideButton = ({ text, onClick }: IPropTypes) => {
   return (
-    <Link href={href} passHref>
-      <Button variant="contained" style={{ width: "100%" }}>
-        {text}
-      </Button>
-    </Link>
+    <Button
+      variant="contained"
+      style={{ width: "100%" }}
+      size="large"
+      onClick={onClick}
+    >
+      {text}
+    </Button>
   );
 };

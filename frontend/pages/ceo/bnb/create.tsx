@@ -1,43 +1,15 @@
 import React, { useCallback, useState } from "react";
-import {
-  TextField,
-  Switch,
-  FormGroup,
-  FormControlLabel,
-  InputAdornment,
-  IconButton,
-} from "@mui/material";
-import { PhotoCamera } from "@mui/icons-material";
-import styled from "styled-components";
 import { WideButton } from "../../../components/WideButton";
 import { Container } from "../../../styles/Basic";
+import InputForm from "../../../components/ceo/InputForm";
+import ImageForm from "../../../components/ceo/ImageForm";
+import PostCode from "../../../components/ceo/Postcode";
+import Switches from "../../../components/ceo/Switches";
+import Script from "next/script";
+import { useRouter } from "next/router";
+import { CeoBnbCreate } from "../../../api/ceo";
 
-const Input = styled.input`
-  display: none;
-`;
-
-interface IImageContainerTypes {
-  url: any;
-}
-
-const ImageContainerGroup = styled.div`
-  /* display: flex; */
-  /* max-width: 100%; */
-  width: 100%;
-`;
-
-const ImageContainer = styled.div<IImageContainerTypes>`
-  display: inline-block;
-  width: 100px;
-  height: 100px;
-  border-radius: 5%;
-  background-image: url(${({ url }) => url});
-  background-size: cover;
-  background-position: center;
-  margin-right: 1rem;
-`;
-
-interface IValues {
+export interface IValues {
   name: string;
   description: string;
   price: number | string;
@@ -46,8 +18,13 @@ interface IValues {
   isCooking: boolean;
 }
 
+export interface IImages {
+  files: File;
+  previewURL: string;
+}
+
 const BnbCreate = () => {
-  const [values, setValue] = useState<IValues>({
+  const [values, setValues] = useState<IValues>({
     name: "",
     description: "",
     price: "",
@@ -55,125 +32,58 @@ const BnbCreate = () => {
     isGarden: false,
     isCooking: false,
   });
-  const [images, setImages] = useState<Array<String>>([]);
+  const [address, setAddress] = useState<String>("");
+  const [images, setImages] = useState<Array<IImages>>([]);
+  const [onScriptLoad, setOnScriptLoad] = useState<boolean>(false);
 
-  const handleChange = useCallback(
-    ({ target: { id, value } }: React.ChangeEvent<HTMLInputElement>) => {
-      const nextValues = {
-        ...values,
-        [id]: value,
-      };
-      setValue(nextValues);
-    },
-    [values]
-  );
+  const router = useRouter();
+  const onClick = useCallback(() => {
+    // if (!address) {
+    //   alert("주소를 입력해주세요.");
+    //   return;
+    // }
 
-  const handleSwitch = useCallback(
-    ({ target: { id, checked } }: React.ChangeEvent<HTMLInputElement>) => {
-      console.log(id + " " + checked);
-      const nextValues = {
-        ...values,
-        [id]: checked,
-      };
-      setValue(nextValues);
-    },
-    [values]
-  );
+    // 1. api 전송
+    const form = new FormData();
+    const dto = {
+      loc: address,
+      price: values.price,
+      cnt: values.people,
+      garden: values.isGarden ? 1 : 0,
+      cooking: values.isCooking ? 1 : 0,
+      contents: values.description,
+      name: values.name,
+    };
+    form.append("dto", JSON.stringify(dto));
 
-  const handleImage = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      const files = event.target.files;
-      const nextImages = [];
-      if (!files) return;
+    images?.map((image) => form.append("file", image.files));
 
-      for (let i = 0; i < files.length; i++) {
-        const imageURL = URL.createObjectURL(files[i]);
-        nextImages.push(imageURL);
-      }
+    console.log(form.get("dto"));
+    console.log(form.get("file"));
+    console.log(images);
 
-      setImages(nextImages);
-    },
-    []
-  );
+    CeoBnbCreate(
+      form,
+      (response: any) => console.log(response),
+      (error: Error) => console.log(error)
+    );
+    // 2. router push
+    // router.push(`/ceo/bnb`);
+  }, [address, images, values]);
 
   return (
     <Container>
+      <Script
+        src={`//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js`}
+        onLoad={() => setOnScriptLoad(true)}
+      />
       숙소 등록
-      <TextField
-        label="숙소 이름"
-        id="name"
-        value={values.name}
-        onChange={handleChange}
-      />
-      <TextField
-        label="숙소 설명"
-        id="description"
-        multiline
-        rows={4}
-        value={values.description}
-        onChange={handleChange}
-      />
-      <TextField
-        label="숙소 가격 (1박)"
-        id="price"
-        value={values.price}
-        onChange={handleChange}
-        InputProps={{
-          endAdornment: <InputAdornment position="end">원</InputAdornment>,
-        }}
-      />
-      <TextField
-        label="최대 인원"
-        id="people"
-        value={values.people}
-        onChange={handleChange}
-        type="number"
-        InputProps={{
-          endAdornment: <InputAdornment position="end">명</InputAdornment>,
-        }}
-      />
-      <FormControlLabel
-        control={
-          <Switch
-            id="isGarden"
-            checked={values.isGarden}
-            onChange={handleSwitch}
-          />
-        }
-        label="마당 있음"
-      />
-      <FormGroup></FormGroup>
-      <FormControlLabel
-        control={
-          <Switch
-            id="isCooking"
-            checked={values.isCooking}
-            onChange={handleSwitch}
-          />
-        }
-        label="취사 가능"
-      />
-      <label htmlFor="upload">
-        <Input
-          accept="image/*"
-          id="upload"
-          multiple
-          type="file"
-          onChange={handleImage}
-        />
-        <IconButton color="primary" component="span">
-          <PhotoCamera />
-        </IconButton>
-      </label>
-      <ImageContainerGroup>
-        <div style={{ overflowX: "auto", whiteSpace: "nowrap" }}>
-          {images.map((image, index) => {
-            console.log(image);
-            return <ImageContainer key={index} url={image} />;
-          })}
-        </div>
-      </ImageContainerGroup>
-      <WideButton href={`/ceo/bnb`} text="숙소 등록하기" />
+      <InputForm values={values} setValues={setValues} />
+      <Switches values={values} setValues={setValues} />
+      <ImageForm images={images} setImages={setImages} />
+      <PostCode />
+      {/* <div id="popup-address">{onScriptLoad ? <PostCode /> : null}</div> */}
+      <WideButton onClick={onClick} text="숙소 등록하기" />
     </Container>
   );
 };
