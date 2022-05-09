@@ -37,7 +37,7 @@ public class Reservation {
 
     private int cnt;
 
-    public Reservation of(ReservationDto dto){
+    public static Reservation of(ReservationDto dto){
         return Reservation.builder()
                 .userId(dto.getUserId())
                 .activity(dto.getActivity())

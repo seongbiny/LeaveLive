@@ -16,7 +16,7 @@ public class FavoriteDto {
     private String userId;
     private Activity activity;
 
-    public FavoriteDto of(Favorite entity){
+    public static FavoriteDto of(Favorite entity){
         return FavoriteDto.builder()
                 .id(entity.getId())
                 .userId(entity.getUserId())

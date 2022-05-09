@@ -29,7 +29,7 @@ public class Activity {
     @Column(name = "user_id")
     private String userId;
 
-    public Activity of(ActivityDto dto){
+    public static Activity of(ActivityDto dto){
         return Activity.builder()
                 .name(dto.getName())
                 .contents(dto.getContents())
@@ -40,7 +40,7 @@ public class Activity {
                 .userId(dto.getUserId())
                 .build();
     }
-    public Activity updateOf(ActivityDto dto){
+    public static Activity updateOf(ActivityDto dto){
         return Activity.builder()
                 .id(dto.getId())
                 .name(dto.getName())

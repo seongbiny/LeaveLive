@@ -17,6 +17,7 @@ import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -26,20 +27,13 @@ public class ActivityService {
 
     public List<ActivityDto> getAllAct(String loc) {
         List<Activity> entities = repo.findAllByLocStartsWith(loc);
-        List<ActivityDto> dtos = new ArrayList<>();
-        ActivityDto dto = new ActivityDto();
-        for (Activity entity : entities) {
-            dto = new ActivityDto();
-            dtos.add(dto.of(entity));
-        }
-        return dtos;
+        return entities.stream().map(ActivityDto::of).collect(Collectors.toList());
     }
 
     public ActivityDto getAct(Long id) {
         Optional<Activity> entity = repo.findById(id);
         if (!entity.isPresent()) throw new NullPointerException("해당하는 액티비티가 없습니다.");
-        ActivityDto dto = new ActivityDto();
-        return dto.of(entity.get());
+        return ActivityDto.of(entity.get());
     }
 
     public Boolean delAct(Long id, String userId) {
@@ -52,21 +46,31 @@ public class ActivityService {
     }
 
     public ActivityDto saveAct(ActivityDto dto, List<MultipartFile> files, String userId) {
-        if (files != null) dto.setPicPath(saveImage(files));
+        boolean flag=false;
+        for(MultipartFile file:files){
+            if(!file.isEmpty()){
+                flag=true;
+                break;
+            }
+        }
+        if (flag){
+            dto.setPicPath(saveImage(files));
+        }
         dto.setUserId(userId);
-        Activity activity = new Activity();
-        Activity response = repo.save(activity.of(dto));
-        return dto.of(response);
+        return ActivityDto.of(repo.save(Activity.of(dto)));
     }
 
     public ActivityDto updateAct(Long id, ActivityDto dto, String userId, List<MultipartFile> files) {
         Optional<Activity> entity = repo.findById(id);
         if (!entity.isPresent()) throw new NullPointerException("해당하는 액티비티가 없습니다.");
         if (!entity.get().getUserId().equals(userId)) throw new NullPointerException("직접 등록한 액티비티만 삭제할 수 있습니다.");
-        // 수정 logic
-        log.info("ActivityService.updateAct.dto:" + dto);
         ActivityDto ori = new ActivityDto();
         ori = ori.of(entity.get()); // 원래 정보
+        ori=updateDto(dto,ori,files);
+        return dto.of(repo.save(Activity.updateOf(ori)));
+    }
+
+    private ActivityDto updateDto(ActivityDto dto, ActivityDto ori, List<MultipartFile> files) {
         if (dto.getLoc() != null) {
             ori.setLoc(dto.getLoc());
         }
@@ -82,12 +86,18 @@ public class ActivityService {
         if (dto.getName() != null) {
             ori.setName(dto.getName());
         }
-        if (files!=null){
+        boolean flag=false;
+        for(MultipartFile file:files){
+            if(!file.isEmpty()){
+                flag=true;
+                break;
+            }
+        }
+        if (flag){
             String picPath=saveImage(files);
             ori.setPicPath(picPath);
         }
-        Activity response = repo.save(entity.get().updateOf(ori));
-        return dto.of(response);
+        return ori;
     }
 
     public String saveImage(List<MultipartFile> files) {

@@ -19,7 +19,7 @@ public class ActivityDto {
     private String name;
     private String userId;
 
-    public ActivityDto of(Activity entity){
+    public static ActivityDto of(Activity entity){
         return ActivityDto.builder()
                 .id(entity.getId())
                 .name(entity.getName())

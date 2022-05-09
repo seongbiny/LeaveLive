@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -24,12 +25,7 @@ public class ReservationService {
     public List<ReservationDto> getAllRes(String userId){
         List<ReservationDto> result=new ArrayList<>();
         List<Reservation> entities=repo.findAllByUserId(userId);
-        ReservationDto res;
-        for(Reservation entity:entities){
-            res=new ReservationDto();
-            result.add(res.of(entity));
-        }
-        return result;
+        return entities.stream().map(ReservationDto::of).collect(Collectors.toList());
     }
     public Boolean delRes(Long id, String userId){
         Optional<Reservation> entity=repo.findById(id);
@@ -90,9 +86,6 @@ public class ReservationService {
         }
         request.setActivity(entity.get());
         request.setUserId(userId);
-        log.info("ReservationService.saveRes.request:"+request);
-        Reservation reservation=new Reservation();
-        Reservation result=repo.save(reservation.of(request));
-        return result.getId();
+        return repo.save(Reservation.of(request)).getId();
     }
 }

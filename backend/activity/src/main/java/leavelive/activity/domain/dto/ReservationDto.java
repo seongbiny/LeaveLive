@@ -22,7 +22,7 @@ public class ReservationDto {
     private Long scheduleId;
     private int cnt;
 
-    public ReservationDto of(Reservation entity){
+    public static ReservationDto of(Reservation entity){
         return ReservationDto.builder()
                 .id(entity.getId())
                 .startDate(entity.getStartDate())

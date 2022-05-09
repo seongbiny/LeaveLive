@@ -13,6 +13,7 @@ import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -22,13 +23,7 @@ public class FavoriteService {
 
     public List<FavoriteDto> getAllFav(String userId) {
         List<Favorite> entities = repo.findAllByUserId(userId);
-        List<FavoriteDto> list = new ArrayList<>();
-        FavoriteDto dto;
-        for (Favorite entity : entities) {
-            dto = new FavoriteDto();
-            list.add(dto.of(entity));
-        }
-        return list;
+        return entities.stream().map(FavoriteDto::of).collect(Collectors.toList());
     }
 
     public Boolean delFav(Long id, String userId) {
@@ -49,10 +44,9 @@ public class FavoriteService {
             }
         }
         FavoriteDto dto=new FavoriteDto();
-        Favorite favorite=new Favorite();
         dto.setActivity(activity.get());
         dto.setUserId(userId);
-        return  repo.save(favorite.of(dto)).getId();
+        return  repo.save(Favorite.of(dto)).getId();
     }
 
 }
