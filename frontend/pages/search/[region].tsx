@@ -6,7 +6,7 @@ import MainSlider from "../../components/main/MainSlider";
 import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
 import NavigationIcon from '@mui/icons-material/Navigation';
-import { useRouter } from 'next/router'
+import Router, { useRouter } from 'next/router'
 
 const Main = styled.div`
   margin-left: 2vh;
@@ -16,9 +16,25 @@ const Container = styled.div`
   margin-bottom: 10vh;
 `;
 
+
 const Region = () => {
   const router = useRouter();
-  
+  const region = router.query.region;
+
+  const ClickBnb = (e:any) => {
+    e.preventDefault();
+    Router.push({
+      pathname: `http://localhost:3000/reservation/bnb`,
+    })
+  };
+
+  const ClickActi = (e:any) => {
+    e.preventDefault();
+    Router.push({
+      pathname: `http://localhost:3000/reservation/activity`,
+    })
+  }
+
   return (
     <Container>
       <Seo title="Main" />
@@ -30,11 +46,11 @@ const Region = () => {
         <div style={{marginTop: '2vh', marginBottom: '2vh'}}>이 지역에 살아본 사람들은 하루 평균 50,000원을 썼어요.</div>
         <Tab>
           <Box sx={{ '& > :not(style)': { m: 1 }, mb: '2vh' }}>
-            <Fab variant="extended" size="small" color="primary" aria-label="add" >
+            <Fab variant="extended" size="small" color="primary" aria-label="add" onClick={ClickBnb}>
               <NavigationIcon sx={{ mr: 1 }} />
               숙소
             </Fab>
-            <Fab variant="extended" size="small" color="primary" aria-label="add">
+            <Fab variant="extended" size="small" color="primary" aria-label="add" onClick={ClickActi}>
               <NavigationIcon sx={{ mr: 1 }} />
               액티비티
             </Fab>

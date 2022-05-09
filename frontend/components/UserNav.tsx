@@ -5,6 +5,7 @@ import FolderIcon from '@mui/icons-material/Folder';
 import RestoreIcon from '@mui/icons-material/Restore';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import Router from 'next/router';
 import Paper from '@mui/material/Paper';
 
@@ -31,9 +32,14 @@ export default function LabelBottomNavigation() {
         />
         <BottomNavigationAction label="diary" value="diary" icon={<FolderIcon />} />
         <BottomNavigationAction
-          label="reservation"
-          value="reservation"
+          label="search"
+          value="search/map"
           icon={<LocationOnIcon />}
+        />
+        <BottomNavigationAction
+          label="share"
+          value="share"
+          icon={<CameraAltIcon />}
         />
       </BottomNavigation>
     </Paper>
