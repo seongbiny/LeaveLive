@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useCallback } from "react";
+import React, { Dispatch, SetStateAction, useCallback, useState } from "react";
 import { IconButton } from "@mui/material";
 import { PhotoCamera } from "@mui/icons-material";
 import styled from "styled-components";
@@ -39,8 +39,16 @@ const ImageContainer = styled.div<IImageContainerTypes>`
 `;
 
 const ImageForm = ({ images, setImages }: IPropTypes) => {
+  const [test, setTest] = useState<any>("");
   const handleImage = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
+      // const reader = new FileReader();
+      // reader.onload = () => {
+      //   setTest(reader.result);
+      // };
+
+      // if (test) console.log(test);
+
       const files = event.target.files;
       const nextImages = [];
       if (!files) return;
@@ -50,6 +58,7 @@ const ImageForm = ({ images, setImages }: IPropTypes) => {
         nextImages.push({ files: files[i], previewURL: imageURL });
       }
 
+      console.log(nextImages);
       setImages(nextImages);
     },
     [setImages]

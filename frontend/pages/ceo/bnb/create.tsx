@@ -32,16 +32,16 @@ const BnbCreate = () => {
     isGarden: false,
     isCooking: false,
   });
-  const [address, setAddress] = useState<String>("");
+  const [address, setAddress] = useState<String>("dddd");
   const [images, setImages] = useState<Array<IImages>>([]);
   const [onScriptLoad, setOnScriptLoad] = useState<boolean>(false);
 
   const router = useRouter();
   const onClick = useCallback(() => {
-    // if (!address) {
-    //   alert("주소를 입력해주세요.");
-    //   return;
-    // }
+    if (!address) {
+      alert("주소를 입력해주세요.");
+      return;
+    }
 
     // 1. api 전송
     const form = new FormData();
@@ -49,27 +49,31 @@ const BnbCreate = () => {
       loc: address,
       price: values.price,
       cnt: values.people,
-      garden: values.isGarden ? 1 : 0,
-      cooking: values.isCooking ? 1 : 0,
+      garden: values.isGarden ? "T" : "F",
+      cooking: values.isCooking ? "T" : "F",
       contents: values.description,
       name: values.name,
     };
-    form.append("dto", JSON.stringify(dto));
+    form.append(
+      "dto",
+      new Blob([JSON.stringify(dto)], {
+        type: "application/json",
+      })
+    );
 
-    images?.map((image) => form.append("file", image.files));
+    images?.map((image) => form.append("image", image.files));
 
     console.log(form.get("dto"));
-    console.log(form.get("file"));
-    console.log(images);
-
+    console.log(form.get("image"));
     CeoBnbCreate(
       form,
-      (response: any) => console.log(response),
+      ({ data: { id } }: any) => {
+        // 2. router push
+        router.push(`/ceo/bnb/${id}`);
+      },
       (error: Error) => console.log(error)
     );
-    // 2. router push
-    // router.push(`/ceo/bnb`);
-  }, [address, images, values]);
+  }, [router, address, images, values]);
 
   return (
     <Container>
