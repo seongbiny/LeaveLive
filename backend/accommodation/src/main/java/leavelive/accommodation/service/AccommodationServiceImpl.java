@@ -80,35 +80,7 @@ public class AccommodationServiceImpl{
         oriDto=oriDto.of(entity.get());
         oriDto.setId(id);
         oriDto.setUserId(userId);
-        // 바뀐 부분
-        if(dto.getCnt()!=0){
-            oriDto.setCnt(dto.getCnt());
-        }
-        if(dto.getContents()!=null){
-            oriDto.setContents(dto.getContents());
-        }
-        if(dto.getPrice()!=0){
-            oriDto.setPrice(dto.getPrice());
-        }
-        if(dto.getLoc()!=null){
-            oriDto.setLoc(dto.getLoc());
-        }
-        if(dto.getName()!=null){
-            oriDto.setName(dto.getName());
-        }
-        if(dto.getPicPath()!=null){
-            oriDto.setPicPath(dto.getPicPath());
-        }
-        if(dto.getCooking()!=oriDto.getCooking()){
-            oriDto.setCooking(dto.getCooking());
-        }
-        if(dto.getGarden()!=oriDto.getGarden()){
-            oriDto.setGarden(dto.getGarden());
-        }
-        if (files!=null){
-            String picPath=saveImage(files);
-            oriDto.setPicPath(picPath);
-        }
+        oriDto=chCheck(dto,oriDto,files);
         repo.save(result.updateOf(oriDto));
         return dto;
     }
@@ -164,5 +136,36 @@ public class AccommodationServiceImpl{
             images=images.substring(0,images.length()-1);
         }
         return images;
+    }
+    public AccommodationArticleDto chCheck(AccommodationArticleDto dto,AccommodationArticleDto oriDto,List<MultipartFile> files){
+        if(dto.getCnt()!=0){
+            oriDto.setCnt(dto.getCnt());
+        }
+        if(dto.getContents()!=null){
+            oriDto.setContents(dto.getContents());
+        }
+        if(dto.getPrice()!=0){
+            oriDto.setPrice(dto.getPrice());
+        }
+        if(dto.getLoc()!=null){
+            oriDto.setLoc(dto.getLoc());
+        }
+        if(dto.getName()!=null){
+            oriDto.setName(dto.getName());
+        }
+        if(dto.getPicPath()!=null){
+            oriDto.setPicPath(dto.getPicPath());
+        }
+        if(dto.getCooking()!=oriDto.getCooking()){
+            oriDto.setCooking(dto.getCooking());
+        }
+        if(dto.getGarden()!=oriDto.getGarden()){
+            oriDto.setGarden(dto.getGarden());
+        }
+        if (files!=null){
+            String picPath=saveImage(files);
+            oriDto.setPicPath(picPath);
+        }
+        return oriDto;
     }
 }
