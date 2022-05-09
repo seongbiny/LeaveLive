@@ -1,8 +1,12 @@
 package leavelive.activity.service;
 
 import leavelive.activity.domain.Activity;
+import leavelive.activity.domain.Favorite;
+import leavelive.activity.domain.Reservation;
 import leavelive.activity.domain.dto.ActivityDto;
 import leavelive.activity.repository.ActivityRepo;
+import leavelive.activity.repository.FavoriteRepo;
+import leavelive.activity.repository.ReservationRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
@@ -24,6 +28,8 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ActivityService {
     private final ActivityRepo repo;
+    private final FavoriteRepo frepo;
+    private final ReservationRepo rrepo;
 
     public List<ActivityDto> getAllAct(String loc) {
         List<Activity> entities = repo.findAllByLocStartsWith(loc);
@@ -37,10 +43,18 @@ public class ActivityService {
     }
 
     public Boolean delAct(Long id, String userId) {
-        // userId 있는지 확인
         Optional<Activity> entity = repo.findById(id);
         if (!entity.isPresent()) throw new NullPointerException("해당하는 액티비티가 없습니다.");
         if (!entity.get().getUserId().equals(userId)) throw new NullPointerException("직접 등록한 액티비티만 삭제할 수 있습니다.");
+        // 연결되어있는거 fav,res 찾고, 삭제
+        List<Favorite> list = frepo.findAllByActivityId(id);
+        if (list != null) {
+            for (Favorite fav : list) frepo.deleteById(fav.getId());
+        }
+        List<Reservation> listRes = rrepo.findByActivityId(id);
+        if (listRes != null) {
+            for (Reservation res : listRes) frepo.deleteById(res.getId());
+        }
         repo.deleteById(id);
         return true;
     }

@@ -1,6 +1,7 @@
 package leavelive.activity.repository;
 
 
+import leavelive.activity.domain.Favorite;
 import leavelive.activity.domain.Reservation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
