@@ -30,7 +30,8 @@ public class JwtCreateController {
         // 토큰 만들기
         String userId = String.valueOf(map.get("googleId")) + "GOOGLE";
         String jwtToken = JWT.create()
-                .withExpiresAt(new Date(System.currentTimeMillis() + (60000) * 1)) //1분
+//                (60000)*20160)
+                .withExpiresAt(new Date(System.currentTimeMillis() + (60000)*20160)) //1분
                 .withClaim("id", userId)
                 .sign(Algorithm.HMAC512(SECRET_KEY));
         String refreshToken = JWT.create()
