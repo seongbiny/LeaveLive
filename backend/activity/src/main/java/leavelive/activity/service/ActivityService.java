@@ -4,6 +4,8 @@ import leavelive.activity.domain.Activity;
 import leavelive.activity.domain.Favorite;
 import leavelive.activity.domain.Reservation;
 import leavelive.activity.domain.dto.ActivityDto;
+import leavelive.activity.exception.FileNotFoundException;
+import leavelive.activity.exception.MyResourceNotFoundException;
 import leavelive.activity.repository.ActivityRepo;
 import leavelive.activity.repository.FavoriteRepo;
 import leavelive.activity.repository.ReservationRepo;
@@ -38,14 +40,14 @@ public class ActivityService {
 
     public ActivityDto getAct(Long id) {
         Optional<Activity> entity = repo.findById(id);
-        if (!entity.isPresent()) throw new NullPointerException("해당하는 액티비티가 없습니다.");
+        if (!entity.isPresent()) throw new MyResourceNotFoundException("해당하는 액티비티가 없습니다.");
         return ActivityDto.of(entity.get());
     }
 
     public Boolean delAct(Long id, String userId) {
         Optional<Activity> entity = repo.findById(id);
-        if (!entity.isPresent()) throw new NullPointerException("해당하는 액티비티가 없습니다.");
-        if (!entity.get().getUserId().equals(userId)) throw new NullPointerException("직접 등록한 액티비티만 삭제할 수 있습니다.");
+        if (!entity.isPresent()) throw new MyResourceNotFoundException("해당하는 액티비티가 없습니다.");
+        if (!entity.get().getUserId().equals(userId)) throw new MyResourceNotFoundException("직접 등록한 액티비티만 삭제할 수 있습니다.");
         // 연결되어있는거 fav,res 찾고, 삭제
         List<Favorite> list = frepo.findAllByActivityId(id);
         if (list != null) {
@@ -76,8 +78,8 @@ public class ActivityService {
 
     public ActivityDto updateAct(Long id, ActivityDto dto, String userId, List<MultipartFile> files) {
         Optional<Activity> entity = repo.findById(id);
-        if (!entity.isPresent()) throw new NullPointerException("해당하는 액티비티가 없습니다.");
-        if (!entity.get().getUserId().equals(userId)) throw new NullPointerException("직접 등록한 액티비티만 삭제할 수 있습니다.");
+        if (!entity.isPresent()) throw new MyResourceNotFoundException("해당하는 액티비티가 없습니다.");
+        if (!entity.get().getUserId().equals(userId)) throw new MyResourceNotFoundException("직접 등록한 액티비티만 삭제할 수 있습니다.");
         ActivityDto ori = new ActivityDto();
         ori = ori.of(entity.get()); // 원래 정보
         ori=updateDto(dto,ori,files);
@@ -128,7 +130,7 @@ public class ActivityService {
             if (!file.exists()) {
                 boolean success = file.mkdir();
                 if (!success) {
-                    throw new NullPointerException("파일 경로를 생성하지 못했습니다.");
+                    throw new FileNotFoundException("파일 경로를 생성하지 못했습니다.");
                 }
             }
             for (MultipartFile multipartFile : files) {
@@ -155,7 +157,7 @@ public class ActivityService {
                     multipartFile.transferTo(file);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    throw new NullPointerException("이미지 저장에 실패했습니다.");
+                    throw new FileNotFoundException("이미지 저장에 실패했습니다.");
                 }
                 file.setWritable(true);
                 file.setReadable(true);

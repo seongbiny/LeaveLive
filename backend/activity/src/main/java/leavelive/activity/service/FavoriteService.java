@@ -3,6 +3,7 @@ package leavelive.activity.service;
 import leavelive.activity.domain.Activity;
 import leavelive.activity.domain.Favorite;
 import leavelive.activity.domain.dto.FavoriteDto;
+import leavelive.activity.exception.MyResourceNotFoundException;
 import leavelive.activity.repository.ActivityRepo;
 import leavelive.activity.repository.FavoriteRepo;
 import lombok.RequiredArgsConstructor;
@@ -28,15 +29,15 @@ public class FavoriteService {
 
     public Boolean delFav(Long id, String userId) {
         Optional<Favorite> entity = repo.findById(id);
-        if(!entity.isPresent()) throw new NullPointerException("해당하는 즐겨찾기가 없습니다.");
-        if(!entity.get().getUserId().equals(userId)) throw new NullPointerException("자신이 등록한 즐겨찾기만 삭제할 수 있습니다.");
+        if(!entity.isPresent()) throw new MyResourceNotFoundException("해당하는 즐겨찾기가 없습니다.");
+        if(!entity.get().getUserId().equals(userId)) throw new MyResourceNotFoundException("자신이 등록한 즐겨찾기만 삭제할 수 있습니다.");
         repo.deleteById(id);
         return true;
     }
 
     public Long saveFav(Long id, String userId){
         Optional<Activity> activity = acRepo.findById(id);
-        if(!activity.isPresent()) throw new NullPointerException("해당하는 숙소가 없습니다.");
+        if(!activity.isPresent()) throw new MyResourceNotFoundException("해당하는 숙소가 없습니다.");
         List<Favorite> entities = repo.findAllByUserId(userId);
         for (Favorite entity:entities){
             if(entity.getActivity().getId()==id){
