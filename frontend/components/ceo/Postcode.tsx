@@ -55,6 +55,8 @@ const Postcode = ({
           style={{ flex: 1, padding: "13.875px 21px", marginLeft: "1rem" }}
           onClick={() => {
             document.body.style.overflow = "hidden";
+            setAddress("");
+            setAddressDetail("");
             setIsShow(true);
           }}
         >
