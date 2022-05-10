@@ -4,9 +4,15 @@ import { TextField } from "@mui/material";
 import { WideButton } from "../../components/WideButton";
 import { PhotoCamera } from "@mui/icons-material";
 import { flexCenter } from "../../styles/Basic";
-import { getUserInfo, updateUserInfo, deleteUser } from "../../api/user";
+import {
+  getUserInfo,
+  updateUserInfo,
+  updateProfileImage,
+  deleteUser,
+} from "../../api/user";
 import { Logout } from "../../components/user/logout";
 import { useRouter } from "next/router";
+import { BACKEND_IMAGE_URL } from "../../api";
 
 const Container = styled.div`
   ${flexCenter};
@@ -76,7 +82,12 @@ const Profile = () => {
         setNickname(nickname);
         setNextNickname(nickname);
         setPicPath(picPath);
-        setNextImage({ file: null, previewURL: picPath });
+        setNextImage({
+          file: null,
+          previewURL: picPath.startsWith("http")
+            ? picPath
+            : `${BACKEND_IMAGE_URL}/${picPath}`,
+        });
         setType(type);
         setStatus(status);
       },
@@ -91,7 +102,8 @@ const Profile = () => {
   const handleImage = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const files = event.target.files;
-      if (!files) return;
+      console.log(files);
+      if (!files || files!.length < 1) return;
 
       const imageURL = URL.createObjectURL(files[0]);
       setNextImage({ file: files[0], previewURL: imageURL });
@@ -100,16 +112,23 @@ const Profile = () => {
   );
 
   const handleSubmit = useCallback(() => {
-    const params: any = {};
-
-    if (nickname.trim() !== nextNickname.trim())
-      params.nickname = nextNickname.trim();
-
-    if (picPath !== nextImage?.previewURL) params.picPath = nextImage?.file;
-
-    if (params !== {}) {
+    // 1. 유저 정보 수정
+    if (nickname.trim() !== nextNickname.trim()) {
       updateUserInfo(
-        params,
+        { nickname: nextNickname.trim() },
+        (response: any) => {
+          console.log(response);
+        },
+        (error: Error) => console.log(error)
+      );
+    }
+
+    // 2. 유저 이미지 수정
+    if (nextImage?.file && picPath !== nextImage?.previewURL && nextImage) {
+      const form = new FormData();
+      form.append("image", nextImage.file);
+      updateProfileImage(
+        form,
         (response: any) => {
           console.log(response);
         },

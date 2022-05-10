@@ -26,6 +26,12 @@ export const updateUserInfo = async (params: any, success: any, fail: any) => {
     await api.patch(`/user`, params).then(success).catch(fail);
 }
 
+export const updateProfileImage =  async (params: any, success: any, fail: any) => {
+    await api.patch(`/user/image`, params, {
+        headers: { "Content-Type": "multipart/form-data" },
+      }).then(success).catch(fail);
+}
+
 export const deleteUser = async (params: any, success: any, fail: any) => {
     await api.delete(`/user`).then(success).catch(fail);
 }
