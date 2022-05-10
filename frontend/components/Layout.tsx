@@ -28,6 +28,9 @@ export default function Layout({ children }: any) {
 
     if (router.pathname.startsWith("/ceo")) setIsUser(false);
     else setIsUser(true);
+
+    if (router.pathname.startsWith("/reservation")) setShowNav(false);
+    else setShowNav(true);
   }, [router]);
 
   const isMobile = useIsMobile();
