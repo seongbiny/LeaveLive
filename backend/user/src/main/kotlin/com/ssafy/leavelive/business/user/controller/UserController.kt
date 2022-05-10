@@ -6,9 +6,11 @@ import com.ssafy.leavelive.business.user.service.UserService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.Parameters
+import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
 import org.springframework.http.HttpStatus
+import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
@@ -78,7 +80,7 @@ class UserController(private val userService: UserService) {
         Parameter(name = "Authorization", description = "액세스 토큰"),
         Parameter(name = "image", description = "프로필로 사용할 사진")
     )
-    @PatchMapping("/image")
+    @PatchMapping("/image", consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
     fun uploadProfileImage(
         @RequestHeader(name = AUTHORIZATION) token: String,
         @RequestBody image: MultipartFile
