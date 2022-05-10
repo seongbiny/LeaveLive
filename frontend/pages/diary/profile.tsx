@@ -4,7 +4,7 @@ import { TextField } from "@mui/material";
 import { WideButton } from "../../components/WideButton";
 import { PhotoCamera } from "@mui/icons-material";
 import { flexCenter } from "../../styles/Basic";
-import { getUserInfo, updateUserInfo } from "../../api/user";
+import { getUserInfo, updateUserInfo, deleteUser } from "../../api/user";
 import { Logout } from "../../components/user/logout";
 import { useRouter } from "next/router";
 
@@ -94,6 +94,23 @@ const Profile = () => {
 
   const handleSubmit = useCallback(() => {}, []);
 
+  const handleLogout = useCallback(() => {
+    Logout();
+    router.push("/login");
+  }, [router]);
+
+  const handleDeleteUser = useCallback(() => {
+    deleteUser(
+      null,
+      (response: any) => {
+        console.log(response);
+        Logout();
+        router.push("/login");
+      },
+      (error: Error) => console.log(error)
+    );
+  }, [router]);
+
   return (
     <Container>
       내 정보 수정
@@ -118,16 +135,10 @@ const Profile = () => {
       />
       <WideButton text="수정하기" onClick={handleSubmit} />
       <UserMenu>
-        <span
-          onClick={() => {
-            Logout();
-            router.push("/login");
-          }}
-          style={{ marginRight: "1rem" }}
-        >
+        <span onClick={handleLogout} style={{ marginRight: "1rem" }}>
           로그아웃
         </span>
-        <span>회원탈퇴</span>
+        <span onClick={handleDeleteUser}>회원탈퇴</span>
       </UserMenu>
     </Container>
   );

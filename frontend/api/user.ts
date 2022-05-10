@@ -22,6 +22,10 @@ export const getUserInfo = async (params: any, success: any, fail: any) => {
     await api.get(`/user`).then(success).catch(fail);
 }
 
-export const updateUserInfo = async(params: any, success: any, fail: any) => {
+export const updateUserInfo = async (params: any, success: any, fail: any) => {
     await api.patch(`/user`, params).then(success).catch(fail);
+}
+
+export const deleteUser = async (params: any, success: any, fail: any) => {
+    await api.delete(`/user`).then(success).catch(fail);
 }
