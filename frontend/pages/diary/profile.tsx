@@ -55,10 +55,16 @@ const Input = styled.input`
   display: none;
 `;
 
+interface INextImage {
+  file: File | null;
+  previewURL: String;
+}
+
 const Profile = () => {
   const [nickname, setNickname] = useState<String>("");
+  const [nextNickname, setNextNickname] = useState<String>("");
   const [picPath, setPicPath] = useState<String>("");
-  const [previewURL, setPreviewURL] = useState<String>("");
+  const [nextImage, setNextImage] = useState<INextImage>();
   const [type, setType] = useState<String>("");
   const [status, setStatus] = useState<String>("");
   const router = useRouter();
@@ -68,7 +74,9 @@ const Profile = () => {
       null,
       ({ data: { nickname, picPath, type, status } }: any) => {
         setNickname(nickname);
+        setNextNickname(nickname);
         setPicPath(picPath);
+        setNextImage({ file: null, previewURL: picPath });
         setType(type);
         setStatus(status);
       },
@@ -77,7 +85,7 @@ const Profile = () => {
   }, []);
 
   const handleChange = useCallback(({ target: { value } }: any) => {
-    setNickname(value);
+    setNextNickname(value);
   }, []);
 
   const handleImage = useCallback(
@@ -86,13 +94,33 @@ const Profile = () => {
       if (!files) return;
 
       const imageURL = URL.createObjectURL(files[0]);
-
-      setPreviewURL(imageURL);
+      setNextImage({ file: files[0], previewURL: imageURL });
     },
     []
   );
 
-  const handleSubmit = useCallback(() => {}, []);
+  const handleSubmit = useCallback(() => {
+    const params: any = {};
+
+    if (nickname.trim() !== nextNickname.trim())
+      params.nickname = nextNickname.trim();
+
+    if (picPath !== nextImage?.previewURL)
+      params.picPath = nextImage?.previewURL;
+
+    if (params !== {}) {
+      updateUserInfo(
+        params,
+        (response: any) => {
+          console.log(response);
+        },
+        (error: Error) => console.log(error)
+      );
+    }
+
+    alert("정보가 수정되었습니다.");
+    router.push("/diary");
+  }, [router, nickname, nextNickname, picPath, nextImage]);
 
   const handleLogout = useCallback(() => {
     Logout();
@@ -114,7 +142,7 @@ const Profile = () => {
   return (
     <Container>
       내 정보 수정
-      <ProfileImage url={previewURL}>
+      <ProfileImage url={nextImage?.previewURL}>
         <UploadButton htmlFor="image">
           <Input
             id="image"
@@ -130,7 +158,7 @@ const Profile = () => {
         id="name"
         style={{ width: "100%", marginBottom: "1rem" }}
         placeholder="이름을 적어주세요."
-        value={nickname}
+        value={nextNickname}
         onChange={handleChange}
       />
       <WideButton text="수정하기" onClick={handleSubmit} />
