@@ -1,6 +1,8 @@
 package leavelive.activity.controller;
 
+import leavelive.activity.domain.dto.ActivityDto;
 import leavelive.activity.domain.dto.ReservationDto;
+import leavelive.activity.repository.ActivityRepo;
 import leavelive.activity.service.ReservationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +42,13 @@ public class ReservationController {
         log.info("ReservationController.saveReservation.userId:" + userId);
         Long result = service.saveRes(id, userId, dto);
         return new ResponseEntity(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/my")
+    public ResponseEntity<List<ReservationDto>> getAllMyRes(HttpServletResponse response) {
+        String userId = response.getHeader("userId");
+        List<ReservationDto> list = service.getAllMyRes(userId);
+        return new ResponseEntity(list, HttpStatus.OK);
     }
 
 }

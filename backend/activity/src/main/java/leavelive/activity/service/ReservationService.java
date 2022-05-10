@@ -89,4 +89,16 @@ public class ReservationService {
         request.setUserId(userId);
         return repo.save(Reservation.of(request)).getId();
     }
+
+    public List<ReservationDto> getAllMyRes(String userId){
+        List<Activity> entities=activityRepo.findAllByUserId(userId);
+        List<ReservationDto> result=new ArrayList<>();
+        for(Activity act:entities){
+            List<Reservation> list=repo.findByActivityId(act.getId());
+            for(Reservation res:list){
+                result.add(ReservationDto.of(res));
+            }
+        }
+        return result;
+    }
 }
