@@ -105,8 +105,7 @@ const Profile = () => {
     if (nickname.trim() !== nextNickname.trim())
       params.nickname = nextNickname.trim();
 
-    if (picPath !== nextImage?.previewURL)
-      params.picPath = nextImage?.previewURL;
+    if (picPath !== nextImage?.previewURL) params.picPath = nextImage?.file;
 
     if (params !== {}) {
       updateUserInfo(
@@ -123,20 +122,24 @@ const Profile = () => {
   }, [router, nickname, nextNickname, picPath, nextImage]);
 
   const handleLogout = useCallback(() => {
-    Logout();
-    router.push("/login");
+    if (confirm("로그아웃 하시겠습니까?")) {
+      Logout();
+      router.push("/login");
+    }
   }, [router]);
 
   const handleDeleteUser = useCallback(() => {
-    deleteUser(
-      null,
-      (response: any) => {
-        console.log(response);
-        Logout();
-        router.push("/login");
-      },
-      (error: Error) => console.log(error)
-    );
+    if (confirm("리브리브를 탈퇴할까요?")) {
+      deleteUser(
+        null,
+        (response: any) => {
+          console.log(response);
+          Logout();
+          router.push("/login");
+        },
+        (error: Error) => console.log(error)
+      );
+    }
   }, [router]);
 
   return (
