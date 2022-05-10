@@ -1,7 +1,5 @@
 server:
   port: 8085
-  servlet:
-    context-path: /api
 spring:
   # DB 설정
   datasource:

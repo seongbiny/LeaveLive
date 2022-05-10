@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
-@RequestMapping("/activity/favorite")
+@RequestMapping("/api/activity/favorite")
 @RequiredArgsConstructor
 @Slf4j
 public class FavoriteController {

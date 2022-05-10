@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/activity/reservation")
+@RequestMapping("/api/activity/reservation")
 @Slf4j
 public class ReservationController {
     private final ReservationService service;
