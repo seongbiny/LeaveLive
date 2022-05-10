@@ -86,6 +86,11 @@ public class ActivityService {
         return dto.of(repo.save(Activity.updateOf(ori)));
     }
 
+    public List<ActivityDto> getAllMyAct(String userId){
+        List<Activity> entities=repo.findAllByUserId(userId);
+        return entities.stream().map(ActivityDto::of).collect(Collectors.toList());
+    }
+
     private ActivityDto updateDto(ActivityDto dto, ActivityDto ori, List<MultipartFile> files) {
         if (dto.getLoc() != null) {
             ori.setLoc(dto.getLoc());

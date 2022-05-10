@@ -58,6 +58,13 @@ public class ActivityController {
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
+    @GetMapping("/my")
+    public ResponseEntity<List<ActivityDto>> getAllMyActivity(HttpServletResponse response) {
+        String userId = response.getHeader("userId");
+        List<ActivityDto> list = service.getAllMyAct(userId);
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
+
 //    @GetMapping("/images")
 //    public ResponseEntity<byte[]> getActImg(@RequestParam("image_path") String imagePath) throws IOException {
 //        byte[] imageByteArray = service.findImage(imagePath);
