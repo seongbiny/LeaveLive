@@ -5,12 +5,9 @@ export const FRONTEND_URL =
     ? "http://k6c105.p.ssafy.io"
     : "http://localhost:3000";
 
-export const BACKEND_URL = "http://k6c105.p.ssafy.io:8080/api";
+export const BACKEND_IMAGE_URL = "http://k6c105.p.ssafy.io/images/";
 
-// export const BACKEND_URL =
-//   process.env.NODE_ENV === "production"
-//     ? "http://k6c105.p.ssafy.io:8080/api"
-//     : "http://localhost:8080/api";
+export const BACKEND_URL = "http://k6c105.p.ssafy.io:8080/api";
 
 function apiInstance() {
   const instance = axios.create({
