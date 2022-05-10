@@ -1,5 +1,6 @@
 package leavelive.accommodation.controller;
 
+import leavelive.accommodation.domain.dto.AccommodationArticleDto;
 import leavelive.accommodation.domain.dto.AccommodationResDto;
 import leavelive.accommodation.service.ReservationServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -39,5 +40,12 @@ public class ReservationController {
         log.info("AcommodationResController.deleteAccommodationRes.userId:" + userId);
         Boolean result = service.deleteReservation(userId, id);
         return new ResponseEntity(result, HttpStatus.OK);
+    }
+    @GetMapping("/my")
+    public ResponseEntity<List<AccommodationResDto>> getAllMyAccRes(HttpServletResponse response){
+        String userId = response.getHeader("userId");
+        log.info("AccommodationController.getAllMyAccRes.userId:" + userId);
+        List<AccommodationResDto> result=service.getAllMyReservation(userId);
+        return new ResponseEntity(result,HttpStatus.OK);
     }
 }

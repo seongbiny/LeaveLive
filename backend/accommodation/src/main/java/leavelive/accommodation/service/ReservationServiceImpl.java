@@ -80,4 +80,21 @@ public class ReservationServiceImpl {
         repo.deleteById(id);
         return true;
     }
+
+    /**
+     * 자신이 등록한 숙소에 대한 모든 예약 목록
+     * @param userId
+     * @return
+     */
+    public List<AccommodationResDto> getAllMyReservation(String userId){
+        List<AccommodationArticle> entities=articleRepo.findAllByUserId(userId);
+        List<AccommodationResDto> result=new ArrayList<>();
+        for(AccommodationArticle article:entities){
+            List<AccommodationRes> list=repo.findByAccommodationArticleId(article.getId());
+            for(AccommodationRes res:list) {
+                result.add(AccommodationResDto.of(res));
+            }
+        }
+        return result;
+    }
 }
