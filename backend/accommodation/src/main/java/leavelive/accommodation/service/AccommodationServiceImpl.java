@@ -95,6 +95,10 @@ public class AccommodationServiceImpl {
         oriDto=updateDto(dto,oriDto,files);
         return AccommodationArticleDto.of(repo.save(AccommodationArticle.updateOf(oriDto)));
     }
+    public List<AccommodationArticleDto> getAllMyAccommodation(String userId){
+        List<AccommodationArticle> entities=repo.findAllByUserId(userId);
+        return entities.stream().map(AccommodationArticleDto::of).collect(Collectors.toList());
+    }
 
     public String saveImage(List<MultipartFile> files) {
         String images = "";

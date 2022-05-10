@@ -9,8 +9,7 @@ import java.util.Optional;
 public interface AccommodationRepository extends JpaRepository<AccommodationArticle,Long> {
     @Override
     Optional<AccommodationArticle> findById(Long id);
-
 //    @Query(value = "select i from AccommodationArticle i where i.loc like ':loc%'")
-//    List<AccommodationArticle> findAllByLoc(@Param("loc") String loc);
     List<AccommodationArticle> findAllByLocStartsWith(String loc);
+    List<AccommodationArticle> findAllByUserId(String userId);
 }

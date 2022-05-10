@@ -35,7 +35,7 @@ public class AccommodationController {
     @DeleteMapping("/{accommodation_id}")
     public ResponseEntity<Boolean> deleteAccommodation(HttpServletResponse response, @PathVariable("accommodation_id") Long id){
         String userId = response.getHeader("userId");
-        log.info("AcommodationResController.getAllAccommodationFav.userId:" + userId);
+        log.info("AccommodationController.deleteAccommodation.userId:" + userId);
         Boolean result=service.delete(id,userId);
         return new ResponseEntity(result, HttpStatus.OK);
     }
@@ -43,7 +43,7 @@ public class AccommodationController {
     @PostMapping(value = "/")
     public ResponseEntity<AccommodationArticleDto> saveAccomodation(HttpServletResponse response, @RequestPart(value="dto") AccommodationArticleDto request, @RequestPart(value="image", required=false) List<MultipartFile> files){
         String userId = response.getHeader("userId");
-        log.info("AcommodationResController.getAllAccommodationFav.userId:" + userId);
+        log.info("AccommodationController.saveAccomodation.userId:" + userId);
         AccommodationArticleDto result=service.save(request,userId,files);
         return new ResponseEntity(result,HttpStatus.OK);
     }
@@ -51,8 +51,15 @@ public class AccommodationController {
     @PatchMapping("/{accommodation_id}")
     public ResponseEntity<AccommodationArticleDto> updateAccommodation(HttpServletResponse response, @PathVariable("accommodation_id") Long id, @RequestPart(value="request") AccommodationArticleDto request, @RequestPart(value="image", required=false) List<MultipartFile> files){
         String userId = response.getHeader("userId");
-        log.info("AcommodationResController.getAllAccommodationFav.userId:" + userId);
+        log.info("AccommodationController.updateAccommodation.userId:" + userId);
         AccommodationArticleDto dto=service.update(request,id,userId,files);
         return new ResponseEntity(dto,HttpStatus.OK);
+    }
+    @GetMapping("/my")
+    public ResponseEntity<List<AccommodationArticleDto>> getAllMyAcc(HttpServletResponse response){
+        String userId = response.getHeader("userId");
+        log.info("AccommodationController.getAllCeoAccommodation.userId:" + userId);
+        List<AccommodationArticleDto> result=service.getAllMyAccommodation(userId);
+        return new ResponseEntity(result,HttpStatus.OK);
     }
 }
