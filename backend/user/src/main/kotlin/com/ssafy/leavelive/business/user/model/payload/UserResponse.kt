@@ -1,6 +1,5 @@
 package com.ssafy.leavelive.business.user.model.payload
 
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.ssafy.leavelive.business.user.model.Status
 import com.ssafy.leavelive.business.user.model.UserType
 

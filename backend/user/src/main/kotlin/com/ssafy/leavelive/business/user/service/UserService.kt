@@ -1,6 +1,5 @@
 package com.ssafy.leavelive.business.user.service
 
-import com.auth0.jwt.JWT
 import com.ssafy.leavelive.business.user.model.User
 import com.ssafy.leavelive.business.user.model.payload.UserRequest
 import com.ssafy.leavelive.business.user.model.payload.UserResponse
@@ -9,6 +8,7 @@ import com.ssafy.leavelive.business.user.utils.JwtUtil
 import org.modelmapper.ModelMapper
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import org.springframework.web.multipart.MultipartFile
 
 @Service
 class UserService(private val userRepository: UserRepository, private val modelMapper: ModelMapper) {
@@ -17,7 +17,7 @@ class UserService(private val userRepository: UserRepository, private val modelM
         modelMapper.map(userRepository.findByIdOrNull(JwtUtil.decodeToken(token)), UserResponse::class.java)
 
     fun getUsers(): List<UserResponse> =
-        userRepository.findAll().map { modelMapper.map(it, UserResponse::class.java) }.toList()
+        userRepository.findAll().map { modelMapper.map(it, UserResponse::class.java) }
 
     fun saveUser(token: String, userRequest: UserRequest): UserResponse {
         // extract decodeToken to token util
@@ -31,7 +31,7 @@ class UserService(private val userRepository: UserRepository, private val modelM
         )
     }
 
-    fun patchUser(token: String, userRequest: UserRequest): UserResponse {
+    fun patchUser(token: String, userRequest: UserRequest, image: MultipartFile): UserResponse {
         val userId = JwtUtil.decodeToken(token)
         val user = userRepository.findById(userId).get()
         modelMapper.map(userRequest, user)
@@ -44,13 +44,6 @@ class UserService(private val userRepository: UserRepository, private val modelM
         userRepository.deleteById(userId)
     }
 
-    // validate user id, whether it exists or not
-    fun exists(userId: String): Boolean = userRepository.existsById(userId)
 
-    fun validateRefreshToken(token: String): Boolean = userRepository.existsByToken(token)
-
-    fun getRefreshToken(userId: String): String {
-        return userRepository.findById(userId).get().token
-    }
 
 }
