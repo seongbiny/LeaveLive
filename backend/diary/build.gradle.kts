@@ -28,6 +28,9 @@ dependencies {
 	implementation("org.modelmapper:modelmapper:3.1.0")
 	// https://mvnrepository.com/artifact/com.auth0/java-jwt
 	implementation("com.auth0:java-jwt:3.19.1")
+	// https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui
+	implementation("org.springdoc:springdoc-openapi-ui:1.6.8")
+
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
