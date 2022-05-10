@@ -27,8 +27,8 @@ class UserController(private val userService: UserService) {
     @PatchMapping
     fun editInformation(
         @RequestHeader(name = "Authorization") token: String,
-        @RequestPart userRequest: UserRequest,
-        @RequestPart image: MultipartFile
+        @RequestPart(value = "userRequest") userRequest: UserRequest,
+        @RequestPart(value = "image") image: MultipartFile
     ): ResponseEntity<UserResponse> {
         return ResponseEntity(userService.patchUser(token, userRequest, image), HttpStatus.OK)
     }

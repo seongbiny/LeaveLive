@@ -9,6 +9,10 @@ import org.modelmapper.ModelMapper
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
+import java.io.File
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 @Service
 class UserService(private val userRepository: UserRepository, private val modelMapper: ModelMapper) {
@@ -35,15 +39,28 @@ class UserService(private val userRepository: UserRepository, private val modelM
         val userId = JwtUtil.decodeToken(token)
         val user = userRepository.findById(userId).get()
         modelMapper.map(userRequest, user)
-        val userResponse = UserResponse()
-        modelMapper.map(userRepository.save(user), userResponse)
-        return userResponse
+        image.let {
+            user.picPath = saveImage(it)
+        }
+        return modelMapper.map(userRepository.save(user), UserResponse::class.java)
     }
 
     fun removeUser(userId: String) {
         userRepository.deleteById(userId)
     }
 
+    private fun saveImage(image: MultipartFile) : String {
+        var uniquePath = "${LocalDate.now().format(DateTimeFormatter.ISO_DATE)}${UUID.randomUUID()}"
+        val path = "/home/ubuntu/images/profile"
+        when(image.contentType?.lowercase()) {
+            "image/png" -> uniquePath += ".png"
+            "image/jpeg" -> uniquePath += ".jpeg"
+        }
+        val file = File(path)
+        if(!file.exists()) file.mkdirs()
+        image.transferTo(File("$path/$uniquePath"))
 
+        return "profile/$uniquePath"
+    }
 
 }
