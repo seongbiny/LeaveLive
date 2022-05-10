@@ -34,6 +34,7 @@ dependencies {
     implementation("org.modelmapper:modelmapper:3.1.0")
     // https://mvnrepository.com/artifact/com.auth0/java-jwt
     implementation("com.auth0:java-jwt:3.19.1")
+    implementation("org.springdoc:springdoc-openapi-ui:1.6.8")
     compileOnly("org.projectlombok:lombok")
     runtimeOnly("com.h2database:h2")
     runtimeOnly("mysql:mysql-connector-java")
