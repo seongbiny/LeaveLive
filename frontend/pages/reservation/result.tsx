@@ -6,7 +6,6 @@ const Box = styled.div`
   flex-direction: column;
   height: 25vh;
   width: 70vw;
-  // border: 1px solid;
   border-radius: 20px;
   align-items: center;
   justify-content: center;
@@ -20,7 +19,6 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  // border: 1px solid;
   height: 100%;
   width: 100%;
   padding-top: 20vh;
