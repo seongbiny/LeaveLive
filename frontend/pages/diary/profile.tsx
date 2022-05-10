@@ -13,11 +13,15 @@ import {
 import { Logout } from "../../components/user/logout";
 import { useRouter } from "next/router";
 import { BACKEND_IMAGE_URL } from "../../api";
+import Header from "../../components/Header";
 
 const Container = styled.div`
   ${flexCenter};
   flex-direction: column;
+  justify-content: flex-start;
   align-self: flex-start;
+  background-color: #f7f8fa;
+  height: 100%;
 `;
 
 interface IProfileImage {
@@ -163,7 +167,7 @@ const Profile = () => {
 
   return (
     <Container>
-      내 정보 수정
+      <Header title="내 정보 수정" />
       <ProfileImage url={nextImage?.previewURL}>
         <UploadButton htmlFor="image">
           <Input
@@ -178,7 +182,11 @@ const Profile = () => {
       <TextField
         label="이름"
         id="name"
-        style={{ width: "100%", marginBottom: "1rem" }}
+        style={{
+          width: "100%",
+          marginBottom: "1rem",
+          backgroundColor: "white",
+        }}
         placeholder="이름을 적어주세요."
         value={nextNickname}
         onChange={handleChange}
