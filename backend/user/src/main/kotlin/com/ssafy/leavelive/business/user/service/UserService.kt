@@ -35,14 +35,21 @@ class UserService(private val userRepository: UserRepository, private val modelM
         )
     }
 
-    fun patchUser(token: String, userRequest: UserRequest, image: MultipartFile): UserResponse {
+    fun patchUser(token: String, userRequest: UserRequest): UserResponse {
         val userId = JwtUtil.decodeToken(token)
         val user = userRepository.findById(userId).get()
         modelMapper.map(userRequest, user)
+        return modelMapper.map(userRepository.save(user), UserResponse::class.java)
+    }
+
+    fun uploadProfileImage(token: String, image: MultipartFile): String {
+        val userId = JwtUtil.decodeToken(token)
+        val user = userRepository.findById(userId).get()
         image.let {
             user.picPath = saveImage(it)
         }
-        return modelMapper.map(userRepository.save(user), UserResponse::class.java)
+        userRepository.save(user)
+        return user.picPath!!
     }
 
     fun removeUser(userId: String) {

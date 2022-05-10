@@ -8,30 +8,39 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 
+private const val AUTHORIZATION = "Authorization"
+
 @RestController
 @RequestMapping("/api/user")
 class UserController(private val userService: UserService) {
 
     @GetMapping
-    fun getInformation(@RequestHeader(name = "Authorization") token: String): ResponseEntity<UserResponse> =
+    fun getInformation(@RequestHeader(name = AUTHORIZATION) token: String): ResponseEntity<UserResponse> =
         ResponseEntity(userService.getUser(token), HttpStatus.OK)
 
     @PostMapping
     fun register(
-        @RequestHeader(name = "Authorization") token: String,
+        @RequestHeader(name = AUTHORIZATION) token: String,
         @RequestBody userRequest: UserRequest
-    ): ResponseEntity<UserResponse> {
-        return ResponseEntity(userService.saveUser(token, userRequest), HttpStatus.OK)
-    }
+    ): ResponseEntity<UserResponse> =
+        ResponseEntity(userService.saveUser(token, userRequest), HttpStatus.OK)
+
 
     @PatchMapping
     fun editInformation(
-        @RequestHeader(name = "Authorization") token: String,
-        @RequestPart(value = "userRequest") userRequest: UserRequest,
-        @RequestPart(value = "image") image: MultipartFile
-    ): ResponseEntity<UserResponse> {
-        return ResponseEntity(userService.patchUser(token, userRequest, image), HttpStatus.OK)
-    }
+        @RequestHeader(name = AUTHORIZATION) token: String,
+        @RequestBody userRequest: UserRequest,
+    ): ResponseEntity<UserResponse> =
+        ResponseEntity(userService.patchUser(token, userRequest), HttpStatus.OK)
+
+
+    @PatchMapping("/image")
+    fun uploadProfileImage(
+        @RequestHeader(name = AUTHORIZATION) token: String,
+        @RequestBody image: MultipartFile
+    ): ResponseEntity<String> =
+        ResponseEntity(userService.uploadProfileImage(token, image), HttpStatus.OK)
+
 
     @DeleteMapping
     fun withdraw() {
