@@ -10,7 +10,7 @@ const config = {
 
 const responseGoogle = async (response) => {
   console.log(1, response);
-  let jwtToken = await Axios.get(
+  let jwtToken = await Axios.post(
     "http://k6c105.p.ssafy.io:8080/api/auth/google",
     JSON.stringify(response),
     config
