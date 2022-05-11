@@ -48,7 +48,15 @@ const MyBnbList = () => {
           picPath={bnb.picPath.split(",")[0]}
           name={bnb.name}
           price={bnb.price}
-          onClick={() => router.push(`/ceo/bnb/${bnb.id}`)}
+          onClick={() =>
+            router.push(
+              {
+                pathname: `/ceo/bnb/${bnb.id}`,
+                query: { id: bnb.id },
+              },
+              `/ceo/bnb/${bnb.id}`
+            )
+          }
         />
       ))}
       {/* <Link href={`/ceo/bnb/create`} passHref> */}
