@@ -81,7 +81,7 @@ const Reservation = () => {
             rangeColors={[theme.palette.primary.main]}
             ranges={state}
             months={2}
-            onChange={(range) => {setState([range.selection]); setStartDate([range.selection][0].startDate); setEndDate([range.selection][0].endDate)}}
+            onChange={(range: any) => {setState([range.selection]); setStartDate([range.selection][0].startDate); setEndDate([range.selection][0].endDate)}}
           />
         </div>
 

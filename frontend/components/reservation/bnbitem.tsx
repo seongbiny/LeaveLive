@@ -2,11 +2,12 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 import Image from "next/image";
 import house from '../../public/house.jpg';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
-import axios from "axios";
+import { likeBnb, unlikeBnb } from "../../api/bnb";
+import { BACKEND_IMAGE_URL } from "../../api";
 
 const Box = styled.div`
   position: relative;
@@ -20,38 +21,30 @@ const Text = styled.div`
   top: 5%;
   left: 80%;
 `;
-
 interface LikeAxios {
   accommodation_ids: number;
   Authorization: string;
 }
 
-const BnbItem = () => {
+const BnbItem = (props: any) => {
     const [like, setLike] = useState(false);
+    const id = 2;
+    console.log(props.picpath.split(','));
+    const picpath = props.picpath.split(',');
 
+    const likeAxios = useCallback(() => {
+      likeBnb(id,
+        (response: any) => console.log(response),
+        (error: Error) => console.log(error))
+      alert("북마크에 등록되었습니다.");  
+    }, []);
 
-    const likeAxios = async () => {
-      try {
-        const request = await axios.post<LikeAxios>(`http://k6c105.p.ssafy.io/api/accommodation/favorite/1`, 
-        {accommodation_id: 1},
-        {headers: {Authorization: localStorage.getItem("access_token")}});
-        console.log(request.data);
-        console.log(like);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    const unlikeAxios = async () => {
-      try {
-        const request = await axios.delete(`http://k6c105.p.ssafy.io/api/accommodation/favorite/1`, {
-          // headers: {"Authorization": localStorage.getItem("access_token")}
-        });
-        console.log(request.data);
-        console.log(like);
-      } catch (err) {
-        console.log(err);
-      }
-    };
+    const unlikeAxios = useCallback(() => {
+      unlikeBnb(id,
+        (response: any) => console.log(response),
+        (error: Error) => console.log(error))
+      alert("북마크에서 삭제되었습니다.")
+    }, [])
 
     return(
         <Box>
@@ -59,20 +52,13 @@ const BnbItem = () => {
             {like === false ? <StarBorderIcon fontSize="large" sx={{color: 'yellow'}} onClick={() => {setLike(!like); likeAxios();}}/> : <StarIcon fontSize="large" sx={{color: 'yellow'}} onClick={() => {setLike(!like); unlikeAxios();}}/>}
           </Text>
           <Carousel infiniteLoop showThumbs={false}>
-              <div>
-                  <Image src={house} width={350} height={250} />
+            {picpath.map((pic, idx)=>(
+              <div key={idx}>
+                <img src={`${BACKEND_IMAGE_URL}/${pic}`} width={350} height={250} />
               </div>
-              <div>
-                  <Image src={house} width={350} height={250} />
-              </div>
-              <div>
-                  <Image src={house} width={350} height={250} />
-              </div>
-              <div>
-                  <Image src={house} width={350} height={250} />
-              </div>
+            ))}
           </Carousel>
-          <div style={{marginLeft:'7vw'}}>어쩌고저쩌고호텔</div>
+          <div style={{marginLeft:'7vw'}}>{props.name}</div>
         </Box>
     )
 }
