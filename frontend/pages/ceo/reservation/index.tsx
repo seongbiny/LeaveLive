@@ -21,8 +21,8 @@ const MyReservation = () => {
             userName: d.userId,
             cnt: d.cnt,
             bnbName: d.accommodationArticle.name,
-            startDate: d.startDate,
-            endDate: d.endDate,
+            startDate: d.startDate.join("."),
+            endDate: d.endDate.join("."),
             price: d.accommodationArticle.price * d.cnt,
           };
 
