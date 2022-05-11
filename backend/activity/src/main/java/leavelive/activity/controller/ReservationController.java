@@ -2,6 +2,7 @@ package leavelive.activity.controller;
 
 import leavelive.activity.domain.dto.ActivityDto;
 import leavelive.activity.domain.dto.ReservationDto;
+import leavelive.activity.domain.dto.ReservationResDto;
 import leavelive.activity.repository.ActivityRepo;
 import leavelive.activity.service.ReservationService;
 import lombok.RequiredArgsConstructor;
@@ -45,9 +46,9 @@ public class ReservationController {
     }
 
     @GetMapping("/my")
-    public ResponseEntity<List<ReservationDto>> getAllMyRes(HttpServletResponse response) {
+    public ResponseEntity<List<ReservationResDto>> getAllMyRes(HttpServletResponse response) {
         String userId = response.getHeader("userId");
-        List<ReservationDto> list = service.getAllMyRes(userId);
+        List<ReservationResDto> list = service.getAllMyRes(userId);
         return new ResponseEntity(list, HttpStatus.OK);
     }
 

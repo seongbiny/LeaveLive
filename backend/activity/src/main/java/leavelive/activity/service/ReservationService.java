@@ -3,16 +3,24 @@ package leavelive.activity.service;
 import leavelive.activity.domain.Activity;
 import leavelive.activity.domain.Reservation;
 import leavelive.activity.domain.dto.ReservationDto;
+import leavelive.activity.domain.dto.ReservationResDto;
 import leavelive.activity.exception.MyResourceNotFoundException;
 import leavelive.activity.repository.ActivityRepo;
 import leavelive.activity.repository.ReservationRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
+import java.nio.charset.Charset;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -90,15 +98,37 @@ public class ReservationService {
         return repo.save(Reservation.of(request)).getId();
     }
 
-    public List<ReservationDto> getAllMyRes(String userId){
+    public List<ReservationResDto> getAllMyRes(String userId){
         List<Activity> entities=activityRepo.findAllByUserId(userId);
-        List<ReservationDto> result=new ArrayList<>();
+        List<ReservationResDto> result=new ArrayList<>();
         for(Activity act:entities){
             List<Reservation> list=repo.findByActivityId(act.getId());
             for(Reservation res:list){
-                result.add(ReservationDto.of(res));
+                ReservationResDto req=ReservationResDto.of(res);
+                req.setNickname(getNickName(userId));
+                result.add(req);
             }
         }
         return result;
+    }
+
+    public String getNickName(String userId){
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(new MediaType("application","json", Charset.forName("UTF-8"))); //json으로 설정
+        HttpEntity<?> requestMessage = new HttpEntity<>(httpHeaders);
+        //requestMessage 만들기
+        RestTemplate restTemplate = new RestTemplate();
+        String url = "http://k6c105.p.ssafy.io:8083/api/user/info/"+userId;
+        String nickname="";
+        try{
+            //요청하기
+            ResponseEntity<Map> responseEntity=restTemplate.getForEntity(url,Map.class,requestMessage);
+            log.info("ReservationServiceImpl.getAllMyReservation.response:"+responseEntity.getBody().get("nickname"));
+            nickname= (String) responseEntity.getBody().get("nickname");
+        }catch (Exception e){
+            e.printStackTrace();
+            log.error("HttpInterceptor.preHandle.response:error");
+        }
+        return nickname;
     }
 }
