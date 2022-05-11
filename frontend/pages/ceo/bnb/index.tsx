@@ -6,6 +6,7 @@ import BnbList from "../../../components/ceo/BnbList";
 import styled from "styled-components";
 import { flexCenter } from "../../../styles/Basic";
 import { useRouter } from "next/router";
+import Header from "../../../components/Header";
 
 interface IBnbList {
   id: number;
@@ -20,9 +21,23 @@ interface IBnbList {
 }
 
 const Container = styled.div`
-  ${flexCenter}
   width: 100%;
+`;
+
+const Wrapper = styled.div`
+  ${flexCenter}
   flex-direction: column;
+  width: 100%;
+  margin-top: 1rem;
+  margin-bottom: 75px;
+`;
+
+const ButtonWrapper = styled.div`
+  position: fixed;
+  left: 50%;
+  bottom: 75px;
+  width: 80%;
+  transform: translate(-50%, 0);
 `;
 
 const MyBnbList = () => {
@@ -40,29 +55,35 @@ const MyBnbList = () => {
   const router = useRouter();
 
   return (
-    <Container>
-      내가 등록한 숙소 목록
-      {bnbList?.map((bnb) => (
-        <BnbList
-          key={bnb.id}
-          picPath={bnb.picPath.split(",")[0]}
-          name={bnb.name}
-          price={bnb.price}
-          onClick={() =>
-            router.push(
-              {
-                pathname: `/ceo/bnb/${bnb.id}`,
-                query: { id: bnb.id },
-              },
-              `/ceo/bnb/${bnb.id}`
-            )
-          }
-        />
-      ))}
-      {/* <Link href={`/ceo/bnb/create`} passHref> */}
-      <WideButton onClick={() => {}} text="새 숙소 등록하기" />
-      {/* </Link> */}
-    </Container>
+    <>
+      <Container>
+        <Header title="숙소 관리" hide={true} />
+        <Wrapper>
+          {bnbList?.map((bnb) => (
+            <BnbList
+              key={bnb.id}
+              picPath={bnb.picPath.split(",")[0]}
+              name={bnb.name}
+              price={bnb.price}
+              onClick={() =>
+                router.push(
+                  {
+                    pathname: `/ceo/bnb/${bnb.id}`,
+                    query: { id: bnb.id },
+                  },
+                  `/ceo/bnb/${bnb.id}`
+                )
+              }
+            />
+          ))}
+        </Wrapper>
+        {/* <Link href={`/ceo/bnb/create`} passHref> */}
+        <ButtonWrapper>
+          <WideButton onClick={() => {}} text="새 숙소 등록하기" />
+        </ButtonWrapper>
+        {/* </Link> */}
+      </Container>
+    </>
   );
 };
 
