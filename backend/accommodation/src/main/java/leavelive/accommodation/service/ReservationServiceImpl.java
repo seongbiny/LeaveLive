@@ -3,16 +3,25 @@ package leavelive.accommodation.service;
 import leavelive.accommodation.domain.AccommodationArticle;
 import leavelive.accommodation.domain.AccommodationRes;
 import leavelive.accommodation.domain.dto.AccommodationResDto;
+import leavelive.accommodation.domain.dto.AccommodationResReq;
+import leavelive.accommodation.exception.LoginException;
 import leavelive.accommodation.exception.MyResourceNotFoundException;
 import leavelive.accommodation.repository.AccommodationRepository;
 import leavelive.accommodation.repository.ReservationRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
+import java.nio.charset.Charset;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -86,15 +95,36 @@ public class ReservationServiceImpl {
      * @param userId
      * @return
      */
-    public List<AccommodationResDto> getAllMyReservation(String userId){
+    public List<AccommodationResReq> getAllMyReservation(String userId){
         List<AccommodationArticle> entities=articleRepo.findAllByUserId(userId);
-        List<AccommodationResDto> result=new ArrayList<>();
+        List<AccommodationResReq> result=new ArrayList<>();
         for(AccommodationArticle article:entities){
             List<AccommodationRes> list=repo.findByAccommodationArticleId(article.getId());
             for(AccommodationRes res:list) {
-                result.add(AccommodationResDto.of(res));
+                AccommodationResReq req=AccommodationResReq.of(res);
+                req.setNickname(getNickName(userId));
+                result.add(req);
             }
         }
         return result;
+    }
+    public String getNickName(String userId){
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(new MediaType("application","json", Charset.forName("UTF-8"))); //json으로 설정
+        HttpEntity<?> requestMessage = new HttpEntity<>(httpHeaders);
+        //requestMessage 만들기
+        RestTemplate restTemplate = new RestTemplate();
+        String url = "http://k6c105.p.ssafy.io:8083/api/user/info/"+userId;
+        String nickname="";
+        try{
+            //요청하기
+            ResponseEntity<Map> responseEntity=restTemplate.getForEntity(url,Map.class,requestMessage);
+            log.info("ReservationServiceImpl.getAllMyReservation.response:"+responseEntity.getBody().get("nickname"));
+            nickname= (String) responseEntity.getBody().get("nickname");
+        }catch (Exception e){
+            e.printStackTrace();
+            log.error("HttpInterceptor.preHandle.response:error");
+        }
+        return nickname;
     }
 }

@@ -2,6 +2,7 @@ package leavelive.accommodation.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import leavelive.accommodation.domain.dto.AccommodationResDto;
+import leavelive.accommodation.domain.dto.AccommodationResReq;
 import lombok.*;
 
 import javax.persistence.*;

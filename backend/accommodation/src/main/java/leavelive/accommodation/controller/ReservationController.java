@@ -2,6 +2,7 @@ package leavelive.accommodation.controller;
 
 import leavelive.accommodation.domain.dto.AccommodationArticleDto;
 import leavelive.accommodation.domain.dto.AccommodationResDto;
+import leavelive.accommodation.domain.dto.AccommodationResReq;
 import leavelive.accommodation.service.ReservationServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -42,10 +43,10 @@ public class ReservationController {
         return new ResponseEntity(result, HttpStatus.OK);
     }
     @GetMapping("/my")
-    public ResponseEntity<List<AccommodationResDto>> getAllMyAccRes(HttpServletResponse response){
+    public ResponseEntity<List<AccommodationResReq>> getAllMyAccRes(HttpServletResponse response){
         String userId = response.getHeader("userId");
         log.info("AccommodationController.getAllMyAccRes.userId:" + userId);
-        List<AccommodationResDto> result=service.getAllMyReservation(userId);
+        List<AccommodationResReq> result=service.getAllMyReservation(userId);
         return new ResponseEntity(result,HttpStatus.OK);
     }
 }
