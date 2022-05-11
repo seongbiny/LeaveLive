@@ -5,7 +5,6 @@ import InputForm from "../../../components/ceo/InputForm";
 import ImageForm from "../../../components/ceo/ImageForm";
 import PostCode from "../../../components/ceo/Postcode";
 import Switches from "../../../components/ceo/Switches";
-import Script from "next/script";
 import { useRouter } from "next/router";
 import { CeoBnbCreate } from "../../../api/ceo";
 
@@ -32,7 +31,8 @@ const BnbCreate = () => {
     isGarden: false,
     isCooking: false,
   });
-  const [address, setAddress] = useState<String>("dddd");
+  const [address, setAddress] = useState<String>("");
+  const [addressDetail, setAddressDetail] = useState<String>("");
   const [images, setImages] = useState<Array<IImages>>([]);
   const [onScriptLoad, setOnScriptLoad] = useState<boolean>(false);
 
@@ -46,7 +46,7 @@ const BnbCreate = () => {
     // 1. api 전송
     const form = new FormData();
     const dto = {
-      loc: address,
+      loc: `${address} ${addressDetail}`,
       price: values.price,
       cnt: values.people,
       garden: values.isGarden ? "T" : "F",
@@ -63,8 +63,6 @@ const BnbCreate = () => {
 
     images?.map((image) => form.append("image", image.files));
 
-    console.log(form.get("dto"));
-    console.log(form.get("image"));
     CeoBnbCreate(
       form,
       ({ data: { id } }: any) => {
@@ -73,20 +71,20 @@ const BnbCreate = () => {
       },
       (error: Error) => console.log(error)
     );
-  }, [router, address, images, values]);
+  }, [router, address, addressDetail, images, values]);
 
   return (
     <Container>
-      <Script
-        src={`//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js`}
-        onLoad={() => setOnScriptLoad(true)}
-      />
       숙소 등록
       <InputForm values={values} setValues={setValues} />
       <Switches values={values} setValues={setValues} />
       <ImageForm images={images} setImages={setImages} />
-      <PostCode />
-      {/* <div id="popup-address">{onScriptLoad ? <PostCode /> : null}</div> */}
+      <PostCode
+        address={address}
+        setAddress={setAddress}
+        addressDetail={addressDetail}
+        setAddressDetail={setAddressDetail}
+      />
       <WideButton onClick={onClick} text="숙소 등록하기" />
     </Container>
   );

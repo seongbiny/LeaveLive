@@ -11,6 +11,8 @@ import { setIsLogin } from "../store/slices/userSlice";
 import { useRouter } from "next/router";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
+import Script from "next/script";
+
 config.autoAddCss = false;
 
 export const allowedURLs = ["/", "/login"];
@@ -46,6 +48,10 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider theme={theme}>
       <Layout>
+        <Script
+          src={`//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js`}
+          // onLoad={() => setOnScriptLoad(true)}
+        />
         <GlobalStyle />
         <CssBaseline />
         <Component {...pageProps} />
