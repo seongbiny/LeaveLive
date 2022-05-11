@@ -1,8 +1,8 @@
 package leavelive.accommodation;
 
-import leavelive.accommodation.domain.dto.AccommodationDto;
-import leavelive.accommodation.domain.dto.FavoriteDto;
-import leavelive.accommodation.domain.dto.ReservationDto;
+import leavelive.accommodation.domain.dto.AccommodationArticleDto;
+import leavelive.accommodation.domain.dto.AccommodationFavDto;
+import leavelive.accommodation.domain.dto.AccommodationResDto;
 import leavelive.accommodation.repository.FavoriteRepository;
 import leavelive.accommodation.repository.AccommodationRepository;
 import leavelive.accommodation.service.AccommodationServiceImpl;
@@ -48,7 +48,7 @@ class AccommodationServiceTests {
 	public void saveAccommodationTest(){
 		// db 저장
 		for(int i=1; i<=10; i++){
-			AccommodationDto dto=new AccommodationDto();
+			AccommodationArticleDto dto=new AccommodationArticleDto();
 //			dto.setAuthor("test"+i);
 			dto.setCooking(1);
 			dto.setCnt(12);
@@ -91,7 +91,7 @@ class AccommodationServiceTests {
 	public void DeleteAccommodationFavTest(){
 		saveAccommodationFavTest();
 		favService.delete(1L,"1");
-		List<FavoriteDto> list = favService.findAll();
+		List<AccommodationFavDto> list = favService.findAll();
 		Assertions.assertThat(favService.findAll().size()).isEqualTo(9);
 	}
 
@@ -101,7 +101,7 @@ class AccommodationServiceTests {
 	public void DeleteAccommodationTest(){
 		saveAccommodationFavTest();
 		service.delete(1L,"1");
-		List<AccommodationDto> list = service.getAllAccommodation();
+		List<AccommodationArticleDto> list = service.getAllAccommodation();
 		Assertions.assertThat(list.size()).isEqualTo(9);
 	}
 	@Test
@@ -111,7 +111,7 @@ class AccommodationServiceTests {
 		saveAccommodationFavTest();
 		try{
 			service.delete(2L,"1");
-			List<AccommodationDto> list = service.getAllAccommodation();
+			List<AccommodationArticleDto> list = service.getAllAccommodation();
 			log.info("숙소 목록"+list);
 			Assertions.assertThat(list.size()).isEqualTo(9);
 		}catch(NullPointerException e){
@@ -125,8 +125,8 @@ class AccommodationServiceTests {
 	@DisplayName("숙소 수정")
 	public void updateAccommodationTest(){
 		saveAccommodationFavTest();
-		List<AccommodationDto> list = service.getAllAccommodation();
-		AccommodationDto dto=new AccommodationDto();
+		List<AccommodationArticleDto> list = service.getAllAccommodation();
+		AccommodationArticleDto dto=new AccommodationArticleDto();
 		dto.setName("수정한 이름");
 		dto.setCooking(1);
 //		service.update(dto,1L,"1");
@@ -139,8 +139,8 @@ class AccommodationServiceTests {
 	@DisplayName("숙소 수정 실패")
 	public void updateAccommodationTestFail() throws NullPointerException {
 		saveAccommodationFavTest();
-		List<AccommodationDto> list = service.getAllAccommodation();
-		AccommodationDto dto=new AccommodationDto();
+		List<AccommodationArticleDto> list = service.getAllAccommodation();
+		AccommodationArticleDto dto=new AccommodationArticleDto();
 		dto.setName("수정한 이름");
 		dto.setCooking(1);
 		try{
@@ -159,7 +159,7 @@ class AccommodationServiceTests {
 	public void getAccommodationFavTest(){
 		saveAccommodationFavTest();
 		log.info("getAccommodationFavTest.findAll.list:"+favService.findAll());
-		List<FavoriteDto> list = favService.getAllByUserId("1");
+		List<AccommodationFavDto> list = favService.getAllByUserId("1");
 		Assertions.assertThat(list.size()).isEqualTo(10);
 	}
 
@@ -170,7 +170,7 @@ class AccommodationServiceTests {
 		saveAccommodationTest();
 		saveAccommodationResTest();
 		String userId="1";
-		List<ReservationDto> list = resService.findByUserId(userId);
+		List<AccommodationResDto> list = resService.findByUserId(userId);
 		log.info("getAccommodationResTest.findByUserId.list:"+list);
 	}
 
@@ -179,7 +179,7 @@ class AccommodationServiceTests {
 	@DisplayName("숙소 예약")
 	public void saveAccommodationResTest(){
 		String userId="1";
-		ReservationDto dto=new ReservationDto();
+		AccommodationResDto dto=new AccommodationResDto();
 		dto.setScheduleId(1L);
 		dto.setStartDate(LocalDate.parse("2022-04-27"));
 		dto.setEndDate(LocalDate.parse("2022-04-29"));

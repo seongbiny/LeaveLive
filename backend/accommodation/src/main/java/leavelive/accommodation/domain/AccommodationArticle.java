@@ -1,9 +1,11 @@
 package leavelive.accommodation.domain;
 
-import leavelive.accommodation.domain.dto.AccommodationDto;
+import leavelive.accommodation.domain.dto.AccommodationArticleDto;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -11,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @ToString
-public class Accommodation {
+public class AccommodationArticle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "accommodation_article_id")
@@ -35,8 +37,8 @@ public class Accommodation {
 //    private List<AccommodationFav> favorite=new ArrayList<>();
 
     // dto -> entity
-    public static Accommodation of(AccommodationDto dto){
-        return Accommodation.builder()
+    public static AccommodationArticle of(AccommodationArticleDto dto){
+        return AccommodationArticle.builder()
                 .loc(dto.getLoc())
                 .price(dto.getPrice())
                 .picPath(dto.getPicPath())
@@ -49,8 +51,8 @@ public class Accommodation {
                 .build();
     }
     // update용 dto -> entity
-    public static Accommodation updateOf(AccommodationDto dto){
-        return Accommodation.builder()
+    public static AccommodationArticle updateOf(AccommodationArticleDto dto){
+        return AccommodationArticle.builder()
                 .id(dto.getId())
                 .loc(dto.getLoc())
                 .price(dto.getPrice())

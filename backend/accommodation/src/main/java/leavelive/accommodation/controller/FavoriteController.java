@@ -1,6 +1,6 @@
 package leavelive.accommodation.controller;
 
-import leavelive.accommodation.domain.dto.FavoriteDto;
+import leavelive.accommodation.domain.dto.AccommodationFavDto;
 import leavelive.accommodation.service.FavoriteServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,10 +19,10 @@ public class FavoriteController {
     private final FavoriteServiceImpl service;
 
     @GetMapping("/")
-    public ResponseEntity<List<FavoriteDto>> getAllAccommodationFav(HttpServletResponse response) {
+    public ResponseEntity<List<AccommodationFavDto>> getAllAccommodationFav(HttpServletResponse response) {
         String userId = response.getHeader("userId");
         log.info("AcommodationResController.getAllAccommodationFav.userId:" + userId);
-        List<FavoriteDto> list = service.getAllByUserId(userId);
+        List<AccommodationFavDto> list = service.getAllByUserId(userId);
         return new ResponseEntity(list, HttpStatus.OK);
     }
 

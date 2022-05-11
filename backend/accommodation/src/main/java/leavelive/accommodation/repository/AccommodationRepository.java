@@ -1,15 +1,15 @@
 package leavelive.accommodation.repository;
 
-import leavelive.accommodation.domain.Accommodation;
+import leavelive.accommodation.domain.AccommodationArticle;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface AccommodationRepository extends JpaRepository<Accommodation,Long> {
+public interface AccommodationRepository extends JpaRepository<AccommodationArticle,Long> {
     @Override
-    Optional<Accommodation> findById(Long id);
+    Optional<AccommodationArticle> findById(Long id);
 //    @Query(value = "select i from AccommodationArticle i where i.loc like ':loc%'")
-    List<Accommodation> findAllByLocStartsWith(String loc);
-    List<Accommodation> findAllByUserId(String userId);
+    List<AccommodationArticle> findAllByLocStartsWith(String loc);
+    List<AccommodationArticle> findAllByUserId(String userId);
 }

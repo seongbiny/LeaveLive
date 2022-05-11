@@ -1,7 +1,7 @@
 package leavelive.accommodation.domain.dto;
 
-import leavelive.accommodation.domain.Accommodation;
-import leavelive.accommodation.domain.Reservation;
+import leavelive.accommodation.domain.AccommodationArticle;
+import leavelive.accommodation.domain.AccommodationRes;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -12,23 +12,23 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @ToString
 @Builder
-public class ReservationDto {
+public class AccommodationResDto {
     private Long id;
     private LocalDate startDate;
     private LocalDate endDate;
     private String userId;
     private int cnt;
-    private Accommodation accommodation;
+    private AccommodationArticle accommodationArticle;
     private Long scheduleId;
 
-    public static ReservationDto of(Reservation entity){
-        return ReservationDto.builder()
+    public static AccommodationResDto of(AccommodationRes entity){
+        return AccommodationResDto.builder()
                 .id(entity.getId())
                 .startDate(entity.getStartDate())
                 .endDate(entity.getEndDate())
                 .userId(entity.getUserId())
                 .cnt(entity.getCnt())
-                .accommodation(entity.getAccommodation())
+                .accommodationArticle(entity.getAccommodationArticle())
                 .scheduleId(entity.getScheduleId())
                 .build();
     }

@@ -1,19 +1,24 @@
 package leavelive.accommodation.service;
 
-import leavelive.accommodation.domain.Accommodation;
-import leavelive.accommodation.domain.Favorite;
-import leavelive.accommodation.domain.dto.AccommodationDto;
+import leavelive.accommodation.domain.AccommodationArticle;
+import leavelive.accommodation.domain.AccommodationFav;
+import leavelive.accommodation.domain.dto.AccommodationArticleDto;
 import leavelive.accommodation.exception.FileNotFoundException;
 import leavelive.accommodation.exception.MyResourceNotFoundException;
 import leavelive.accommodation.repository.FavoriteRepository;
 import leavelive.accommodation.repository.AccommodationRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -26,41 +31,41 @@ public class AccommodationServiceImpl {
     private final AccommodationRepository repo;
     private final FavoriteRepository favRepo;
 
-    public List<AccommodationDto> getAllAccommodationByLoc(String loc) {
-        List<Accommodation> entities = repo.findAllByLocStartsWith(loc);
-        return entities.stream().map(AccommodationDto::of).collect(Collectors.toList());
+    public List<AccommodationArticleDto> getAllAccommodationByLoc(String loc) {
+        List<AccommodationArticle> entities = repo.findAllByLocStartsWith(loc);
+        return entities.stream().map(AccommodationArticleDto::of).collect(Collectors.toList());
     }
 
-    public List<AccommodationDto> getAllAccommodation() {
-        List<Accommodation> entities = repo.findAll();
-        return entities.stream().map(AccommodationDto::of).collect(Collectors.toList());
+    public List<AccommodationArticleDto> getAllAccommodation() {
+        List<AccommodationArticle> entities = repo.findAll();
+        return entities.stream().map(AccommodationArticleDto::of).collect(Collectors.toList());
     }
 
-    public AccommodationDto getAccommodation(Long id) {
-        Optional<Accommodation> entity = repo.findById(id);
+    public AccommodationArticleDto getAccommodation(Long id) {
+        Optional<AccommodationArticle> entity = repo.findById(id);
         if (!entity.isPresent()) throw new MyResourceNotFoundException("해당하는 숙소가 없습니다.");
-        return AccommodationDto.of(entity.get());
+        return AccommodationArticleDto.of(entity.get());
     }
 
     public Boolean delete(Long id, String userId) {
         // 내가 작성한 숙소가 맞는지 확인
-        Optional<Accommodation> accommodationArticle = repo.findById(id);
+        Optional<AccommodationArticle> accommodationArticle = repo.findById(id);
         if (!accommodationArticle.isPresent()) throw new MyResourceNotFoundException("해당하는 숙소가 없습니다.");
         if (!accommodationArticle.get().getUserId().equals(userId))
             throw new MyResourceNotFoundException("자신이 등록한 숙소만 삭제할 수 있습니다.");
         // 연결되어있는거 먼저 삭제
         // id를 가지고 있는 모든 favRepo 찾고, 삭제
-        List<Favorite> list = favRepo.findAllByAcommodationId(id);
+        List<AccommodationFav> list = favRepo.findAllByAcommodationId(id);
         if (list != null) {
-            for (Favorite entity : list) favRepo.deleteById(entity.getId());
+            for (AccommodationFav entity : list) favRepo.deleteById(entity.getId());
         }
         repo.deleteById(id);
         return true;
     }
 
-    public AccommodationDto save(AccommodationDto dto, String userId, List<MultipartFile> files) {
+    public AccommodationArticleDto save(AccommodationArticleDto dto, String userId, List<MultipartFile> files) {
         dto.setUserId(userId);
-        Accommodation entity = new Accommodation();
+        AccommodationArticle entity = new AccommodationArticle();
         // 이미지 파일 저장
         boolean flag=false;
         for(MultipartFile image:files){
@@ -74,25 +79,25 @@ public class AccommodationServiceImpl {
             dto.setPicPath(img_path);
         }
         log.info("------------------dto확인"+dto);
-        return AccommodationDto.of(repo.save(entity.of(dto)));
+        return AccommodationArticleDto.of(repo.save(entity.of(dto)));
     }
 
-    public AccommodationDto update(AccommodationDto dto, Long id, String userId, List<MultipartFile> files) {
-        Optional<Accommodation> entity = repo.findById(id);
+    public AccommodationArticleDto update(AccommodationArticleDto dto, Long id, String userId, List<MultipartFile> files) {
+        Optional<AccommodationArticle> entity = repo.findById(id);
         if (!entity.isPresent()) throw new MyResourceNotFoundException("해당하는 숙소가 없습니다.");
         if (!entity.get().getUserId().equals(userId)) throw new MyResourceNotFoundException("자신이 등록한 숙소만 수정할 수 있습니다.");
-        AccommodationDto oriDto = new AccommodationDto(); //저장할 내용
+        AccommodationArticleDto oriDto = new AccommodationArticleDto(); //저장할 내용
         oriDto = oriDto.of(entity.get()); //저장할 내용
         oriDto.setId(id);
         oriDto.setUserId(userId);
         log.info("AccommodationServiceImpl.AccommodationArticleDto.dto:"+dto);
         log.info("AccommodationServiceImpl.AccommodationArticleDto.oriDto:"+oriDto);
         oriDto=updateDto(dto,oriDto,files);
-        return AccommodationDto.of(repo.save(Accommodation.updateOf(oriDto)));
+        return AccommodationArticleDto.of(repo.save(AccommodationArticle.updateOf(oriDto)));
     }
-    public List<AccommodationDto> getAllMyAccommodation(String userId){
-        List<Accommodation> entities=repo.findAllByUserId(userId);
-        return entities.stream().map(AccommodationDto::of).collect(Collectors.toList());
+    public List<AccommodationArticleDto> getAllMyAccommodation(String userId){
+        List<AccommodationArticle> entities=repo.findAllByUserId(userId);
+        return entities.stream().map(AccommodationArticleDto::of).collect(Collectors.toList());
     }
 
     public String saveImage(List<MultipartFile> files) {
@@ -147,7 +152,7 @@ public class AccommodationServiceImpl {
         }
         return images;
     }
-    public AccommodationDto updateDto(AccommodationDto dto, AccommodationDto oriDto, List<MultipartFile> files){
+    public AccommodationArticleDto updateDto(AccommodationArticleDto dto,AccommodationArticleDto oriDto, List<MultipartFile> files){
         if (dto.getCnt() != 0) {
             oriDto.setCnt(dto.getCnt());
         }
