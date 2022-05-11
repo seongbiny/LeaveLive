@@ -18,7 +18,7 @@ const MyReservation = () => {
         const reservationList: Array<IReservation> = [];
         data.forEach((d: any) => {
           const reservation: IReservation = {
-            userName: d.userId,
+            userName: d.nickname,
             cnt: d.cnt,
             bnbName: d.accommodationArticle.name,
             startDate: d.startDate.join("."),
@@ -29,6 +29,7 @@ const MyReservation = () => {
           reservationList.push(reservation);
         });
 
+        console.log(reservationList);
         setReservations(reservationList);
       },
       (error: Error) => console.log(error)
@@ -36,7 +37,13 @@ const MyReservation = () => {
   }, []);
 
   const [reservations, setReservations] = useState<Array<IReservation>>();
-  return <div>테스트</div>;
+  return (
+    <div>
+      {reservations?.map((reservation, index) => (
+        <div key={index}>{reservation.bnbName}</div>
+      ))}
+    </div>
+  );
 };
 
 export default MyReservation;
