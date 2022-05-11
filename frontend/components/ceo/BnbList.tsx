@@ -47,7 +47,10 @@ const BnbName = styled.div`
 const BnbPrice = styled.div`
   align-self: flex-end;
   padding-bottom: 0.5rem;
+  font-weight: bold;
+  font-size: 1.1rem;
 `;
+
 const BnbList = ({ picPath, name, price, onClick }: IPropTypes) => {
   return (
     <Container onClick={onClick}>

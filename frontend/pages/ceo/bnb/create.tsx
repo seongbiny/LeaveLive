@@ -31,8 +31,8 @@ const BnbCreate = () => {
     isGarden: false,
     isCooking: false,
   });
-  const [address, setAddress] = useState<String>("dddd");
-  const [addressDetail, setAddressDetail] = useState<String>("dddd");
+  const [address, setAddress] = useState<String>("");
+  const [addressDetail, setAddressDetail] = useState<String>("");
   const [images, setImages] = useState<Array<IImages>>([]);
   const [onScriptLoad, setOnScriptLoad] = useState<boolean>(false);
 
