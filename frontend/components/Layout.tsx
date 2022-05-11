@@ -14,7 +14,7 @@ const Container = styled.div`
 
 const Main = styled.main`
   flex: 1;
-  // ${flexCenter}
+  ${flexCenter}
 `;
 
 export default function Layout({ children }: any) {
@@ -31,6 +31,9 @@ export default function Layout({ children }: any) {
 
     if (router.pathname.startsWith("/reservation")) setShowNav(false);
     else setShowNav(true);
+
+    if (router.pathname.startsWith("/ceo/bnb") && router.pathname.length !== 8)
+      setShowNav(false);
   }, [router]);
 
   const isMobile = useIsMobile();
