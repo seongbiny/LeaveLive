@@ -1,5 +1,6 @@
 package com.ssafy.leavelive.business.user.controller
 
+import com.ssafy.leavelive.business.user.model.payload.UserResponse
 import com.ssafy.leavelive.business.user.service.UserInternalService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -13,6 +14,9 @@ class UserInternalController(private val userInternalService: UserInternalServic
     fun check(@PathVariable userId: String): ResponseEntity<Boolean> =
         ResponseEntity(userInternalService.exists(userId), HttpStatus.OK)
 
+    @GetMapping("/info/{userId}")
+    fun getUser(@PathVariable userId: String): ResponseEntity<UserResponse> =
+        ResponseEntity(userInternalService.getUser(userId), HttpStatus.OK)
 
     @GetMapping("/refresh-token")
     fun validateRefreshToken(@RequestParam token: String): ResponseEntity<Boolean> =
