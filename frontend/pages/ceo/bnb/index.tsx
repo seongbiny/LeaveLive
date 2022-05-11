@@ -77,11 +77,11 @@ const MyBnbList = () => {
             />
           ))}
         </Wrapper>
-        {/* <Link href={`/ceo/bnb/create`} passHref> */}
-        <ButtonWrapper>
-          <WideButton onClick={() => {}} text="새 숙소 등록하기" />
-        </ButtonWrapper>
-        {/* </Link> */}
+        <Link href={`/ceo/bnb/create`} passHref>
+          <ButtonWrapper>
+            <WideButton onClick={() => {}} text="새 숙소 등록하기" />
+          </ButtonWrapper>
+        </Link>
       </Container>
     </>
   );
