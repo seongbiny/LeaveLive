@@ -4,7 +4,6 @@ import leavelive.activity.domain.Activity;
 import leavelive.activity.domain.Reservation;
 import lombok.*;
 
-import javax.persistence.Table;
 import java.time.LocalDate;
 
 @Getter
