@@ -1,8 +1,7 @@
 package leavelive.accommodation.controller;
 
-import leavelive.accommodation.domain.dto.AccommodationArticleDto;
-import leavelive.accommodation.domain.dto.AccommodationResDto;
-import leavelive.accommodation.domain.dto.AccommodationResReq;
+import leavelive.accommodation.domain.dto.ReservationDto;
+import leavelive.accommodation.domain.dto.ReservationResDto;
 import leavelive.accommodation.service.ReservationServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,15 +19,15 @@ public class ReservationController {
     private final ReservationServiceImpl service;
 
     @GetMapping("/")
-    public ResponseEntity<List<AccommodationResDto>> getAllAccommodationFav(HttpServletResponse response) {
+    public ResponseEntity<List<ReservationDto>> getAllAccommodationFav(HttpServletResponse response) {
         String userId = response.getHeader("userId");
         log.info("AcommodationResController.getAllAccommodationFav.userId:" + userId);
-        List<AccommodationResDto> list = service.findByUserId(userId);
+        List<ReservationDto> list = service.findByUserId(userId);
         return new ResponseEntity(list, HttpStatus.OK);
     }
 
     @PostMapping("/{accommodation_id}")
-    public ResponseEntity<Long> reservationAccommodation(HttpServletResponse response, @PathVariable("accommodation_id") Long id, @RequestBody AccommodationResDto request) {
+    public ResponseEntity<Long> reservationAccommodation(HttpServletResponse response, @PathVariable("accommodation_id") Long id, @RequestBody ReservationDto request) {
         String userId = response.getHeader("userId");
         log.info("AcommodationResController.reservationAccommodation.userId:" + userId);
         Long result = service.saveReservation(userId, id, request);
@@ -43,10 +42,10 @@ public class ReservationController {
         return new ResponseEntity(result, HttpStatus.OK);
     }
     @GetMapping("/my")
-    public ResponseEntity<List<AccommodationResReq>> getAllMyAccRes(HttpServletResponse response){
+    public ResponseEntity<List<ReservationResDto>> getAllMyAccRes(HttpServletResponse response){
         String userId = response.getHeader("userId");
         log.info("AccommodationController.getAllMyAccRes.userId:" + userId);
-        List<AccommodationResReq> result=service.getAllMyReservation(userId);
+        List<ReservationResDto> result=service.getAllMyReservation(userId);
         return new ResponseEntity(result,HttpStatus.OK);
     }
 }

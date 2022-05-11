@@ -1,8 +1,7 @@
 package leavelive.accommodation.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import leavelive.accommodation.domain.dto.AccommodationResDto;
-import leavelive.accommodation.domain.dto.AccommodationResReq;
+import leavelive.accommodation.domain.dto.ReservationDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -14,7 +13,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @ToString
 @Builder
-public class AccommodationRes {
+public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name="accommodation_reservation_id")
@@ -30,17 +29,17 @@ public class AccommodationRes {
 
     @ManyToOne
     @JoinColumn(name = "accommodation_article_id")
-    private AccommodationArticle accommodationArticle;
+    private Accommodation accommodation;
 
     @Column(name="schedule_id")
     private Long scheduleId;
 
     private int cnt;
 
-    public static AccommodationRes of(AccommodationResDto dto){
-        return AccommodationRes.builder()
+    public static Reservation of(ReservationDto dto){
+        return Reservation.builder()
                 .userId(dto.getUserId())
-                .accommodationArticle(dto.getAccommodationArticle())
+                .accommodation(dto.getAccommodation())
                 .endDate(dto.getEndDate())
                 .startDate(dto.getStartDate())
                 .scheduleId(dto.getScheduleId())

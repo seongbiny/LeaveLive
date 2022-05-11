@@ -1,10 +1,9 @@
 package leavelive.accommodation.service;
 
-import leavelive.accommodation.domain.AccommodationArticle;
-import leavelive.accommodation.domain.AccommodationRes;
-import leavelive.accommodation.domain.dto.AccommodationResDto;
-import leavelive.accommodation.domain.dto.AccommodationResReq;
-import leavelive.accommodation.exception.LoginException;
+import leavelive.accommodation.domain.Accommodation;
+import leavelive.accommodation.domain.Reservation;
+import leavelive.accommodation.domain.dto.ReservationDto;
+import leavelive.accommodation.domain.dto.ReservationResDto;
 import leavelive.accommodation.exception.MyResourceNotFoundException;
 import leavelive.accommodation.repository.AccommodationRepository;
 import leavelive.accommodation.repository.ReservationRepository;
@@ -32,10 +31,10 @@ public class ReservationServiceImpl {
     private final ReservationRepository repo;
     private final AccommodationRepository articleRepo;
 
-    public List<AccommodationResDto> findByUserId(String userId) {
-        List<AccommodationRes> entities=repo.findByUserId(userId);
+    public List<ReservationDto> findByUserId(String userId) {
+        List<Reservation> entities=repo.findByUserId(userId);
         if(entities==null) throw new MyResourceNotFoundException("예약한 숙소가 없습니다.");
-        List<AccommodationResDto> list=entities.stream().map(AccommodationResDto::of).collect(Collectors.toList());
+        List<ReservationDto> list=entities.stream().map(ReservationDto::of).collect(Collectors.toList());
         return list;
     }
 
@@ -45,18 +44,18 @@ public class ReservationServiceImpl {
      * start<=myStart<end ->x
      * start<myEnd<=end ->x
      */
-    public Long saveReservation(String userId, Long id, AccommodationResDto request){
-        Optional<AccommodationArticle> entity=articleRepo.findById(id);
+    public Long saveReservation(String userId, Long id, ReservationDto request){
+        Optional<Accommodation> entity=articleRepo.findById(id);
         LocalDate myStart=request.getStartDate();
         LocalDate myEnd=request.getEndDate();
         if(!entity.isPresent()) throw new MyResourceNotFoundException("해당하는 숙소가 없습니다.");
         if(myStart.isAfter(myEnd)) throw new MyResourceNotFoundException("종료일이 시작일보다 앞입니다.");
         if(request.getCnt()<=0 || request.getCnt()>entity.get().getCnt()) throw new MyResourceNotFoundException("인원수가 0이하거나 수용할 수 있는 인원을 초과했습니다.");
-        List<AccommodationRes> list=repo.findByAccommodationArticleId(id);
+        List<Reservation> list=repo.findByAccommodationArticleId(id);
         log.info("AccommodationResService.saveReservation.list:"+list);
         if(list!=null || list.size()>0){
             boolean flag=true;
-            for (AccommodationRes res:list){
+            for (Reservation res:list){
                 LocalDate start=res.getStartDate();
                 LocalDate end=res.getEndDate();
                 if(!start.isEqual(myStart) && !end.isEqual(myEnd)){
@@ -78,12 +77,12 @@ public class ReservationServiceImpl {
             }
             if(!flag) throw new MyResourceNotFoundException("이미 해당 기간에 예약되어 있는 숙소입니다.");
         }
-        request.setAccommodationArticle(entity.get());
+        request.setAccommodation(entity.get());
         request.setUserId(userId);
-        return repo.save(AccommodationRes.of(request)).getId();
+        return repo.save(Reservation.of(request)).getId();
     }
     public Boolean deleteReservation(String userId,Long id){
-        Optional<AccommodationRes> entity=repo.findById(id);
+        Optional<Reservation> entity=repo.findById(id);
         if(!entity.isPresent()) throw new MyResourceNotFoundException("해당하는 숙소가 없습니다.");
         if(!entity.get().getUserId().equals(userId)) throw new MyResourceNotFoundException("자신이 등록한 예약만 삭제할 수 있습니다.");
         repo.deleteById(id);
@@ -95,13 +94,13 @@ public class ReservationServiceImpl {
      * @param userId
      * @return
      */
-    public List<AccommodationResReq> getAllMyReservation(String userId){
-        List<AccommodationArticle> entities=articleRepo.findAllByUserId(userId);
-        List<AccommodationResReq> result=new ArrayList<>();
-        for(AccommodationArticle article:entities){
-            List<AccommodationRes> list=repo.findByAccommodationArticleId(article.getId());
-            for(AccommodationRes res:list) {
-                AccommodationResReq req=AccommodationResReq.of(res);
+    public List<ReservationResDto> getAllMyReservation(String userId){
+        List<Accommodation> entities=articleRepo.findAllByUserId(userId);
+        List<ReservationResDto> result=new ArrayList<>();
+        for(Accommodation article:entities){
+            List<Reservation> list=repo.findByAccommodationArticleId(article.getId());
+            for(Reservation res:list) {
+                ReservationResDto req= ReservationResDto.of(res);
                 req.setNickname(getNickName(userId));
                 result.add(req);
             }

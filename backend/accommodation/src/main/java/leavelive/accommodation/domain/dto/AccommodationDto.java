@@ -1,14 +1,7 @@
 package leavelive.accommodation.domain.dto;
 
-import leavelive.accommodation.domain.AccommodationArticle;
-import leavelive.accommodation.domain.AccommodationFav;
+import leavelive.accommodation.domain.Accommodation;
 import lombok.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import javax.persistence.Column;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -16,7 +9,7 @@ import java.util.stream.Collectors;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AccommodationArticleDto {
+public class AccommodationDto {
     private Long id;
     private String loc;
 //    private String author;
@@ -30,8 +23,8 @@ public class AccommodationArticleDto {
     private String userId;
 
     // entity -> dto
-    public static AccommodationArticleDto of(AccommodationArticle article) {
-        return AccommodationArticleDto.builder()
+    public static AccommodationDto of(Accommodation article) {
+        return AccommodationDto.builder()
                 .id(article.getId())
                 .loc(article.getLoc())
 //                .author(article.getAuthor())
