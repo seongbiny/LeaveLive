@@ -55,35 +55,33 @@ const MyBnbList = () => {
   const router = useRouter();
 
   return (
-    <>
-      <Container>
-        <Header title="숙소 관리" hide={true} />
-        <Wrapper>
-          {bnbList?.map((bnb) => (
-            <BnbList
-              key={bnb.id}
-              picPath={bnb.picPath.split(",")[0]}
-              name={bnb.name}
-              price={bnb.price}
-              onClick={() =>
-                router.push(
-                  {
-                    pathname: `/ceo/bnb/${bnb.id}`,
-                    query: { id: bnb.id },
-                  },
-                  `/ceo/bnb/${bnb.id}`
-                )
-              }
-            />
-          ))}
-        </Wrapper>
-        <Link href={`/ceo/bnb/create`} passHref>
-          <ButtonWrapper>
-            <WideButton onClick={() => {}} text="새 숙소 등록하기" />
-          </ButtonWrapper>
-        </Link>
-      </Container>
-    </>
+    <Container>
+      <Header title="숙소 관리" hide={true} />
+      <Wrapper>
+        {bnbList?.map((bnb) => (
+          <BnbList
+            key={bnb.id}
+            picPath={bnb.picPath.split(",")[0]}
+            name={bnb.name}
+            price={bnb.price}
+            onClick={() =>
+              router.push(
+                {
+                  pathname: `/ceo/bnb/${bnb.id}`,
+                  query: { id: bnb.id },
+                },
+                `/ceo/bnb/${bnb.id}`
+              )
+            }
+          />
+        ))}
+      </Wrapper>
+      <Link href={`/ceo/bnb/create`} passHref>
+        <ButtonWrapper>
+          <WideButton onClick={() => {}} text="새 숙소 등록하기" />
+        </ButtonWrapper>
+      </Link>
+    </Container>
   );
 };
 
