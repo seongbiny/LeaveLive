@@ -24,14 +24,14 @@ const Region = () => {
   const ClickBnb = (e:any) => {
     e.preventDefault();
     Router.push({
-      pathname: `http://localhost:3000/reservation/bnb`,
+      pathname: `http://localhost:3000/reservation/${region}/bnb`,
     })
   };
 
   const ClickActi = (e:any) => {
     e.preventDefault();
     Router.push({
-      pathname: `http://localhost:3000/reservation/activity`,
+      pathname: `http://localhost:3000/reservation/${region}/activity`,
     })
   }
 
@@ -40,7 +40,7 @@ const Region = () => {
       <Seo title="Main" />
       <StyledBox>
         <Image src="/main-background.png" alt="main" title="main" width="100%" height="56%" layout="responsive" objectFit="contain"/>
-        <Text>{router.query.region}로 여행 어때요?</Text>
+        <Text>{region} 여행 어때요?</Text>
       </StyledBox>
       <Main>
         <div style={{marginTop: '2vh', marginBottom: '2vh'}}>이 지역에 살아본 사람들은 하루 평균 50,000원을 썼어요.</div>
