@@ -30,7 +30,7 @@ const BnbItem = (props: any) => {
     const [like, setLike] = useState(false);
     const id = 2;
     console.log(props.picpath.split(','));
-    const picpath = props.picpath.split(',');
+    const picpath: Array<String> = props.picpath.split(',');
 
     const likeAxios = useCallback(() => {
       likeBnb(id,

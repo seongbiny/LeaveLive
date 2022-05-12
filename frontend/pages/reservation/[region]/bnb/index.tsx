@@ -18,9 +18,19 @@ const StyledTab = styled.div`
   padding-right: 3vw;
 `;
 
+interface TypeBnb{
+  id: number;
+  contents: string;
+  cooking: string;
+  garden: string;
+  loc: string;
+  name: string;
+  picPath: string;
+}
+
 const BnbList = () => {
   const region = Router.query.region;
-  const [list, setList] = useState([]);
+  const [list, setList] = useState<Array<TypeBnb>>([]);
   const [like, setLike] = useState('');
 
   // console.log(region)
@@ -51,16 +61,11 @@ const BnbList = () => {
         <ArrowBackIosNewIcon sx={{color:'#60ffc6'}}/>
       </StyledTab>
         {list.map((bnb)=>(
-            <div key={bnb.id}
-                contents={bnb.contents}
-                cooking={bnb.cooking}
-                garden={bnb.garden}
-                loc={bnb.loc}
-                onClick={()=>(Router.push(`bnb/${bnb.id}`))}>
+            <div key={bnb.id}>
               <BnbItem 
                 name={bnb.name} 
-                contents={bnb.contents} 
                 picpath={bnb.picPath}
+                onClick={()=>(Router.push(`bnb/${bnb.id}`))}
               />
             </div>
         ))} 
