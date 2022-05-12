@@ -28,7 +28,7 @@ public class FavoriteService {
     }
 
     public Boolean delFav(Long id, String userId) {
-        Optional<Favorite> entity = repo.findById(id);
+        List<Favorite> entity = repo.findByIdAndUserId(id,userId);
         if(!entity.isPresent()) throw new MyResourceNotFoundException("해당하는 즐겨찾기가 없습니다.");
         if(!entity.get().getUserId().equals(userId)) throw new MyResourceNotFoundException("자신이 등록한 즐겨찾기만 삭제할 수 있습니다.");
         repo.deleteById(id);
