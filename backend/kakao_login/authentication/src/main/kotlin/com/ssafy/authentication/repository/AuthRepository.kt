@@ -17,24 +17,7 @@ class AuthRepository(private val restTemplate: RestTemplate) {
 
     private val logger = LoggerFactory.getLogger(javaClass)
 
-    private val USER_API_URL = "http://localhost:8083/api/user"
-
-    fun getKakaoAccessTokenWithCode(code: String?): String {
-        val headers: HttpHeaders = HttpHeaders()
-        headers.contentType = MediaType.APPLICATION_FORM_URLENCODED
-
-        val body = LinkedMultiValueMap<String, String>()
-        body["grant_type"] = "authorization_code"
-        body["client_id"] = "80161aeec9b53c1dd5c367be40966be2" // kakao api key
-        body["redirect_uri"] = "http://www.localhost:3000/login/oauth2/redirect" // redirect url
-        body["code"] = code
-
-        val request = HttpEntity<MultiValueMap<String, String>>(body, headers)
-        val response: ResponseEntity<Map<String, Any>> =
-            restTemplate.postForEntity("https://kauth.kakao.com/oauth/token", request)
-
-        return response.body?.get("access_token") as String
-    }
+    private val USER_API_URL = "https://k6c105.p.ssafy.io:8083/api/user"
 
     fun getKakaoUserIdWithToken(accessToken: String?): Long {
         val headers = HttpHeaders()
