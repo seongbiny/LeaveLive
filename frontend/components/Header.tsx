@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import ArrowBackIosNewRoundedIcon from "@mui/icons-material/ArrowBackIosNewRounded";
 import styled from "styled-components";
 import { flexCenter } from "../styles/Basic";
-import { useRouter } from "next/router";
+import BackButton from "../components/BackButton";
 
 interface IPropTypes {
   title: string;
@@ -22,17 +21,11 @@ const Wrapper = styled.div`
   position: relative;
   width: 100%;
 `;
-const BackButton = styled.div`
-  ${flexCenter}
-  position: absolute;
-  left: 3%;
-`;
 
 const Title = styled.div`
   text-align: center;
 `;
 const Header = ({ title, hide }: IPropTypes) => {
-  const router = useRouter();
   const [isShow, setIsShow] = useState<boolean>(true);
 
   useEffect(() => {
@@ -42,11 +35,7 @@ const Header = ({ title, hide }: IPropTypes) => {
   return (
     <Container>
       <Wrapper>
-        {isShow ? (
-          <BackButton onClick={() => router.back()}>
-            <ArrowBackIosNewRoundedIcon />
-          </BackButton>
-        ) : null}
+        {isShow ? <BackButton /> : null}
 
         <Title>{title}</Title>
       </Wrapper>

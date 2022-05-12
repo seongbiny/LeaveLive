@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { getMyReservationList } from "../../../api/ceo";
 import ReservationList from "../../../components/ceo/ReservationList";
-import styled from "styled-components";
 import Header from "../../../components/Header";
+import { Container, Wrapper } from "../../../styles/Basic";
 
 export interface IReservation {
   userName: string;
@@ -12,10 +12,6 @@ export interface IReservation {
   endDate: string;
   price: number;
 }
-
-const Container = styled.div`
-  width: 80%;
-`;
 
 const MyReservation = () => {
   useEffect(() => {
@@ -45,13 +41,15 @@ const MyReservation = () => {
   return (
     <Container>
       <Header title="예약 확인" hide={true} />
-      {reservations?.map((reservation, index) => (
-        <ReservationList
-          key={index}
-          reservation={reservation}
-          isLast={index === reservations.length - 1 ? true : false}
-        ></ReservationList>
-      ))}
+      <Wrapper>
+        {reservations?.map((reservation, index) => (
+          <ReservationList
+            key={index}
+            reservation={reservation}
+            isLast={index === reservations.length - 1 ? true : false}
+          ></ReservationList>
+        ))}
+      </Wrapper>
     </Container>
   );
 };
