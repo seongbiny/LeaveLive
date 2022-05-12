@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ActivityItem from '../../../../components/reservation/activityItem';
+import Header from "../../../../components/Header";
 
 const StyledTab = styled.div`
   display: flex;
@@ -18,11 +19,12 @@ const ActivityList = () => {
   const router = useRouter();
   return (
     <div style={{marginBottom: '10vh'}}>
-      <StyledTab>
+      {/* <StyledTab>
         <ArrowBackIosNewIcon onClick={()=>(router.back())} />
         <div>광주</div>
         <ArrowBackIosNewIcon sx={{color:'#60ffc6'}}/>
-      </StyledTab>
+      </StyledTab> */}
+      <Header title="광주" hide={false} />
       <div>
         <ActivityItem />
         <ActivityItem />
