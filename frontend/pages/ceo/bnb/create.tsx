@@ -1,12 +1,14 @@
 import React, { useCallback, useState } from "react";
 import { WideButton } from "../../../components/WideButton";
-import { Container } from "../../../styles/Basic";
+import { Container, Wrapper } from "../../../styles/Basic";
 import InputForm from "../../../components/ceo/InputForm";
 import ImageForm from "../../../components/ceo/ImageForm";
 import PostCode from "../../../components/ceo/Postcode";
 import Switches from "../../../components/ceo/Switches";
 import { useRouter } from "next/router";
 import { CeoBnbCreate } from "../../../api/ceo";
+import Header from "../../../components/Header";
+import styled from "styled-components";
 
 export interface IValues {
   name: string;
@@ -21,6 +23,11 @@ export interface IImages {
   files: File;
   previewURL: string;
 }
+
+const ContentsWrapper = styled(Wrapper)`
+  justify-content: flex-start;
+  padding-top: 1rem;
+`;
 
 const BnbCreate = () => {
   const [values, setValues] = useState<IValues>({
@@ -75,17 +82,19 @@ const BnbCreate = () => {
 
   return (
     <Container>
-      숙소 등록
-      <InputForm values={values} setValues={setValues} />
-      <Switches values={values} setValues={setValues} />
-      <ImageForm images={images} setImages={setImages} />
-      <PostCode
-        address={address}
-        setAddress={setAddress}
-        addressDetail={addressDetail}
-        setAddressDetail={setAddressDetail}
-      />
-      <WideButton onClick={onClick} text="숙소 등록하기" />
+      <Header title="숙소 등록" />
+      <ContentsWrapper>
+        <InputForm values={values} setValues={setValues} />
+        <Switches values={values} setValues={setValues} />
+        <ImageForm images={images} setImages={setImages} />
+        <PostCode
+          address={address}
+          setAddress={setAddress}
+          addressDetail={addressDetail}
+          setAddressDetail={setAddressDetail}
+        />
+        <WideButton onClick={onClick} text="숙소 등록하기" />
+      </ContentsWrapper>
     </Container>
   );
 };
