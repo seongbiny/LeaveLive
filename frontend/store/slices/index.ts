@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
 import userSlice from "./userSlice";
+import bookmarkSlice from "./bookmarkSlice";
 import { HYDRATE } from "next-redux-wrapper";
 
 export const rootReducer = (state: any, action: any) => {
@@ -11,6 +12,7 @@ export const rootReducer = (state: any, action: any) => {
     }
     return combineReducers({
         user: userSlice.reducer,
+        bookmark: bookmarkSlice.reducer,
     })(state, action);
 }
 
