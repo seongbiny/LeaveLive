@@ -11,7 +11,6 @@ export const store = configureStore({
     devTools: process.env.NODE_ENV !== 'production',
     enhancers: (defaultEnhancers) => [...defaultEnhancers]
 });
-
 // next.js redux wrapper 설정 
 const makeStore = () => store;
 export const wrapper = createWrapper(makeStore);
