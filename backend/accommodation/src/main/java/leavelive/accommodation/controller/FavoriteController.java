@@ -34,8 +34,8 @@ public class FavoriteController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{accommodation_fav_id}")
-    public ResponseEntity<Boolean> deleteAccommodationFav(HttpServletResponse response, @PathVariable("accommodation_fav_id") Long id) {
+    @DeleteMapping("/{accommodation_id}")
+    public ResponseEntity<Boolean> deleteAccommodationFav(HttpServletResponse response, @PathVariable("accommodation_id") Long id) {
         String userId = response.getHeader("userId");
         log.info("AcommodationResController.getAllAccommodationFav.userId:" + userId);
         Boolean result=service.delete(id, userId);

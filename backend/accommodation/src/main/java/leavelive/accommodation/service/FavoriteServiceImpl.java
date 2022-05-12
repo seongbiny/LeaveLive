@@ -44,10 +44,10 @@ public class FavoriteServiceImpl {
         return favRepo.save(AccommodationFav.of(dto)).getId();
     }
     public Boolean delete(Long id,String userId){
-        Optional<AccommodationFav> accommodationFav=favRepo.findById(id);
-        if(!accommodationFav.isPresent()) throw new MyResourceNotFoundException("해당하는 숙소가 없습니다.");
-        if(!accommodationFav.get().getUserId().equals(userId)) throw new MyResourceNotFoundException("자신이 등록한 숙소만 삭제할 수 있습니다.");
-        favRepo.deleteById(id);
+        List<AccommodationFav> entities=favRepo.findByIdAndUserId(id,userId);
+        for(AccommodationFav fav:entities) {
+            favRepo.deleteById(fav.getId());
+        }
         return true;
     }
 }

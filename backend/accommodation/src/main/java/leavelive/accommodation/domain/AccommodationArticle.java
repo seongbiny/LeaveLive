@@ -29,7 +29,7 @@ public class AccommodationArticle {
     private int cnt;
     private String garden;
     private String cooking;
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "MEDIUMTEXT")
     private String contents;
     private String name;
 
