@@ -46,7 +46,6 @@ public class HttpInterceptor implements HandlerInterceptor {
             log.error("HttpInterceptor.preHandle:error");
         }
 
-        // 유저가 DB에 있는지 확인
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(new MediaType("application","json", Charset.forName("UTF-8"))); //json으로 설정
         HttpEntity<?> requestMessage = new HttpEntity<>(httpHeaders);

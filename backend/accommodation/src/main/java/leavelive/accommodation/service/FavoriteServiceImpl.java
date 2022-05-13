@@ -45,6 +45,7 @@ public class FavoriteServiceImpl {
     }
     public Boolean delete(Long id,String userId){
         List<AccommodationFav> entities=favRepo.findByIdAndUserId(id,userId);
+        if(entities==null || entities.size()==0) throw new MyResourceNotFoundException("해당하는 즐겨찾기가 없습니다.");
         for(AccommodationFav fav:entities) {
             favRepo.deleteById(fav.getId());
         }
