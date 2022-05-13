@@ -118,7 +118,7 @@ public class ReservationService {
         HttpEntity<?> requestMessage = new HttpEntity<>(httpHeaders);
         //requestMessage 만들기
         RestTemplate restTemplate = new RestTemplate();
-        String url = "http://k6c105.p.ssafy.io:8083/api/user/info/"+userId;
+        String url = "https://k6c105.p.ssafy.io:8083/api/user/info/"+userId;
         String nickname="";
         try{
             //요청하기
