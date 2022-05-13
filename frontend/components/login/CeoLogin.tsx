@@ -3,7 +3,6 @@ import GoogleLoginButton from "./GoogleLoginButton";
 import KakaoLoginButton from "./KakaoLoginButton";
 import { ColoredText, UnderlineText } from "../../styles/Text";
 import { Typography } from "@mui/material";
-import styled from "styled-components";
 import {
   TextContainer,
   Title,
@@ -11,6 +10,7 @@ import {
   ButtonContainer,
   NavigatorContainer,
 } from "./UserLogin";
+import { Wrapper } from "../../styles/Basic";
 
 interface IPropTypes {
   setIsUser: Dispatch<SetStateAction<boolean>>;
@@ -18,7 +18,7 @@ interface IPropTypes {
 
 const CeoLogin = ({ setIsUser }: IPropTypes) => {
   return (
-    <>
+    <Wrapper width={65}>
       <TextContainer>
         <Title>
           <Typography variant="h5">
@@ -43,7 +43,7 @@ const CeoLogin = ({ setIsUser }: IPropTypes) => {
           사용자 로그인
         </UnderlineText>
       </NavigatorContainer>
-    </>
+    </Wrapper>
   );
 };
 
