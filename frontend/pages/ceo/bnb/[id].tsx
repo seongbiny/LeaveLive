@@ -114,10 +114,10 @@ const BnbDetail = () => {
           })}
         </BnbContent>
         <div>
-          위치{detail.loc}지도있어야함
+          위치{detail.loc}
           <Map
-            longitude={126.9726223}
-            latitude={37.5866076}
+            // longitude={126.9726223}
+            // latitude={37.5866076}
             address={detail.loc}
           />
         </div>
