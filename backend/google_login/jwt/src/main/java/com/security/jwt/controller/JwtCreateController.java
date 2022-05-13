@@ -37,7 +37,7 @@ public class JwtCreateController {
         // jwtToken 및 refreshToken 발급
         String userId = map.get("googleId") + "GOOGLE";
         String jwtToken = JWT.create()
-                .withExpiresAt(new Date(System.currentTimeMillis() + (60000)*20160)) //1분
+                .withExpiresAt(new Date(System.currentTimeMillis() + (60000)*20160)) //2주
                 .withClaim("id", userId)
                 .sign(Algorithm.HMAC512(SECRET_KEY));
         String refreshToken = JWT.create()
@@ -52,7 +52,7 @@ public class JwtCreateController {
         
         //user가 있는지 확인
         RestTemplate restTemplate = new RestTemplate();
-        String baseUrl = "http://localhost:8083/api/user";
+        String baseUrl = "https://k6c105.p.ssafy.io:8083/api/user";
         String url = baseUrl + "/" + userId;
         try {
             ResponseEntity<Boolean> responseEntity = restTemplate.getForEntity(url, Boolean.class, requestMessage);
