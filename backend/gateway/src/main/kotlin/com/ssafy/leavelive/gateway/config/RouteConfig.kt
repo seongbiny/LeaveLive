@@ -7,7 +7,7 @@ import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
-private const val URL = "localhost"
+private const val URL = "k6c105.p.ssafy.io"
 
 @Configuration
 class RouteConfig(private val authenticationFilter: AuthenticationFilter) {
