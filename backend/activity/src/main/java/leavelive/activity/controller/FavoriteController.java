@@ -28,7 +28,7 @@ public class FavoriteController {
         return new ResponseEntity(list, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{activity__id}")
+    @DeleteMapping("/{activity_id}")
     public ResponseEntity<Boolean> delFavorite(HttpServletResponse response,@PathVariable("activity_id") Long id) {
         String userId = response.getHeader("userId");
         log.info("FavoriteController.delFavorite.userId:" + userId);
