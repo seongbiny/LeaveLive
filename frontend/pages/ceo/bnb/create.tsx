@@ -69,7 +69,11 @@ const BnbCreate = () => {
       })
     );
 
-    images?.map((image) => form.append("image", image.files));
+    if (images.length === 0) {
+      form.append("image", new Blob());
+    } else {
+      images?.map((image) => form.append("image", image.files));
+    }
 
     CeoBnbCreate(
       form,

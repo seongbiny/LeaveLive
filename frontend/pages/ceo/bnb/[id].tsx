@@ -98,7 +98,12 @@ const BnbDetail = () => {
     getMyBnbDetail(
       id,
       ({ data }: any) => {
-        setDetail(data);
+        const value = {
+          ...data,
+        };
+
+        if (!value.picPath) value.picPath = "/default.png";
+        setDetail(value);
       },
       (error: Error) => console.log(error)
     );
@@ -108,19 +113,18 @@ const BnbDetail = () => {
     deleteMyBnb(
       router.query.id,
       (response: any) => {
-        alert("숙소를 성공적으로 삭제했어요.");
-        router.push(`/ceo/bnb`);
-        console.log(response);
+        if (confirm("숙소를 삭제할까요?")) {
+          alert("숙소를 성공적으로 삭제했어요.");
+          router.push(`/ceo/bnb`);
+        }
       },
       (error: Error) => console.log(error)
     );
-
-    //router.push(`/ceo/bnb`);
   }, []);
 
   return (
     <Container>
-      <div style={{ position: "relative" }}>
+      <div style={{ position: "relative", width: "100%" }}>
         <ButtonWrapper>
           <BackButton />
         </ButtonWrapper>
@@ -130,10 +134,14 @@ const BnbDetail = () => {
           showStatus={false}
           showArrows={false}
         >
-          {detail.picPath.split(",").map((path, index) => (
+          {detail.picPath?.split(",").map((path, index) => (
             <div key={index}>
               <Image
-                src={`${BACKEND_IMAGE_URL}/${path}`}
+                src={
+                  path === "/default.png"
+                    ? path
+                    : `${BACKEND_IMAGE_URL}/${path}`
+                }
                 width={412}
                 height={250}
               />

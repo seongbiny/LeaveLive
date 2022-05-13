@@ -16,6 +16,7 @@ const Container = styled.div`
   background-color: #dffff4;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   padding: 1rem 2rem;
+  z-index: 2;
 `;
 
 const Price = styled.span`
