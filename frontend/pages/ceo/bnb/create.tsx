@@ -26,7 +26,7 @@ export interface IImages {
 
 const ContentsWrapper = styled(Wrapper)`
   justify-content: flex-start;
-  padding-top: 1rem;
+  padding-top: 2rem;
 `;
 
 const BnbCreate = () => {
@@ -40,6 +40,7 @@ const BnbCreate = () => {
   });
   const [address, setAddress] = useState<String>("");
   const [addressDetail, setAddressDetail] = useState<String>("");
+  const [postcode, setPostcode] = useState<String>("");
   const [images, setImages] = useState<Array<IImages>>([]);
   const [onScriptLoad, setOnScriptLoad] = useState<boolean>(false);
 
@@ -68,7 +69,11 @@ const BnbCreate = () => {
       })
     );
 
-    images?.map((image) => form.append("image", image.files));
+    if (images.length === 0) {
+      form.append("image", new Blob());
+    } else {
+      images?.map((image) => form.append("image", image.files));
+    }
 
     CeoBnbCreate(
       form,
@@ -92,6 +97,8 @@ const BnbCreate = () => {
           setAddress={setAddress}
           addressDetail={addressDetail}
           setAddressDetail={setAddressDetail}
+          postcode={postcode}
+          setPostcode={setPostcode}
         />
         <WideButton onClick={onClick} text="숙소 등록하기" />
       </ContentsWrapper>

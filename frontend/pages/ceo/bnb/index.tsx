@@ -61,7 +61,7 @@ const MyBnbList = () => {
         {bnbList?.map((bnb) => (
           <BnbList
             key={bnb.id}
-            picPath={bnb.picPath.split(",")[0]}
+            picPath={bnb.picPath?.split(",")[0]}
             name={bnb.name}
             price={bnb.price}
             onClick={() =>

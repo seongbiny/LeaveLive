@@ -4,7 +4,7 @@ import { BACKEND_IMAGE_URL } from "../../api";
 import { flexCenter } from "../../styles/Basic";
 
 interface IPropTypes {
-  picPath: string;
+  picPath: string | null;
   name: string;
   price: number;
   onClick: () => void;
@@ -54,7 +54,9 @@ const BnbPrice = styled.div`
 const BnbList = ({ picPath, name, price, onClick }: IPropTypes) => {
   return (
     <Container onClick={onClick}>
-      <ImageContainer url={`${BACKEND_IMAGE_URL}${picPath}`}></ImageContainer>
+      <ImageContainer
+        url={picPath ? `${BACKEND_IMAGE_URL}${picPath}` : "/default.png"}
+      ></ImageContainer>
       <ContentContainer>
         <BnbName>{name}</BnbName>
         <BnbPrice>{price.toLocaleString()}원</BnbPrice>
