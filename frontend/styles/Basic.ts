@@ -12,14 +12,14 @@ interface IContainerProps {
 
 export const Container = styled.div`
     ${flexCenter}
-    /* width: ${({width}: IContainerProps) => width ? width : 80}%; */
     width: 100%;
     height: 100%;
     flex-direction: column;
-`;
+    `;
 
 export const Wrapper = styled.div`
-  width: 80%;
+width: ${({width}: IContainerProps) => width ? width : 80}%;
+  /* width: 80%; */
   height: 100%;
   ${flexCenter}
   flex-direction: column;

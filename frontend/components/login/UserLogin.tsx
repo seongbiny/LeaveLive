@@ -4,6 +4,7 @@ import KakaoLoginButton from "./KakaoLoginButton";
 import { ColoredText, UnderlineText } from "../../styles/Text";
 import { Typography } from "@mui/material";
 import styled from "styled-components";
+import { Wrapper } from "../../styles/Basic";
 
 interface IPropTypes {
   setIsUser: Dispatch<SetStateAction<boolean>>;
@@ -12,6 +13,7 @@ interface IPropTypes {
 export const TextContainer = styled.div`
   width: 100%;
   margin-bottom: 20%;
+  margin-left: 10%;
 `;
 
 export const Title = styled.div`
@@ -35,7 +37,7 @@ export const NavigatorContainer = styled.div`
 
 const UserLogin = ({ setIsUser }: IPropTypes) => {
   return (
-    <>
+    <Wrapper width={65}>
       <TextContainer>
         <Title>
           <Typography variant="h5" lineHeight={1.6}>
@@ -63,7 +65,7 @@ const UserLogin = ({ setIsUser }: IPropTypes) => {
           사장님 로그인
         </UnderlineText>
       </NavigatorContainer>
-    </>
+    </Wrapper>
   );
 };
 
