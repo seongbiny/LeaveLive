@@ -61,7 +61,7 @@ public class ActivityService {
         return true;
     }
 
-    public ActivityDto saveAct(ActivityDto dto, List<MultipartFile> files, String userId) {
+    public ActivityDto saveAct(ActivityDto dto, List<MultipartFile> files, String userId, MultipartFile img) {
         boolean flag=false;
         for(MultipartFile file:files){
             if(!file.isEmpty()){
@@ -71,6 +71,11 @@ public class ActivityService {
         }
         if (flag){
             dto.setPicPath(saveImage(files));
+        }
+        if(!img.isEmpty()){
+            List<MultipartFile> list=new ArrayList<>();
+            list.add(img);
+            dto.setPicContents(saveImage(list));
         }
         dto.setUserId(userId);
         return ActivityDto.of(repo.save(Activity.of(dto)));

@@ -25,6 +25,8 @@ public class Activity {
     private String picPath;
     @Column(columnDefinition = "TEXT")
     private String contents;
+    @Column(columnDefinition = "TEXT")
+    private String picContents;
     private String name;
     @Column(name = "user_id")
     private String userId;
@@ -36,6 +38,7 @@ public class Activity {
                 .cnt(dto.getCnt())
                 .loc(dto.getLoc())
                 .picPath(dto.getPicPath())
+                .picContents(dto.getPicContents())
                 .price(dto.getPrice())
                 .userId(dto.getUserId())
                 .build();
@@ -48,6 +51,7 @@ public class Activity {
                 .cnt(dto.getCnt())
                 .loc(dto.getLoc())
                 .picPath(dto.getPicPath())
+                .picContents(dto.getPicContents())
                 .price(dto.getPrice())
                 .userId(dto.getUserId())
                 .build();

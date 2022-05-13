@@ -43,10 +43,10 @@ public class ActivityController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<ActivityDto> delActivity(HttpServletResponse response, @RequestPart(value = "dto") ActivityDto dto, @RequestPart(value = "image", required = false) List<MultipartFile> files) {
+    public ResponseEntity<ActivityDto> delActivity(HttpServletResponse response, @RequestPart(value = "dto") ActivityDto dto, @RequestPart(value = "image", required = false) List<MultipartFile> files, @RequestPart(value = "contentsImage", required = false) MultipartFile file) {
         String userId = response.getHeader("userId");
         log.info("ReservationController.getAllReservation.userId:" + userId);
-        ActivityDto result = service.saveAct(dto, files, userId);
+        ActivityDto result = service.saveAct(dto, files, userId, file);
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
