@@ -55,7 +55,7 @@ public class ActivityService {
         }
         List<Reservation> listRes = rrepo.findByActivityId(id);
         if (listRes != null) {
-            for (Reservation res : listRes) frepo.deleteById(res.getId());
+            for (Reservation res : listRes) rrepo.deleteById(res.getId());
         }
         repo.deleteById(id);
         return true;

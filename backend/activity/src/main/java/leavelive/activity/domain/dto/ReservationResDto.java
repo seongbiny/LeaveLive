@@ -19,7 +19,6 @@ public class ReservationResDto {
     private String userId;
     private String nickname;
     private Activity activity;
-    private Long scheduleId;
     private int cnt;
 
     public static ReservationResDto of(Reservation entity){
@@ -30,7 +29,6 @@ public class ReservationResDto {
                 .userId(entity.getUserId())
                 .cnt(entity.getCnt())
                 .activity(entity.getActivity())
-                .scheduleId(entity.getScheduleId())
                 .build();
     }
 }

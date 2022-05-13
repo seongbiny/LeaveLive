@@ -32,9 +32,6 @@ public class Reservation {
     @JoinColumn(name = "activity_article_id")
     private Activity activity;
 
-    @Column(name="schedule_id")
-    private Long scheduleId;
-
     private int cnt;
 
     public static Reservation of(ReservationDto dto){
@@ -43,7 +40,6 @@ public class Reservation {
                 .activity(dto.getActivity())
                 .endDate(dto.getEndDate())
                 .startDate(dto.getStartDate())
-                .scheduleId(dto.getScheduleId())
                 .cnt(dto.getCnt())
                 .build();
     }

@@ -19,7 +19,6 @@ public class ReservationDto {
     private LocalDate endDate;
     private String userId;
     private Activity activity;
-    private Long scheduleId;
     private int cnt;
 
     public static ReservationDto of(Reservation entity){
@@ -30,7 +29,6 @@ public class ReservationDto {
                 .userId(entity.getUserId())
                 .cnt(entity.getCnt())
                 .activity(entity.getActivity())
-                .scheduleId(entity.getScheduleId())
                 .build();
     }
 }
