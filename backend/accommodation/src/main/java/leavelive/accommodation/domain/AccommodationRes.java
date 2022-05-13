@@ -31,9 +31,6 @@ public class AccommodationRes {
     @JoinColumn(name = "accommodation_article_id")
     private AccommodationArticle accommodationArticle;
 
-    @Column(name="schedule_id")
-    private Long scheduleId;
-
     private int cnt;
 
     public static AccommodationRes of(AccommodationResDto dto){
@@ -42,7 +39,6 @@ public class AccommodationRes {
                 .accommodationArticle(dto.getAccommodationArticle())
                 .endDate(dto.getEndDate())
                 .startDate(dto.getStartDate())
-                .scheduleId(dto.getScheduleId())
                 .cnt(dto.getCnt())
                 .build();
     }

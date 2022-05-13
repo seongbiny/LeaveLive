@@ -19,7 +19,6 @@ public class AccommodationResDto {
     private String userId;
     private int cnt;
     private AccommodationArticle accommodationArticle;
-    private Long scheduleId;
 
     public static AccommodationResDto of(AccommodationRes entity){
         return AccommodationResDto.builder()
@@ -29,7 +28,6 @@ public class AccommodationResDto {
                 .userId(entity.getUserId())
                 .cnt(entity.getCnt())
                 .accommodationArticle(entity.getAccommodationArticle())
-                .scheduleId(entity.getScheduleId())
                 .build();
     }
 }
