@@ -33,6 +33,7 @@ const Container = styled.div`
   flex-direction: column;
   width: 100%;
   margin-bottom: 75px;
+  line-height: 2.2rem;
 `;
 
 const ButtonWrapper = styled.div`
