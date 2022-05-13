@@ -24,6 +24,15 @@ const Container = styled.div`
   height: 100%;
 `;
 
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 80%;
+  height: 100%;
+`;
+
 interface IProfileImage {
   url: any;
 }
@@ -168,36 +177,38 @@ const Profile = () => {
   return (
     <Container>
       <Header title="내 정보 수정" />
-      <ProfileImage url={nextImage?.previewURL}>
-        <UploadButton htmlFor="image">
-          <Input
-            id="image"
-            type="file"
-            accept="image/*"
-            onChange={handleImage}
-          />
-          <PhotoCamera color="primary" />
-        </UploadButton>
-      </ProfileImage>
-      <TextField
-        label="이름"
-        id="name"
-        style={{
-          width: "100%",
-          marginBottom: "1rem",
-          backgroundColor: "white",
-        }}
-        placeholder="이름을 적어주세요."
-        value={nextNickname}
-        onChange={handleChange}
-      />
-      <WideButton text="수정하기" onClick={handleSubmit} />
-      <UserMenu>
-        <span onClick={handleLogout} style={{ marginRight: "1rem" }}>
-          로그아웃
-        </span>
-        <span onClick={handleDeleteUser}>회원탈퇴</span>
-      </UserMenu>
+      <Wrapper>
+        <ProfileImage url={nextImage?.previewURL}>
+          <UploadButton htmlFor="image">
+            <Input
+              id="image"
+              type="file"
+              accept="image/*"
+              onChange={handleImage}
+            />
+            <PhotoCamera color="primary" />
+          </UploadButton>
+        </ProfileImage>
+        <TextField
+          label="이름"
+          id="name"
+          style={{
+            width: "100%",
+            marginBottom: "1rem",
+            backgroundColor: "white",
+          }}
+          placeholder="이름을 적어주세요."
+          value={nextNickname}
+          onChange={handleChange}
+        />
+        <WideButton text="수정하기" onClick={handleSubmit} />
+        <UserMenu>
+          <span onClick={handleLogout} style={{ marginRight: "1rem" }}>
+            로그아웃
+          </span>
+          <span onClick={handleDeleteUser}>회원탈퇴</span>
+        </UserMenu>
+      </Wrapper>
     </Container>
   );
 };
