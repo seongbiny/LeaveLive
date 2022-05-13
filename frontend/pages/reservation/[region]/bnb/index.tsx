@@ -3,8 +3,6 @@ import Router from 'next/router';
 import BnbItem from "../../../../components/reservation/bnbitem";
 import { likeBnbList, bnbList } from "../../../../api/bnb";
 import Header from "../../../../components/Header";
-import { useAppSelector, useAppDispatch } from "../../../../util/bookmarkHooks";
-import { setIsbookmark } from "../../../../store/slices/bookmarkSlice";
 interface TypeBnb{
   id: number;
   contents: string;
@@ -18,21 +16,17 @@ interface TypeBnb{
 const BnbList = () => {
   const region = Router.query.region;
   const [list, setList] = useState<Array<TypeBnb>>([]);
-  const [like, setLike] = useState([]);
-  const dispatch = useAppDispatch();
-  const likelist: number[] = [];
+  const [like, setLike] = useState<number[]>([]);
 
   useEffect(() => {
-
     bnbList(
       region,
       (data: any) => {
-        console.log(data.data);
+        // console.log(data.data);
         setList(data.data);
       },
       (error: Error) => console.log(error)
     )
-
   }, [region]);
 
 
@@ -40,23 +34,10 @@ const BnbList = () => {
     likeBnbList(
       null,
       (data: any) => {
-        console.log(data.data);
-        // setLike(data.data);
-        // dispatch(setIsbookmark(likelist));
+        setLike(data.data);
+        // console.log(data.data);
       }, 
       (error: Error) => console.log(error))
-
-    // const handleLike = () => {
-    //   for (let i of like){
-    //     if (!(i.accommodationArticle.id in likelist)){
-    //       likelist.push(i.accommodationArticle.id)
-    //     }
-    //     console.log(i)
-    //   }
-    // }
-    // handleLike();
-    // console.log(likelist)
-
   },[])
 
   return (
@@ -64,16 +45,16 @@ const BnbList = () => {
       <Header title={String(region)} hide={false} />
       <div>
         {list.map((bnb) => {
-          return likelist.length !== 0 ? (
+          return like.length !== 0 ? (
             <div key={bnb.id}>
               <BnbItem 
                 name={bnb.name} 
                 picpath={bnb.picPath}
-                likelist={likelist}
-                id={bnb.id}
+                like={like}
+                bnbid={bnb.id}
               />
             </div>
-          ) : <div>
+          ) : <div key={bnb.id}>
                 <BnbItem 
                   name={bnb.name} 
                   picpath={bnb.picPath}
@@ -82,7 +63,6 @@ const BnbList = () => {
               </div>
         })}
       </div>
-
     </div>
   )
 };

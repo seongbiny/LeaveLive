@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useEffect } from "react";
 import { useRouter } from 'next/router';
+import { KakaoLoginRequest } from '../../api/user';
 
 declare global {
   interface Window {
@@ -39,17 +40,38 @@ function Map() {
         const locPosition = new window.kakao.maps.LatLng(latitude, longitude);
         const message = '<div style="padding:5px;">여기에 계신가요?!</div>';
         currMarker(locPosition, message);
+        
+        const sw = new window.kakao.maps.LatLng(latitude-0.02, longitude-0.02);
+        const ne = new window.kakao.maps.LatLng(Number(latitude)+0.02, Number(longitude)+0.02);
+        
+        // console.log(typeof(latitude), longitude)
+        // console.log(map.getBounds().getNorthEast())
+        // console.log(map.getBounds().getSouthWest())
+        // console.log(sw)
+        // console.log(ne)
+        var test = new window.kakao.maps.LatLng(36, 127);
+        var test2 = new window.kakao.maps.LatLng(37, 128);
 
-
+        var tbounds = new window.kakao.maps.LatLngBounds(test, test2);
+        console.log(tbounds)
+        let ttbound = new window.kakao.maps.LatLngBounds(sw, ne);
+        console.log(ttbound)
         // 장소 검색 객체를 생성
         const ps = new window.kakao.maps.services.Places(map);
-        ps.categorySearch(`${tag}`, placesSearchCB, {useMapBounds:true}); 
+        ps.categorySearch(`${tag}`, placesSearchCB, {
+          useMapBounds:true,
+          location: new window.kakao.maps.LatLng(latitude, longitude),
+          // radius: 10000,
+          bounds: new window.kakao.maps.LatLngBounds(sw, ne),
+          page: 2
+        }); 
 
         // 장소검색이 완료됐을 때 호출되는 콜백함수
         function placesSearchCB(data: any, status: any, pagination: any) {
           if (status === window.kakao.maps.services.Status.OK) {
             // 정상적으로 검색이 완료됐으면
             // 검색 목록과 마커를 표출
+            console.log(data.length)
             for (var i=0; i<data.length; i++) {
               displayMarker(data[i])
             }   
@@ -65,7 +87,7 @@ function Map() {
         function displayMarker(place: any) {
           let marker = new window.kakao.maps.Marker({
             map: map,
-            position: new window.kakao.maps.LatLng(place.y, place.x)
+            position: new window.kakao.maps.LatLng(place.y, place.x),
           });
           const iwRemoveable = true;
           // 마커에 클릭이벤트를 등록합니다

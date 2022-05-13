@@ -3,9 +3,9 @@ import axios from "axios";
 export const FRONTEND_URL =
   process.env.NODE_ENV === "production"
     ? "https://k6c105.p.ssafy.io"
-    : "http://localhost:3000";
+    : "https://localhost:3000";
 
-export const BACKEND_IMAGE_URL = "http://k6c105.p.ssafy.io/images/";
+export const BACKEND_IMAGE_URL = "https://k6c105.p.ssafy.io/images/";
 
 export const BACKEND_URL = "https://k6c105.p.ssafy.io:8080/api";
 

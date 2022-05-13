@@ -19,7 +19,8 @@ const Text = styled.div`
   left: 85%;
 `;
 
-const ActivityList = () => {
+const ActivityList = (props: any) => {
+    
     return (
         <>
             <Box>
