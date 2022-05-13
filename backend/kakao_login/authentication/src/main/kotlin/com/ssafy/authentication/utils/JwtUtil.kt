@@ -7,7 +7,7 @@ import java.util.*
 class JwtUtil {
 
     companion object {
-        private const val EXPIRE_DATE: Long = 1000 * 60 * 1 // 1min
+        private const val EXPIRE_DATE: Long = 1000 * 60 * 30 // 1min
 
         private const val SECRET_KEY: String = "blahblahblahblahblahblahblahblahblah"
 
