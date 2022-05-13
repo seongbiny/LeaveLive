@@ -13,7 +13,7 @@ const Container = styled.div`
   position: fixed;
   bottom: 0;
   width: 100%;
-  background-color: rgba(96, 255, 198, 0.2);
+  background-color: #dffff4;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   padding: 1rem 2rem;
 `;
