@@ -2,11 +2,13 @@ package leavelive.accommodation.service;
 
 import leavelive.accommodation.domain.AccommodationArticle;
 import leavelive.accommodation.domain.AccommodationFav;
+import leavelive.accommodation.domain.AccommodationRes;
 import leavelive.accommodation.domain.dto.AccommodationArticleDto;
 import leavelive.accommodation.exception.FileNotFoundException;
 import leavelive.accommodation.exception.MyResourceNotFoundException;
 import leavelive.accommodation.repository.FavoriteRepository;
 import leavelive.accommodation.repository.AccommodationRepository;
+import leavelive.accommodation.repository.ReservationRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
@@ -30,6 +32,7 @@ import java.util.stream.Collectors;
 public class AccommodationServiceImpl {
     private final AccommodationRepository repo;
     private final FavoriteRepository favRepo;
+    private final ReservationRepository resRepo;
 
     public List<AccommodationArticleDto> getAllAccommodationByLoc(String loc) {
         List<AccommodationArticle> entities = repo.findAllByLocStartsWith(loc);
@@ -58,6 +61,10 @@ public class AccommodationServiceImpl {
         List<AccommodationFav> list = favRepo.findAllByAcommodationId(id);
         if (list != null) {
             for (AccommodationFav entity : list) favRepo.deleteById(entity.getId());
+        }
+        List<AccommodationRes> res = resRepo.findByAccommodationArticleId(id);
+        if (res != null) {
+            for (AccommodationRes entity : res) resRepo.deleteById(entity.getId());
         }
         repo.deleteById(id);
         return true;
