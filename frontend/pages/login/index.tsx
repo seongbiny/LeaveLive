@@ -13,7 +13,7 @@ const Login = () => {
   }, [router]);
 
   return (
-    <Container width={65}>
+    <Container>
       {isUser ? (
         <UserLogin setIsUser={setIsUser} />
       ) : (
