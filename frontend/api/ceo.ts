@@ -1,3 +1,4 @@
+import { Paid } from "@mui/icons-material";
 import { apiInstance } from ".";
 
 const api = apiInstance();
@@ -22,4 +23,8 @@ export const getMyReservationList = async (params: any, success: any, fail: any)
 
 export const getMyBnbDetail = async (accommodation_id: any, success: any, fail: any) => {
   await api.get(`/accommodation/detail/${accommodation_id}`).then(success).catch(fail);
+}
+
+export const deleteMyBnb = async(accommodation_id: any, success: any, fail: any) => {
+  await api.delete(`/accommodation/${accommodation_id}`).then(success).catch(fail);
 }
