@@ -9,6 +9,7 @@ interface IPropTypes {
   isShow?: boolean;
   setIsShow: Dispatch<SetStateAction<boolean>>;
   setAddress: Dispatch<SetStateAction<String>>;
+  setPostcode: Dispatch<SetStateAction<String>>;
 }
 
 interface IModalOverlay {
@@ -48,7 +49,12 @@ const CloseButton = styled.div`
   ${flexCenter}
 `;
 
-const Postcode = ({ isShow, setIsShow, setAddress }: IPropTypes) => {
+const Postcode = ({
+  isShow,
+  setIsShow,
+  setAddress,
+  setPostcode,
+}: IPropTypes) => {
   const handleComplete = (data: any) => {
     let fullAddress = data.address;
     let extraAddress = "";
@@ -62,8 +68,11 @@ const Postcode = ({ isShow, setIsShow, setAddress }: IPropTypes) => {
           extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
       }
       fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
+
+      console.log(data);
     }
 
+    setPostcode(data.zonecode);
     setAddress(fullAddress);
     document.body.style.overflow = "unset";
     setIsShow(false);
