@@ -13,8 +13,8 @@ spring:
   # DB 설정
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/accommodation?serverTimezone=Asia/Seoul&useSSL=false&allowPublicKeyRetrieval=true
-#    url: jdbc:mysql://localhost:3397/accommodation?serverTimezone=Asia/Seoul&useSSL=false&allowPublicKeyRetrieval=true
+#    url: jdbc:mysql://localhost:3306/accommodation?serverTimezone=Asia/Seoul&useSSL=false&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://localhost:3397/accommodation?serverTimezone=Asia/Seoul&useSSL=false&allowPublicKeyRetrieval=true
     username: ssafy
     password: ssafy
     hikari:
