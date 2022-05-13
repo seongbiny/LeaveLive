@@ -19,53 +19,53 @@ class RouteConfig(private val authenticationFilter: AuthenticationFilter) {
             .route("kakao_auth_route") {
                 it
                     .path("/api/auth/kakao/**")
-                    .uri("https://$URL:8081")
+                    .uri("http://$URL:8081")
             }
             .route("google_auth_route") {
                 it
                     .path("/api/auth/google/**")
-                    .uri("https://$URL:8082")
+                    .uri("http://$URL:8082")
             }
             .route("token_republish_route") {
                 it.path("/api/auth/token/**")
-                    .uri("https://$URL:8081")
+                    .uri("http://$URL:8081")
             }
             .route("user_route") {
                 it
                     .path("/api/user/**")
                     .filters { f: GatewayFilterSpec -> f.filter(authenticationFilter) }
-                    .uri("https://$URL:8083")
+                    .uri("http://$URL:8083")
             }
             .route("accommodation_route") {
                 it
                     .path("/api/accommodation/**")
                     .filters { f: GatewayFilterSpec -> f.filter(authenticationFilter) }
-                    .uri("https://$URL:8084")
+                    .uri("http://$URL:8084")
 
             }
             .route("accommodation_exclude_auth") {
                 it
                     .order(-1)
                     .path("/api/accommodation/all/**", "/api/accommodation/detail/**")
-                    .uri("https://$URL:8084")
+                    .uri("http://$URL:8084")
             }
             .route("activity_route") {
                 it
                     .path("/api/activity/**")
                     .filters { f: GatewayFilterSpec -> f.filter(authenticationFilter) }
-                    .uri("https://$URL:8085")
+                    .uri("http://$URL:8085")
             }
             .route("activity_exclude_path") {
                 it
                     .order(-1)
                     .path("/api/activity/all/**", "/api/activity/detail/**")
-                    .uri("https://$URL:8085")
+                    .uri("http://$URL:8085")
             }
             .route("diary_route") {
                 it
                     .path("/api/diary/**")
                     .filters { f: GatewayFilterSpec -> f.filter(authenticationFilter) }
-                    .uri("https://$URL:8086")
+                    .uri("http://$URL:8086")
             }
 
             .build()
