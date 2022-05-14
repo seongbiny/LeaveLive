@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import BnbItem from "../../components/bookmark/bnb";
 import ActivityList from "../../components/bookmark/activity";
-import styled, { AnyStyledComponent } from "styled-components";
+import styled from "styled-components";
 import { likeBnbList } from "../../api/bnb";
 
 const TabBox = styled.div`
@@ -35,41 +35,28 @@ interface TypeBnb{
   accommodationArticle?: any;
 }
 
+
 const Bookmark = () => {
   const [index, setIndex] = useState(0);
   const [list, setList] = useState<Array<TypeBnb>>([]);
-  const [bnblist, setBnblist] = useState<Object[]>([]);
-
+  const [rerender, setRerender] = useState(false);
 
   useEffect(()=>{
     likeBnbList(
       null,
       (data: any) => {
-        // const arr: any = [];
-        // console.log()
-        // data.data.forEach((value: any)=>{
-        //   arr.concat(value.accommodationArticle)
-        //   console.log(value.accommodationArticle);
-        //   console.log(arr)
-
-        //   // if(!(value.accommodationArticle in list)){
-        //   // }
-        // })
-
-        // data.data.forEach((bnb: any)=>{
-        //   // console.log(data.data);
-        //   // if(list.length === 0){
-        //   //   setList([bnb.accommodationArticle]);  
-        //   // } else {
-        //   // }
-        // });
         setList(data.data);
       },
       (error: Error) => console.log(error),
     )
-    // console.log(list);
-  },[])
-  console.log(list)
+  },[rerender])
+
+  const rendering = () => {
+    setRerender(!rerender);
+    setList([...list])
+    console.log(list);
+  }
+
   return (
     <div>
       <Tabs>
@@ -79,12 +66,17 @@ const Bookmark = () => {
       { index === 0 ?
         list.map((bnb: any)=>{
           return (
-            <BnbItem key={bnb.id} name={bnb.accommodationArticle.name} />
-            // <h1>{bnb.accommodationArticle.name}</h1>
+              <BnbItem 
+                key={bnb.id} 
+                name={bnb.accommodationArticle.name} 
+                picPath={bnb.accommodationArticle.picPath} 
+                id={bnb.accommodationArticle.id}
+                like={list}
+                rendering={rendering}
+              />
           )
         }) :
        <ActivityList /> }
-      {/* {list.map((bnb)=>{console.log(bnb.accommodationArticle.id, bnb.accommodationArticle.name)})} */}
     </div>
   )
 };

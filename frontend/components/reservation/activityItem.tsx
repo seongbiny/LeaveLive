@@ -22,7 +22,18 @@ const ActivityItem = (props: any) => {
     const picContent = props.picContent;
     const name = props.name;
     const price = props.price;
-    console.log(picPath)
+    const likelist = props.like;
+
+    useEffect(()=>{
+        {likelist !== undefined ?
+            likelist.forEach((value: any)=>{
+                if(`${value.activity.id}` === String(actid)){
+                    setLike(true);
+                    return false
+                }
+            }) : null
+        }
+    }, [likelist])
 
     const likeAxios = () => {
         likeActivity(actid,
@@ -32,7 +43,7 @@ const ActivityItem = (props: any) => {
     }
     const unlikeAxios = () => {
         unlikeActivity(actid,
-          (response: any) => (console.log(Response)),
+          (response: any) => (console.log(response)),
           (error: Error) => console.log(error))
         console.log("북마크에서 삭제되었습니다.")
       }

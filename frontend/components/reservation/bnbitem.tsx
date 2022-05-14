@@ -23,12 +23,12 @@ const Text = styled.div`
 
 const BnbItem = (props: any) => {
   const [like, setLike] = useState(false);
-  const bnbid = props.bnbid;
+  const bnbid = props.id;
   const likelist = props.like;
-  const picpath: Array<String> = props.picpath.split(',');
+  const picpath: Array<String> = props.picPath.split(',');
 
   useEffect(()=>{
-    // console.log(likelist);
+    console.log(bnbid);
     {likelist !== undefined ?
       likelist.forEach((value: any)=>{
         if(`${value.accommodationArticle.id}` === String(bnbid)){
@@ -59,17 +59,33 @@ const BnbItem = (props: any) => {
       <Box>
         <Text>
           {like === false ? 
-            <FavoriteBorderIcon fontSize="medium" sx={{color: '#FF385C'}} onClick={() => {setLike(!like); likeAxios();}}/> 
-            : <FavoriteIcon fontSize="medium" sx={{color: '#FF385C'}} onClick={() => {setLike(!like); unlikeAxios();}}/>}
+            <FavoriteBorderIcon 
+              fontSize="medium" 
+              sx={{color: '#FF385C'}} 
+              onClick={() => {setLike(!like); likeAxios();}}
+            /> : 
+            <FavoriteIcon 
+              fontSize="medium" 
+              sx={{color: '#FF385C'}} 
+              onClick={() => {setLike(!like); unlikeAxios();}}
+            />}
         </Text>
         <Carousel infiniteLoop showThumbs={false}>
           {picpath.map((pic, idx)=>(
-            <div key={idx} onClick={()=>(Router.push(`bnb/1`))} style={{marginLeft: '5vw', marginRight: '5vw'}} >
-              <img src={`${BACKEND_IMAGE_URL}/${pic}`} width={350} height={250} style={{borderRadius: '10px'}} />
+            <div 
+              key={idx} 
+              onClick={()=>(Router.push(`bnb/1`))} 
+              style={{marginLeft: '5vw', marginRight: '5vw'}} >
+              <img 
+                src={`${BACKEND_IMAGE_URL}/${pic}`} 
+                width={350} height={250} 
+                style={{borderRadius: '10px'}} />
             </div>
           ))}
         </Carousel>
-        <div style={{marginLeft:'7vw', fontSize: '20px', paddingTop: '1vh'}}>{props.name}</div>
+        <div style={{marginLeft:'7vw', fontSize: '20px', paddingTop: '1vh'}}>
+            {props.name}
+        </div>
       </Box>
   )
 }

@@ -49,15 +49,15 @@ const BnbList = () => {
             <div key={bnb.id}>
               <BnbItem 
                 name={bnb.name} 
-                picpath={bnb.picPath}
+                picPath={bnb.picPath}
                 like={like}
-                bnbid={bnb.id}
+                id={bnb.id}
               />
             </div>
           ) : <div key={bnb.id}>
                 <BnbItem 
                   name={bnb.name} 
-                  picpath={bnb.picPath}
+                  picPath={bnb.picPath}
                   id={bnb.id}
                 />
               </div>
