@@ -2,7 +2,7 @@ import React, { Dispatch, SetStateAction, useCallback, useState } from "react";
 import { IconButton } from "@mui/material";
 import { PhotoCamera } from "@mui/icons-material";
 import styled from "styled-components";
-import { IImages } from "../../pages/ceo/bnb/create";
+import { IImages } from "../../../pages/ceo/bnb/create";
 
 interface IPropTypes {
   images: Array<IImages>;

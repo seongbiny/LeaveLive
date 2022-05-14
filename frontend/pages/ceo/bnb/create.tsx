@@ -1,10 +1,12 @@
 import React, { useCallback, useState } from "react";
 import { WideButton } from "../../../components/WideButton";
 import { Container, Wrapper } from "../../../styles/Basic";
-import InputForm from "../../../components/ceo/InputForm";
-import ImageForm from "../../../components/ceo/ImageForm";
-import PostCode from "../../../components/ceo/Postcode";
-import Switches from "../../../components/ceo/Switches";
+import {
+  InputForm,
+  ImageForm,
+  Postcode,
+  Switches,
+} from "../../../components/ceo/form";
 import { useRouter } from "next/router";
 import { CeoBnbCreate } from "../../../api/ceo";
 import Header from "../../../components/Header";
@@ -24,7 +26,7 @@ export interface IImages {
   previewURL: string;
 }
 
-const ContentsWrapper = styled(Wrapper)`
+export const ContentsWrapper = styled(Wrapper)`
   justify-content: flex-start;
   padding-top: 2rem;
 `;
@@ -92,7 +94,7 @@ const BnbCreate = () => {
         <InputForm values={values} setValues={setValues} />
         <Switches values={values} setValues={setValues} />
         <ImageForm images={images} setImages={setImages} />
-        <PostCode
+        <Postcode
           address={address}
           setAddress={setAddress}
           addressDetail={addressDetail}

@@ -2,7 +2,7 @@ import React, { Dispatch, SetStateAction, useState } from "react";
 import ReactDOM from "react-dom";
 import DaumPostcode from "react-daum-postcode";
 import styled from "styled-components";
-import { flexCenter } from "../../styles/Basic";
+import { flexCenter } from "../../../styles/Basic";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 
 interface IPropTypes {
@@ -49,7 +49,7 @@ const CloseButton = styled.div`
   ${flexCenter}
 `;
 
-const Postcode = ({
+const SearchPostcode = ({
   isShow,
   setIsShow,
   setAddress,
@@ -68,8 +68,6 @@ const Postcode = ({
           extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
       }
       fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
-
-      console.log(data);
     }
 
     setPostcode(data.zonecode);
@@ -105,4 +103,4 @@ const Postcode = ({
   // return modalContent;
 };
 
-export default Postcode;
+export default SearchPostcode;

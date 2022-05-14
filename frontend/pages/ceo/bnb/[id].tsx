@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { getMyBnbDetail } from "../../../api/ceo";
+import { getMyBnbDetail, deleteMyBnb } from "../../../api/ceo";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import DetailNav from "../../../components/ceo/DetailNav";
@@ -13,9 +13,8 @@ import LocalFloristRoundedIcon from "@mui/icons-material/LocalFloristRounded";
 import SoupKitchenRoundedIcon from "@mui/icons-material/SoupKitchenRounded";
 import Map from "../../../components/ceo/BnbMap";
 import Button from "@mui/material/Button";
-import { deleteMyBnb } from "../../../api/ceo";
 
-interface IDetail {
+export interface IDetail {
   cnt: number;
   contents: string;
   cooking: string;
@@ -200,7 +199,19 @@ const BnbDetail = () => {
       >
         숙소 삭제하기
       </Button>
-      <DetailNav price={detail.price}></DetailNav>
+      <DetailNav
+        price={detail.price}
+        text="수정하기"
+        onClick={() =>
+          router.push(
+            {
+              pathname: `/ceo/bnb/update`,
+              query: { id: router.query.id },
+            },
+            `/ceo/bnb/update`
+          )
+        }
+      ></DetailNav>
     </Container>
   );
 };
