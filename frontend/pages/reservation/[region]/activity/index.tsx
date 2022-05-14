@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useState, useEffect } from "react";
-import Router from 'next/router';
+import { useRouter } from "next/router";
 import ActivityItem from '../../../../components/reservation/activityItem';
 import Header from "../../../../components/Header";
 import { activityList, likeActivityList } from '../../../../api/activity';
@@ -16,7 +16,8 @@ interface TypeAct{
 }
 
 const ActivityList = () => {
-  const region = Router.query.region;
+  const router = useRouter();
+  const region = router.query.region;
   const [list, setList] = useState<Array<TypeAct>>([]);
   const [like, setLike] = useState<number[]>([]);
 
@@ -24,19 +25,19 @@ const ActivityList = () => {
     likeActivityList(
       null,
       (data: any) => {
-        // console.log(data.data);
         setLike(data.data);
       },
       (error: Error) => console.log(error)
-    )
+    );
+    console.log({router})
   },[])
 
   useEffect(() => {
     activityList(
       region,
       (data: any) => {
-        // console.log(data.data);
         setList(data.data);
+        console.log(data.data)
       },
       (error: Error) => console.log(error))
   },[region])
@@ -44,32 +45,18 @@ const ActivityList = () => {
   return (
     <div>
       <Header title={String(region)} hide={false} />
-      <div>
-        {list.map((act) => {
-          return like.length !== 0 ? (
-            <div key={act.id}>
-              <ActivityItem
-                name={act.name}
-                picPath={act.picPath}
-                actid={act.id}
-                picContent={act.picContents}
-                price={act.price}
-                like={like}
-              />
-            </div>
-          ) : (
-            <div key={act.id}>
-              <ActivityItem
-                name={act.name}
-                picPath={act.picPath}
-                actid={act.id}
-                picContent={act.picContents}
-                price={act.price}
-              />
-            </div>
-          )
-        })}
-      </div>
+        {list?.map((act) => (
+          <ActivityItem
+            key={act.id}
+            name={act.name}
+            picPath={act.picPath}
+            actId={act.id}
+            picContent={act.picContents}
+            price={act.price}
+            like={like}
+            loc={act.loc}
+          />
+        ))}
     </div>
   )
 };

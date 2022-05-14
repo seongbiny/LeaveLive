@@ -1,7 +1,12 @@
-import React from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
-const Login = () => {
-  return <div>테스트</div>;
+const ActivityDetail = () => {
+  return (
+    <>
+      <div>액티비티디테일</div>
+    </>
+  )
 };
 
-export default Login;
+export default ActivityDetail;

@@ -1,6 +1,6 @@
 import { DateRange } from 'react-date-range';
 import { addDays } from "date-fns"
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import locale from 'date-fns/locale/ko';
@@ -12,6 +12,7 @@ import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import Button from '@mui/material/Button';
+import { bnbReservation } from "../../api/bnb";
 
 const Container = styled.div`
   // display: flex;
@@ -58,8 +59,65 @@ const Reservation = () => {
       key: "selection",
     },
   ])
-  console.log(startDate);
-  console.log(endDate);
+  const startDay = String(startDate).split(' ');
+  const endDay = String(endDate).split(' ');
+  // const [reservationCnt, setReservationCnt] = useState(0);
+  const reservationCnt = children+baby+adult;
+  
+  const MonChange = (mon: any) => {
+    if (mon === 'Jan') {
+      return startDay[1] = '01'
+    } else if (mon === 'Feb') {
+      return startDay[1] = '02'
+    } else if (mon === 'Mar') {
+      return startDay[1] = '03'
+    } else if (mon === 'Apr') {
+      return startDay[1] = '04'
+    } else if (mon === 'May') {
+      return startDay[1] = '05'
+    } else if (mon === 'Jun') {
+      return startDay[1] = '06'
+    } else if (mon === 'Jul') {
+      return startDay[1] = '07'
+    } else if (mon === 'Aug') {
+      return startDay[1] = '08'
+    } else if (mon === 'Sep') {
+      return startDay[1] = '09'
+    } else if (mon === 'Oct') {
+      return startDay[1] = '10'
+    } else if (mon === 'Nov') {
+      return startDay[1] = '11'
+    } else {
+      return startDay[1] = '12'
+    }
+  }
+
+  const reservationStart = startDay[3]+'-'+MonChange(startDay[1])+'-'+startDay[2];
+  const reservationEnd = endDay[3]+'-'+MonChange(endDay[1])+'-'+endDay[2]
+
+  const reservationAxios = useCallback(() => {
+    const form = new FormData();
+    const dto = {
+      cnt: reservationCnt,
+      startDate: reservationStart,
+      endDate: reservationEnd,
+    };
+    form.append(
+      "dto",
+      new Blob([JSON.stringify(dto)], {
+        type: "application/json",
+      })
+    )
+    bnbReservation(
+      10,
+      form,
+      ({ data }: any) => {
+        console.log(data);
+      },
+      (error: Error) => console.log(error)
+    )
+
+  },[])
 
   return (
     <>
@@ -125,7 +183,8 @@ const Reservation = () => {
         <hr />
       </Container>
       <BottomNav>
-        <Button variant="contained" size="large" sx={{width: '60vw'}} onClick={()=>(Router.push(`/reservation/result`))}>예약하기</Button>
+        {/* <Button variant="contained" size="large" sx={{width: '60vw'}} onClick={()=>(Router.push(`/reservation/result`))}>예약하기</Button> */}
+        <Button variant="contained" size="large" sx={{width: '60vw'}} onClick={reservationAxios}>예약하기</Button>
       </BottomNav>
     </>
   )

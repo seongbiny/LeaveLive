@@ -36,6 +36,7 @@ const Bookmark = () => {
       null,
       (data: any) => {
         setBnbList(data.data);
+        console.log(data.data)
       },
       (error: Error) => console.log(error),
     )
@@ -67,6 +68,7 @@ const Bookmark = () => {
                 name={bnb.accommodationArticle.name} 
                 picPath={bnb.accommodationArticle.picPath} 
                 id={bnb.accommodationArticle.id}
+                loc={bnb.accommodationArticle.loc}
                 like={bnbList}
                 rendering={rendering}
               />
