@@ -1,44 +1,74 @@
 import styled from 'styled-components';
-import { useRouter } from 'next/router';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import { useState, useEffect } from "react";
+import Router from 'next/router';
 import ActivityItem from '../../../../components/reservation/activityItem';
 import Header from "../../../../components/Header";
+import { activityList, likeActivityList } from '../../../../api/activity';
 
-const StyledTab = styled.div`
-  display: flex;
-  justify-content: space-between;
-  height: 7vh;
-  align-items: center;
-  background: #60ffc6;
-  margin-bottom: 3vh;
-  padding-left: 3vw;
-  padding-right: 3vw;
-`;
+interface TypeAct{
+  id: number,
+  contents: string,
+  loc: string,
+  name: string,
+  picContents: string,
+  picPath: string,
+  price: number
+}
 
 const ActivityList = () => {
-  const router = useRouter();
+  const region = Router.query.region;
+  const [list, setList] = useState<Array<TypeAct>>([]);
+  const [like, setLike] = useState<number[]>([]);
+
+  useEffect(() => {
+    likeActivityList(
+      null,
+      (data: any) => {
+        // console.log(data.data);
+        setLike(data.data);
+      },
+      (error: Error) => console.log(error)
+    )
+  },[])
+
+  useEffect(() => {
+    activityList(
+      region,
+      (data: any) => {
+        // console.log(data.data);
+        setList(data.data);
+      },
+      (error: Error) => console.log(error))
+  },[region])
+
   return (
-    <div style={{marginBottom: '10vh'}}>
-      {/* <StyledTab>
-        <ArrowBackIosNewIcon onClick={()=>(router.back())} />
-        <div>광주</div>
-        <ArrowBackIosNewIcon sx={{color:'#60ffc6'}}/>
-      </StyledTab> */}
-      <Header title="광주" hide={false} />
+    <div>
+      <Header title={String(region)} hide={false} />
       <div>
-        <ActivityItem />
-        <ActivityItem />
-        <ActivityItem />
-        <ActivityItem />
-        <ActivityItem />
-        <ActivityItem />
-        <ActivityItem />
-        <ActivityItem />
-        <ActivityItem />
-        <ActivityItem />
-        <ActivityItem />
-        <ActivityItem />
-        <ActivityItem />
+        {list.map((act) => {
+          return like.length !== 0 ? (
+            <div key={act.id}>
+              <ActivityItem
+                name={act.name}
+                picPath={act.picPath}
+                actid={act.id}
+                picContent={act.picContents}
+                price={act.price}
+                like={like}
+              />
+            </div>
+          ) : (
+            <div key={act.id}>
+              <ActivityItem
+                name={act.name}
+                picPath={act.picPath}
+                actid={act.id}
+                picContent={act.picContents}
+                price={act.price}
+              />
+            </div>
+          )
+        })}
       </div>
     </div>
   )
