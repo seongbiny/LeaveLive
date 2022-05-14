@@ -1,10 +1,9 @@
 import styled from 'styled-components';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
-import { useEffect, useState } from 'react';
 import { BACKEND_IMAGE_URL } from '../../api';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { likeBnb, unlikeBnb } from '../../api/bnb';
+import { unlikeBnb } from '../../api/bnb';
 
 
 const Box = styled.div`
@@ -20,28 +19,21 @@ const Text = styled.div`
   left: 85%;
 `;
 
-
 const BnbItem = (props: any) => {
     const picPath: Array<String> = props.picPath.split(',');
     const id = props.id;
-    const likeList = props.like;
-
-    useEffect(()=>{
-        console.log(likeList);
-    },[likeList])
 
     async function unlikeAxios(){
         await unlikeBnb(id,
             (response: any) => console.log(response),
             (error: Error) => console.log(error)
-        )
-        await alert("북마크를 취소하겠습니까?")
+        );
+        await alert("북마크를 취소하겠습니까?");
         await render();
     }
 
     const render = ()=> {
         props.rendering(!render);
-        console.log('제발~');
     };
 
     return (
