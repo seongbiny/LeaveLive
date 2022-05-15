@@ -52,19 +52,21 @@ class UserService(private val userRepository: UserRepository, private val modelM
         return user.picPath!!
     }
 
-    fun removeUser(userId: String) {
+    fun removeUser(token: String): Boolean {
+        val userId = JwtUtil.decodeToken(token)
         userRepository.deleteById(userId)
+        return true;
     }
 
-    private fun saveImage(image: MultipartFile) : String {
+    private fun saveImage(image: MultipartFile): String {
         var uniquePath = "${LocalDate.now().format(DateTimeFormatter.ISO_DATE)}${UUID.randomUUID()}"
         val path = "/home/ubuntu/images/profile"
-        when(image.contentType?.lowercase()) {
+        when (image.contentType?.lowercase()) {
             "image/png" -> uniquePath += ".png"
             "image/jpeg" -> uniquePath += ".jpeg"
         }
         val file = File(path)
-        if(!file.exists()) file.mkdirs()
+        if (!file.exists()) file.mkdirs()
         image.transferTo(File("$path/$uniquePath"))
 
         return "profile/$uniquePath"

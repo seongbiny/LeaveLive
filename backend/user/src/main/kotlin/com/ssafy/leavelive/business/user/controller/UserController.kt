@@ -89,7 +89,8 @@ class UserController(private val userService: UserService) {
 
 
     @DeleteMapping
-    fun withdraw() {
-    }
+    fun withdraw(@RequestHeader(name = AUTHORIZATION) token: String): ResponseEntity<Boolean> =
+        ResponseEntity(userService.removeUser(token),HttpStatus.OK)
+
 
 }
