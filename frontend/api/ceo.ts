@@ -12,7 +12,6 @@ export const CeoBnbCreate = async (params: any, success: any, fail: any) => {
     .catch(fail);
 };
 
-
 export const getMyBnbList = async (params: any, success: any, fail: any) => {
   await api.get(`/accommodation/my`).then(success).catch(fail);
 }
