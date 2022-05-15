@@ -33,7 +33,7 @@ class AuthRepository(private val restTemplate: RestTemplate) {
     }
 
 
-    fun checkUserAndGetRefreshToken(userId: String, token: String): String {
+    fun checkUserAndGetRefreshToken(userId: String, token: String, type: String): String {
         val headers = HttpHeaders()
         val body = HashMap<String, Any>()
         val request = HttpEntity(body, headers)
@@ -53,6 +53,7 @@ class AuthRepository(private val restTemplate: RestTemplate) {
         val refreshToken = JwtUtil.createJwtRefreshToken()
         body["nickname"] = "random nickname created at ${Date().time}"
         body["token"] = refreshToken
+        body["type"] = type
         val userCreateRequest = HttpEntity(body, headers)
         val userCreateResponse: ResponseEntity<Map<String, Any>> =
             restTemplate.postForEntity("$USER_API_URL", userCreateRequest)

@@ -10,7 +10,7 @@ class AuthService(private val authRepository: AuthRepository) {
 
     private val logger = LoggerFactory.getLogger(javaClass)
 
-    fun publishAccessToken(token: String): Map<String, Any> {
+    fun publishAccessToken(token: String, type: String): Map<String, Any> {
 
         // get user info with access token
         val kakaoUserId = authRepository.getKakaoUserIdWithToken(token)
@@ -24,7 +24,7 @@ class AuthService(private val authRepository: AuthRepository) {
 
         // check if id exists in DB, if it doesn't create new user
         // if user is already exists, use it's existing refresh token else create new one
-        val jwtRefreshToken = authRepository.checkUserAndGetRefreshToken(hashedId, jwtAccessToken)
+        val jwtRefreshToken = authRepository.checkUserAndGetRefreshToken(hashedId, jwtAccessToken, type)
 
         // put tokens to result map
         val result: MutableMap<String, Any> = HashMap()
