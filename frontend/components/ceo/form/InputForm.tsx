@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction, useCallback } from "react";
 import { TextField, InputAdornment } from "@mui/material";
-import { IValues } from "../../pages/ceo/bnb/create";
+import { IValues } from "../../../pages/ceo/bnb/create";
 import styled from "styled-components";
 
 interface IPropTypes {

@@ -10,7 +10,6 @@ import {
   updateProfileImage,
   deleteUser,
 } from "../../api/user";
-import { Logout } from "../../components/user/logout";
 import { useRouter } from "next/router";
 import { BACKEND_IMAGE_URL } from "../../api";
 import Header from "../../components/Header";
@@ -155,8 +154,7 @@ const Profile = () => {
 
   const handleLogout = useCallback(() => {
     if (confirm("로그아웃 하시겠습니까?")) {
-      Logout();
-      router.push("/login");
+      router.push("/logout");
     }
   }, [router]);
 
@@ -165,9 +163,7 @@ const Profile = () => {
       deleteUser(
         null,
         (response: any) => {
-          console.log(response);
-          Logout();
-          router.push("/login");
+          router.push("/logout");
         },
         (error: Error) => console.log(error)
       );

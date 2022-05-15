@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { getMyReservationList } from "../../../api/ceo";
 import ReservationList from "../../../components/ceo/ReservationList";
 import Header from "../../../components/Header";
-import { Container, Wrapper } from "../../../styles/Basic";
+import { Container } from "../../../styles/Basic";
+import { ContentsWrapper } from "../bnb/create";
 
 export interface IReservation {
   userName: string;
@@ -41,7 +42,7 @@ const MyReservation = () => {
   return (
     <Container>
       <Header title="예약 확인" hide={true} />
-      <Wrapper>
+      <ContentsWrapper>
         {reservations?.map((reservation, index) => (
           <ReservationList
             key={index}
@@ -49,7 +50,7 @@ const MyReservation = () => {
             isLast={index === reservations.length - 1 ? true : false}
           ></ReservationList>
         ))}
-      </Wrapper>
+      </ContentsWrapper>
     </Container>
   );
 };
