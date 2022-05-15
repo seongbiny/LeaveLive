@@ -1,4 +1,3 @@
-import { Paid } from "@mui/icons-material";
 import { apiInstance } from ".";
 
 const api = apiInstance();
