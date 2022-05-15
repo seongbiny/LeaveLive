@@ -32,9 +32,11 @@ const Redirect = () => {
   // kakao 토큰 성공 시 callback 함수
   const onKakaoGetTokenSuccess = useCallback(
     ({ data: { access_token } }: any) => {
-      console.log(access_token);
+      // console.log(access_token);
+      const type = router.query.type;
       const params = {
         token: access_token,
+        type,
       };
 
       KakaoLoginRequest(params, onLoginSuccess, (error: Error) =>
@@ -53,7 +55,7 @@ const Redirect = () => {
       const params: any = {
         grant_type: "authorization_code",
         client_id: process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID,
-        redirect_uri: `${FRONTEND_URL}/login/oauth2/redirect`,
+        redirect_uri: `${FRONTEND_URL}/login/oauth2/redirect?type=${router.query.type}`,
         code,
       };
 

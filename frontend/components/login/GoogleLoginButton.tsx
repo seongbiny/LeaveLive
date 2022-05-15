@@ -7,6 +7,10 @@ import { useAppDispatch } from "../../hooks";
 import { setIsLogin, setUserInfo } from "../../store/slices/userSlice";
 import { getUserInfo } from "../../api/user";
 
+interface IPropTypes {
+  type: "USER" | "PROVIDER";
+}
+
 const GoogleButton = styled.button`
   width: 191px;
   height: 46px;
@@ -15,13 +19,14 @@ const GoogleButton = styled.button`
   border: none;
 `;
 
-const GoogleLoginButton = () => {
+const GoogleLoginButton = ({ type }: IPropTypes) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
   const onSuccess = useCallback(
     (response: object) => {
       GoogleLoginRequest(
+        type,
         JSON.stringify(response),
         ({ data }: any) => {
           localStorage.setItem("access_token", data[0]);
@@ -35,6 +40,7 @@ const GoogleLoginButton = () => {
             },
             (error: Error) => console.log(error)
           );
+          router.push("/main");
         },
         (error: Error) => console.log(error)
       );

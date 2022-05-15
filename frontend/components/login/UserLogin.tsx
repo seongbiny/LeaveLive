@@ -55,8 +55,8 @@ const UserLogin = ({ setIsUser }: IPropTypes) => {
       </TextContainer>
 
       <ButtonContainer>
-        <GoogleLoginButton />
-        <KakaoLoginButton />
+        <GoogleLoginButton type="USER" />
+        <KakaoLoginButton type="USER" />
       </ButtonContainer>
 
       <NavigatorContainer>

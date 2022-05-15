@@ -3,7 +3,7 @@ import axios from "axios";
 export const FRONTEND_URL =
   process.env.NODE_ENV === "production"
     ? "https://k6c105.p.ssafy.io"
-    : "https://localhost:3000";
+    : "http://localhost:3000";
 
 export const BACKEND_IMAGE_URL = "https://k6c105.p.ssafy.io/images/";
 
