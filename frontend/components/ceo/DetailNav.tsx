@@ -5,6 +5,8 @@ import { flexCenter } from "../../styles/Basic";
 
 interface IPropTypes {
   price: number;
+  text: string;
+  onClick: () => void;
 }
 
 const Container = styled.div`
@@ -23,12 +25,12 @@ const Price = styled.span`
   font-size: 1.1rem;
   font-weight: bold;
 `;
-const DetailNav = ({ price }: IPropTypes) => {
+const DetailNav = ({ price, text, onClick }: IPropTypes) => {
   return (
     <Container>
       <Price>{price.toLocaleString()}원 / 1박 </Price>
       <div style={{ width: "50%" }}>
-        <WideButton text="수정하기" onClick={() => {}} />
+        <WideButton text={text} onClick={onClick} />
       </div>
     </Container>
   );

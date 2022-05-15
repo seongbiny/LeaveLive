@@ -2,8 +2,8 @@ import React, { Dispatch, SetStateAction, useCallback, useState } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import styled from "styled-components";
-import { flexCenter } from "../../styles/Basic";
-import SearchPostcode from "../../components/ceo/SearchPostcode";
+import { flexCenter } from "../../../styles/Basic";
+import SearchPostcode from "./SearchPostcode";
 
 interface IPropTypes {
   address?: String;

@@ -1,8 +1,8 @@
 import React, { Dispatch, SetStateAction, useCallback } from "react";
 import { Switch, FormControlLabel } from "@mui/material";
-import { IValues } from "../../pages/ceo/bnb/create";
+import { IValues } from "../../../pages/ceo/bnb/create";
 import styled from "styled-components";
-import { flexCenter } from "../../styles/Basic";
+import { flexCenter } from "../../../styles/Basic";
 
 interface IPropTypes {
   values: IValues;
