@@ -5,10 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.nio.charset.Charset;
@@ -28,8 +25,9 @@ public class JwtCreateController {
      * @return
      */
     @PostMapping("/auth/google")
-    public List<String> jwtCreate(@RequestBody Map<String, Object> data) {
+    public List<String> jwtCreate(@RequestParam("type") String type, @RequestBody Map<String, Object> data) {
         List<String> tokens = new ArrayList<>();
+        log.info("type"+type);
         log.info("jwtCreateController 실행");
         log.info("JwtCreateController.jwtCreate.data:" + data.get("profileObj"));
         Map<String, Object> map = (Map<String, Object>) data.get("profileObj");
@@ -64,6 +62,7 @@ public class JwtCreateController {
                 body.put("picPath", picPath);
                 body.put("nickname", nickname);
                 body.put("token", refreshToken);
+                body.put("type",type);
                 requestMessage = new HttpEntity<>(body, httpHeaders);
                 ResponseEntity<Map> responseMap = restTemplate.postForEntity(url, requestMessage, Map.class);
                 log.info("JwtCreateController.jwtCreate.response_body:" + responseEntity.getBody());
