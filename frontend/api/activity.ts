@@ -17,3 +17,7 @@ export const unlikeActivity = async (activity_id: any, success: any, fail: any) 
 export const activityList = async (activity_loc: any, success: any, fail: any) => {
     await api.get(`/activity/all?activity_loc=${activity_loc}`).then(success).then(fail);
 }
+
+export const activityDetail = async (activity_id: any, success: any, fail: any) => {
+    await api.get(`/activity/detail/${activity_id}`).then(success).catch(fail);
+}
