@@ -1,6 +1,8 @@
 package com.ssafy.authentication.repository
 
 import com.ssafy.authentication.utils.JwtUtil
+import com.ssafy.authentication.utils.NicknameGenerator
+import com.ssafy.authentication.utils.NicknameGenerator.Companion.random
 import org.slf4j.LoggerFactory
 import org.springframework.http.*
 import org.springframework.stereotype.Repository
@@ -46,12 +48,12 @@ class AuthRepository(private val restTemplate: RestTemplate) {
 
             return refreshTokenResponse.body ?: throw RuntimeException("there are no user with this user id: $userId")
         }
-        // else generate new user with refresh token
+        // else generate new user with refresh token and given type
         logger.debug("this user is not registered, trying create new user")
         headers["Authorization"] = token
         headers.contentType = MediaType.APPLICATION_JSON
         val refreshToken = JwtUtil.createJwtRefreshToken()
-        body["nickname"] = "random nickname created at ${Date().time}"
+        body["nickname"] = "${NicknameGenerator.adjList.random()} ${NicknameGenerator.nameList.random()}"
         body["token"] = refreshToken
         body["type"] = type
         val userCreateRequest = HttpEntity(body, headers)
