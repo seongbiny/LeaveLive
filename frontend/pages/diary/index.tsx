@@ -1,14 +1,15 @@
 import React from "react";
 import Seo from "../../components/Seo";
-import Link from "next/link";
+
+import Header from "../../components/Header";
+import Profile from "../../components/diary/profile";
+
 const Diary = () => {
   return (
     <>
       <Seo title="Diary" />
-      <div>Diary</div>
-      <Link href="/diary/profile">
-        <a>내정보</a>
-      </Link>
+      <Header title="여행 다이어리" hide={true} />
+      <Profile />
     </>
   );
 };
