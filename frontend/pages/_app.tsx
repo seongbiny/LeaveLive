@@ -6,13 +6,12 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material";
 import theme from "../styles/Theme";
 import { useEffect } from "react";
-import { getRefreshToken } from "../api/user";
-import { setIsLogin } from "../store/slices/userSlice";
+import { getRefreshToken, getUserInfo } from "../api/user";
+import { setIsLogin, setType } from "../store/slices/userSlice";
 import { useRouter } from "next/router";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import Script from "next/script";
-
 config.autoAddCss = false;
 
 export const allowedURLs = ["/", "/login"];
@@ -35,14 +34,29 @@ function MyApp({ Component, pageProps }: AppProps) {
         //   (error: Error) => {}
         // );
         store.dispatch(setIsLogin(true));
-      }
-
-      if (!isLogin && !allowedURLs.includes(router.pathname)) {
-        router.push("/");
+        getUserInfo(
+          null,
+          ({ data }: any) => {
+            store.dispatch(setType(data.type));
+          },
+          (error: Error) => console.log(error)
+        );
       }
     }
 
-    store.subscribe(autoLogin);
+    autoLogin();
+    // store.subscribe(autoLogin);
+
+    const isLogin = store.getState().user.isLogin;
+    const type = store.getState().user.type;
+    if (!isLogin) {
+      // if (!allowedURLs.includes(router.pathname)) router.push("/");
+    } else {
+      // if (type === "USER" && router.pathname.startsWith("ceo"))
+      //   router.push("/main");
+      // if (type === "CEO" && !router.pathname.startsWith("ceo"))
+      //   router.push("/ceo");
+    }
   }, [router]);
 
   return (
@@ -50,7 +64,6 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Layout>
         <Script
           src={`//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js`}
-          // onLoad={() => setOnScriptLoad(true)}
         />
         <GlobalStyle />
         <CssBaseline />

@@ -1,10 +1,10 @@
 import React, { useEffect, useCallback } from "react";
 import { useRouter } from "next/router";
-import { KakaoLoginRequest } from "../../../api/user";
+import { KakaoLoginRequest, getUserInfo } from "../../../api/user";
 import axios from "axios";
 import { FRONTEND_URL } from "../../../api";
 import { useAppDispatch } from "../../../hooks";
-import { setIsLogin } from "../../../store/slices/userSlice";
+import { setIsLogin, setType } from "../../../store/slices/userSlice";
 
 const Redirect = () => {
   const router = useRouter();
@@ -18,6 +18,17 @@ const Redirect = () => {
       localStorage.setItem("refresh_token", refresh_token);
 
       dispatch(setIsLogin(true));
+      getUserInfo(
+        null,
+        ({ data }: any) => {
+          console.log(data);
+          dispatch(setType(data.type));
+
+          if (data.type === "USER") router.push("/main");
+          else router.push("/ceo");
+        },
+        (error: Error) => console.log(error)
+      );
     },
     [dispatch]
   );
