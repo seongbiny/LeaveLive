@@ -81,7 +81,6 @@ const BnbItem = (props: any) => {
             {picPath.map((pic, idx)=>(
               <div 
                 key={idx} 
-                onClick={()=>(router.push(`bnb/1`))} 
                 style={{marginLeft: '5vw', marginRight: '5vw'}} >
                 <img 
                   src={`${BACKEND_IMAGE_URL}/${pic}`} 
