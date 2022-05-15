@@ -7,7 +7,7 @@ import { ThemeProvider } from "@mui/material";
 import theme from "../styles/Theme";
 import { useEffect } from "react";
 import { getRefreshToken, getUserInfo } from "../api/user";
-import { setIsLogin, setType } from "../store/slices/userSlice";
+import { setIsLogin, setUserInfo } from "../store/slices/userSlice";
 import { useRouter } from "next/router";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
@@ -36,8 +36,8 @@ function MyApp({ Component, pageProps }: AppProps) {
         store.dispatch(setIsLogin(true));
         getUserInfo(
           null,
-          ({ data }: any) => {
-            store.dispatch(setType(data.type));
+          ({ data: { nickname, picPath, type } }: any) => {
+            store.dispatch(setUserInfo({ nickname, picPath, type }));
           },
           (error: Error) => console.log(error)
         );

@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { getUserInfo } from "../../api/user";
+import React from "react";
 import styled from "styled-components";
 import { flexCenter } from "../../styles/Basic";
 import { BoldText, ColoredText } from "../../styles/Text";
 import Link from "next/link";
 import { BACKEND_IMAGE_URL } from "../../api";
+import { useAppSelector } from "../../hooks";
 
 const Container = styled.div`
   ${flexCenter}
@@ -32,20 +32,8 @@ const EditLink = styled.a`
 `;
 
 const Profile = () => {
-  const [nickname, setNickname] = useState<string>();
-  const [picPath, setPicPath] = useState<string>();
-
-  useEffect(() => {
-    getUserInfo(
-      null,
-      ({ data }: any) => {
-        console.log(data);
-        setNickname(data.nickname);
-        setPicPath(data.picPath);
-      },
-      (error: Error) => console.log(error)
-    );
-  }, []);
+  const nickname = useAppSelector((state) => state.user.nickname);
+  const picPath = useAppSelector((state) => state.user.picPath);
 
   return (
     <Container>

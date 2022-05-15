@@ -4,7 +4,7 @@ import { GoogleLoginRequest } from "../../api/user";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import { useAppDispatch } from "../../hooks";
-import { setIsLogin, setType } from "../../store/slices/userSlice";
+import { setIsLogin, setUserInfo } from "../../store/slices/userSlice";
 import { getUserInfo } from "../../api/user";
 
 const GoogleButton = styled.button`
@@ -30,12 +30,8 @@ const GoogleLoginButton = () => {
           dispatch(setIsLogin(true));
           getUserInfo(
             null,
-            ({ data }: any) => {
-              console.log(data);
-              dispatch(setType(data.type));
-
-              if (data.type === "USER") router.push("/main");
-              else router.push("/ceo");
+            ({ data: { nickname, picPath, type } }: any) => {
+              dispatch(setUserInfo({ nickname, picPath, type }));
             },
             (error: Error) => console.log(error)
           );
