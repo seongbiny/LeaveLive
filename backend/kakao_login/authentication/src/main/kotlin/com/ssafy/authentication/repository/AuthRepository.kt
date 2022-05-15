@@ -33,7 +33,7 @@ class AuthRepository(private val restTemplate: RestTemplate) {
     }
 
 
-    fun checkUserAndGetRefreshToken(userId: String, token: String, type: String): String {
+    fun checkUserAndGetRefreshToken(userId: String, token: String, type: String = "USER"): String {
         val headers = HttpHeaders()
         val body = HashMap<String, Any>()
         val request = HttpEntity(body, headers)
