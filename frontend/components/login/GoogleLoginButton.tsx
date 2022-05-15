@@ -4,7 +4,8 @@ import { GoogleLoginRequest } from "../../api/user";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import { useAppDispatch } from "../../hooks";
-import { setIsLogin } from "../../store/slices/userSlice";
+import { setIsLogin, setType } from "../../store/slices/userSlice";
+import { getUserInfo } from "../../api/user";
 
 const GoogleButton = styled.button`
   width: 191px;
@@ -27,7 +28,17 @@ const GoogleLoginButton = () => {
           localStorage.setItem("refresh_token", data[1]);
 
           dispatch(setIsLogin(true));
-          router.push("/main");
+          getUserInfo(
+            null,
+            ({ data }: any) => {
+              console.log(data);
+              dispatch(setType(data.type));
+
+              if (data.type === "USER") router.push("/main");
+              else router.push("/ceo");
+            },
+            (error: Error) => console.log(error)
+          );
         },
         (error: Error) => console.log(error)
       );
