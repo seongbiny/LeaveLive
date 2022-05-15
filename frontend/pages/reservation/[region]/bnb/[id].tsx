@@ -65,6 +65,12 @@ const BnbConditionWrapper = styled.div`
   }
 `;
 
+const Top = styled.div`
+  border: 1px solid;
+  height: 7vh;
+  width: 100%;
+`;
+
 const ContentContainer = styled.div`
   width: 80%;
 `;
@@ -85,6 +91,7 @@ const BnbDetail = () => {
   });
 
   useEffect(()=>{
+    console.log(router)
     const id = router.query.id;
     bnbDetail(
       id,
@@ -94,7 +101,7 @@ const BnbDetail = () => {
         };
         if (!value.picPath) value.picPath = "/default.png";
         setDetail(value);
-        console.log(value)
+        // console.log(value)
       },
       (error: Error) => console.log(error)
     )
@@ -108,6 +115,7 @@ const BnbDetail = () => {
     <Container>
       <div style={{ position: "relative", width: "100%" }}>
       <Header title="상세보기" hide={false} />
+      {/* <Top onClick={()=>(router.back())}>뒤로가기</Top> */}
         <Carousel
           infiniteLoop
           showThumbs={false}

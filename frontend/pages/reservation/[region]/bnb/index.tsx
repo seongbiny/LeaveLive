@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import BnbItem from "../../../../components/reservation/bnbitem";
 import { likeBnbList, bnbList } from "../../../../api/bnb";
 import Header from "../../../../components/Header";
+import styled from 'styled-components';
 interface TypeBnb{
   id: number;
   contents: string;
@@ -11,7 +12,7 @@ interface TypeBnb{
   loc: string;
   name: string;
   picPath: string;
-}
+};
 
 const BnbList = () => {
   const router = useRouter();
