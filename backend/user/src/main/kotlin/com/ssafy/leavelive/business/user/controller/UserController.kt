@@ -87,7 +87,16 @@ class UserController(private val userService: UserService) {
     ): ResponseEntity<String> =
         ResponseEntity(userService.uploadProfileImage(token, image), HttpStatus.OK)
 
-
+    @Operation(summary = "회원 탈퇴", description = "액세스 토큰 내부 사용자 아이디로 회원 탈퇴를 시도한다")
+    @ApiResponses(
+        ApiResponse(responseCode = "200", description = "OK"),
+        ApiResponse(responseCode = "401", description = "액세스 토큰이 유효하지 않습니다"),
+        ApiResponse(responseCode = "403", description = "액세스 토큰이 만료되었습니다"),
+        ApiResponse(responseCode = "500", description = "해당하는 사용자 아이디가 없어서 예외가 발생한 경우")
+    )
+    @Parameters(
+        Parameter(name = "Authorization", description = "액세스 토큰"),
+    )
     @DeleteMapping
     fun withdraw(@RequestHeader(name = AUTHORIZATION) token: String): ResponseEntity<Boolean> =
         ResponseEntity(userService.removeUser(token),HttpStatus.OK)
