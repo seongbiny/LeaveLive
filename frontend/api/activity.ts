@@ -29,9 +29,3 @@ export const activityReservation = async (activity_id: any, params: any, success
 export const getActivityList = async (params: any, success: any, fail: any) => {
     await api.get(`/activity/reservation/`).then(success).catch(fail);
 }
-
-
-
-export const getDiary = async (date: any, success: any, fail: any) => {
-    await api.get(`/diary?date=${date}`).then(success).catch(fail);
-}

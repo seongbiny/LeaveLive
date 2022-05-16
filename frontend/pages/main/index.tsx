@@ -6,7 +6,7 @@ import MenuTab from '../../components/main/MenuTab';
 import Button from '@mui/material/Button';
 import Schedule from "../../components/main/schedule";
 import { getUserInfo } from "../../api/user";
-import { getDiary } from "../../api/activity";
+import { getDiary } from "../../api/diary";
 import Item from "../../components/main/Item";
 import { useRouter } from "next/router";
 
