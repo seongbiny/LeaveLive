@@ -5,14 +5,16 @@ import { WideButton } from "../../components/WideButton";
 import { PhotoCamera } from "@mui/icons-material";
 import { flexCenter } from "../../styles/Basic";
 import {
-  getUserInfo,
   updateUserInfo,
   updateProfileImage,
   deleteUser,
+  getUserInfo,
 } from "../../api/user";
 import { useRouter } from "next/router";
 import { BACKEND_IMAGE_URL } from "../../api";
 import Header from "../../components/Header";
+import { useAppSelector, useAppDispatch } from "../../hooks";
+import { setUserInfo } from "../../store/slices/userSlice";
 
 const Container = styled.div`
   ${flexCenter};
@@ -79,33 +81,22 @@ interface INextImage {
 }
 
 const Profile = () => {
-  const [nickname, setNickname] = useState<String>("");
+  const nickname = useAppSelector((state) => state.user.nickname);
   const [nextNickname, setNextNickname] = useState<String>("");
-  const [picPath, setPicPath] = useState<String>("");
+  const picPath = useAppSelector((state) => state.user.picPath);
   const [nextImage, setNextImage] = useState<INextImage>();
-  const [type, setType] = useState<String>("");
-  const [status, setStatus] = useState<String>("");
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    getUserInfo(
-      null,
-      ({ data: { nickname, picPath, type, status } }: any) => {
-        setNickname(nickname);
-        setNextNickname(nickname);
-        setPicPath(picPath);
-        setNextImage({
-          file: null,
-          previewURL: picPath.startsWith("http")
-            ? picPath
-            : `${BACKEND_IMAGE_URL}/${picPath}`,
-        });
-        setType(type);
-        setStatus(status);
-      },
-      (error: Error) => console.log(error)
-    );
-  }, []);
+    setNextNickname(nickname);
+    setNextImage({
+      file: null,
+      previewURL: picPath.startsWith("http")
+        ? picPath
+        : `${BACKEND_IMAGE_URL}/${picPath}`,
+    });
+  }, [nickname, picPath]);
 
   const handleChange = useCallback(({ target: { value } }: any) => {
     setNextNickname(value);
@@ -129,7 +120,7 @@ const Profile = () => {
       updateUserInfo(
         { nickname: nextNickname.trim() },
         (response: any) => {
-          console.log(response);
+          // console.log(response);
         },
         (error: Error) => console.log(error)
       );
@@ -142,13 +133,23 @@ const Profile = () => {
       updateProfileImage(
         form,
         (response: any) => {
-          console.log(response);
+          // console.log(response);
         },
         (error: Error) => console.log(error)
       );
     }
 
     alert("정보가 수정되었습니다.");
+
+    // 3. 변경된 정보를 redux에 갱신 후 router push
+    getUserInfo(
+      null,
+      ({ data: { nickname, picPath, type } }: any) => {
+        dispatch(setUserInfo({ nickname, picPath, type }));
+      },
+      (error: Error) => console.log(error)
+    );
+
     router.push("/diary");
   }, [router, nickname, nextNickname, picPath, nextImage]);
 

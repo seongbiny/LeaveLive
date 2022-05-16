@@ -34,8 +34,8 @@ const CeoLogin = ({ setIsUser }: IPropTypes) => {
       </TextContainer>
 
       <ButtonContainer>
-        <GoogleLoginButton />
-        <KakaoLoginButton />
+        <GoogleLoginButton type="PROVIDER" />
+        <KakaoLoginButton type="PROVIDER" />
       </ButtonContainer>
       <NavigatorContainer>
         사용자이신가요?&nbsp;

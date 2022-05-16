@@ -4,8 +4,12 @@ import { GoogleLoginRequest } from "../../api/user";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import { useAppDispatch } from "../../hooks";
-import { setIsLogin, setType } from "../../store/slices/userSlice";
+import { setIsLogin, setUserInfo } from "../../store/slices/userSlice";
 import { getUserInfo } from "../../api/user";
+
+interface IPropTypes {
+  type: "USER" | "PROVIDER";
+}
 
 const GoogleButton = styled.button`
   width: 191px;
@@ -15,13 +19,14 @@ const GoogleButton = styled.button`
   border: none;
 `;
 
-const GoogleLoginButton = () => {
+const GoogleLoginButton = ({ type }: IPropTypes) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
   const onSuccess = useCallback(
     (response: object) => {
       GoogleLoginRequest(
+        type,
         JSON.stringify(response),
         ({ data }: any) => {
           localStorage.setItem("access_token", data[0]);
@@ -30,15 +35,12 @@ const GoogleLoginButton = () => {
           dispatch(setIsLogin(true));
           getUserInfo(
             null,
-            ({ data }: any) => {
-              console.log(data);
-              dispatch(setType(data.type));
-
-              if (data.type === "USER") router.push("/main");
-              else router.push("/ceo");
+            ({ data: { nickname, picPath, type } }: any) => {
+              dispatch(setUserInfo({ nickname, picPath, type }));
             },
             (error: Error) => console.log(error)
           );
+          router.push("/main");
         },
         (error: Error) => console.log(error)
       );
