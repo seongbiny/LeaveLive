@@ -1,14 +1,23 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
 import Button from '@mui/material/Button';
-
+import styled from 'styled-components';
 interface MapProps{
     fill: string,
     width: string,
     height: string,
     stroke: string,
     fillOpacity: number
-}
+};
+
+const Styled = styled.div`
+    path:hover {
+        fill: green;
+        cursor: pointer;
+    };
+    padding-left: 5vw;
+    padding-bottom: 5vh;
+`;
 
 const Map = ({fill, width, height, stroke, fillOpacity }: MapProps) => {
     const router = useRouter();
@@ -16,7 +25,7 @@ const Map = ({fill, width, height, stroke, fillOpacity }: MapProps) => {
 
     return (
         <>
-            <div style={{paddingLeft:'5vw', paddingBottom: '5vh'}}>
+            <Styled>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 524 631"
@@ -147,15 +156,20 @@ const Map = ({fill, width, height, stroke, fillOpacity }: MapProps) => {
                         fill={region==='울산시'?'green':'lightgreen'}
                     />
                 </svg>
-            </div>
+            </Styled>
             {region.length === 0 ?
-                <div style={{display:'flex', justifyContent:'space-evenly'}}>
-                    <div style={{textAlign:'center', fontSize: '20px'}}>어디로 떠날지 못정했다면?</div> 
-                    <Button variant="contained" onClick={()=>(router.push(`/test`))}>지역 추천 테스트</Button>
+                <div style={{display:'grid', justifyContent:'center'}}>
+                    <div style={{textAlign:'center', fontSize: '1.1rem', paddingBottom: '1vh'}}>어디로 떠날지 못정했다면?</div>
+                    <div style={{margin: 'auto'}}>
+                        <Button variant="contained" onClick={()=>(router.push(`/test`))}>지역 추천 테스트</Button>
+                    </div> 
+                    
                 </div> :
-                <div style={{display:'flex', justifyContent:'space-evenly'}}>
-                    <div style={{textAlign:'center', fontSize: '20px'}}>{region}(으)로 떠나볼까요?</div>
-                    <Button variant="contained" onClick={()=>(router.push(`/search/${region}`))}>Go!</Button>
+                <div style={{display:'grid', justifyContent:'center'}}>
+                    <div style={{textAlign:'center', fontSize: '20px', paddingBottom: '1vh'}}>{region}(으)로 떠나볼까요?</div>
+                    <div style={{margin: 'auto'}}>
+                        <Button variant="contained" onClick={()=>(router.push(`/search/${region}`))}>Go!</Button>
+                    </div>
                 </div>
             }
         </>

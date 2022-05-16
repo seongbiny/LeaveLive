@@ -40,11 +40,11 @@ const Region = () => {
 
   const check = (name: any) => {
     if(name==='전라남도') {setRegion('전남')}
-    if(name==='전라북도') {setRegion('전북')}
-    if(name==='경상남도') {setRegion('경남')}
-    if(name==='경상북도') {setRegion('경북')}
-    if(name==='충청남도') {setRegion('충남')}
-    if(name==='충청북도') {setRegion('충북')}
+    else if(name==='전라북도') {setRegion('전북')}
+    else if(name==='경상남도') {setRegion('경남')}
+    else if(name==='경상북도') {setRegion('경북')}
+    else if(name==='충청남도') {setRegion('충남')}
+    else if(name==='충청북도') {setRegion('충북')}
   }
 
   useEffect(() => {
