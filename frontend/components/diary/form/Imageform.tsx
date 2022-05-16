@@ -68,7 +68,7 @@ const ImageForm = ({ images, setImages }: IPropTypes) => {
         <IconButton color="primary" component="span">
           <PhotoCamera />
         </IconButton>
-        일기 사진 첨부
+        사진 첨부
       </label>
       <ImageContainerGroup>
         <ImageContainerWrapper>

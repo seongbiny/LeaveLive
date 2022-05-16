@@ -51,7 +51,7 @@ const InputForm = ({ values, setValues }: IPropTypes) => {
 
       const nextValues = {
         ...values,
-        tags: [...values.tags, tag],
+        tags: [...values.tags, tag.trim()],
       };
       setValues(nextValues);
       setTag("");
@@ -79,7 +79,7 @@ const InputForm = ({ values, setValues }: IPropTypes) => {
         style={{ width: "100%" }}
       />
       <TextField
-        label="태그"
+        // label="태그"
         id="tag"
         onKeyUp={AddTags}
         value={tag}

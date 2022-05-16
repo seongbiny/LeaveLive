@@ -56,7 +56,8 @@ const DiaryCalendar = () => {
       );
     }
     return (
-      <div onClick={() => handleClick(day, extraDot)}>
+      <div>
+        {/* <div onClick={() => handleClick(day, extraDot)}> */}
         {extraDot}
         <span>{format(day, "d")}</span>
       </div>
