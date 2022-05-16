@@ -147,7 +147,10 @@ const Map = ({fill, width, height, stroke, fillOpacity }: MapProps) => {
                 />
             </svg>
             {region.length === 0 ?
-                <div style={{textAlign:'center', fontSize: '20px'}}>어디로 떠나볼까요?</div> :
+                <div style={{display:'flex', justifyContent:'space-evenly'}}>
+                    <div style={{textAlign:'center', fontSize: '20px'}}>어디로 떠날지 못정했다면?</div> 
+                    <Button variant="contained" onClick={()=>(router.push(`/test`))}>지역 추천 테스트</Button>
+                </div> :
                 <div style={{display:'flex', justifyContent:'space-evenly'}}>
                     <div style={{textAlign:'center', fontSize: '20px'}}>{region}(으)로 떠나볼까요?</div>
                     <Button variant="contained" onClick={()=>(router.push(`/search/${region}`))}>Go!</Button>
