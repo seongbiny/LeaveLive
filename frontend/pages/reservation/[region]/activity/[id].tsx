@@ -29,10 +29,11 @@ const Container = styled.div`
 `;
 
 const BnbTitle = styled.div`
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   font-weight: bold;
   padding-top: 1.5rem;
   padding-bottom: 1rem;
+  padding-right: 70vw;
 `;
 
 const BnbContent = styled.div`
@@ -77,91 +78,56 @@ const ActivityDetail = () => {
     userId: "",
   });
   
-  console.log(detail.picPath.split(","))
+  // console.log(detail.picPath.split(","))
   useEffect(()=>{
     const id = router.query.id;
-    activityDetail(
-      id,
-      ({ data }: any) => {
-        const value = {
-          ...data,
-        };
-        if (!value.picPath) value.picPath = "/default.png";
-        setDetail(value);
-        console.log(value);
-      },
-      (error: Error) => console.log(error)
-    )
+    {id !== undefined &&
+      activityDetail(
+        id,
+        ({ data }: any) => {
+          const value = {
+            ...data,
+          };
+          if (!value.picPath) value.picPath = "/default.png";
+          setDetail(value);
+          console.log(value);
+        },
+        (error: Error) => console.log(error)
+      )
+    }
+    console.log(detail.picPath.split(","))
   },[router])
 
   return (
-    <Carousel
-      infiniteLoop
-      showThumbs={false}
-      showStatus={false}
-      showArrows={false}
-    >
-      {detail.picPath?.split(",").map((path, index) => (
-        <div key={index}>
-          <img
-            src={
-              path === "/default.png"
-                ? path
-                : `${BACKEND_IMAGE_URL}/${path}`
-            }
-            width={412}
-            height={250}
-          />
-        </div>
-      ))}
-    </Carousel>
-    // <Container>
-    //   <div style={{ position: "relative", width: "100%" }}>
-    //   <Header title="상세보기" hide={false} />
-    //     <Carousel
-    //       infiniteLoop
-    //       showThumbs={false}
-    //       showStatus={false}
-    //       showArrows={false}
-    //     >
-    //       {detail.picPath?.split(",").map((path, index) => (
-    //         <div key={index}>
-    //           <Image
-    //             src={
-    //               path === "/default.png"
-    //                 ? path
-    //                 : `${BACKEND_IMAGE_URL}/${path}`
-    //             }
-    //             width={412}
-    //             height={250}
-    //           />
-    //         </div>
-    //       ))}
-    //     </Carousel>
-    //   </div>
-    //   <ContentContainer>
-    //     <BnbTitle>{detail.name}</BnbTitle>
-    //     <BnbContent>
-    //       {detail?.contents.split("\n").map((line, index) => {
-    //         return (
-    //           <span key={index}>
-    //             {line}
-    //             <br />
-    //           </span>
-    //         );
-    //       })}
-    //     </BnbContent>
-    //     <div>
-    //       <BnbHeading>위치</BnbHeading>
-    //       {detail.loc}
-    //       <Map
-    //         address={detail.loc}
-    //         style={{ margin: "1rem 0" }}
-    //       />
-    //     </div>
-    //   </ContentContainer>
-    //   {<div onClick={handleClick}>예약하기</div>
-    // </Container>
+    <Container>
+      <div style={{ position: "relative", width: "100%" }}>
+        <Header title="상세보기" hide={false} />
+        <Carousel
+          infiniteLoop
+          showThumbs={false}
+          showStatus={false}
+          showArrows={false}
+        >
+          {detail.picPath?.split(",").map((path, index) => (
+            <div key={index}>
+              <img
+                src={
+                  path === "/default.png"
+                    ? path
+                    : `${BACKEND_IMAGE_URL}/${path}`
+                }
+                width={412}
+                height={250}
+              />
+            </div>
+          ))}
+        </Carousel>
+      </div>
+      
+      <BnbTitle>{detail.name}</BnbTitle>
+      <img src={`${BACKEND_IMAGE_URL}/${detail.picContents}`} width="90%"  />
+      <div onClick={()=>{router.push(`/reservation/activity/${detail.id}`)}}>예약하기</div>
+    </Container>
   )
 };
 

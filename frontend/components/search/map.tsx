@@ -14,15 +14,11 @@ const Map = ({fill, width, height, stroke, fillOpacity }: MapProps) => {
     const router = useRouter();
     const [region, setRegion] = useState('');
 
-    const handleClick = (e: any) => {
-        alert(e+"(으)로 여행가겠습니까?")
-    }
-
     return (
         <>
             <svg
                 xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 450 700"
+                viewBox="0 0 524 631"
                 height={height}
                 width={width}
                 fill={fill}

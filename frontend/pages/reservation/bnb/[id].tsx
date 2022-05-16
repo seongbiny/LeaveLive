@@ -4,7 +4,7 @@ import { useCallback, useState } from "react";
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import locale from 'date-fns/locale/ko';
-import theme from "../../styles/Theme";
+import theme from "../../../styles/Theme";
 import styled from "styled-components";
 import Router from 'next/router';
 import CloseIcon from '@mui/icons-material/Close';
@@ -12,7 +12,7 @@ import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import Button from '@mui/material/Button';
-import { bnbReservation } from "../../api/bnb";
+import { bnbReservation } from "../../../api/bnb";
 
 const Container = styled.div`
   // display: flex;
@@ -45,7 +45,7 @@ const BottomNav = styled.div`
   // border: 1px solid;
 `;
 
-const Reservation = () => {
+const ReservationBnb = () => {
   // const router = useRouter();
   const [adult, setAdult] = useState<number>(0);
   const [children, setChildren] = useState<number>(0);
@@ -189,4 +189,4 @@ const Reservation = () => {
     </>
   )
 }
-export default Reservation;
+export default ReservationBnb;

@@ -44,15 +44,7 @@ const BnbItem = (props: any) => {
             <Text>
                 <FavoriteIcon fontSize="medium" sx={{color: '#FF385C'}} onClick={()=>{unlikeAxios()}} />
             </Text>
-            <div onClick={()=>{
-                router.push(
-                    {
-                        pathname: `/reservation/${loc}/bnb/${id}`,
-                        query: { loc: loc[0], id: id },
-                    },
-                    `/reservation/${loc[0]}/bnb/${id}`
-                )
-            }}>
+            <div onClick={props.onClick}>
                 <Carousel infiniteLoop showThumbs={false}>
                     {picPath.map((pic, idx)=>(
                         <div key={idx} style={{marginLeft: '5vw', marginRight: '5vw'}}>

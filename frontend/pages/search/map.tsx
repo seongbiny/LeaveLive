@@ -17,7 +17,7 @@ const KoreaMap = () => {
   return (
     <Container>
       <div style={{marginBottom: '5vh', fontSize: '25px', textAlign: 'center'}}>어디로 갈까요?</div>
-      <Map width="100%" height="100%" fill={"lightgreen"} stroke={"lightgreen"} fillOpacity={0.5} />
+      <Map width="100%" height="90%" fill={"lightgreen"} stroke={"lightgreen"} fillOpacity={0.5} />
     </Container>
   )
 };
