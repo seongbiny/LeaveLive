@@ -93,7 +93,7 @@ class DiaryController(private val diaryService: DiaryService) {
     fun editDiary(
         @RequestHeader(name = "Authorization") token: String,
         @RequestPart(value = "diaryRequest") diaryRequest: DiaryRequest,
-        @RequestPart(value = "images") images: List<MultipartFile>,
+        @RequestPart(value = "images", required = false) images: List<MultipartFile>,
         @PathVariable diaryId: Long
     ): ResponseEntity<DiaryResponse> =
         ResponseEntity(diaryService.edit(token, diaryRequest, images, diaryId), HttpStatus.OK)
