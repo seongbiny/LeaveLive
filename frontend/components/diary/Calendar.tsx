@@ -22,6 +22,13 @@ const DiaryCalendar = () => {
   const router = useRouter();
   const handleChange = useCallback((item: Date) => {
     // console.log(format(item, "yyyy-MM-dd"));
+    router.push(
+      {
+        pathname: `/diary/write`,
+        query: { date: format(item, "yyyy-MM-dd") },
+      },
+      `/diary/write`
+    );
     // router.push(`/diary/${format(item, "yyyy-MM-dd")}`);
     setDate(item);
   }, []);
