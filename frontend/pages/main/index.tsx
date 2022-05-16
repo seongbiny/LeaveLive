@@ -93,13 +93,15 @@ const Main = () => {
       </Box>
       <MenuTab/>
       <div style={{marginBottom:'2vh', marginLeft: '5vw', fontWeight: 'bold'}}>오늘 나의 일정</div>
-      {diary.diaryId !== 0 && <div style={{ margin: "3vh" }}>
-        <Item diary={diary} onClick={()=>{router.push(`/dairy`)}} />
-      </div>}
+      {diary.diaryId !== 0 ? <div style={{ margin: "3vh" }}>
+        <Item diary={diary} onClick={()=>{router.push(`/diary`)}} />
+        </div> : <div>일정을 추가하세요</div>
+      }
       <div style={{marginBottom:'2vh', marginLeft: '5vw', fontWeight: 'bold'}}>내일 나의 일정</div>
-      {diary.diaryId !== 0 && <div style={{ margin: "3vh" }}>
-        <Item diary={diaryTom} onClick={()=>{router.push(`/dairy`)}} />
-      </div> }
+      {diary.diaryId !== 0 ? <div style={{ margin: "3vh" }}>
+        <Item diary={diaryTom} onClick={()=>{router.push(`/diary`)}} />
+        </div> : <div>일정을 추가하세요</div>
+      }
     </div>
   )
 };

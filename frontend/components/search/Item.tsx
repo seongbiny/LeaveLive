@@ -12,15 +12,15 @@ const Box = styled.div`
 //   border: 1px solid;
 `;
 
-const Item = (props: any) => {
-  const id = props.list[0].id;
-  const picPath: Array<String> = props.list[0].picPath.split(',');
-  const name = props.list[0].name;
+const Item = ({ list, url }: any) => {
+  const id = list[0].id;
+  const picPath: Array<String> = list[0].picPath.split(',');
+  const name = list[0].name;
   const router = useRouter();
   const region = router.query.region;
 
   useEffect(()=>{
-    console.log(props.list)
+    console.log(list)
   },[])
 
   return(
@@ -30,7 +30,7 @@ const Item = (props: any) => {
               <div 
                 key={idx} 
                 style={{marginLeft: '5vw', marginRight: '5vw'}}
-                onClick={()=>{router.push(`/reservation/${region}/${props.url}/${id}`)}}
+                onClick={()=>{router.push(`/reservation/${region}/${url}/${id}`)}}
               >
                     
                 <img 

@@ -63,8 +63,8 @@ const ReservationBnb = () => {
   ])
   const startDay = String(startDate).split(' ');
   const endDay = String(endDate).split(' ');
-  // const [reservationCnt, setReservationCnt] = useState(0);
-  const reservationCnt = children+baby+adult;
+  const [reservationCnt, setReservationCnt] = useState(0);
+  // const reservationCnt = children+baby+adult;
   
   const MonChange = (mon: any) => {
     if (mon === 'Jan') {
@@ -147,9 +147,9 @@ const ReservationBnb = () => {
             <div>만 13세 이상</div>
           </div>
           <div>
-            <Fab size="small" aria-label="add"><AddIcon onClick={()=>(setAdult(adult+1))} /></Fab>
+            <Fab size="small" aria-label="add"><AddIcon onClick={()=>(setAdult(adult+1), setReservationCnt(reservationCnt+1))} /></Fab>
               <div style={{width:'10vw', display:'inline-block', textAlign:'center'}}>{adult}</div>
-            <Fab size="small" aria-label="remove"><RemoveIcon onClick={()=>(setAdult(adult-1))} /></Fab>
+            <Fab size="small" aria-label="remove"><RemoveIcon onClick={()=>(setAdult(adult-1), setReservationCnt(reservationCnt-1))} /></Fab>
           </div>
         </Tabs>
         <hr />
@@ -159,9 +159,9 @@ const ReservationBnb = () => {
             <div>만 2~12세</div>
           </div>
           <div>
-            <Fab size="small" aria-label="add"><AddIcon onClick={()=>(setChildren(children+1))} /></Fab>
+            <Fab size="small" aria-label="add"><AddIcon onClick={()=>(setChildren(children+1), setReservationCnt(reservationCnt+1))} /></Fab>
               <div style={{width:'10vw', display:'inline-block', textAlign:'center'}}>{children}</div>
-            <Fab size="small" aria-label="remove"><RemoveIcon onClick={()=>(setChildren(children-1))} /></Fab>
+            <Fab size="small" aria-label="remove"><RemoveIcon onClick={()=>(setChildren(children-1), setReservationCnt(reservationCnt-1))} /></Fab>
           </div>
         </Tabs>
         <hr />
@@ -171,15 +171,14 @@ const ReservationBnb = () => {
             <div>만 2세 미만</div>
           </div>
           <div>
-            <Fab size="small" aria-label="add"><AddIcon onClick={()=>(setBaby(baby+1))} /></Fab>
+            <Fab size="small" aria-label="add"><AddIcon onClick={()=>(setBaby(baby+1), setReservationCnt(reservationCnt+1))} /></Fab>
               <div style={{width:'10vw', display:'inline-block', textAlign:'center'}}>{baby}</div>
-            <Fab size="small" aria-label="remove"><RemoveIcon onClick={()=>(setBaby(baby-1))} /></Fab>
+            <Fab size="small" aria-label="remove"><RemoveIcon onClick={()=>(setBaby(baby-1), setReservationCnt(reservationCnt-1))} /></Fab>
           </div>
         </Tabs>
         <hr />
       </Container>
       <BottomNav>
-        {/* <Button variant="contained" size="large" sx={{width: '60vw'}} onClick={()=>(Router.push(`/reservation/result`))}>예약하기</Button> */}
         <Button variant="contained" size="large" sx={{width: '60vw'}} onClick={reservationAxios}>예약하기</Button>
       </BottomNav>
     </>

@@ -132,9 +132,14 @@ const ActivityDetail = () => {
           style={{ margin: "1rem 0"}}
         />
       </div>
-      <div onClick={()=>{router.push(`/reservation/activity/${detail.id}`)}}>예약하기</div>
+      <Bottom onClick={()=>{router.push(`/reservation/activity/${detail.id}`)}}>예약하기</Bottom>
     </Container>
   )
 };
+const Bottom = styled.div`
+  width: 100%;
+  height: 10vh;
+  border: 1px solid;
+`;
 
 export default ActivityDetail;

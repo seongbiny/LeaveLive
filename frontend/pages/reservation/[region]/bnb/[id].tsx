@@ -11,6 +11,7 @@ import { flexCenter } from "../../../../styles/Basic";
 import LocalFloristRoundedIcon from "@mui/icons-material/LocalFloristRounded";
 import SoupKitchenRoundedIcon from "@mui/icons-material/SoupKitchenRounded";
 import Header from "../../../../components/Header";
+import { Button } from "@mui/material";
 
 interface IDetail {
   cnt: number;
@@ -31,6 +32,7 @@ const Container = styled.div`
   width: 100%;
   margin-bottom: 75px;
   line-height: 2.2rem;
+  height: 100%
 `;
 
 const BnbTitle = styled.div`
@@ -89,92 +91,91 @@ const BnbDetail = () => {
     price: 0,
     userId: "",
   });
+  const [path, setPath] = useState([]);
 
   useEffect(()=>{
-    console.log(router)
     const id = router.query.id;
     bnbDetail(
       id,
-      ({ data }: any) => {
-        const value = {
-          ...data,
-        };
-        if (!value.picPath) value.picPath = "/default.png";
-        setDetail(value);
-        // console.log(value)
-      },
+      ({ data }: any) => {console.log(data), setDetail(data), setPath(data.picPath.split(","))},
       (error: Error) => console.log(error)
     )
+    console.log(detail)
   },[router])
 
   return(
-    <Container>
-      <div style={{ position: "relative", width: "100%" }}>
-        <Header title="상세보기" hide={false} />
-        <Carousel
-          infiniteLoop
-          showThumbs={false}
-          showStatus={false}
-          showArrows={false}
-        >
-          {detail.picPath?.split(",").map((path, index) => (
-            <div key={index}>
-              <Image
-                src={
-                  path === "/default.png"
-                    ? path
-                    : `${BACKEND_IMAGE_URL}/${path}`
-                }
-                width={412}
-                height={250}
-              />
-            </div>
-          ))}
-        </Carousel>
-      </div>
-      <ContentContainer>
-        <BnbTitle>{detail.name}</BnbTitle>
-        <BnbContent>
-          {detail?.contents.split("\n").map((line, index) => {
-            return (
-              <span key={index}>
-                {line}
-                <br />
-              </span>
-            );
-          })}
-        </BnbContent>
-        <div>
-          <BnbHeading>위치</BnbHeading>
-          {detail.loc}
-          <Map
-            address={detail.loc}
-            style={{ margin: "1rem 0" }}
-          />
+    detail.id !== 0 &&
+      <Container>
+        <div style={{ position: "relative", width: "100%" }}>
+          <Header title="상세보기" hide={false} />
+          <Carousel infiniteLoop showThumbs={false}>
+            {path.map((pic, idx)=>(
+              <div key={idx}>
+                <img
+                  src={`${BACKEND_IMAGE_URL}/${pic}`}
+                  width={350} height={250} 
+                  style={{borderRadius: '10px'}}
+                />
+              </div>
+            ))}
+          </Carousel>
         </div>
-        <AdditionalInfo>
-          <div style={{ flex: 1 }}>
-            <BnbHeading>편의시설</BnbHeading>
-            <div>
-              <BnbConditionWrapper>
-                <LocalFloristRoundedIcon />
-                <span>정원 {detail.garden === "T" ? "있음" : "없음"}</span>
-              </BnbConditionWrapper>
-              <BnbConditionWrapper>
-                <SoupKitchenRoundedIcon />{" "}
-                <span>취사 {detail.cooking === "T" ? "가능" : "불가능"}</span>
-              </BnbConditionWrapper>
+        <ContentContainer>
+          <BnbTitle>{detail.name}</BnbTitle>
+          <BnbContent>
+            {detail?.contents.split("\n").map((line, index) => {
+              return (
+                <span key={index}>
+                  {line}
+                  <br />
+                </span>
+              );
+            })}
+          </BnbContent>
+          <div>
+            <BnbHeading>위치</BnbHeading>
+            {detail.loc}
+            <Map
+              address={detail.loc}
+              style={{ margin: "1rem 0" }}
+            />
+          </div>
+          <AdditionalInfo>
+            <div style={{ flex: 1 }}>
+              <BnbHeading>편의시설</BnbHeading>
+              <div>
+                <BnbConditionWrapper>
+                  <LocalFloristRoundedIcon />
+                  <span>정원 {detail.garden === "T" ? "있음" : "없음"}</span>
+                </BnbConditionWrapper>
+                <BnbConditionWrapper>
+                  <SoupKitchenRoundedIcon />{" "}
+                  <span>취사 {detail.cooking === "T" ? "가능" : "불가능"}</span>
+                </BnbConditionWrapper>
+              </div>
             </div>
+            <div style={{ flex: 1 }}>
+              <BnbHeading>최대 {detail.cnt}명</BnbHeading>
+              까지 입실할 수 있어요.
+            </div>
+          </AdditionalInfo>
+        </ContentContainer>
+        <Bottom onClick={()=>{router.push(`/reservation/bnb/${detail.id}`)}}>
+          <div style={{marginRight:'20vw', fontWeight:'bold', fontSize:'1.2rem'}}>{detail.price}원 / 박</div>
+          <div>
+            <Button variant="contained" >예약하기</Button>
           </div>
-          <div style={{ flex: 1 }}>
-            <BnbHeading>최대 {detail.cnt}명</BnbHeading>
-            까지 입실할 수 있어요.
-          </div>
-        </AdditionalInfo>
-      </ContentContainer>
-      <div onClick={()=>{router.push(`/reservation/bnb/${detail.id}`)}}>예약하기</div>
-    </Container>
+        </Bottom>
+      </Container>
   )
 };
-
+const Bottom = styled.div`
+  width: 100%;
+  height: 10vh;
+  // border: 1px solid;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #d3d3d3;
+`;
 export default BnbDetail;
