@@ -1,18 +1,15 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import BackButton from "../../../../components/BackButton";
 import styled from "styled-components";
 import { Carousel } from "react-responsive-carousel";
 import { BACKEND_IMAGE_URL } from "../../../../api";
 import { bnbDetail } from "../../../../api/bnb";
-import Image from "next/image";
 import Map from "../../../../components/ceo/BnbMap";
 import { flexCenter } from "../../../../styles/Basic";
 import LocalFloristRoundedIcon from "@mui/icons-material/LocalFloristRounded";
 import SoupKitchenRoundedIcon from "@mui/icons-material/SoupKitchenRounded";
 import Header from "../../../../components/Header";
 import { Button } from "@mui/material";
-
 interface IDetail {
   cnt: number;
   contents: string;
