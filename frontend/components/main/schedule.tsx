@@ -18,8 +18,8 @@ interface Props {
 const Container = styled.div`
     // border: 1px solid;
     margin-bottom: 3vh;
-    margin-left: 2vh;
-    margin-right: 2vh;
+    margin-left: 7vw;
+    margin-right: 7vw;
 `
 
 const Schedule = (props: Props) => {
@@ -41,10 +41,10 @@ const Schedule = (props: Props) => {
 
     return (
         <div>
-            <div style={{marginBottom:'2vh', marginLeft: '2vh'}}>{day} 나의 일정</div>
+            <div style={{marginBottom:'2vh', marginLeft: '5vw', fontWeight: 'bold'}}>{day} 나의 일정</div>
             <Container>
                 <Slider {...settings}>
-                    <Card style={{ margin: "2vh" }}>
+                    <Card style={{ margin: "3vh" }}>
                         <CardMedia
                             component="img"
                             height="150"

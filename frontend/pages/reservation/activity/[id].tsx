@@ -4,15 +4,15 @@ import { useCallback, useState } from "react";
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import locale from 'date-fns/locale/ko';
-import theme from "../../styles/Theme";
+import theme from "../../../styles/Theme";
 import styled from "styled-components";
-import Router from 'next/router';
 import CloseIcon from '@mui/icons-material/Close';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import Button from '@mui/material/Button';
-import { bnbReservation } from "../../api/bnb";
+import { activityReservation } from "../../../api/activity";
+import { useRouter } from 'next/router';
 
 const Container = styled.div`
   // display: flex;
@@ -45,8 +45,9 @@ const BottomNav = styled.div`
   // border: 1px solid;
 `;
 
-const Reservation = () => {
-  // const router = useRouter();
+const ReservationAct = () => {
+  const router = useRouter();
+  const id = router.query.id;
   const [adult, setAdult] = useState<number>(0);
   const [children, setChildren] = useState<number>(0);
   const [baby, setBaby] = useState(0);
@@ -61,8 +62,7 @@ const Reservation = () => {
   ])
   const startDay = String(startDate).split(' ');
   const endDay = String(endDate).split(' ');
-  // const [reservationCnt, setReservationCnt] = useState(0);
-  const reservationCnt = children+baby+adult;
+  const [reservationCnt, setReservationCnt] = useState(0);
   
   const MonChange = (mon: any) => {
     if (mon === 'Jan') {
@@ -95,36 +95,30 @@ const Reservation = () => {
   const reservationStart = startDay[3]+'-'+MonChange(startDay[1])+'-'+startDay[2];
   const reservationEnd = endDay[3]+'-'+MonChange(endDay[1])+'-'+endDay[2]
 
-  const reservationAxios = useCallback(() => {
-    const form = new FormData();
+  async function reservationAxios(){
     const dto = {
-      cnt: reservationCnt,
-      startDate: reservationStart,
-      endDate: reservationEnd,
-    };
-    form.append(
-      "dto",
-      new Blob([JSON.stringify(dto)], {
-        type: "application/json",
-      })
-    )
-    bnbReservation(
-      10,
-      form,
-      ({ data }: any) => {
+        cnt: reservationCnt,
+        startDate: reservationStart,
+        endDate: reservationEnd,
+      };
+    console.log(dto)
+    await activityReservation(
+    id,
+    dto,
+    ({ data }: any) => {
         console.log(data);
-      },
-      (error: Error) => console.log(error)
+        router.push(`/reservation/activity/result/${data}`)
+    },
+    (error: Error) => console.log(error)
     )
+  }
 
-  },[])
 
   return (
     <>
-    
       <Container>
         <StyledTab>
-          <CloseIcon onClick={()=>(Router.back())} />
+          <CloseIcon onClick={()=>(router.back())} />
           <div>예약하기</div>
           <CloseIcon sx={{color:'#60ffc6'}}/>
         </StyledTab>
@@ -151,9 +145,9 @@ const Reservation = () => {
             <div>만 13세 이상</div>
           </div>
           <div>
-            <Fab size="small" aria-label="add"><AddIcon onClick={()=>(setAdult(adult+1))} /></Fab>
+            <Fab size="small" aria-label="add"><AddIcon onClick={()=>(setAdult(adult+1), setReservationCnt(reservationCnt+1))} /></Fab>
               <div style={{width:'10vw', display:'inline-block', textAlign:'center'}}>{adult}</div>
-            <Fab size="small" aria-label="remove"><RemoveIcon onClick={()=>(setAdult(adult-1))} /></Fab>
+            <Fab size="small" aria-label="remove"><RemoveIcon onClick={()=>(setAdult(adult-1), setReservationCnt(reservationCnt-1))} /></Fab>
           </div>
         </Tabs>
         <hr />
@@ -163,9 +157,9 @@ const Reservation = () => {
             <div>만 2~12세</div>
           </div>
           <div>
-            <Fab size="small" aria-label="add"><AddIcon onClick={()=>(setChildren(children+1))} /></Fab>
+            <Fab size="small" aria-label="add"><AddIcon onClick={()=>(setChildren(children+1), setReservationCnt(reservationCnt+1))} /></Fab>
               <div style={{width:'10vw', display:'inline-block', textAlign:'center'}}>{children}</div>
-            <Fab size="small" aria-label="remove"><RemoveIcon onClick={()=>(setChildren(children-1))} /></Fab>
+            <Fab size="small" aria-label="remove"><RemoveIcon onClick={()=>(setChildren(children-1), setReservationCnt(reservationCnt-1))} /></Fab>
           </div>
         </Tabs>
         <hr />
@@ -175,18 +169,22 @@ const Reservation = () => {
             <div>만 2세 미만</div>
           </div>
           <div>
-            <Fab size="small" aria-label="add"><AddIcon onClick={()=>(setBaby(baby+1))} /></Fab>
+            <Fab size="small" aria-label="add"><AddIcon onClick={()=>(setBaby(baby+1), setReservationCnt(reservationCnt+1))} /></Fab>
               <div style={{width:'10vw', display:'inline-block', textAlign:'center'}}>{baby}</div>
-            <Fab size="small" aria-label="remove"><RemoveIcon onClick={()=>(setBaby(baby-1))} /></Fab>
+            <Fab size="small" aria-label="remove"><RemoveIcon onClick={()=>(setBaby(baby-1), setReservationCnt(reservationCnt-1))} /></Fab>
           </div>
         </Tabs>
         <hr />
       </Container>
       <BottomNav>
-        {/* <Button variant="contained" size="large" sx={{width: '60vw'}} onClick={()=>(Router.push(`/reservation/result`))}>예약하기</Button> */}
-        <Button variant="contained" size="large" sx={{width: '60vw'}} onClick={reservationAxios}>예약하기</Button>
+        <Button 
+            variant="contained" 
+            size="large" 
+            sx={{width: '60vw'}} 
+            onClick={reservationAxios}
+        >예약하기</Button>
       </BottomNav>
     </>
   )
 }
-export default Reservation;
+export default ReservationAct;

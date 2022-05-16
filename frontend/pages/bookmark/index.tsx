@@ -4,6 +4,7 @@ import ActivityItem from "../../components/bookmark/activity";
 import styled from "styled-components";
 import { likeBnbList } from "../../api/bnb";
 import { likeActivityList } from "../../api/activity";
+import { useRouter } from "next/router";
 interface TypeBnb{
   id: number;
   contents: string;
@@ -26,6 +27,7 @@ interface TypeAct{
 
 
 const Bookmark = () => {
+  const router = useRouter();
   const [index, setIndex] = useState(0);
   const [bnbList, setBnbList] = useState<Array<TypeBnb>>([]);
   const [actList, setActList] = useState<Array<TypeAct>>([]);
@@ -71,6 +73,15 @@ const Bookmark = () => {
                 loc={bnb.accommodationArticle.loc}
                 like={bnbList}
                 rendering={rendering}
+                onClick={()=>{
+                  router.push(
+                      {
+                          pathname: `/reservation/${bnb.accommodationArticle.loc.split(' ')[0]}/bnb/${bnb.id}`,
+                          query: { loc: bnb.accommodationArticle.loc.split(' ')[0], id: bnb.id },
+                      },
+                      `/reservation/${bnb.accommodationArticle.loc.split(' ')[0]}/bnb/${bnb.id}`
+                    )
+                  }}
               />
           )
         }) :  actList.map((act: any)=>{
@@ -80,6 +91,7 @@ const Bookmark = () => {
               name={act.activity.name}
               picPath={act.activity.picPath}
               id={act.activity.id}
+              loc={act.activity.loc}
               like={actList}
               rendering={rendering}
             />

@@ -105,17 +105,12 @@ const BnbDetail = () => {
       },
       (error: Error) => console.log(error)
     )
-  },[router]);
-
-  const handleClick = () => {
-    router.push('/reservation')
-  }
+  },[router])
 
   return(
     <Container>
       <div style={{ position: "relative", width: "100%" }}>
-      <Header title="상세보기" hide={false} />
-      {/* <Top onClick={()=>(router.back())}>뒤로가기</Top> */}
+        <Header title="상세보기" hide={false} />
         <Carousel
           infiniteLoop
           showThumbs={false}
@@ -177,7 +172,7 @@ const BnbDetail = () => {
           </div>
         </AdditionalInfo>
       </ContentContainer>
-      <div onClick={handleClick}>예약하기</div>
+      <div onClick={()=>{router.push(`/reservation/bnb/${detail.id}`)}}>예약하기</div>
     </Container>
   )
 };

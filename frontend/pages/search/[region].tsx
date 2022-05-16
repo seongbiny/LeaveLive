@@ -34,11 +34,17 @@ interface TypeActivity{
 
 const Region = () => {
   const router = useRouter();
-  const region = router.query.region;
+  // const region = router.query.region;
+  const [region, setRegion] = useState(router.query.region);
   const [bnbItem, setBnbItem] = useState<Array<TypeBnb>>([]);
   const [activityItem, setActivityItem] = useState<Array<TypeActivity>>([]);
 
+  const check = (name: any) => {
+    if(name==='전라남도') {setRegion('전남')}
+  }
+
   useEffect(() => {
+    check(region);
     bnbList(
       region,
       ({ data }: any) => {
