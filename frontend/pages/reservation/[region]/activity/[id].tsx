@@ -21,7 +21,7 @@ interface IDetail {
 }
 
 const Container = styled.div`
-  ${flexCenter}
+  // ${flexCenter}
   flex-direction: column;
   width: 100%;
   margin-bottom: 75px;
@@ -123,9 +123,15 @@ const ActivityDetail = () => {
           ))}
         </Carousel>
       </div>
-      
       <BnbTitle>{detail.name}</BnbTitle>
       <img src={`${BACKEND_IMAGE_URL}/${detail.picContents}`} width="90%"  />
+      <div>
+        <div>위치 {detail.loc}</div>
+        <Map
+          address={detail.loc}
+          style={{ margin: "1rem 0"}}
+        />
+      </div>
       <div onClick={()=>{router.push(`/reservation/activity/${detail.id}`)}}>예약하기</div>
     </Container>
   )

@@ -13,6 +13,7 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import Button from '@mui/material/Button';
 import { bnbReservation } from "../../../api/bnb";
+import { useRouter } from 'next/router';
 
 const Container = styled.div`
   // display: flex;
@@ -46,7 +47,8 @@ const BottomNav = styled.div`
 `;
 
 const ReservationBnb = () => {
-  // const router = useRouter();
+  const router = useRouter();
+  const id = router.query.id;
   const [adult, setAdult] = useState<number>(0);
   const [children, setChildren] = useState<number>(0);
   const [baby, setBaby] = useState(0);
@@ -95,29 +97,23 @@ const ReservationBnb = () => {
   const reservationStart = startDay[3]+'-'+MonChange(startDay[1])+'-'+startDay[2];
   const reservationEnd = endDay[3]+'-'+MonChange(endDay[1])+'-'+endDay[2]
 
-  const reservationAxios = useCallback(() => {
-    const form = new FormData();
+  async function reservationAxios(){
     const dto = {
-      cnt: reservationCnt,
-      startDate: reservationStart,
-      endDate: reservationEnd,
-    };
-    form.append(
-      "dto",
-      new Blob([JSON.stringify(dto)], {
-        type: "application/json",
-      })
-    )
-    bnbReservation(
-      10,
-      form,
-      ({ data }: any) => {
+        cnt: reservationCnt,
+        startDate: reservationStart,
+        endDate: reservationEnd,
+      };
+    console.log(dto)
+    await bnbReservation(
+    id,
+    dto,
+    ({ data }: any) => {
         console.log(data);
-      },
-      (error: Error) => console.log(error)
+        router.push(`/reservation/bnb/result/${data}`)
+    },
+    (error: Error) => console.log(error)
     )
-
-  },[])
+  }
 
   return (
     <>
