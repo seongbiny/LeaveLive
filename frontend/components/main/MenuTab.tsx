@@ -41,7 +41,7 @@ const MenuTab: NextPage = () => {
 
     return (
         <>
-            <div style={{paddingLeft: '7vw', marginTop: '2vh'}}>주변 편의 시설</div>
+            <div style={{paddingLeft: '7vw', marginTop: '2vh', fontWeight: 'bold'}}>주변 편의 시설</div>
             <Menu>
                 <Container onClick={()=>(handleClick(tag[0]))}>
                     <Image src="/cafe.png" alt="cafe" title="cafe" width={65} height={65}/>
