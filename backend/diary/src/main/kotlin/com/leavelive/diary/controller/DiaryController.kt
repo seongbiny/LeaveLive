@@ -36,6 +36,19 @@ class DiaryController(private val diaryService: DiaryService) {
         @RequestParam date: String
     ): ResponseEntity<DiaryResponse> = ResponseEntity(diaryService.get(token, date), HttpStatus.OK)
 
+    @GetMapping("/my-diary")
+    @Operation(summary = "나의 모든 다이어리 조회", description = "특정 회원이 특정 날짜에 작성한 다이어리를 조회한다")
+    @ApiResponses(
+        ApiResponse(responseCode = "200", description = "OK"),
+        ApiResponse(responseCode = "401", description = "액세스 토큰이 유효하지 않습니다"),
+        ApiResponse(responseCode = "403", description = "액세스 토큰이 만료되었습니다")
+    )
+    @Parameters(
+        Parameter(name = "Authorization", description = "액세스 토큰"),
+    )
+    fun getAllDiaries(@RequestHeader(name = "Authorization") token: String): ResponseEntity<List<DiaryResponse>> =
+        ResponseEntity(diaryService.getAllDiaries(token), HttpStatus.OK)
+
     @Operation(summary = "공유된 다이어리 조회", description = "공유된 모든 다이어리를 조회한다")
     @ApiResponses(
         ApiResponse(responseCode = "200", description = "OK"),

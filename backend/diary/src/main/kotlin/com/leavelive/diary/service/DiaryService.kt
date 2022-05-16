@@ -29,6 +29,11 @@ class DiaryService(private val diaryRepository: DiaryRepository, private val mod
         )
     }
 
+    fun getAllDiaries(token: String) : List<DiaryResponse> {
+        val userId = JwtUtil.decodeToken(token)
+        return diaryRepository.findAllByUserId(userId).map { modelMapper.map(it, DiaryResponse::class.java) }
+    }
+
     fun getAllPublicDiaries(): List<DiaryResponse> =
         diaryRepository.findAllByStatus(Status.PUBLIC).map { modelMapper.map(it, DiaryResponse::class.java) }
 
