@@ -6,6 +6,8 @@ import { useRouter } from 'next/router';
 
 const Container = styled.div`
     display: grid;
+    text-align: center;
+    font-size: 0.8rem;
 `;
 const Menu = styled.div`
     display: flex;
@@ -42,20 +44,20 @@ const MenuTab: NextPage = () => {
             <div style={{paddingLeft: '7vw', marginTop: '2vh'}}>주변 편의 시설</div>
             <Menu>
                 <Container onClick={()=>(handleClick(tag[0]))}>
-                    <Image src="/cafe.png" alt="cafe" title="cafe" width="70%" height="70%"/>
-                    <div style={{textAlign: 'center'}}>카페</div>
+                    <Image src="/cafe.png" alt="cafe" title="cafe" width={65} height={65}/>
+                    <div style={{paddingTop: '1vh'}}>카페</div>
                 </Container>
                 <Container onClick={()=>(handleClick(tag[1]))}>
-                    <Image src="/hospital.png" alt="hospital" title="hospital" width="70%" height="70%"/>
-                    <div style={{textAlign: 'center'}}>병원</div>
+                    <Image src="/hospital.png" alt="hospital" title="hospital" width={65} height={65}/>
+                    <div style={{paddingTop: '1vh'}}>병원</div>
                 </Container>
                 <Container onClick={()=>(handleClick(tag[2]))}>
-                    <Image src="/convenience.png" alt="convenience" title="convenience" width="70%" height="70%"/>
-                    <div style={{textAlign: 'center'}}>편의점</div>
+                    <Image src="/convenience.png" alt="convenience" title="convenience" width={65} height={65}/>
+                    <div style={{paddingTop: '1vh'}}>편의점</div>
                 </Container>
                 <Container onClick={()=>(handleClick(tag[3]))}> 
-                    <Image src="/bank.png" alt="bank" title="bank" width="70%" height="70%"/>
-                    <div style={{textAlign: 'center'}}>은행</div>
+                    <Image src="/bank.png" alt="bank" title="bank" width={65} height={65}/>
+                    <div style={{paddingTop: '1vh'}}>은행</div>
                 </Container>
             </Menu>
         </>

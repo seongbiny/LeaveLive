@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { useRouter } from "next/router";
 import Map from "../../components/search/map";
-import Button from '@mui/material/Button';
 
 const Container = styled.div`
   // background-color: green;
