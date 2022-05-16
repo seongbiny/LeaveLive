@@ -28,8 +28,10 @@ export const bnbDetail = async (accommodation_id: any, success: any, fail: any) 
 }
 
 // 숙소 예약하기
-export const bnbReservation = async (accommodation_id: any, success: any, fail: any) => {
-    await api.post(`/accommodation/reservation/${accommodation_id}`).then(success).catch(fail);
+export const bnbReservation = async (accommodation_id: any, params: any, success: any, fail: any) => {
+    await api.post(`/accommodation/reservation/${accommodation_id}`, {
+        headers: { "Content-Type": "multipart/form-data" },
+    }).then(success).catch(fail);
 }
 
 // 숙소 예약취소

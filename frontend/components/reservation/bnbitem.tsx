@@ -6,7 +6,7 @@ import { likeBnb, unlikeBnb } from "../../api/bnb";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { BACKEND_IMAGE_URL } from "../../api";
-import Router from 'next/router';
+import { useRouter } from "next/router";
 
 const Box = styled.div`
   position: relative;
@@ -23,37 +23,36 @@ const Text = styled.div`
 
 const BnbItem = (props: any) => {
   const [like, setLike] = useState(false);
-  const bnbid = props.id;
-  const likelist = props.like;
-  const picpath: Array<String> = props.picPath.split(',');
+  const id = props.id;
+  const likeList = props.like;
+  const picPath: Array<String> = props.picPath.split(',');
+  const router = useRouter();
+  const loc = props.loc.split(' ')[0];
 
   useEffect(()=>{
-    console.log(bnbid);
-    {likelist !== undefined ?
-      likelist.forEach((value: any)=>{
-        if(`${value.accommodationArticle.id}` === String(bnbid)){
+    {likeList !== undefined ?
+      likeList.forEach((value: any)=>{
+        if(`${value.accommodationArticle.id}` === String(id)){
           setLike(true);
           return false
         }
       }) : null
     }
-  },[likelist]);
+  },[likeList]);
 
   const likeAxios = () => {
-    likeBnb(bnbid,
+    likeBnb(id,
       (response: any) => console.log(response),
       (error: Error) => console.log(error))
     console.log("북마크에 등록되었습니다.");  
   }
 
   const unlikeAxios = () => {
-    unlikeBnb(bnbid,
-      (response: any) => (console.log(response, bnbid)),
+    unlikeBnb(id,
+      (response: any) => (console.log(response)),
       (error: Error) => console.log(error))
     console.log("북마크에서 삭제되었습니다.")
   }
-
-
 
   return(
       <Box>
@@ -70,21 +69,29 @@ const BnbItem = (props: any) => {
               onClick={() => {setLike(!like); unlikeAxios();}}
             />}
         </Text>
-        <Carousel infiniteLoop showThumbs={false}>
-          {picpath.map((pic, idx)=>(
-            <div 
-              key={idx} 
-              onClick={()=>(Router.push(`bnb/1`))} 
-              style={{marginLeft: '5vw', marginRight: '5vw'}} >
-              <img 
-                src={`${BACKEND_IMAGE_URL}/${pic}`} 
-                width={350} height={250} 
-                style={{borderRadius: '10px'}} />
-            </div>
-          ))}
-        </Carousel>
-        <div style={{marginLeft:'7vw', fontSize: '20px', paddingTop: '1vh'}}>
-            {props.name}
+        <div onClick={() => {
+          router.push(
+              {
+              pathname: `/reservation/${loc}/bnb/${id}`,
+              query: { loc: loc, id: id }
+              },
+              `/reservation/${loc}/bnb/${id}`
+          )}}>
+          <Carousel infiniteLoop showThumbs={false}>
+            {picPath.map((pic, idx)=>(
+              <div 
+                key={idx} 
+                style={{marginLeft: '5vw', marginRight: '5vw'}} >
+                <img 
+                  src={`${BACKEND_IMAGE_URL}/${pic}`} 
+                  width={350} height={250} 
+                  style={{borderRadius: '10px'}} />
+              </div>
+            ))}
+          </Carousel>
+          <div style={{marginLeft:'7vw', fontSize: '20px', paddingTop: '1vh'}}>
+              {props.name}
+          </div>
         </div>
       </Box>
   )

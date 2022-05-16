@@ -1,8 +1,9 @@
-import { useCallback, useEffect, useState } from "react";
-import Router from 'next/router';
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import BnbItem from "../../../../components/reservation/bnbitem";
 import { likeBnbList, bnbList } from "../../../../api/bnb";
 import Header from "../../../../components/Header";
+import styled from 'styled-components';
 interface TypeBnb{
   id: number;
   contents: string;
@@ -11,10 +12,11 @@ interface TypeBnb{
   loc: string;
   name: string;
   picPath: string;
-}
+};
 
 const BnbList = () => {
-  const region = Router.query.region;
+  const router = useRouter();
+  const region = router.query.region;
   const [list, setList] = useState<Array<TypeBnb>>([]);
   const [like, setLike] = useState<number[]>([]);
 
@@ -22,8 +24,8 @@ const BnbList = () => {
     bnbList(
       region,
       (data: any) => {
-        // console.log(data.data);
         setList(data.data);
+        console.log(data.data)
       },
       (error: Error) => console.log(error)
     )
@@ -35,33 +37,26 @@ const BnbList = () => {
       null,
       (data: any) => {
         setLike(data.data);
-        // console.log(data.data);
       }, 
       (error: Error) => console.log(error))
-  },[])
+  },[]);
 
   return (
     <div>
       <Header title={String(region)} hide={false} />
       <div>
-        {list.map((bnb) => {
-          return like.length !== 0 ? (
-            <div key={bnb.id}>
-              <BnbItem 
-                name={bnb.name} 
-                picPath={bnb.picPath}
-                like={like}
-                id={bnb.id}
-              />
-            </div>
-          ) : <div key={bnb.id}>
-                <BnbItem 
-                  name={bnb.name} 
-                  picPath={bnb.picPath}
-                  id={bnb.id}
-                />
-              </div>
-        })}
+        {list?.map((bnb) => (
+          <div key={bnb.id}>
+            <BnbItem 
+              key={bnb.id}
+              name={bnb.name} 
+              picPath={bnb.picPath}
+              like={like}
+              id={bnb.id}
+              loc={bnb.loc}
+            />
+          </div>
+        ))}
       </div>
     </div>
   )

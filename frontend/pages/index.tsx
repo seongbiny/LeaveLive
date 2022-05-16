@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Link from "next/link";
 
 const Main = styled.div`
-  border: 1px solid;
+  // border: 1px solid;
   height: 100%;
   padding-top: 50%;
   text-align: center;
