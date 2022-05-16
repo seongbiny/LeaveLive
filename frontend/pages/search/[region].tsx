@@ -53,7 +53,6 @@ const Region = () => {
       region,
       ({ data }: any) => {
         setBnbItem(data.sort(()=>Math.random()-0.5).slice(0,1));
-        console.log(data)
       },
       (error: Error) => console.log(error)
     );
@@ -61,7 +60,6 @@ const Region = () => {
       region,
       ({ data }: any) => {
         setActivityItem(data.sort(()=>Math.random()-0.5).slice(0,1));
-        console.log(data)
       },
       (error: Error) => console.log(error)
     );
@@ -89,14 +87,28 @@ const Region = () => {
         </Tab>
         <div style={{display: 'grid'}}>
           <Title>추천 숙소</Title>
-          {bnbItem.length !== 0 && <Item list={bnbItem} url="bnb" /> }
+          {bnbItem.length !== 0 ? <Item list={bnbItem} url="bnb" /> :
+            <StyledError>아직 숙소가 없어요</StyledError>
+          }
           <Title>추천 액티비티</Title>
-          {activityItem.length !== 0 && <Item list={activityItem} url="activity" />}
+          {activityItem.length !== 0 ? <Item list={activityItem} url="activity" /> :
+            <StyledError>아직 액티비티가 없어요</StyledError>
+          }
         </div>
       </Main>
     </Container>
   )
 };
+
+const StyledError = styled.div`
+  width: 70%;
+  height: 7vh;
+  background: #d3d3d3;
+  margin: auto;
+  text-align: center;
+  border-radius: 20px;
+  line-height: 7vh;
+`;
 
 const Title = styled.div`
   margin: 2vh;

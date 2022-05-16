@@ -35,12 +35,12 @@ const Item = ({ list, url }: any) => {
                     
                 <img 
                   src={`${BACKEND_IMAGE_URL}/${pic}`} 
-                  width={350} height={250} 
+                  width={350} height={200} 
                   style={{borderRadius: '10px'}} />
               </div>
             ))}
           </Carousel>
-          <div style={{marginLeft:'7vw', fontSize: '20px', paddingTop: '1vh'}}>
+          <div style={{marginLeft:'7vw', fontSize: '1rem', paddingTop: '1vh'}}>
               {name}
           </div>
       </Box>
