@@ -2,12 +2,12 @@ import React, { Dispatch, SetStateAction, useCallback, useState } from "react";
 import { IconButton } from "@mui/material";
 import { PhotoCamera } from "@mui/icons-material";
 import styled from "styled-components";
-import { IImages } from "../../../pages/ceo/bnb/create";
+import { IImage } from "../../../pages/diary/write";
 
-// interface IPropTypes {
-//   images: Array<IImages>;
-//   setImages: Dispatch<SetStateAction<Array<IImages>>>;
-// }
+interface IPropTypes {
+  images: Array<IImage>;
+  setImages: Dispatch<SetStateAction<Array<IImage>>>;
+}
 
 const Input = styled.input`
   display: none;
@@ -38,22 +38,21 @@ const ImageContainer = styled.div<IImageContainerTypes>`
   margin-right: 1rem;
 `;
 
-const ImageForm = () => {
+const ImageForm = ({ images, setImages }: IPropTypes) => {
   const handleImage = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const files = event.target.files;
-      const nextImages = [];
+      const nextImages: Array<IImage> = [];
       if (!files) return;
 
       for (let i = 0; i < files.length; i++) {
         const imageURL = URL.createObjectURL(files[i]);
-        nextImages.push({ files: files[i], previewURL: imageURL });
+        nextImages.push({ file: files[i], previewURL: imageURL });
       }
 
-      //   setImages(nextImages);
+      setImages(nextImages);
     },
-    // [setImages]
-    []
+    [setImages]
   );
 
   return (
@@ -73,9 +72,9 @@ const ImageForm = () => {
       </label>
       <ImageContainerGroup>
         <ImageContainerWrapper>
-          {/* {images.map((image, index) => {
+          {images.map((image, index) => {
             return <ImageContainer key={index} url={image.previewURL} />;
-          })} */}
+          })}
         </ImageContainerWrapper>
       </ImageContainerGroup>
     </>

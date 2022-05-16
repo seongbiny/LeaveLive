@@ -3,7 +3,7 @@ import Header from "../../components/Header";
 import { useRouter } from "next/router";
 import InputForm from "../../components/diary/form/InputForm";
 import Switch from "../../components/diary/form/Switch";
-import ImageForm from "../../components/diary/form/Imageform";
+import ImageForm from "../../components/diary/form/ImageForm";
 import styled from "styled-components";
 import { Container, Wrapper } from "../../styles/Basic";
 
@@ -12,6 +12,11 @@ export interface IValues {
   content: string;
   tags: Array<string>;
   status: boolean;
+}
+
+export interface IImage {
+  file: File;
+  previewURL: string;
 }
 
 export const ContentsWrapper = styled(Wrapper)`
@@ -28,14 +33,15 @@ const Write = () => {
     tags: [],
     status: false,
   });
+  const [images, setImages] = useState<Array<IImage>>([]);
 
   return (
     <Container>
       <Header title="일기 작성" />
       <ContentsWrapper>
         <InputForm values={values} setValues={setValues} />
-        <Switch />
-        <ImageForm />
+        <Switch values={values} setValues={setValues} />
+        <ImageForm images={images} setImages={setImages} />
       </ContentsWrapper>
     </Container>
   );
