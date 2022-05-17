@@ -3,10 +3,7 @@ import { getMyBnbDetail, deleteMyBnb } from "../../../api/ceo";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import DetailNav from "../../../components/ceo/DetailNav";
-import { Carousel } from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { BACKEND_IMAGE_URL } from "../../../api";
-import Image from "next/image";
+import Carousel from "../../../components/Carousel";
 import BackButton from "../../../components/BackButton";
 import { flexCenter } from "../../../styles/Basic";
 import LocalFloristRoundedIcon from "@mui/icons-material/LocalFloristRounded";
@@ -40,6 +37,9 @@ const ButtonWrapper = styled.div`
   top: 5%;
   left: 2%;
   z-index: 2;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const ContentContainer = styled.div`
@@ -128,26 +128,7 @@ const BnbDetail = () => {
         <ButtonWrapper>
           <BackButton />
         </ButtonWrapper>
-        <Carousel
-          infiniteLoop
-          showThumbs={false}
-          showStatus={false}
-          showArrows={false}
-        >
-          {detail.picPath?.split(",").map((path, index) => (
-            <div key={index}>
-              <Image
-                src={
-                  path === "/default.png"
-                    ? path
-                    : `${BACKEND_IMAGE_URL}/${path}`
-                }
-                width={412}
-                height={250}
-              />
-            </div>
-          ))}
-        </Carousel>
+        <Carousel picPath={detail.picPath} />
       </div>
       <ContentContainer>
         <BnbTitle>{detail.name}</BnbTitle>

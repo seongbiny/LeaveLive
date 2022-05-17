@@ -27,7 +27,6 @@ export const ContentsWrapper = styled(Wrapper)`
 
 const Write = () => {
   const router = useRouter();
-  // const [date, setDate] = useState<string>("");
 
   useEffect(() => {
     setValues({ ...values, date: String(router.query.date) });
@@ -49,7 +48,7 @@ const Write = () => {
       date: values.date,
     };
 
-    console.log(diaryRequest);
+    console.log(images);
     form.append(
       "diaryRequest",
       new Blob([JSON.stringify(diaryRequest)], {
@@ -66,11 +65,12 @@ const Write = () => {
     writeDiary(
       form,
       (response: any) => {
-        console.log(response);
+        router.push(`/diary/${values.date}`);
+        // console.log(response);
       },
       (error: Error) => console.log(error)
     );
-  }, [values]);
+  }, [values, images]);
 
   return (
     <Container>
