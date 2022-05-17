@@ -57,9 +57,9 @@ const Write = () => {
     );
 
     if (images.length === 0) {
-      form.append("image", new Blob());
+      form.append("images", new Blob());
     } else {
-      images?.map((image) => form.append("image", image.file));
+      images?.map((image) => form.append("images", image.file));
     }
 
     writeDiary(
@@ -69,7 +69,7 @@ const Write = () => {
       },
       (error: Error) => console.log(error)
     );
-  }, []);
+  }, [values]);
 
   return (
     <Container>
