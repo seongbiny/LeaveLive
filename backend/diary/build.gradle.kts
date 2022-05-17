@@ -17,6 +17,7 @@ repositories {
 }
 
 dependencies {
+	implementation ("org.hibernate:hibernate-core:5.6.5.Final")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
