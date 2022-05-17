@@ -102,7 +102,7 @@ const ReservationBnb = () => {
         cnt: reservationCnt,
         startDate: reservationStart,
         endDate: reservationEnd,
-        id: id
+        // id: id
       };
     console.log(dto)
     await bnbReservation(

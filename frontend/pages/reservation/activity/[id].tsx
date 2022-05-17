@@ -100,7 +100,7 @@ const ReservationAct = () => {
         cnt: reservationCnt,
         startDate: reservationStart,
         endDate: reservationEnd,
-        id: id
+        // id: id
       };
     console.log(dto)
     await activityReservation(
