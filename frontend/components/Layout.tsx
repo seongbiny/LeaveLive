@@ -24,19 +24,19 @@ export default function Layout({ children }: any) {
 
   useEffect(() => {
     if (allowedURLs.includes(router.pathname)) setShowNav(false);
-    else setShowNav(true);
+    else {
+      if (router.pathname.startsWith("/ceo")) setIsUser(false);
+      else setIsUser(true);
 
-    if (router.pathname.startsWith("/ceo")) setIsUser(false);
-    else setIsUser(true);
+      if (router.pathname.startsWith("/reservation")) setShowNav(false);
+      else setShowNav(true);
 
-    if (router.pathname.startsWith("/reservation")) setShowNav(false);
-    else setShowNav(true);
-
-    if (router.pathname === ("/")) setShowNav(false);
-    else setShowNav(true);
-
-    if (router.pathname.startsWith("/ceo/bnb") && router.pathname.length !== 8)
-      setShowNav(false);
+      if (
+        router.pathname.startsWith("/ceo/bnb") &&
+        router.pathname.length !== 8
+      )
+        setShowNav(false);
+    }
   }, [router]);
 
   const isMobile = useIsMobile();

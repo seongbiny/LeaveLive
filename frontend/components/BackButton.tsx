@@ -6,8 +6,6 @@ import { useRouter } from "next/router";
 
 const Container = styled.div`
   ${flexCenter}
-  position: absolute;
-  left: 3%;
 `;
 
 const BackButton = () => {
