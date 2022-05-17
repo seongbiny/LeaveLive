@@ -42,6 +42,11 @@ class DiaryService(
     fun getAllPublicDiaries(): List<DiaryResponse> =
         diaryRepository.findAllByStatus(Status.PUBLIC).map { modelMapper.map(it, DiaryResponse::class.java) }
 
+    fun getAllPublicDiariesByTag(tag: String): List<DiaryResponse> =
+        diaryRepository.findAllByStatusAndTagContains(Status.PUBLIC, tag)
+            .map { modelMapper.map(it, DiaryResponse::class.java) }
+
+
     fun register(token: String, diaryRequest: DiaryRequest, images: List<MultipartFile>): DiaryResponse {
         val userId = JwtUtil.decodeToken(token)
         val diary = modelMapper.map(diaryRequest, Diary::class.java)
@@ -94,4 +99,6 @@ class DiaryService(
         if (picPath == "") return ""
         return picPath.substring(0, picPath.length - 1)
     }
+
+
 }

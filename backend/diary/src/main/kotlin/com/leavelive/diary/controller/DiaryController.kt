@@ -59,6 +59,12 @@ class DiaryController(private val diaryService: DiaryService) {
     fun getAllPublicDiaries(): ResponseEntity<List<DiaryResponse>> =
         ResponseEntity(diaryService.getAllPublicDiaries(), HttpStatus.OK)
 
+
+    @GetMapping("/search/{tag}")
+    fun getAllPublicDiariesByTag(@PathVariable tag: String) : ResponseEntity<List<DiaryResponse>>
+    = ResponseEntity(diaryService.getAllPublicDiariesByTag(tag), HttpStatus.OK)
+
+
     @Operation(summary = "다이어리 등록", description = "다이어리를 등록합니다")
     @ApiResponses(
         ApiResponse(responseCode = "200", description = "OK"),
