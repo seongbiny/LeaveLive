@@ -24,12 +24,13 @@ interface IDetail {
 }
 
 const Container = styled.div`
-  ${flexCenter}
+  // ${flexCenter}
+  display: flex;
   flex-direction: column;
   width: 100%;
   margin-bottom: 75px;
   line-height: 2.2rem;
-  height: 100%
+  margin-bottom: 13vh;
 `;
 
 const BnbTitle = styled.div`
@@ -64,14 +65,10 @@ const BnbConditionWrapper = styled.div`
   }
 `;
 
-const Top = styled.div`
-  border: 1px solid;
-  height: 7vh;
-  width: 100%;
-`;
-
 const ContentContainer = styled.div`
-  width: 80%;
+  width: 90%;
+  justify-content: center;
+  margin: auto;
 `;
 
 const BnbDetail = () => {
@@ -174,5 +171,8 @@ const Bottom = styled.div`
   justify-content: center;
   align-items: center;
   background: #d3d3d3;
+  position: fixed;
+  margin-top: 90vh;
+  z-index: 100;
 `;
 export default BnbDetail;

@@ -32,3 +32,6 @@ export const deleteUser = async (params: any, success: any, fail: any) => {
     await api.delete(`/user`).then(success).catch(fail);
 }
 
+export const getUserDiary = async (params: any, success: any, fail: any) => {
+    await api.get(`/user/profile/${params}`).then(success).catch(fail);
+}

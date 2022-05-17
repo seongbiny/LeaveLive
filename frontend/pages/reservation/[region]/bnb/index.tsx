@@ -42,7 +42,7 @@ const BnbList = () => {
   },[]);
 
   return (
-    <div>
+    <div style={{marginBottom: '13vh'}}>
       <Header title={String(region)} hide={false} />
       <div>
         {list?.map((bnb) => (

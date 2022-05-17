@@ -7,7 +7,8 @@ const Container = styled.div`
   // border: 1px solid;
   display: grid;
   align-items: center;
-  margin-top: 5vh;
+  margin-top: 3vh;
+  margin-bottom: 13vh;
   // margin-left: 5vw;
 `
 

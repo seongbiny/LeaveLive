@@ -16,7 +16,7 @@ const Styled = styled.div`
         cursor: pointer;
     };
     padding-left: 5vw;
-    padding-bottom: 5vh;
+    padding-bottom: 3vh;
 `;
 
 const Map = ({fill, width, height, stroke, fillOpacity }: MapProps) => {

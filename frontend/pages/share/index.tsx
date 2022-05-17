@@ -12,6 +12,7 @@ interface IDiary {
     tag: string;
     date: string;
     picPath: string;
+    userId: number;
 }
 
 const Share = () => {
@@ -29,7 +30,14 @@ const Share = () => {
         <div>
             <Header title="여행스타그램" hide={true} />
             {diary.map((item)=>{
-                return <Item key={item.diaryId} content={item.content} date={item.date} diaryId={item.diaryId} picPath={item.picPath} />
+                return <Item 
+                            key={item.diaryId} 
+                            content={item.content} 
+                            date={item.date} 
+                            diaryId={item.diaryId} 
+                            picPath={item.picPath} 
+                            userId={item.userId}
+                        />
             })}
         </div>
     )

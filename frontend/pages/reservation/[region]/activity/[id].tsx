@@ -29,40 +29,7 @@ const Container = styled.div`
   width: 100%;
   margin-bottom: 75px;
   line-height: 2.2rem;
-`;
-
-const BnbTitle = styled.div`
-  font-size: 1.5rem;
-  font-weight: bold;
-  padding-top: 1.5rem;
-  padding-bottom: 1rem;
-  padding-right: 70vw;
-  border: 1px solid;
-`;
-
-const BnbContent = styled.div`
-  padding-bottom: 1rem;
-`;
-
-const BnbHeading = styled.div`
-  font-size: 1.1rem;
-  font-weight: bold;
-  padding: 0.6rem 0;
-`;
-
-const AdditionalInfo = styled.div`
-  ${flexCenter}
-  align-items: flex-start;
-`;
-
-const BnbConditionWrapper = styled.div`
-  ${flexCenter}
-  justify-content: flex-start;
-  padding-bottom: 0.5rem;
-
-  span {
-    margin-left: 0.2rem;
-  }
+  margin-bottom: 13vh;
 `;
 
 const ContentContainer = styled.div`
@@ -85,12 +52,13 @@ const ActivityDetail = () => {
     userId: "",
   });
   
-  // console.log(detail.picPath.split(","))
+  const [path, setPath] = useState([]);
+
   useEffect(()=>{
     const id = router.query.id;
     activityDetail(
       id,
-      ({ data }: any) => {console.log(data), setDetail(data)},
+      ({ data }: any) => {console.log(data), setDetail(data), setPath(data.picPath.split(","))},
       (error: Error) => console.log(error)
     )
     console.log(detail)
@@ -105,7 +73,7 @@ const ActivityDetail = () => {
             infiniteLoop
             showThumbs={false}
           >
-            {detail.picPath.split(",").map((pic, idx)=>(
+            {path.map((pic, idx)=>(
               <div key={idx}>
                 <img 
                   src={`${BACKEND_IMAGE_URL}/${pic}`}

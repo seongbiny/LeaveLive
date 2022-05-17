@@ -117,7 +117,7 @@ const ReservationBnb = () => {
   }
 
   return (
-    <>
+    <div style={{marginBottom: '10vh'}}>
     
       <Container>
         <StyledTab>
@@ -182,7 +182,7 @@ const ReservationBnb = () => {
       <BottomNav>
         <Button variant="contained" size="large" sx={{width: '60vw'}} onClick={reservationAxios}>예약하기</Button>
       </BottomNav>
-    </>
+    </div>
   )
 }
 export default ReservationBnb;

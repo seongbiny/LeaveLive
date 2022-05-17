@@ -96,12 +96,12 @@ const Main = () => {
       <div style={{marginBottom:'2vh', marginLeft: '5vw', fontWeight: 'bold'}}>오늘 나의 일정</div>
       {diary.diaryId !== 0 ? <div style={{ margin: "3vh" }}>
         <Item diary={diary} onClick={()=>{router.push(`/diary`)}} />
-        </div> : <StyledError>일정을 추가하세요</StyledError>
+        </div> : <StyledError>일정이 없습니다.</StyledError>
       }
       <div style={{marginBottom:'2vh', marginLeft: '5vw', fontWeight: 'bold'}}>내일 나의 일정</div>
-      {diary.diaryId !== 0 ? <div style={{ margin: "3vh" }}>
+      {diaryTom.diaryId !== 0 ? <div style={{ margin: "3vh" }}>
         <Item diary={diaryTom} onClick={()=>{router.push(`/diary`)}} />
-        </div> : <StyledError>일정을 추가하세요</StyledError>
+        </div> : <StyledError>일정이 없습니다.</StyledError>
       }
     </div>
   )
