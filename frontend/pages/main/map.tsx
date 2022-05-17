@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { useEffect } from "react";
 import { useRouter } from 'next/router';
 import { KakaoLoginRequest } from '../../api/user';
+import Header from '../../components/Header';
 
 declare global {
   interface Window {
@@ -151,7 +152,10 @@ function Map() {
   }, [latitude, longitude]);
 
   return (
-    <MapContainer id="map" />
+    <>
+      <Header title='편의시설' />
+      <MapContainer id="map" />
+    </>
   );
 }
 

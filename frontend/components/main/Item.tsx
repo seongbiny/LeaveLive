@@ -25,7 +25,7 @@ export default function Item({ diary, onClick }: any) {
   },[])
   return (
     <>
-      <img src={`${BACKEND_IMAGE_URL}/${diary.picPath.split(",")[0]}`} height={100} width={100} />
+      {/* <img src={`${BACKEND_IMAGE_URL}/${diary.picPath.split(",")[0]}`} height={100} width={100} /> */}
       <Card style={{ margin: "2vh" }}>
         <CardMedia
           component="img"

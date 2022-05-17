@@ -12,7 +12,6 @@ const Box = styled.div`
   position: relative;
   display: grid;
   margin-bottom: 2vh;
-//   border: 1px solid;
 `;
 const Text = styled.div`
   z-index: 100;
@@ -55,45 +54,49 @@ const BnbItem = (props: any) => {
   }
 
   return(
-      <Box>
-        <Text>
-          {like === false ? 
-            <FavoriteBorderIcon 
-              fontSize="medium" 
-              sx={{color: '#FF385C'}} 
-              onClick={() => {setLike(!like); likeAxios();}}
-            /> : 
-            <FavoriteIcon 
-              fontSize="medium" 
-              sx={{color: '#FF385C'}} 
-              onClick={() => {setLike(!like); unlikeAxios();}}
-            />}
-        </Text>
-        <div onClick={() => {
-          router.push(
-              {
-              pathname: `/reservation/${loc}/bnb/${id}`,
-              query: { loc: loc, id: id }
-              },
-              `/reservation/${loc}/bnb/${id}`
-          )}}>
-          <Carousel infiniteLoop showThumbs={false}>
-            {picPath.map((pic, idx)=>(
-              <div 
-                key={idx} 
-                style={{marginLeft: '5vw', marginRight: '5vw'}} >
-                <img 
-                  src={`${BACKEND_IMAGE_URL}/${pic}`} 
-                  width={350} height={250} 
-                  style={{borderRadius: '10px'}} />
-              </div>
-            ))}
-          </Carousel>
-          <div style={{marginLeft:'7vw', fontSize: '20px', paddingTop: '1vh'}}>
-              {props.name}
-          </div>
+    <Box>
+      <Text>
+        {like === false ? 
+          <FavoriteBorderIcon 
+            fontSize="medium" 
+            sx={{color: '#FF385C'}} 
+            onClick={() => {setLike(!like); likeAxios();}}
+          /> : 
+          <FavoriteIcon 
+            fontSize="medium" 
+            sx={{color: '#FF385C'}} 
+            onClick={() => {setLike(!like); unlikeAxios();}}
+          />}
+      </Text>
+      <div>
+        <Carousel infiniteLoop showThumbs={false}>
+          {picPath.map((pic, idx)=>(
+            <div 
+              key={idx} 
+              style={{marginLeft: '5vw', marginRight: '5vw'}} >
+              <img 
+                src={`${BACKEND_IMAGE_URL}/${pic}`} 
+                width={300} height={200} 
+                style={{borderRadius: '10px'}} />
+            </div>
+          ))}
+        </Carousel>
+        <div 
+          style={{marginLeft:'7vw', fontSize: '20px', paddingTop: '1vh', cursor:"pointer"}}
+          onClick={() => {
+            router.push(
+                {
+                pathname: `/reservation/${loc}/bnb/${id}`,
+                query: { loc: loc, id: id }
+                },
+                `/reservation/${loc}/bnb/${id}`
+            );
+          }}
+        >
+            {props.name}
         </div>
-      </Box>
+      </div>
+    </Box>
   )
 }
 export default BnbItem;

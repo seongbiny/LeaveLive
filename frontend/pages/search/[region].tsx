@@ -34,13 +34,17 @@ interface TypeActivity{
 
 const Region = () => {
   const router = useRouter();
-  // const region = router.query.region;
   const [region, setRegion] = useState(router.query.region);
   const [bnbItem, setBnbItem] = useState<Array<TypeBnb>>([]);
   const [activityItem, setActivityItem] = useState<Array<TypeActivity>>([]);
 
   const check = (name: any) => {
     if(name==='전라남도') {setRegion('전남')}
+    else if(name==='전라북도') {setRegion('전북')}
+    else if(name==='경상남도') {setRegion('경남')}
+    else if(name==='경상북도') {setRegion('경북')}
+    else if(name==='충청남도') {setRegion('충남')}
+    else if(name==='충청북도') {setRegion('충북')}
   }
 
   useEffect(() => {
@@ -49,7 +53,6 @@ const Region = () => {
       region,
       ({ data }: any) => {
         setBnbItem(data.sort(()=>Math.random()-0.5).slice(0,1));
-        // console.log(data.sort(()=>Math.random()-0.5).slice(0,1));
       },
       (error: Error) => console.log(error)
     );
@@ -57,7 +60,6 @@ const Region = () => {
       region,
       ({ data }: any) => {
         setActivityItem(data.sort(()=>Math.random()-0.5).slice(0,1));
-        console.log(data.sort(()=>Math.random()-0.5).slice(0,1));
       },
       (error: Error) => console.log(error)
     );
@@ -71,7 +73,6 @@ const Region = () => {
         <Text><div>{region}</div><div>여행 어때요?</div></Text>
       </StyledBox>
       <Main>
-        {/* <div style={{marginTop: '2vh', marginBottom: '2vh'}}>이 지역에 살아본 사람들은 하루 평균 50,000원을 썼어요.</div> */}
         <Tab>
           <Box sx={{ '& > :not(style)': { m: 1 }, mb: '1vh' }}>
             <Fab variant="extended" size="medium" color="primary" aria-label="add" onClick={()=>{router.push(`/reservation/${region}/bnb`)}}>
@@ -86,14 +87,28 @@ const Region = () => {
         </Tab>
         <div style={{display: 'grid'}}>
           <Title>추천 숙소</Title>
-          {bnbItem.length !== 0 && <Item list={bnbItem} url="bnb" /> }
+          {bnbItem.length !== 0 ? <Item list={bnbItem} url="bnb" /> :
+            <StyledError>아직 숙소가 없어요</StyledError>
+          }
           <Title>추천 액티비티</Title>
-          {activityItem.length !== 0 && <Item list={activityItem} url="activity" />}
+          {activityItem.length !== 0 ? <Item list={activityItem} url="activity" /> :
+            <StyledError>아직 액티비티가 없어요</StyledError>
+          }
         </div>
       </Main>
     </Container>
   )
 };
+
+const StyledError = styled.div`
+  width: 70%;
+  height: 7vh;
+  background: #d3d3d3;
+  margin: auto;
+  text-align: center;
+  border-radius: 20px;
+  line-height: 7vh;
+`;
 
 const Title = styled.div`
   margin: 2vh;

@@ -2,13 +2,13 @@ import { useRouter } from 'next/router'
 import styled from 'styled-components';
 import Button from '@mui/material/Button';
 import { ColoredText, BoldText } from '../../styles/Text';
-import { WideButton } from '../../components/WideButton';
+import { useState, useEffect } from "react";
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   height: 100vh;
-  padding-top: 25vh;
+  padding-top: 20vh;
   align-items: center;
   font-size: 20px;
 `;
@@ -21,6 +21,22 @@ const TextContainer = styled.div`
 const Result = () => {
   const router = useRouter();
   const result = router.query.region;
+  const [name, setName] = useState(String(router.query.region).split(" ")[0]);
+  console.log(String(router.query.region).split(" ")[0]);
+
+  const check = (name: any) => {
+    if(name==='전라남도') {setName('전남')}
+    else if(name==='전라북도') {setName('전북')}
+    else if(name==='경상남도') {setName('경남')}
+    else if(name==='경상북도') {setName('경북')}
+    else if(name==='충청남도') {setName('충남')}
+    else if(name==='충청북도') {setName('충북')}
+  }
+
+  useEffect(()=>{
+    check(result);
+  },[result])
+
   return (
     <Container>
       <div style={{width: '70%', marginBottom: '3vh'}}>
@@ -89,7 +105,7 @@ const Result = () => {
             <ColoredText style={{fontSize:'30px'}}>충청북도 청주</ColoredText>
           </TextContainer>}
       </div>
-      <div style={{marginTop: '30vh'}}>
+      <div style={{marginTop: '25vh'}} onClick={()=>{router.push(`/search/${name}`)}}>
         <Button variant="contained" >여행가기</Button>
       </div>
     </Container>

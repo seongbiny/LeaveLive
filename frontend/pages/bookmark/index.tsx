@@ -57,7 +57,7 @@ const Bookmark = () => {
   }
 
   return (
-    <div>
+    <div style={{marginBottom: '13vh'}}>
       <Tabs>
         <TabBox onClick={()=>(setIndex(0))} >숙소</TabBox>
         <TabBox onClick={()=>(setIndex(1))}>액티비티</TabBox>
@@ -105,12 +105,14 @@ const Bookmark = () => {
 
 const TabBox = styled.div`
   &:hover{
-    color: skyblue;
+    color: #00cf95;
+    cursor: pointer;
   }
   height: 7vh;
   border-bottom: 1px solid;
   line-height: 7vh;
   text-align: center;
+  font-size: 1rem;
 `;
 
 const Tabs = styled.div`

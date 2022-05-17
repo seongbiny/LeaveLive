@@ -82,6 +82,7 @@ const Main = () => {
       ({ data }: any) => {console.log(data), setDiaryTom(data)},
       (error: Error) => console.log(error)
     )
+    console.log(day)
   },[])
   
   return (
@@ -93,16 +94,28 @@ const Main = () => {
       </Box>
       <MenuTab/>
       <div style={{marginBottom:'2vh', marginLeft: '5vw', fontWeight: 'bold'}}>오늘 나의 일정</div>
-      {diary.diaryId !== 0 && <div style={{ margin: "3vh" }}>
-        <Item diary={diary} onClick={()=>{router.push(`/dairy`)}} />
-      </div>}
+      {diary.diaryId !== 0 ? <div style={{ margin: "3vh" }}>
+        <Item diary={diary} onClick={()=>{router.push(`/diary`)}} />
+        </div> : <StyledError>일정을 추가하세요</StyledError>
+      }
       <div style={{marginBottom:'2vh', marginLeft: '5vw', fontWeight: 'bold'}}>내일 나의 일정</div>
-      {diary.diaryId !== 0 && <div style={{ margin: "3vh" }}>
-        <Item diary={diaryTom} onClick={()=>{router.push(`/dairy`)}} />
-      </div> }
+      {diary.diaryId !== 0 ? <div style={{ margin: "3vh" }}>
+        <Item diary={diaryTom} onClick={()=>{router.push(`/diary`)}} />
+        </div> : <StyledError>일정을 추가하세요</StyledError>
+      }
     </div>
   )
 };
+
+const StyledError = styled.div`
+  width: 70%;
+  height: 7vh;
+  background: #d3d3d3;
+  margin: auto;
+  text-align: center;
+  border-radius: 20px;
+  line-height: 7vh;
+`;
 
 const Box = styled.div`
   position: relative;
