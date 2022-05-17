@@ -10,6 +10,7 @@ import org.modelmapper.ModelMapper
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
 import java.io.File
+import java.net.URLDecoder
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -43,7 +44,7 @@ class DiaryService(
         diaryRepository.findAllByStatus(Status.PUBLIC).map { modelMapper.map(it, DiaryResponse::class.java) }
 
     fun getAllPublicDiariesByTag(tag: String): List<DiaryResponse> =
-        diaryRepository.findAllByStatusAndTagContains(Status.PUBLIC, tag)
+        diaryRepository.findAllByStatusAndTagContains(Status.PUBLIC, URLDecoder.decode(tag, "UTF-8"))
             .map { modelMapper.map(it, DiaryResponse::class.java) }
 
 
