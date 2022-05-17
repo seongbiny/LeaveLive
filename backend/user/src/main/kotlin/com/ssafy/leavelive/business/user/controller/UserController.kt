@@ -34,6 +34,21 @@ class UserController(private val userService: UserService) {
     fun getInformation(@RequestHeader(name = AUTHORIZATION) token: String): ResponseEntity<UserResponse> =
         ResponseEntity(userService.getUser(token), HttpStatus.OK)
 
+    @Operation(summary = "사용자 프로필 정보 조회", description = "해당하는 아이디의 사용자 닉네임과 프로필사진 경로를 조회한다")
+    @ApiResponses(
+        ApiResponse(responseCode = "200", description = "OK"),
+        ApiResponse(responseCode = "401", description = "액세스 토큰이 유효하지 않습니다"),
+        ApiResponse(responseCode = "403", description = "액세스 토큰이 만료되었습니다")
+    )
+    @Parameters(
+        Parameter(name = "Authorization", description = "액세스 토큰"),
+    )
+    @GetMapping("/{userId}")
+    fun getUserProfile(
+        @RequestHeader(name = AUTHORIZATION) token: String,
+        @PathVariable userId: String
+    ): ResponseEntity<Map<String, String>> = ResponseEntity(userService.getProfileInfo(userId), HttpStatus.OK)
+
     @Operation(summary = "회원가입", description = "서드 파티 인증 서버에서 사용하는 회원가입 기능")
     @ApiResponses(
         ApiResponse(responseCode = "200", description = "OK"),
@@ -99,7 +114,7 @@ class UserController(private val userService: UserService) {
     )
     @DeleteMapping
     fun withdraw(@RequestHeader(name = AUTHORIZATION) token: String): ResponseEntity<Boolean> =
-        ResponseEntity(userService.removeUser(token),HttpStatus.OK)
+        ResponseEntity(userService.removeUser(token), HttpStatus.OK)
 
 
 }

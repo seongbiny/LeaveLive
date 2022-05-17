@@ -13,6 +13,7 @@ import java.io.File
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
+import kotlin.collections.HashMap
 
 @Service
 class UserService(private val userRepository: UserRepository, private val modelMapper: ModelMapper) {
@@ -22,6 +23,16 @@ class UserService(private val userRepository: UserRepository, private val modelM
 
     fun getUsers(): List<UserResponse> =
         userRepository.findAll().map { modelMapper.map(it, UserResponse::class.java) }
+
+    fun getProfileInfo(userId: String) : Map<String, String> {
+        val user = userRepository.findById(userId)
+        val map = HashMap<String,String>()
+        user.ifPresent {
+            map["nickname"] = it.nickname
+            map["picPath"] = it.picPath.orEmpty()
+        }
+        return map
+    }
 
     fun saveUser(token: String, userRequest: UserRequest): UserResponse {
         // extract decodeToken to token util
