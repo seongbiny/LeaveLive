@@ -5,6 +5,8 @@ import { Key, useEffect, useState } from "react";
 import { getUserDiary } from "../../api/user";
 import styled from 'styled-components';
 import { flexCenter } from "../../styles/Basic";
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 interface IType {
     nickname: string;
     picPath: string;
@@ -16,7 +18,6 @@ const DiaryItem = ({content, date, diaryId, picPath, userId, tag, tagFunction}: 
     const [btn, setBtn] = useState(0);
     const textLength = content.length;
     const tags = tag.split(",");
-    const [keyword, setKeyword] = useState('');
 
     useEffect(()=>{
         getUserDiary(
@@ -27,7 +28,7 @@ const DiaryItem = ({content, date, diaryId, picPath, userId, tag, tagFunction}: 
     },[])
 
     return (
-        <div style={{marginBottom: '13vh'}}>
+        <div>
             <Carousel showThumbs={false}>
                 {picPathList.map((pic: any, idx: Key | null | undefined)=>(
                     <div key={idx}>
@@ -40,9 +41,9 @@ const DiaryItem = ({content, date, diaryId, picPath, userId, tag, tagFunction}: 
             </Carousel>
             <div>
                 <Profile>
-                    <img src={`${BACKEND_IMAGE_URL}/${userData.picPath}`} height={30} width={30} />
-                    <div style={{paddingLeft:'2vw', fontSize: '1rem', fontWeight: 'bold'}}>{userData.nickname}</div>
-                    <div style={{marginLeft: 'auto', paddingRight: '2vw'}}>{date}</div>
+                    <img src={`${BACKEND_IMAGE_URL}/${userData.picPath}`} height={30} width={30} style={{marginLeft:'3vw'}} />
+                    <div style={{paddingLeft:'3vw', fontSize: '1rem', fontWeight: 'bold'}}>{userData.nickname}</div>
+                    <div style={{marginLeft: 'auto', paddingRight: '5vw'}}>{date}</div>
                 </Profile>
                 <Main>
                     <TagContainer>
@@ -55,11 +56,11 @@ const DiaryItem = ({content, date, diaryId, picPath, userId, tag, tagFunction}: 
                         btn === 0 ?
                             <>
                                 <Text>{content}</Text>
-                                <div onClick={()=>(setBtn(1))}>더보기</div> 
+                                <div onClick={()=>(setBtn(1))}><ArrowDropDownIcon /></div> 
                             </> :
                             <>
                                 <div>{content}</div>
-                                <div onClick={()=>(setBtn(0))}>접기</div>
+                                <div onClick={()=>(setBtn(0))}><ArrowDropUpIcon /></div>
                             </> :
                         <div>{content}</div>
                     }
@@ -104,6 +105,7 @@ const Main = styled.div`
     padding-left: 5vw;
     padding-right: 5vw;
     margin: 2vh;
+    padding-bottom: 3vh;
 `;
 const Text = styled.div`
   overflow: hidden;

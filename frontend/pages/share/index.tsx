@@ -45,7 +45,7 @@ const Share = () => {
     }
 
     return (
-        <div>
+        <div style={{marginBottom: '13vh'}}>
             {mode === "diary" ?
                 <Header title="여행스타그램" hide={true} /> :
                 <TagTop>
