@@ -60,7 +60,9 @@ class DiaryService(
         if (diary.userId != userId) throw RuntimeException("user id doesn't match")
         modelMapper.map(diaryRequest, diary)
         images.let {
-            diary.picPath = saveImages(it)
+            val path = saveImages(it)
+            if (path != "")
+                diary.picPath = path
         }
         return modelMapper.map(diaryRepository.save(diary), DiaryResponse::class.java)
     }
@@ -89,6 +91,7 @@ class DiaryService(
                 picPath += "diary/${uniquePath},"
             }
         }
+        if (picPath == "") return ""
         return picPath.substring(0, picPath.length - 1)
     }
 }
