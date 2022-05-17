@@ -9,7 +9,11 @@ const Box = styled.div`
   position: relative;
   display: grid;
   margin-bottom: 2vh;
-//   border: 1px solid;
+`;
+const Hover = styled.div`
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const Item = ({ list, url }: any) => {
@@ -35,9 +39,9 @@ const Item = ({ list, url }: any) => {
               </div>
             ))}
           </Carousel>
-          <div style={{marginLeft:'7vw', fontSize: '1rem', paddingTop: '1vh'}}>
+          <Hover style={{marginLeft:'7vw', fontSize: '1rem', paddingTop: '1vh'}}>
               {name}
-          </div>
+          </Hover>
       </Box>
   )
 }

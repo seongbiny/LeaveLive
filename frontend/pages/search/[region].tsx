@@ -91,11 +91,11 @@ const Region = () => {
       <Main>
         <Tab>
           <Box sx={{ '& > :not(style)': { m: 1 }, mb: '1vh' }}>
-            <Fab variant="extended" size="medium" color="primary" aria-label="add" onClick={()=>{router.push(`/reservation/${region}/bnb`)}}>
+            <Fab sx={{ padding: 2 }} variant="extended" size="small" color="primary" aria-label="add" onClick={()=>{router.push(`/reservation/${region}/bnb`)}}>
               <NavigationIcon sx={{ mr: 1 }} />
               숙소
             </Fab>
-            <Fab variant="extended" size="medium" color="primary" aria-label="add" onClick={()=>{router.push(`/reservation/${region}/activity`)}}>
+            <Fab variant="extended" size="small" color="primary" aria-label="add" onClick={()=>{router.push(`/reservation/${region}/activity`)}}>
               <NavigationIcon sx={{ mr: 1 }} />
               액티비티
             </Fab>
@@ -144,9 +144,9 @@ const Text = styled.div`
   // z-index: 100;
   position: absolute;
   color: white;
-  top: 65%;
+  top: 60%;
   left: 10%;
-  font-size: 25px
+  font-size: 1.2rem
 `;
 
 const Main = styled.div`

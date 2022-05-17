@@ -8,12 +8,12 @@ import { useRouter } from 'next/router';
 const Box = styled.div`
   display: flex;
   flex-direction: column;
-  height: 25vh;
-  width: 70vw;
+  height: 30vh;
+  width: 75vw;
   border-radius: 20px;
   align-items: center;
   justify-content: center;
-  font-size: 1.3rem;
+  font-size: 1rem;
   margin-bottom: 20vh;
   text-align: center;
   background-color: lightgray;

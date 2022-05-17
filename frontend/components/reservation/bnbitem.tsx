@@ -11,7 +11,7 @@ import { useRouter } from "next/router";
 const Box = styled.div`
   position: relative;
   display: grid;
-  margin-bottom: 2vh;
+  margin-bottom: 4vh;
 `;
 const Text = styled.div`
   z-index: 100;
@@ -82,7 +82,7 @@ const BnbItem = (props: any) => {
           ))}
         </Carousel>
         <div 
-          style={{marginLeft:'7vw', fontSize: '20px', paddingTop: '1vh', cursor:"pointer"}}
+          style={{marginLeft:'7vw', fontSize: '1rem', paddingTop: '1vh', cursor:"pointer"}}
           onClick={() => {
             router.push(
                 {

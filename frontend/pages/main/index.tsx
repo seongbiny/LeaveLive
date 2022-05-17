@@ -3,21 +3,10 @@ import Seo from "../../components/Seo";
 import Image from "next/image";
 import styled from 'styled-components';
 import MenuTab from '../../components/main/MenuTab';
-import Button from '@mui/material/Button';
-import Schedule from "../../components/main/schedule";
 import { getUserInfo } from "../../api/user";
 import { getDiary } from "../../api/diary";
 import Item from "../../components/main/Item";
 import { useRouter } from "next/router";
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-  height: 25vh;
-  border: 1px solid;
-`;
 
 interface IProps {
   content: string,
@@ -109,12 +98,15 @@ const Main = () => {
 
 const StyledError = styled.div`
   width: 70%;
-  height: 7vh;
-  background: #d3d3d3;
+  height: 20vh;
+  color: gray;
   margin: auto;
   text-align: center;
   border-radius: 20px;
-  line-height: 7vh;
+  line-height: 20vh;
+  margin-top: 3vh;
+  margin-bottom: 3vh;
+  border: 1px dashed;
 `;
 
 const Box = styled.div`

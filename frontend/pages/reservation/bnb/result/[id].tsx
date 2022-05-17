@@ -8,15 +8,15 @@ import { getBnbList } from "../../../../api/bnb";
 const Box = styled.div`
   display: flex;
   flex-direction: column;
-  height: 25vh;
-  width: 70vw;
+  height: 30vh;
+  width: 75vw;
   border-radius: 20px;
   align-items: center;
   justify-content: center;
-  font-size: 25px;
+  font-size: 1rem;
   margin-bottom: 20vh;
   text-align: center;
-  background-color: #d3d3d3;
+  background-color: lightgray;
 `;
 
 const Container = styled.div`
@@ -60,7 +60,7 @@ const Confirm = () => {
       <Box>
           {list.length !== 0 &&
             <>
-                <div>{name}</div>
+                <div style={{width: '60%', marginBottom: '2vh'}}>{name}</div>
                 <div>{startDay} 부터</div>
                 <div>{endDay} 까지</div>
                 <div>예약되었습니다.</div>
