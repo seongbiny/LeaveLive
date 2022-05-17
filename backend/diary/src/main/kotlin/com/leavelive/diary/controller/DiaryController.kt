@@ -60,8 +60,8 @@ class DiaryController(private val diaryService: DiaryService) {
         ResponseEntity(diaryService.getAllPublicDiaries(), HttpStatus.OK)
 
 
-    @GetMapping("/search/{tag}")
-    fun getAllPublicDiariesByTag(@PathVariable tag: String) : ResponseEntity<List<DiaryResponse>>
+    @GetMapping("/search")
+    fun getAllPublicDiariesByTag(@RequestParam tag: String) : ResponseEntity<List<DiaryResponse>>
     = ResponseEntity(diaryService.getAllPublicDiariesByTag(tag), HttpStatus.OK)
 
 
