@@ -15,6 +15,7 @@ interface IPropTypes {
 interface IContainer {
   backgroundColor: string;
 }
+
 const Container = styled.div<IContainer>`
   ${flexCenter}
   background-color: #dffff4;

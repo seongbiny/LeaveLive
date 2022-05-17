@@ -1,10 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react";
 import Header from "../../components/Header";
 import { useRouter } from "next/router";
-import InputForm from "../../components/diary/form/InputForm";
-import Switch from "../../components/diary/form/Switch";
-import ImageForm from "../../components/diary/form/ImageForm";
 import styled from "styled-components";
+import { InputForm, Switch, ImageForm } from "../../components/diary/form";
 import { Container, Wrapper } from "../../styles/Basic";
 import { WideButton } from "../../components/WideButton";
 import { writeDiary } from "../../api/diary";

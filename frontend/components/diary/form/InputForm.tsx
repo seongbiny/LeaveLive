@@ -44,7 +44,8 @@ const InputForm = ({ values, setValues }: IPropTypes) => {
 
   const AddTags = (event: React.KeyboardEvent) => {
     if (event.key === " " || event.key === "Enter") {
-      if (!tag.trim()) {
+      // 아무 내용도 작성하지 않거나 이미 작성된 태그는 추가하지 않음
+      if (!tag.trim() || values.tags.includes(tag.trim())) {
         setTag("");
         return;
       }
