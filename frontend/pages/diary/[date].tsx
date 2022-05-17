@@ -10,11 +10,13 @@ import LockRoundedIcon from "@mui/icons-material/LockRounded";
 import LockOpenRoundedIcon from "@mui/icons-material/LockOpenRounded";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import Link from "next/link";
+import { flexCenter } from "../../styles/Basic";
+import Tag from "../../components/diary/Tag";
 
 interface IDiary {
   id: number;
   content: string;
-  tag: string;
+  tags: Array<string>;
   status: string;
   picPath: string;
 }
@@ -25,13 +27,39 @@ export const ContentsWrapper = styled(Wrapper)`
   margin-bottom: 75px;
 `;
 
+const MenuContainer = styled.div`
+  ${flexCenter}
+  width: 100%;
+  margin-bottom: 1rem;
+`;
+
+const MenuIconContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  flex: 1;
+`;
+
+const DiaryContentContainer = styled.div`
+  width: 100%;
+  line-height: 1.8rem;
+`;
+
+const TagContainer = styled.div`
+  ${flexCenter}
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: flex-start;
+  margin: 1rem 0;
+`;
+
 const DiaryContents = () => {
   const router = useRouter();
+  const [title, setTitle] = useState<string>("");
   const [date, setDate] = useState<string>(String(router.query.date));
   const [diary, setDiary] = useState<IDiary>({
     id: -1,
     content: "",
-    tag: "",
+    tags: [],
     status: "",
     picPath: "",
   });
@@ -50,13 +78,16 @@ const DiaryContents = () => {
   }, []);
 
   useEffect(() => {
+    const dateArr = String(router.query.date).split("-");
+    setTitle(`${dateArr[0]}년 ${dateArr[1]}월 ${dateArr[2]}일`);
+
     getDiary(
       date,
       ({ data }: any) => {
         const value = {
           id: data.diaryId,
           content: data.content,
-          tag: data.tag,
+          tags: data.tag.split(","),
           status: data.status,
           picPath: data.picPath,
         };
@@ -70,27 +101,46 @@ const DiaryContents = () => {
 
   return (
     <Container>
-      <Header title={date} />
+      <Header title={title} />
       <Carousel picPath={diary.picPath} />
       <ContentsWrapper>
-        <div>
-          <Link
-            href={{
-              pathname: "/diary/update",
-              query: { date },
-            }}
-          >
-            <EditRoundedIcon />
-          </Link>
-          {diary.status === "PUBLIC" ? (
-            <LockOpenRoundedIcon />
-          ) : (
-            <LockRoundedIcon />
-          )}
-          <CloseRoundedIcon onClick={removeDiary} />
-        </div>
-        <div>{diary.content}</div>
-        <div>{diary.tag}</div>
+        <MenuContainer>
+          <div style={{ flex: 2.5 }}>
+            {String(router.query.date).split("-").join(".")}
+          </div>
+          <MenuIconContainer>
+            <Link
+              href={{
+                pathname: "/diary/update",
+                query: { date },
+              }}
+            >
+              <EditRoundedIcon />
+            </Link>
+            {diary.status === "PUBLIC" ? (
+              <LockOpenRoundedIcon />
+            ) : (
+              <LockRoundedIcon />
+            )}
+            <CloseRoundedIcon onClick={removeDiary} />
+          </MenuIconContainer>
+        </MenuContainer>
+
+        <DiaryContentContainer>
+          {diary.content.split("\n").map((line, index) => {
+            return (
+              <span key={index}>
+                {line}
+                <br />
+              </span>
+            );
+          })}
+        </DiaryContentContainer>
+        <TagContainer>
+          {diary.tags.map((tag, index) => (
+            <Tag text={tag} />
+          ))}
+        </TagContainer>
       </ContentsWrapper>
     </Container>
   );
