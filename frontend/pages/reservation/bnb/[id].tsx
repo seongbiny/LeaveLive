@@ -1,6 +1,6 @@
 import { DateRange } from 'react-date-range';
 import { addDays } from "date-fns"
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import locale from 'date-fns/locale/ko';
@@ -12,8 +12,9 @@ import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import Button from '@mui/material/Button';
-import { bnbReservation } from "../../../api/bnb";
+import { bnbReservation, getPossible } from "../../../api/bnb";
 import { useRouter } from 'next/router';
+import { format } from "date-fns";
 
 const Container = styled.div`
   // display: flex;
@@ -46,9 +47,19 @@ const BottomNav = styled.div`
   // border: 1px solid;
 `;
 
+interface IBnbDates {
+  startDate: Date;
+  endDate: Date;
+}
+
 const ReservationBnb = () => {
   const router = useRouter();
   const id = router.query.id;
+  const [bnbDates, setBnbDates] = useState<Array<IBnbDates>>([]);
+  // const [pickS, setPickS] = useState<Date>(new Date);
+  // const [pickE, setPickE] = useState<Date>(new Date);
+  const [pickS, setPickS] = useState<Array<Date>>([new Date]);
+  const [pickE, setPickE] = useState<Array<Date>>([new Date]);
   const [adult, setAdult] = useState<number>(0);
   const [children, setChildren] = useState<number>(0);
   const [baby, setBaby] = useState(0);
@@ -109,12 +120,58 @@ const ReservationBnb = () => {
     id,
     dto,
     ({ data }: any) => {
-        console.log(data);
         router.push(`/reservation/bnb/result/${data}`)
     },
     (error: Error) => console.log(error)
     )
   }
+
+  useEffect(()=>{
+    getPossible(
+      id,
+      ({ data }: any) => {
+        setBnbDates(
+          data.map((item: any)=>({
+            startDate: new Date(item.startDate.join("-")),
+            endDate: new Date(item.endDate.join("-")),
+          }))
+        );
+      },
+      (error: Error) => console.log(error)
+    )
+  },[])
+  console.log(bnbDates)
+
+  const customDayContent = useCallback((day: Date) => {
+    let extraDot: any = null;
+    for(let i = 0; i < bnbDates.length; i++) {
+      if (
+        (bnbDates[i].startDate <= day) && 
+        (day < bnbDates[i].endDate)
+      ) {
+        extraDot = (
+          <div
+            style={{
+              height: "5px",
+              width: "5px",
+              borderRadius: "100%",
+              background: "orange",
+              position: "absolute",
+              top: 2,
+              right: 2,
+            }}
+          />
+        );
+        break;
+      }
+    }
+    return (
+      <div>
+        {extraDot}
+        <span>{format(day, "d")}</span>
+      </div>
+    );
+  }, [bnbDates]);
 
   return (
     <div style={{marginBottom: '10vh'}}>
@@ -128,16 +185,19 @@ const ReservationBnb = () => {
         
         <div style={{paddingLeft:'4vw', fontSize: '1.2rem', paddingBottom:'2vh'}}>날짜를 선택하세요.</div>
         <div style={{textAlign: 'center'}}>
-          <DateRange
-            // @ts-ignore
-            locale={locale}
-            editableDateInputs={true}
-            moveRangeOnFirstSelection={false}
-            rangeColors={[theme.palette.primary.main]}
-            ranges={state}
-            months={2}
-            onChange={(range: any) => {setState([range.selection]); setStartDate([range.selection][0].startDate); setEndDate([range.selection][0].endDate)}}
-          />
+          {(pickS !== [new Date] && pickE !== [new Date]) &&
+            <DateRange
+              // @ts-ignore
+              locale={locale}
+              editableDateInputs={true}
+              moveRangeOnFirstSelection={false}
+              rangeColors={[theme.palette.primary.main]}
+              ranges={state}
+              months={2}
+              onChange={(range: any) => {setState([range.selection]); setStartDate([range.selection][0].startDate); setEndDate([range.selection][0].endDate)}}
+              dayContentRenderer={customDayContent}
+            />
+          }
         </div>
 
         <div style={{paddingLeft:'4vw', fontSize: '1.2rem', paddingBottom:'2vh'}}>인원을 선택하세요.</div>
