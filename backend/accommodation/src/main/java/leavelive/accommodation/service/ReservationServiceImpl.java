@@ -3,6 +3,7 @@ package leavelive.accommodation.service;
 import leavelive.accommodation.domain.AccommodationArticle;
 import leavelive.accommodation.domain.AccommodationRes;
 import leavelive.accommodation.domain.dto.AccommodationResDto;
+import leavelive.accommodation.domain.dto.AccommodationResNope;
 import leavelive.accommodation.domain.dto.AccommodationResRes;
 import leavelive.accommodation.exception.MyResourceNotFoundException;
 import leavelive.accommodation.repository.AccommodationRepository;
@@ -38,9 +39,9 @@ public class ReservationServiceImpl {
         return list;
     }
 
-    public List<AccommodationResDto> findAllByAccommodatinoId(Long id){
+    public List<AccommodationResNope> findAllByAccommodatinoId(Long id){
         List<AccommodationRes> entities=repo.findByAccommodationArticleId(id);
-        List<AccommodationResDto> list=entities.stream().map(AccommodationResDto::of).collect(Collectors.toList());
+        List<AccommodationResNope> list=entities.stream().map(AccommodationResNope::of).collect(Collectors.toList());
         return list;
     }
 

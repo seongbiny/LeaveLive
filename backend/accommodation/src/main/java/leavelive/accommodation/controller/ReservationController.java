@@ -1,6 +1,7 @@
 package leavelive.accommodation.controller;
 
 import leavelive.accommodation.domain.dto.AccommodationResDto;
+import leavelive.accommodation.domain.dto.AccommodationResNope;
 import leavelive.accommodation.domain.dto.AccommodationResRes;
 import leavelive.accommodation.service.ReservationServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +29,7 @@ public class ReservationController {
 
     @GetMapping("/all/{accommodation_id}")
     public ResponseEntity<List<AccommodationResDto>> getAllAccommodation(@PathVariable("accommodation_id") Long id) {
-        List<AccommodationResDto> list = service.findAllByAccommodatinoId(id);
+        List<AccommodationResNope> list = service.findAllByAccommodatinoId(id);
         return new ResponseEntity(list, HttpStatus.OK);
     }
 
