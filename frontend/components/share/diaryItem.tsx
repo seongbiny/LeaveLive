@@ -4,21 +4,24 @@ import { BACKEND_IMAGE_URL } from "../../api";
 import { Key, useEffect, useState } from "react";
 import { getUserDiary } from "../../api/user";
 import styled from 'styled-components';
+import { flexCenter } from "../../styles/Basic";
 interface IType {
     nickname: string;
     picPath: string;
 }
 
-const DiaryItem = ({content, date, diaryId, picPath, userId}: any) => {
+const DiaryItem = ({content, date, diaryId, picPath, userId, tag, tagFunction}: any) => {
     const picPathList = picPath.split(",");
     const [userData, setUserData] = useState<IType | any>({});
     const [btn, setBtn] = useState(0);
     const textLength = content.length;
+    const tags = tag.split(",");
+    const [keyword, setKeyword] = useState('');
 
     useEffect(()=>{
         getUserDiary(
             userId,
-            ({ data }: any) => {console.log(data), setUserData(data)},
+            ({ data }: any) => {setUserData(data)},
             (error: Error): any => console.log(error)
         )
     },[])
@@ -42,6 +45,12 @@ const DiaryItem = ({content, date, diaryId, picPath, userId}: any) => {
                     <div style={{marginLeft: 'auto', paddingRight: '2vw'}}>{date}</div>
                 </Profile>
                 <Main>
+                    <TagContainer>
+                        {tags.map((tag: any, idx: any)=>{
+                            return <TagIcon key={idx} onClick={()=>{tagFunction(tag)}}><span>{tag}</span></TagIcon>
+                        })}
+                    </TagContainer>
+                
                     {textLength > 50 ?
                         btn === 0 ?
                             <>
@@ -60,9 +69,32 @@ const DiaryItem = ({content, date, diaryId, picPath, userId}: any) => {
     )
 };
 
+const TagIcon = styled.div`
+${flexCenter}
+background-color: #dffff4;
+border-radius: 20px;
+padding: 0.3rem 1rem;
+font-size: 0.8rem;
+margin-right: 0.5rem;
+margin-bottom: 0.8rem;
+& > span {
+  margin-right: 0.3rem;
+  margin-bottom: 2px;
+}
+
+&:hover {
+  cursor: pointer;
+}
+`;
+
+const TagContainer = styled.div`
+  ${flexCenter}
+  flex-wrap: wrap;
+  justify-content: start;
+`;
+
 const Profile = styled.div`
     display: flex;
-    // border: 1px solid;
     padding-left: 2vw;
     padding-top: 2vw;
     align-items: center;
@@ -72,7 +104,6 @@ const Main = styled.div`
     padding-left: 5vw;
     padding-right: 5vw;
     margin: 2vh;
-    // border: 1px solid;
 `;
 const Text = styled.div`
   overflow: hidden;

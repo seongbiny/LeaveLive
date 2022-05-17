@@ -40,3 +40,7 @@ export const publicDiary = async (params: any, success: any, fail: any) => {
 export const deleteDiary = async (diaryId: any, success: any, fail: any) => {
   await api.delete(`/diary/${diaryId}`).then(success).catch(fail);
 };
+
+export const tagDiary = async (params: any, success: any, fail: any) => {
+  await api.get(`/diary/search?tag=${params}`).then(success).catch(fail);
+};
