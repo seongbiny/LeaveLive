@@ -21,15 +21,18 @@ class DiaryService(private val diaryRepository: DiaryRepository, private val mod
 
     fun get(token: String, date: String): DiaryResponse {
         val userId = JwtUtil.decodeToken(token)
-        return modelMapper.map(
-            diaryRepository.findByUserIdAndDate(
-                userId,
-                LocalDate.parse(date, DateTimeFormatter.ISO_DATE)
-            ).get(), DiaryResponse::class.java
-        )
+        return try {
+            modelMapper.map(
+                diaryRepository.findByUserIdAndDate(
+                    userId,
+                    LocalDate.parse(date, DateTimeFormatter.ISO_DATE)
+                ).get(), DiaryResponse::class.java)
+        } catch (e: NoSuchElementException) {
+            DiaryResponse()
+        }
     }
 
-    fun getAllDiaries(token: String) : List<DiaryResponse> {
+    fun getAllDiaries(token: String): List<DiaryResponse> {
         val userId = JwtUtil.decodeToken(token)
         return diaryRepository.findAllByUserId(userId).map { modelMapper.map(it, DiaryResponse::class.java) }
     }
