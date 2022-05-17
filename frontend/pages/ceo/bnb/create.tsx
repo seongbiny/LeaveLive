@@ -29,6 +29,7 @@ export interface IImages {
 export const ContentsWrapper = styled(Wrapper)`
   justify-content: flex-start;
   padding-top: 2rem;
+  margin-bottom: 75px;
 `;
 
 const BnbCreate = () => {
