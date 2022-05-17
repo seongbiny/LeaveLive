@@ -45,6 +45,7 @@ const ActivityList = () => {
   return (
     <div>
       <Header title={String(region)} hide={false} />
+      <div>
         {list?.map((act) => (
           <ActivityItem
             key={act.id}
@@ -57,6 +58,7 @@ const ActivityList = () => {
             loc={act.loc}
           />
         ))}
+      </div>
     </div>
   )
 };

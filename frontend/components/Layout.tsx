@@ -42,18 +42,18 @@ export default function Layout({ children }: any) {
   const isMobile = useIsMobile();
   return (
     <Container>
-      {/* {isMobile ? (
+      {isMobile ? (
         <>
           <Main>{children}</Main>
           {showNav ? isUser ? <LabelBottomNavigation /> : <CeoNav /> : null}
         </>
       ) : (
         <div>모바일로 접속해주세요.</div>
-      )} */}
-      <>
+      )}
+      {/* <>
         <Main>{children}</Main>
         {showNav ? isUser ? <LabelBottomNavigation /> : <CeoNav /> : null}
-      </>
+      </> */}
     </Container>
   );
 }

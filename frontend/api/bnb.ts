@@ -40,3 +40,7 @@ export const bnbCancel = async (accommodation_res_id: any, success: any, fail: a
 export const getBnbList = async (params: any, success: any, fail: any) => {
     await api.get(`/accommodation/reservation/`).then(success).catch(fail);
 }
+
+export const getPossible = async (params: any, success: any, fail: any) => {
+    await api.get(`/accommodation/reservation/all/${params}`).then(success).catch(fail);
+}
