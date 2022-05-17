@@ -43,7 +43,7 @@ class UserController(private val userService: UserService) {
     @Parameters(
         Parameter(name = "Authorization", description = "액세스 토큰"),
     )
-    @GetMapping("/{userId}")
+    @GetMapping("/profile/{userId}")
     fun getUserProfile(
         @RequestHeader(name = AUTHORIZATION) token: String,
         @PathVariable userId: String
