@@ -79,7 +79,7 @@ class DiaryService(
         var picPath = ""
         val path = "/home/ubuntu/images/diary"
         images.forEach {
-            it.let {
+            if (!it.isEmpty) {
                 var uniquePath = "${LocalDate.now().format(DateTimeFormatter.ISO_DATE)}${UUID.randomUUID()}"
                 when (it.contentType?.lowercase()) {
                     "image/png" -> uniquePath += ".png"
