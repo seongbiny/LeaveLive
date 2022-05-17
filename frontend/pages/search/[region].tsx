@@ -34,7 +34,7 @@ interface TypeActivity{
 
 const Region = () => {
   const router = useRouter();
-  const [region, setRegion] = useState(router.query.region);
+  const [region, setRegion] = useState(String(router.query.region));
   const [bnbItem, setBnbItem] = useState<Array<TypeBnb>>([]);
   const [activityItem, setActivityItem] = useState<Array<TypeActivity>>([]);
 
@@ -47,23 +47,39 @@ const Region = () => {
     else if(name==='충청북도') {setRegion('충북')}
   }
 
-  useEffect(() => {
+  useEffect(()=>{
     check(region);
-    bnbList(
-      region,
-      ({ data }: any) => {
-        setBnbItem(data.sort(()=>Math.random()-0.5).slice(0,1));
-      },
-      (error: Error) => console.log(error)
-    );
-    activityList(
-      region,
-      ({ data }: any) => {
-        setActivityItem(data.sort(()=>Math.random()-0.5).slice(0,1));
-      },
-      (error: Error) => console.log(error)
-    );
+    console.log(region)
+  },[])
+  
+  useEffect(() => {
+    if(region.length <= 3){
+      bnbList(
+        region,
+        ({ data }: any) => {
+          data.sort(()=>Math.random()-0.5);
+          setBnbItem(data.slice(0,1));
+          console.log(data.slice(0,1))
+        },
+        (error: Error) => console.log(error)
+      );
+    }
+    
   }, [region]);
+
+  useEffect(()=>{
+    if(region.length <= 3) {
+      activityList(
+        region,
+        ({ data }: any) => {
+          data.sort(()=>Math.random()-0.5);
+          setActivityItem(data.slice(0,1));
+          console.log(data.slice(0,1))
+        },
+        (error: Error) => console.log(error)
+      );
+    }
+    },[region])
 
   return (
     <Container>
@@ -88,11 +104,11 @@ const Region = () => {
         <div style={{display: 'grid'}}>
           <Title>추천 숙소</Title>
           {bnbItem.length !== 0 ? <Item list={bnbItem} url="bnb" /> :
-            <StyledError>아직 숙소가 없어요</StyledError>
+            <StyledError>숙소가 없습니다.</StyledError>
           }
           <Title>추천 액티비티</Title>
           {activityItem.length !== 0 ? <Item list={activityItem} url="activity" /> :
-            <StyledError>아직 액티비티가 없어요</StyledError>
+            <StyledError>데이터가 없습니다.</StyledError>
           }
         </div>
       </Main>

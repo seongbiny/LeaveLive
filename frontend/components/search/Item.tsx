@@ -18,11 +18,7 @@ const Item = ({ list, url }: any) => {
   const name = list[0].name;
   const router = useRouter();
   const region = router.query.region;
-
-  useEffect(()=>{
-    console.log(list)
-  },[])
-
+  
   return(
       <Box>
           <Carousel infiniteLoop showThumbs={false}>
@@ -32,7 +28,6 @@ const Item = ({ list, url }: any) => {
                 style={{marginLeft: '5vw', marginRight: '5vw'}}
                 onClick={()=>{router.push(`/reservation/${region}/${url}/${id}`)}}
               >
-                    
                 <img 
                   src={`${BACKEND_IMAGE_URL}/${pic}`} 
                   width={350} height={200} 

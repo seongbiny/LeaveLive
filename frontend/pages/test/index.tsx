@@ -40,7 +40,7 @@ const Test1: NextPage<Props> = ({setStep}) => {
       <Main style={{height: '35vh'}}>
         <div>
           <div style={{fontSize: '1.7rem', fontWeight:'bold', paddingBottom:'1vh'}}>질문1</div>
-          <div>자연에서 쉬고싶다.</div>
+          <div style={{fontSize: '1.3rem', fontWeight:'bold'}}>자연에서 쉬고싶다.</div>
         </div>
         <Option style={{width: '40vw'}} onClick={()=>(setStep(1))}>Yes</Option>
         <Option style={{width: '40vw'}} onClick={()=>(setStep(2))}>No</Option>
@@ -58,7 +58,7 @@ const Test2: NextPage<Props> = ({setStep}) => {
       <Main style={{height: '35vh'}}>
         <div>
           <div style={{fontSize: '1.7rem', fontWeight:'bold', paddingBottom:'1vh'}}>질문2</div>
-          <div>산이 좋아? 바다가 좋아?</div>
+          <div style={{fontSize: '1.3rem', fontWeight:'bold'}}>산이 좋아? 바다가 좋아?</div>
         </div>
         <Option style={{width: '50vw'}} onClick={()=>(setStep(3))}>산이 좋다.</Option>
         <Option style={{width: '50vw'}} onClick={()=>(setStep(4))}>바다가 좋다.</Option>
@@ -76,7 +76,7 @@ const Test3: NextPage<Props> = ({setStep}) => {
       <Main style={{height: '35vh'}}>
         <div>
           <div style={{fontSize: '1.7rem', fontWeight:'bold', paddingBottom:'1vh'}}>질문2</div>
-          <div>더 좋아하는 여행 분위기는?</div>
+          <div style={{fontSize: '1.3rem', fontWeight:'bold'}}>더 좋아하는 여행 분위기는?</div>
         </div>
         <Option style={{width: '75vw'}} onClick={()=>(setStep(5))}>도시가 좋다.</Option>
         <Option style={{width: '75vw'}} onClick={()=>(setStep(6))}>조용한 휴양지가 좋다.</Option>
@@ -111,7 +111,7 @@ const Test4: NextPage = () => {
       <Main style={{height: '35vh'}}>
         <div>
           <div style={{fontSize: '1.7rem', fontWeight:'bold', paddingBottom:'1vh'}}>질문3</div>
-          <div>여행은 역시 맛집탐방이다.</div>
+          <div style={{fontSize: '1.3rem', fontWeight:'bold'}}>여행은 역시 맛집탐방이다.</div>
         </div>
         <Option style={{width: '30vw'}} onClick={handleClick_5}>Yes</Option>
         <Option style={{width: '30vw'}} onClick={handleClick_6}>No</Option>
@@ -145,7 +145,7 @@ const Test5: NextPage = () => {
       <Main style={{height: '35vh'}}>
         <div>
           <div style={{fontSize: '1.7rem', fontWeight:'bold', paddingBottom:'1vh'}}>질문3</div>
-          <div>이색적이고 특별한 곳이 좋다.</div>
+          <div style={{fontSize: '1.3rem', fontWeight:'bold'}}>이색적이고 특별한 곳이 좋다.</div>
         </div>
         <Option style={{width: '40vw'}} onClick={handleClick_7}>Yes</Option>
         <Option style={{width: '40vw'}} onClick={handleClick_8}>No</Option>
@@ -209,7 +209,7 @@ const Test7: NextPage = () => {
       <Progress><Bar barWidth="99%" /><img style={{position: 'absolute', top:'2%', left: '80%'}} src="/train.png" height={60} width={60} /></Progress>
       <Main style={{height: '35vh'}}>
         <div style={{fontSize: '1.7rem', fontWeight:'bold', paddingBottom:'1vh'}}>질문3</div>
-        <div>수도권기준! 거리는?</div>
+        <div style={{fontSize: '1.3rem', fontWeight:'bold'}}>수도권기준! 거리는?</div>
         <Option style={{width: '60vw'}} onClick={handleClick_11}>가까운게 좋다.</Option>
         <Option style={{width: '60vw'}} onClick={handleClick_12}>먼게 좋다.</Option>
       </Main>

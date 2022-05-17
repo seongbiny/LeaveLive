@@ -23,9 +23,9 @@ const BnbList = () => {
   useEffect(() => {
     bnbList(
       region,
-      (data: any) => {
-        setList(data.data);
-        console.log(data.data)
+      ({ data }: any) => {
+        setList(data);
+        console.log(data)
       },
       (error: Error) => console.log(error)
     )
