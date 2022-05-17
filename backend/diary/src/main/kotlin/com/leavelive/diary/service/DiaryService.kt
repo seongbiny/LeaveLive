@@ -10,14 +10,15 @@ import org.modelmapper.ModelMapper
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
 import java.io.File
-import java.nio.file.Paths
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
-import kotlin.io.path.Path
 
 @Service
-class DiaryService(private val diaryRepository: DiaryRepository, private val modelMapper: ModelMapper) {
+class DiaryService(
+    private val diaryRepository: DiaryRepository,
+    private val modelMapper: ModelMapper
+) {
 
     fun get(token: String, date: String): DiaryResponse {
         val userId = JwtUtil.decodeToken(token)
@@ -26,7 +27,8 @@ class DiaryService(private val diaryRepository: DiaryRepository, private val mod
                 diaryRepository.findByUserIdAndDate(
                     userId,
                     LocalDate.parse(date, DateTimeFormatter.ISO_DATE)
-                ).get(), DiaryResponse::class.java)
+                ).get(), DiaryResponse::class.java
+            )
         } catch (e: NoSuchElementException) {
             DiaryResponse()
         }
