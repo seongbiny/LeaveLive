@@ -26,6 +26,12 @@ public class ReservationController {
         return new ResponseEntity(list, HttpStatus.OK);
     }
 
+    @GetMapping("/all/{accommodation_id}")
+    public ResponseEntity<List<AccommodationResDto>> getAllAccommodation(@PathVariable("accommodation_id") Long id) {
+        List<AccommodationResDto> list = service.findAllByAccommodatinoId(id);
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
+
     @PostMapping("/{accommodation_id}")
     public ResponseEntity<Long> reservationAccommodation(HttpServletResponse response, @PathVariable("accommodation_id") Long id, @RequestBody AccommodationResDto request) {
         String userId = response.getHeader("userId");

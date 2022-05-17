@@ -38,6 +38,12 @@ public class ReservationServiceImpl {
         return list;
     }
 
+    public List<AccommodationResDto> findAllByAccommodatinoId(Long id){
+        List<AccommodationRes> entities=repo.findByAccommodationArticleId(id);
+        List<AccommodationResDto> list=entities.stream().map(AccommodationResDto::of).collect(Collectors.toList());
+        return list;
+    }
+
     /**
      * 예약할 수 있는 날짜인지 확인
      * myStart와 myEnd가 구간 안에 있으면 이미 예약되어있으므로 예약 불가
