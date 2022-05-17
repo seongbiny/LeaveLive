@@ -44,7 +44,7 @@ class DiaryService(
         diaryRepository.findAllByStatus(Status.PUBLIC).map { modelMapper.map(it, DiaryResponse::class.java) }
 
     fun getAllPublicDiariesByTag(tag: String): List<DiaryResponse> =
-        diaryRepository.findAllByStatusAndTagContains(Status.PUBLIC, URLDecoder.decode(tag, "UTF-8"))
+        diaryRepository.findAllByStatusAndTagContains(Status.PUBLIC, tag)
             .map { modelMapper.map(it, DiaryResponse::class.java) }
 
 
