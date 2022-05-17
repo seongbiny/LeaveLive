@@ -77,17 +77,18 @@ class DiaryService(
         var picPath = ""
         val path = "/home/ubuntu/images/diary"
         images.forEach {
-            var uniquePath = "${LocalDate.now().format(DateTimeFormatter.ISO_DATE)}${UUID.randomUUID()}"
-            when (it.contentType?.lowercase()) {
-                "image/png" -> uniquePath += ".png"
-                "image/jpeg" -> uniquePath += ".jpeg"
+            it.let {
+                var uniquePath = "${LocalDate.now().format(DateTimeFormatter.ISO_DATE)}${UUID.randomUUID()}"
+                when (it.contentType?.lowercase()) {
+                    "image/png" -> uniquePath += ".png"
+                    "image/jpeg" -> uniquePath += ".jpeg"
+                }
+                val file = File(path)
+                if (!file.exists()) file.mkdirs()
+                it.transferTo(File("$path/${uniquePath}"))
+                picPath += "diary/${uniquePath},"
             }
-            val file = File(path)
-            if (!file.exists()) file.mkdirs()
-            it.transferTo(File("$path/${uniquePath}"))
-            picPath += "diary/${uniquePath},"
         }
-
         return picPath.substring(0, picPath.length - 1)
     }
 }
