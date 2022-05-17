@@ -10,8 +10,7 @@ import { useRouter } from "next/router";
 const Box = styled.div`
   position: relative;
   display: grid;
-  margin-bottom: 2vh;
-//   border: 1px solid;
+  margin-bottom: 3vh;
 `;
 const Text = styled.div`
   z-index: 100;
@@ -44,15 +43,15 @@ const BnbItem = (props: any) => {
             <Text>
                 <FavoriteIcon fontSize="medium" sx={{color: '#FF385C'}} onClick={()=>{unlikeAxios()}} />
             </Text>
-            <div onClick={props.onClick}>
+            <div>
                 <Carousel infiniteLoop showThumbs={false}>
                     {picPath.map((pic, idx)=>(
-                        <div key={idx} style={{marginLeft: '5vw', marginRight: '5vw'}}>
-                            <img src={`${BACKEND_IMAGE_URL}/${pic}`} style={{borderRadius: '10px'}} width={350} height={250} />
+                        <div key={idx} style={{marginLeft: '5.5vw', marginRight: '5.5vw'}}>
+                            <img src={`${BACKEND_IMAGE_URL}/${pic}`} style={{borderRadius: '10px'}} width="70%" height={230} />
                         </div>
                     ))}
                 </Carousel>
-                <div style={{marginLeft:'7vw', fontSize: '20px', paddingTop: '1vh'}}>{props.name}</div>
+                <div style={{marginLeft:'7vw', fontSize: '1.1rem', paddingTop: '1vh', cursor: 'pointer'}} onClick={props.onClick} >{props.name}</div>
             </div>
         </Box> 
     )

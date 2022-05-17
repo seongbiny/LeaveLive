@@ -63,8 +63,8 @@ const ReservationBnb = () => {
   ])
   const startDay = String(startDate).split(' ');
   const endDay = String(endDate).split(' ');
-  // const [reservationCnt, setReservationCnt] = useState(0);
-  const reservationCnt = children+baby+adult;
+  const [reservationCnt, setReservationCnt] = useState(0);
+  // const reservationCnt = children+baby+adult;
   
   const MonChange = (mon: any) => {
     if (mon === 'Jan') {
@@ -102,6 +102,7 @@ const ReservationBnb = () => {
         cnt: reservationCnt,
         startDate: reservationStart,
         endDate: reservationEnd,
+        // id: id
       };
     console.log(dto)
     await bnbReservation(
@@ -125,7 +126,7 @@ const ReservationBnb = () => {
           <CloseIcon sx={{color:'#60ffc6'}}/>
         </StyledTab>
         
-        <div>날짜를 선택하세요.</div>
+        <div style={{paddingLeft:'4vw', fontSize: '1.2rem', paddingBottom:'2vh'}}>날짜를 선택하세요.</div>
         <div style={{textAlign: 'center'}}>
           <DateRange
             // @ts-ignore
@@ -139,47 +140,46 @@ const ReservationBnb = () => {
           />
         </div>
 
-        <div>인원을 선택하세요.</div>
+        <div style={{paddingLeft:'4vw', fontSize: '1.2rem', paddingBottom:'2vh'}}>인원을 선택하세요.</div>
         <hr />
         <Tabs>
           <div>
-            <div>성인</div>
-            <div>만 13세 이상</div>
+            <div style={{fontSize: '1.1rem', paddingBottom: '1vh'}}>성인</div>
+            <div style={{fontSize: '0.8rem', color: 'gray'}}>만 13세 이상</div>
           </div>
           <div>
-            <Fab size="small" aria-label="add"><AddIcon onClick={()=>(setAdult(adult+1))} /></Fab>
+            <Fab size="small" aria-label="add"><AddIcon onClick={()=>(setAdult(adult+1), setReservationCnt(reservationCnt+1))} /></Fab>
               <div style={{width:'10vw', display:'inline-block', textAlign:'center'}}>{adult}</div>
-            <Fab size="small" aria-label="remove"><RemoveIcon onClick={()=>(setAdult(adult-1))} /></Fab>
+            <Fab size="small" aria-label="remove"><RemoveIcon onClick={()=>(setAdult(adult-1), setReservationCnt(reservationCnt-1))} /></Fab>
           </div>
         </Tabs>
         <hr />
         <Tabs>
           <div>
-            <div>어린이</div>
-            <div>만 2~12세</div>
+            <div style={{fontSize: '1.1rem', paddingBottom: '1vh'}}>어린이</div>
+            <div style={{fontSize: '0.8rem', color: 'gray'}}>만 2~12세</div>
           </div>
           <div>
-            <Fab size="small" aria-label="add"><AddIcon onClick={()=>(setChildren(children+1))} /></Fab>
+            <Fab size="small" aria-label="add"><AddIcon onClick={()=>(setChildren(children+1), setReservationCnt(reservationCnt+1))} /></Fab>
               <div style={{width:'10vw', display:'inline-block', textAlign:'center'}}>{children}</div>
-            <Fab size="small" aria-label="remove"><RemoveIcon onClick={()=>(setChildren(children-1))} /></Fab>
+            <Fab size="small" aria-label="remove"><RemoveIcon onClick={()=>(setChildren(children-1), setReservationCnt(reservationCnt-1))} /></Fab>
           </div>
         </Tabs>
         <hr />
         <Tabs>
           <div>
-            <div>유아</div>
-            <div>만 2세 미만</div>
+            <div style={{fontSize: '1.1rem', paddingBottom: '1vh'}}>유아</div>
+            <div style={{fontSize: '0.8rem', color: 'gray'}}>만 2세 미만</div>
           </div>
           <div>
-            <Fab size="small" aria-label="add"><AddIcon onClick={()=>(setBaby(baby+1))} /></Fab>
+            <Fab size="small" aria-label="add"><AddIcon onClick={()=>(setBaby(baby+1), setReservationCnt(reservationCnt+1))} /></Fab>
               <div style={{width:'10vw', display:'inline-block', textAlign:'center'}}>{baby}</div>
-            <Fab size="small" aria-label="remove"><RemoveIcon onClick={()=>(setBaby(baby-1))} /></Fab>
+            <Fab size="small" aria-label="remove"><RemoveIcon onClick={()=>(setBaby(baby-1), setReservationCnt(reservationCnt-1))} /></Fab>
           </div>
         </Tabs>
         <hr />
       </Container>
       <BottomNav>
-        {/* <Button variant="contained" size="large" sx={{width: '60vw'}} onClick={()=>(Router.push(`/reservation/result`))}>예약하기</Button> */}
         <Button variant="contained" size="large" sx={{width: '60vw'}} onClick={reservationAxios}>예약하기</Button>
       </BottomNav>
     </>

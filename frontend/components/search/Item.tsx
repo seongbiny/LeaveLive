@@ -12,15 +12,15 @@ const Box = styled.div`
 //   border: 1px solid;
 `;
 
-const Item = (props: any) => {
-  const id = props.list[0].id;
-  const picPath: Array<String> = props.list[0].picPath.split(',');
-  const name = props.list[0].name;
+const Item = ({ list, url }: any) => {
+  const id = list[0].id;
+  const picPath: Array<String> = list[0].picPath.split(',');
+  const name = list[0].name;
   const router = useRouter();
   const region = router.query.region;
 
   useEffect(()=>{
-    console.log(props.list)
+    console.log(list)
   },[])
 
   return(
@@ -30,17 +30,17 @@ const Item = (props: any) => {
               <div 
                 key={idx} 
                 style={{marginLeft: '5vw', marginRight: '5vw'}}
-                onClick={()=>{router.push(`/reservation/${region}/${props.url}/${id}`)}}
+                onClick={()=>{router.push(`/reservation/${region}/${url}/${id}`)}}
               >
                     
                 <img 
                   src={`${BACKEND_IMAGE_URL}/${pic}`} 
-                  width={350} height={250} 
+                  width={350} height={200} 
                   style={{borderRadius: '10px'}} />
               </div>
             ))}
           </Carousel>
-          <div style={{marginLeft:'7vw', fontSize: '20px', paddingTop: '1vh'}}>
+          <div style={{marginLeft:'7vw', fontSize: '1rem', paddingTop: '1vh'}}>
               {name}
           </div>
       </Box>
