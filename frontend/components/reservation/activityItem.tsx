@@ -8,13 +8,12 @@ import { likeActivity, unlikeActivity } from "../../api/activity";
 import { BACKEND_IMAGE_URL } from "../../api";
 
 const Box = styled.div`
-    // border: 1px solid;
     display: flex;
     width: 100%;
-    padding: 1vh;
+    padding: 3vw;
+    cursor: pointer;
 `;
 const Main = styled.div`
-    // border: 1px solid;
     display: flex;
     width: 90%
 `;
@@ -67,10 +66,10 @@ const ActivityItem = (props: any) => {
                         `/reservation/${loc}/activity/${id}`
                     )}}
                 >
-                    <img src={`${BACKEND_IMAGE_URL}/${picPath[0]}`} height={150} width={150} style={{borderRadius: '10px'}} />
-                    <div style={{width: '100%', display: 'grid', paddingLeft: '2vw', alignContent: 'space-between'}}>
-                        <div style={{fontSize:'20px'}}>{name}</div>
-                        <div style={{textAlign:'right', fontWeight:'bold', fontSize:'18px'}}>{price}원</div>
+                    <img src={`${BACKEND_IMAGE_URL}/${picPath[0]}`} height={100} width={100} style={{borderRadius: '10px'}} />
+                    <div style={{width: '100%', display: 'grid', paddingLeft: '5vw', alignContent: 'space-between'}}>
+                        <div style={{fontSize:'1rem',  paddingRight:'5vw'}}>{name}</div>
+                        <div style={{textAlign:'right', fontWeight:'bold', fontSize:'1.1rem'}}>{price}원</div>
                     </div>
                 </Main>
                 {like === false ? 

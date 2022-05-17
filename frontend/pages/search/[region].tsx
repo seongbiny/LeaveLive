@@ -34,34 +34,52 @@ interface TypeActivity{
 
 const Region = () => {
   const router = useRouter();
-  // const region = router.query.region;
-  const [region, setRegion] = useState(router.query.region);
+  const [region, setRegion] = useState(String(router.query.region));
   const [bnbItem, setBnbItem] = useState<Array<TypeBnb>>([]);
   const [activityItem, setActivityItem] = useState<Array<TypeActivity>>([]);
 
   const check = (name: any) => {
     if(name==='전라남도') {setRegion('전남')}
+    else if(name==='전라북도') {setRegion('전북')}
+    else if(name==='경상남도') {setRegion('경남')}
+    else if(name==='경상북도') {setRegion('경북')}
+    else if(name==='충청남도') {setRegion('충남')}
+    else if(name==='충청북도') {setRegion('충북')}
   }
 
-  useEffect(() => {
+  useEffect(()=>{
     check(region);
-    bnbList(
-      region,
-      ({ data }: any) => {
-        setBnbItem(data.sort(()=>Math.random()-0.5).slice(0,1));
-        // console.log(data.sort(()=>Math.random()-0.5).slice(0,1));
-      },
-      (error: Error) => console.log(error)
-    );
-    activityList(
-      region,
-      ({ data }: any) => {
-        setActivityItem(data.sort(()=>Math.random()-0.5).slice(0,1));
-        console.log(data.sort(()=>Math.random()-0.5).slice(0,1));
-      },
-      (error: Error) => console.log(error)
-    );
+    console.log(region)
+  },[])
+  
+  useEffect(() => {
+    if(region.length <= 3){
+      bnbList(
+        region,
+        ({ data }: any) => {
+          data.sort(()=>Math.random()-0.5);
+          setBnbItem(data.slice(0,1));
+          console.log(data.slice(0,1))
+        },
+        (error: Error) => console.log(error)
+      );
+    }
+    
   }, [region]);
+
+  useEffect(()=>{
+    if(region.length <= 3) {
+      activityList(
+        region,
+        ({ data }: any) => {
+          data.sort(()=>Math.random()-0.5);
+          setActivityItem(data.slice(0,1));
+          console.log(data.slice(0,1))
+        },
+        (error: Error) => console.log(error)
+      );
+    }
+    },[region])
 
   return (
     <Container>
@@ -71,7 +89,6 @@ const Region = () => {
         <Text><div>{region}</div><div>여행 어때요?</div></Text>
       </StyledBox>
       <Main>
-        {/* <div style={{marginTop: '2vh', marginBottom: '2vh'}}>이 지역에 살아본 사람들은 하루 평균 50,000원을 썼어요.</div> */}
         <Tab>
           <Box sx={{ '& > :not(style)': { m: 1 }, mb: '1vh' }}>
             <Fab variant="extended" size="medium" color="primary" aria-label="add" onClick={()=>{router.push(`/reservation/${region}/bnb`)}}>
@@ -86,14 +103,28 @@ const Region = () => {
         </Tab>
         <div style={{display: 'grid'}}>
           <Title>추천 숙소</Title>
-          {bnbItem.length !== 0 && <Item list={bnbItem} url="bnb" /> }
+          {bnbItem.length !== 0 ? <Item list={bnbItem} url="bnb" /> :
+            <StyledError>숙소가 없습니다.</StyledError>
+          }
           <Title>추천 액티비티</Title>
-          {activityItem.length !== 0 && <Item list={activityItem} url="activity" />}
+          {activityItem.length !== 0 ? <Item list={activityItem} url="activity" /> :
+            <StyledError>데이터가 없습니다.</StyledError>
+          }
         </div>
       </Main>
     </Container>
   )
 };
+
+const StyledError = styled.div`
+  width: 70%;
+  height: 7vh;
+  background: #d3d3d3;
+  margin: auto;
+  text-align: center;
+  border-radius: 20px;
+  line-height: 7vh;
+`;
 
 const Title = styled.div`
   margin: 2vh;

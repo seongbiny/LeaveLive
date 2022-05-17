@@ -32,6 +32,9 @@ export default function Layout({ children }: any) {
     if (router.pathname.startsWith("/reservation")) setShowNav(false);
     else setShowNav(true);
 
+    if (router.pathname === ("/")) setShowNav(false);
+    else setShowNav(true);
+
     if (router.pathname.startsWith("/ceo/bnb") && router.pathname.length !== 8)
       setShowNav(false);
   }, [router]);
@@ -39,18 +42,18 @@ export default function Layout({ children }: any) {
   const isMobile = useIsMobile();
   return (
     <Container>
-      {/* {isMobile ? (
+      {isMobile ? (
         <>
           <Main>{children}</Main>
           {showNav ? isUser ? <LabelBottomNavigation /> : <CeoNav /> : null}
         </>
       ) : (
         <div>모바일로 접속해주세요.</div>
-      )} */}
-      <>
+      )}
+      {/* <>
         <Main>{children}</Main>
         {showNav ? isUser ? <LabelBottomNavigation /> : <CeoNav /> : null}
-      </>
+      </> */}
     </Container>
   );
 }

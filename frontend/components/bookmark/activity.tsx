@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 const Box = styled.div`
   position: relative;
   display: grid;
-  margin-bottom: 2vh;
+  margin-bottom: 3vh;
 //   border: 1px solid;
 `;
 const Text = styled.div`
@@ -44,23 +44,26 @@ const ActivityList = (props: any) => {
                 <Text>
                     <FavoriteIcon fontSize="medium" sx={{color: '#FF385C'}} onClick={()=>{unlikeAxios()}} />
                 </Text>
-                <div onClick={()=>{
-                    router.push(
-                        {
-                            pathname: `/reservation/${loc}/activity/${id}`,
-                            query: { loc: loc[0], id: id },
-                        },
-                        `/reservation/${loc[0]}/activity/${id}`
-                    )
-                }}>
+                <div>
                     <Carousel infiniteLoop showThumbs={false}>
                         {picPath.map((pic, idx)=>(
-                            <div key={idx} style={{marginLeft: '5vw', marginRight: '5vw'}}>
-                                <img src={`${BACKEND_IMAGE_URL}/${pic}`} style={{borderRadius: '10px'}} width={350} height={250} />
+                            <div key={idx} style={{marginLeft: '5.5vw', marginRight: '5.5vw'}}>
+                                <img src={`${BACKEND_IMAGE_URL}/${pic}`} style={{borderRadius: '10px'}} width={350} height={230} />
                             </div>
                         ))}
                     </Carousel>
-                    <div style={{marginLeft:'7vw', fontSize: '20px', paddingTop: '1vh'}}>{props.name}</div>
+                    <div 
+                        style={{marginLeft:'7vw', fontSize: '1.1rem', paddingTop: '1vh', cursor: 'pointer'}}
+                        onClick={()=>{
+                            router.push(
+                                {
+                                    pathname: `/reservation/${loc}/activity/${id}`,
+                                    query: { loc: loc[0], id: id },
+                                },
+                                `/reservation/${loc[0]}/activity/${id}`
+                            )
+                        }}
+                    >{props.name}</div>
                 </div>
             </Box>
         </>

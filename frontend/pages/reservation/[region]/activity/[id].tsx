@@ -8,6 +8,8 @@ import Image from "next/image";
 import Map from "../../../../components/ceo/BnbMap";
 import { flexCenter } from "../../../../styles/Basic";
 import Header from "../../../../components/Header";
+import AddLocationIcon from '@mui/icons-material/AddLocation';
+import { Button } from "@mui/material";
 interface IDetail {
   cnt: number;
   contents: string;
@@ -22,47 +24,19 @@ interface IDetail {
 
 const Container = styled.div`
   // ${flexCenter}
+  display: flex;
   flex-direction: column;
   width: 100%;
   margin-bottom: 75px;
   line-height: 2.2rem;
-`;
-
-const BnbTitle = styled.div`
-  font-size: 1.5rem;
-  font-weight: bold;
-  padding-top: 1.5rem;
-  padding-bottom: 1rem;
-  padding-right: 70vw;
-`;
-
-const BnbContent = styled.div`
-  padding-bottom: 1rem;
-`;
-
-const BnbHeading = styled.div`
-  font-size: 1.1rem;
-  font-weight: bold;
-  padding: 0.6rem 0;
-`;
-
-const AdditionalInfo = styled.div`
-  ${flexCenter}
-  align-items: flex-start;
-`;
-
-const BnbConditionWrapper = styled.div`
-  ${flexCenter}
-  justify-content: flex-start;
-  padding-bottom: 0.5rem;
-
-  span {
-    margin-left: 0.2rem;
-  }
+  margin-bottom: 13vh;
 `;
 
 const ContentContainer = styled.div`
-  width: 80%;
+  width: 90%;
+  justify-content: center;
+  margin: auto;
+  padding-top: 3vh;
 `;
 const ActivityDetail = () => {
   const router = useRouter();
@@ -78,63 +52,69 @@ const ActivityDetail = () => {
     userId: "",
   });
   
-  // console.log(detail.picPath.split(","))
+  const [path, setPath] = useState([]);
+
   useEffect(()=>{
     const id = router.query.id;
-    {id !== undefined &&
-      activityDetail(
-        id,
-        ({ data }: any) => {
-          const value = {
-            ...data,
-          };
-          if (!value.picPath) value.picPath = "/default.png";
-          setDetail(value);
-          console.log(value);
-        },
-        (error: Error) => console.log(error)
-      )
-    }
-    console.log(detail.picPath.split(","))
+    activityDetail(
+      id,
+      ({ data }: any) => {console.log(data), setDetail(data), setPath(data.picPath.split(","))},
+      (error: Error) => console.log(error)
+    )
+    console.log(detail)
   },[router])
 
   return (
-    <Container>
-      <div style={{ position: "relative", width: "100%" }}>
-        <Header title="상세보기" hide={false} />
-        <Carousel
-          infiniteLoop
-          showThumbs={false}
-          showStatus={false}
-          showArrows={false}
-        >
-          {detail.picPath?.split(",").map((path, index) => (
-            <div key={index}>
-              <img
-                src={
-                  path === "/default.png"
-                    ? path
-                    : `${BACKEND_IMAGE_URL}/${path}`
-                }
-                width={412}
-                height={250}
-              />
-            </div>
-          ))}
-        </Carousel>
-      </div>
-      <BnbTitle>{detail.name}</BnbTitle>
-      <img src={`${BACKEND_IMAGE_URL}/${detail.picContents}`} width="90%"  />
-      <div>
-        <div>위치 {detail.loc}</div>
-        <Map
-          address={detail.loc}
-          style={{ margin: "1rem 0"}}
-        />
-      </div>
-      <div onClick={()=>{router.push(`/reservation/activity/${detail.id}`)}}>예약하기</div>
-    </Container>
+    detail.id !== 0 &&
+      <Container>
+        <div style={{ position: "relative", width: "100%" }}>
+          <Header title="상세보기" hide={false} />
+          <Carousel
+            infiniteLoop
+            showThumbs={false}
+          >
+            {path.map((pic, idx)=>(
+              <div key={idx}>
+                <img 
+                  src={`${BACKEND_IMAGE_URL}/${pic}`}
+                  width={350} height={300}
+                  style={{borderRadius: '10px'}}
+                />
+              </div>
+            ))}
+          </Carousel>
+        </div>
+        <ContentContainer>
+          <div style={{fontSize:'1.5rem', fontWeight:'bold', paddingBottom: '3vh'}}>{detail.name}</div>
+          <div>
+            <AddLocationIcon />
+            <div style={{fontSize: '1rem', display: 'inline'}}>{detail.loc}</div>
+            <Map
+              address={detail.loc}
+              style={{ margin: "1rem 0"}}
+            />
+          </div>
+          <img src={`${BACKEND_IMAGE_URL}/${detail.picContents}`} width="100%" />
+        </ContentContainer>
+        <Bottom onClick={()=>{router.push(`/reservation/activity/${detail.id}`)}}>
+          <div style={{marginRight:'20vw', fontWeight:'bold', fontSize:'1.2rem'}}>{detail.price}원 / 인</div>
+          <div>
+            <Button variant="contained" >예약하기</Button>
+          </div>
+        </Bottom>
+      </Container>
   )
 };
-
+const Bottom = styled.div`
+  width: 100%;
+  height: 10vh;
+  // border: 1px solid;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #d3d3d3;
+  position: fixed;
+  margin-top: 90vh;
+  z-index: 100;
+`;
 export default ActivityDetail;

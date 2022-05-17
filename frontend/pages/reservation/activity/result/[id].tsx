@@ -13,10 +13,10 @@ const Box = styled.div`
   border-radius: 20px;
   align-items: center;
   justify-content: center;
-  font-size: 25px;
+  font-size: 1.3rem;
   margin-bottom: 20vh;
   text-align: center;
-  background-color: #d3d3d3;
+  background-color: lightgray;
 `;
 
 const Container = styled.div`
@@ -52,7 +52,6 @@ const Confirm = () => {
       },
       (error: Error) => console.log(error)
     )
-    console.log(list)
   },[]);
 
   return (
@@ -61,6 +60,7 @@ const Confirm = () => {
           {list.length !== 0 &&
             <>
                 <div>{name}</div>
+                <hr />
                 <div>{startDay} 부터</div>
                 <div>{endDay} 까지</div>
                 <div>예약되었습니다.</div>
