@@ -75,7 +75,7 @@ class DiaryService(
 
     private fun saveImages(images: List<MultipartFile>): String {
         var picPath = ""
-        images.map {
+        images.forEach {
             var uniquePath = "${LocalDate.now().format(DateTimeFormatter.ISO_DATE)}${UUID.randomUUID()}"
             val path = "/home/ubuntu/images/diary"
             when (it.contentType?.lowercase()) {
