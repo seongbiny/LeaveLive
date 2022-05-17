@@ -45,7 +45,7 @@ public class ReservationService {
     }
 
     /**
-     * 예약 날짜에 따라 예약 여부가 결정됨
+     * 예약 날짜에 따라 예약 여부가 결정됨  --> 액티비티는 해당 로직 X
      * @param id
      * @param userId
      * @return 예약된 아이디
@@ -53,46 +53,46 @@ public class ReservationService {
     public Long saveRes(Long id, String userId, ReservationDto request){
         Optional<Activity> entity=activityRepo.findById(id);
         if(!entity.isPresent()) throw new MyResourceNotFoundException("해당하는 액티비티가 없습니다.");
-        LocalDate myStart=request.getStartDate();
-        LocalDate myEnd=request.getEndDate();
-        if(myStart.isAfter(myEnd)) throw new MyResourceNotFoundException("종료일이 시작일보다 앞입니다.");
-        if(request.getCnt()<=0 || request.getCnt()>entity.get().getCnt()) throw new MyResourceNotFoundException("인원수가 0이하거나 수용할 수 있는 인원을 초과했습니다.");
-        List<Reservation> list=repo.findByActivityId(id);
-        log.info("ReservationService.saveRes.list:"+list);
-        if(list!=null || list.size()>0){
-            boolean flag=true;
-            for (Reservation res:list){
-                LocalDate start=res.getStartDate();
-                LocalDate end=res.getEndDate();
-                if(!start.isEqual(myStart) && !end.isEqual(myEnd)){
-                    /**
-                     * myStart와 myEnd가 구간 안에 있으면 이미 예약되어있으므로 예약 불가
-                     * start= 0419  myStart= 0421
-                     * end= 0421  myEnd= 0422
-                     * start<=myStart<end ->x
-                     * start<myEnd<=end ->x
-                     */
-                    log.info("ReservationService.saveRes:"+start+"<="+myStart+"<"+end);
-                    // 범위 안에 포함되면 X
-                    if(!myStart.isBefore(start) && myStart.isBefore(end)){
-                        log.info("ReservationService.saveRes:시작날짜가 잘못되었음");
-                        flag=false;
-                        break;
-                    }
-                    start=start.plusDays(1);
-                    log.info("ReservationService.saveRes:"+start+"<"+myEnd+"<="+end);
-                    if(!myEnd.isBefore(start) && myEnd.isBefore(end)){
-                        log.info("ReservationService.saveRes:종료날짜가 잘못되었음");
-                        flag=false;
-                        break;
-                    }
-                }else{
-                    flag=false;
-                    break;
-                }
-            }
-            if(!flag) throw new MyResourceNotFoundException("이미 해당 기간에 예약되어 있는 숙소입니다.");
-        }
+//        LocalDate myStart=request.getStartDate();
+//        LocalDate myEnd=request.getEndDate();
+//        if(myStart.isAfter(myEnd)) throw new MyResourceNotFoundException("종료일이 시작일보다 앞입니다.");
+//        if(request.getCnt()<=0 || request.getCnt()>entity.get().getCnt()) throw new MyResourceNotFoundException("인원수가 0이하거나 수용할 수 있는 인원을 초과했습니다.");
+//        List<Reservation> list=repo.findByActivityId(id);
+//        log.info("ReservationService.saveRes.list:"+list);
+//        if(list!=null || list.size()>0){
+//            boolean flag=true;
+//            for (Reservation res:list){
+//                LocalDate start=res.getStartDate();
+//                LocalDate end=res.getEndDate();
+//                if(!start.isEqual(myStart) && !end.isEqual(myEnd)){
+//                    /**
+//                     * myStart와 myEnd가 구간 안에 있으면 이미 예약되어있으므로 예약 불가
+//                     * start= 0419  myStart= 0421
+//                     * end= 0421  myEnd= 0422
+//                     * start<=myStart<end ->x
+//                     * start<myEnd<=end ->x
+//                     */
+//                    log.info("ReservationService.saveRes:"+start+"<="+myStart+"<"+end);
+//                    // 범위 안에 포함되면 X
+//                    if(!myStart.isBefore(start) && myStart.isBefore(end)){
+//                        log.info("ReservationService.saveRes:시작날짜가 잘못되었음");
+//                        flag=false;
+//                        break;
+//                    }
+//                    start=start.plusDays(1);
+//                    log.info("ReservationService.saveRes:"+start+"<"+myEnd+"<="+end);
+//                    if(!myEnd.isBefore(start) && myEnd.isBefore(end)){
+//                        log.info("ReservationService.saveRes:종료날짜가 잘못되었음");
+//                        flag=false;
+//                        break;
+//                    }
+//                }else{
+//                    flag=false;
+//                    break;
+//                }
+//            }
+//            if(!flag) throw new MyResourceNotFoundException("이미 해당 기간에 예약되어 있는 숙소입니다.");
+//        }
         request.setActivity(entity.get());
         request.setUserId(userId);
         return repo.save(Reservation.of(request)).getId();
