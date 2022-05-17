@@ -75,9 +75,9 @@ class DiaryService(
 
     private fun saveImages(images: List<MultipartFile>): String {
         var picPath = ""
+        val path = "/home/ubuntu/images/diary"
         images.forEach {
             var uniquePath = "${LocalDate.now().format(DateTimeFormatter.ISO_DATE)}${UUID.randomUUID()}"
-            val path = "/home/ubuntu/images/diary"
             when (it.contentType?.lowercase()) {
                 "image/png" -> uniquePath += ".png"
                 "image/jpeg" -> uniquePath += ".jpeg"
@@ -85,9 +85,9 @@ class DiaryService(
             val file = File(path)
             if (!file.exists()) file.mkdirs()
             it.transferTo(File("$path/${uniquePath}"))
-            picPath += "diary/${uniquePath}, "
+            picPath += "diary/${uniquePath},"
         }
 
-        return picPath.substring(0, picPath.length - 2)
+        return picPath.substring(0, picPath.length - 1)
     }
 }
