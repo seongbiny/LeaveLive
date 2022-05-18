@@ -33,13 +33,92 @@ const ActivityList = () => {
   },[])
 
   useEffect(() => {
-    activityList(
-      region,
-      (data: any) => {
-        setList(data.data);
-        console.log(data.data)
-      },
-      (error: Error) => console.log(error))
+    if (region === '제주도') {
+      activityList(
+        '제주특별자치도',
+        ({ data }: any) => {
+          setList(data);
+          console.log(data)
+        },
+        (error: Error) => console.log(error)
+      )
+    } else if (region==='강원도') {
+      activityList(
+        '강원',
+        ({ data }: any) => {
+          setList(data);
+          console.log(data)
+        },
+        (error: Error) => console.log(error)
+      )
+    } else if (region==='전라남도') {
+      activityList(
+        '전남',
+        ({ data }: any) => {
+          setList(data);
+          console.log(data)
+        },
+        (error: Error) => console.log(error)
+      )
+    } else if (region==='전라북도') {
+      activityList(
+        '전북',
+        ({ data }: any) => {
+          setList(data);
+          console.log(data)
+        },
+        (error: Error) => console.log(error)
+      )
+    }
+    else if (region==='경상남도') {
+      activityList(
+        '경남',
+        ({ data }: any) => {
+          setList(data);
+          console.log(data)
+        },
+        (error: Error) => console.log(error)
+      )
+    }
+    else if (region==='경상북도') {
+      activityList(
+        '경북',
+        ({ data }: any) => {
+          setList(data);
+          console.log(data)
+        },
+        (error: Error) => console.log(error)
+      )
+    }
+    else if (region==='충청남도') {
+      activityList(
+        '충남',
+        ({ data }: any) => {
+          setList(data);
+          console.log(data)
+        },
+        (error: Error) => console.log(error)
+      )
+    }
+    else if (region==='충청북도') {
+      activityList(
+        '충북',
+        ({ data }: any) => {
+          setList(data);
+          console.log(data)
+        },
+        (error: Error) => console.log(error)
+      )
+    } else {
+      activityList(
+        region,
+        ({ data }: any) => {
+          setList(data);
+          console.log(data)
+        },
+        (error: Error) => console.log(error)
+      )
+    }
   },[region])
 
   return (

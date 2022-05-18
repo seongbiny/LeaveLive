@@ -20,9 +20,76 @@ const BnbList = () => {
   const [like, setLike] = useState<number[]>([]);
 
   useEffect(() => {
-    if (region==='강원도') {
+    if (region === '제주도') {
       bnbList(
-        "강원",
+        '제주특별자치도',
+        ({ data }: any) => {
+          setList(data);
+          console.log(data)
+        },
+        (error: Error) => console.log(error)
+      )
+    } else if (region==='강원도') {
+      bnbList(
+        '강원',
+        ({ data }: any) => {
+          setList(data);
+          console.log(data)
+        },
+        (error: Error) => console.log(error)
+      )
+    } else if (region==='전라남도') {
+      bnbList(
+        '전남',
+        ({ data }: any) => {
+          setList(data);
+          console.log(data)
+        },
+        (error: Error) => console.log(error)
+      )
+    } else if (region==='전라북도') {
+      bnbList(
+        '전북',
+        ({ data }: any) => {
+          setList(data);
+          console.log(data)
+        },
+        (error: Error) => console.log(error)
+      )
+    }
+    else if (region==='경상남도') {
+      bnbList(
+        '경남',
+        ({ data }: any) => {
+          setList(data);
+          console.log(data)
+        },
+        (error: Error) => console.log(error)
+      )
+    }
+    else if (region==='경상북도') {
+      bnbList(
+        '경북',
+        ({ data }: any) => {
+          setList(data);
+          console.log(data)
+        },
+        (error: Error) => console.log(error)
+      )
+    }
+    else if (region==='충청남도') {
+      bnbList(
+        '충남',
+        ({ data }: any) => {
+          setList(data);
+          console.log(data)
+        },
+        (error: Error) => console.log(error)
+      )
+    }
+    else if (region==='충청북도') {
+      bnbList(
+        '충북',
         ({ data }: any) => {
           setList(data);
           console.log(data)
