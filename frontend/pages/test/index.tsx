@@ -1,25 +1,18 @@
 // 테스트 하는 페이지
 import type { NextPage } from "next";
-import React, { useState, Dispatch, SetStateAction, useEffect } from "react";
+import React, { useState, Dispatch, SetStateAction } from "react";
 import {useRouter} from 'next/router';
 import styled from 'styled-components';
 interface Props {
   step?: number;
   setStep: Dispatch<SetStateAction<number>>;
-  // onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const Test: NextPage = () => {
-
   const [step, setStep] = useState<number>(0);
-
-  useEffect(() => {
-    console.log(step);
-  },[step])
 
   return (
     <Container>
-      {/* <audio autoPlay controls src="/bgm.mp3" /> */}
       {step === 0 && <Test1 setStep={setStep}></Test1> }
       {step === 1 && <Test2 setStep={setStep}></Test2> }
       {step === 2 && <Test3 setStep={setStep}></Test3> }

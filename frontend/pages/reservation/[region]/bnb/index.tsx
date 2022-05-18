@@ -25,7 +25,6 @@ const BnbList = () => {
         '제주특별자치도',
         ({ data }: any) => {
           setList(data);
-          console.log(data)
         },
         (error: Error) => console.log(error)
       )
@@ -34,7 +33,6 @@ const BnbList = () => {
         '강원',
         ({ data }: any) => {
           setList(data);
-          console.log(data)
         },
         (error: Error) => console.log(error)
       )
@@ -43,7 +41,6 @@ const BnbList = () => {
         '전남',
         ({ data }: any) => {
           setList(data);
-          console.log(data)
         },
         (error: Error) => console.log(error)
       )
@@ -52,7 +49,6 @@ const BnbList = () => {
         '전북',
         ({ data }: any) => {
           setList(data);
-          console.log(data)
         },
         (error: Error) => console.log(error)
       )
@@ -62,7 +58,6 @@ const BnbList = () => {
         '경남',
         ({ data }: any) => {
           setList(data);
-          console.log(data)
         },
         (error: Error) => console.log(error)
       )
@@ -72,7 +67,6 @@ const BnbList = () => {
         '경북',
         ({ data }: any) => {
           setList(data);
-          console.log(data)
         },
         (error: Error) => console.log(error)
       )
@@ -82,7 +76,6 @@ const BnbList = () => {
         '충남',
         ({ data }: any) => {
           setList(data);
-          console.log(data)
         },
         (error: Error) => console.log(error)
       )
@@ -92,7 +85,6 @@ const BnbList = () => {
         '충북',
         ({ data }: any) => {
           setList(data);
-          console.log(data)
         },
         (error: Error) => console.log(error)
       )
@@ -101,7 +93,6 @@ const BnbList = () => {
         region,
         ({ data }: any) => {
           setList(data);
-          console.log(data)
         },
         (error: Error) => console.log(error)
       )

@@ -9,7 +9,6 @@ import { useRouter } from 'next/router';
 import { bnbList } from '../../api/bnb';
 import Item from "../../components/search/Item";
 import { activityList } from "../../api/activity";
-
 interface TypeBnb{
   id: number;
   contents: string;
@@ -19,7 +18,6 @@ interface TypeBnb{
   name: string;
   picPath: string;
 };
-
 interface TypeActivity{
   id: number;
   cnt: number;
@@ -45,7 +43,6 @@ const Region = () => {
         ({ data }: any) => {
           data.sort(()=>Math.random()-0.5);
           setBnbItem(data.slice(0,1));
-          console.log(data.slice(0,1))
         },
         (error: Error) => console.log(error)
       )
@@ -55,7 +52,6 @@ const Region = () => {
         ({ data }: any) => {
           data.sort(()=>Math.random()-0.5);
           setBnbItem(data.slice(0,1));
-          console.log(data.slice(0,1))
         },
         (error: Error) => console.log(error)
       )
@@ -65,7 +61,6 @@ const Region = () => {
         ({ data }: any) => {
           data.sort(()=>Math.random()-0.5);
           setBnbItem(data.slice(0,1));
-          console.log(data.slice(0,1))
         },
         (error: Error) => console.log(error)
       )
@@ -75,7 +70,6 @@ const Region = () => {
         ({ data }: any) => {
           data.sort(()=>Math.random()-0.5);
           setBnbItem(data.slice(0,1));
-          console.log(data.slice(0,1))
         },
         (error: Error) => console.log(error)
       )
@@ -86,7 +80,6 @@ const Region = () => {
         ({ data }: any) => {
           data.sort(()=>Math.random()-0.5);
           setBnbItem(data.slice(0,1));
-          console.log(data.slice(0,1))
         },
         (error: Error) => console.log(error)
       )
@@ -97,7 +90,6 @@ const Region = () => {
         ({ data }: any) => {
           data.sort(()=>Math.random()-0.5);
           setBnbItem(data.slice(0,1));
-          console.log(data.slice(0,1))
         },
         (error: Error) => console.log(error)
       )
@@ -108,7 +100,6 @@ const Region = () => {
         ({ data }: any) => {
           data.sort(()=>Math.random()-0.5);
           setBnbItem(data.slice(0,1));
-          console.log(data.slice(0,1))
         },
         (error: Error) => console.log(error)
       )
@@ -119,7 +110,6 @@ const Region = () => {
         ({ data }: any) => {
           data.sort(()=>Math.random()-0.5);
           setBnbItem(data.slice(0,1));
-          console.log(data.slice(0,1))
         },
         (error: Error) => console.log(error)
       )
@@ -129,7 +119,6 @@ const Region = () => {
         ({ data }: any) => {
           data.sort(()=>Math.random()-0.5);
           setBnbItem(data.slice(0,1));
-          console.log(data.slice(0,1))
         },
         (error: Error) => console.log(error)
       )
@@ -141,8 +130,8 @@ const Region = () => {
       activityList(
         '제주특별자치도',
         ({ data }: any) => {
-          setActivityItem(data);
-          console.log(data)
+          data.sort(()=>Math.random()-0.5);
+          setActivityItem(data.slice(0,1));
         },
         (error: Error) => console.log(error)
       )
@@ -150,8 +139,8 @@ const Region = () => {
       activityList(
         '강원',
         ({ data }: any) => {
-          setActivityItem(data);
-          console.log(data)
+          data.sort(()=>Math.random()-0.5);
+          setActivityItem(data.slice(0,1));
         },
         (error: Error) => console.log(error)
       )
@@ -159,8 +148,8 @@ const Region = () => {
       activityList(
         '전남',
         ({ data }: any) => {
-          setActivityItem(data);
-          console.log(data)
+          data.sort(()=>Math.random()-0.5);
+          setActivityItem(data.slice(0,1));
         },
         (error: Error) => console.log(error)
       )
@@ -168,8 +157,8 @@ const Region = () => {
       activityList(
         '전북',
         ({ data }: any) => {
-          setActivityItem(data);
-          console.log(data)
+          data.sort(()=>Math.random()-0.5);
+          setActivityItem(data.slice(0,1));
         },
         (error: Error) => console.log(error)
       )
@@ -178,8 +167,9 @@ const Region = () => {
       activityList(
         '경남',
         ({ data }: any) => {
-          setActivityItem(data);
-          console.log(data)
+          data.sort(()=>Math.random()-0.5);
+          setActivityItem(data.slice(0,1));
+          console.log(data.slice(0,1))
         },
         (error: Error) => console.log(error)
       )
@@ -188,8 +178,9 @@ const Region = () => {
       activityList(
         '경북',
         ({ data }: any) => {
-          setActivityItem(data);
-          console.log(data)
+          data.sort(()=>Math.random()-0.5);
+          setActivityItem(data.slice(0,1));
+          console.log(data.slice(0,1))
         },
         (error: Error) => console.log(error)
       )
@@ -198,8 +189,9 @@ const Region = () => {
       activityList(
         '충남',
         ({ data }: any) => {
-          setActivityItem(data);
-          console.log(data)
+          data.sort(()=>Math.random()-0.5);
+          setActivityItem(data.slice(0,1));
+          console.log(data.slice(0,1))
         },
         (error: Error) => console.log(error)
       )
@@ -208,8 +200,8 @@ const Region = () => {
       activityList(
         '충북',
         ({ data }: any) => {
-          setActivityItem(data);
-          console.log(data)
+          data.sort(()=>Math.random()-0.5);
+          setActivityItem(data.slice(0,1));
         },
         (error: Error) => console.log(error)
       )
@@ -217,8 +209,8 @@ const Region = () => {
       activityList(
         region,
         ({ data }: any) => {
-          setActivityItem(data);
-          console.log(data)
+          data.sort(()=>Math.random()-0.5);
+          setActivityItem(data.slice(0,1));
         },
         (error: Error) => console.log(error)
       )

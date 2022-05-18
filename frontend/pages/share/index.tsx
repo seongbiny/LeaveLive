@@ -20,11 +20,10 @@ const Share = () => {
     const [mode, setMode] = useState('diary');
 
     useEffect(()=>{
-        console.log(mode)
         if(mode==='diary'){
             publicDiary(
                 null,
-                ({ data }: any) => {console.log(data), setDiary(data), setMode('diary')},
+                ({ data }: any) => {setDiary(data), setMode('diary')},
                 (error: Error) => console.log(error)
             )
         }
@@ -34,7 +33,7 @@ const Share = () => {
         if(keyword !== '') {
             tagDiary(
                 keyword,
-                ({ data }: any) => {console.log(data), setDiary(data), setMode('tag')},
+                ({ data }: any) => {setDiary(data), setMode('tag')},
                 (error: Error) => console.log(error)
             )
         }

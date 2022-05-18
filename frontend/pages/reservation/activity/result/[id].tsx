@@ -40,7 +40,6 @@ const Confirm = () => {
     getActivityList(
       null,
       ({ data }: any) => {
-        console.log(data);
         {data.map((item: any)=>{
             if(Number(id)===item.id){
                 setList(item)

@@ -28,13 +28,14 @@ const DiaryItem = ({content, date, diaryId, picPath, userId, tag, tagFunction}: 
     },[])
 
     return (
-        <div>
+        <div style={{marginBottom: '2vh'}}>
             <Carousel showThumbs={false}>
                 {picPathList.map((pic: any, idx: Key | null | undefined)=>(
                     <div key={idx}>
                         <img 
                             src={`${BACKEND_IMAGE_URL}/${pic}`}
                             width="100%" height={220}
+                            style={{objectFit: 'contain'}}
                         />
                     </div>
                 ))}
@@ -55,11 +56,29 @@ const DiaryItem = ({content, date, diaryId, picPath, userId, tag, tagFunction}: 
                     {textLength > 50 ?
                         btn === 0 ?
                             <>
-                                <Text>{content}</Text>
+                                <Text>
+                                    {content.split("\n").map((line: any, idx: any)=>{
+                                        return (
+                                            <span key={idx}>
+                                                {line}
+                                                <br />
+                                            </span>
+                                        )
+                                    })}
+                                </Text>
                                 <div onClick={()=>(setBtn(1))}><ArrowDropDownIcon /></div> 
                             </> :
                             <>
-                                <div>{content}</div>
+                                <div>
+                                    {content.split("\n").map((line: any, idx: any)=>{
+                                        return (
+                                            <span key={idx}>
+                                                {line}
+                                                <br />
+                                            </span>
+                                        )
+                                    })}
+                                </div>
                                 <div onClick={()=>(setBtn(0))}><ArrowDropUpIcon /></div>
                             </> :
                         <div>{content}</div>
@@ -105,7 +124,7 @@ const Main = styled.div`
     padding-left: 5vw;
     padding-right: 5vw;
     margin: 2vh;
-    padding-bottom: 3vh;
+    // padding-bottom: 1vh;
 `;
 const Text = styled.div`
   overflow: hidden;

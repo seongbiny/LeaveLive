@@ -51,17 +51,14 @@ const ActivityDetail = () => {
     price: 0,
     userId: "",
   });
-  
-  const [path, setPath] = useState([]);
 
   useEffect(()=>{
     const id = router.query.id;
     activityDetail(
       id,
-      ({ data }: any) => {setDetail(data), setPath(data.picPath.split(","))},
+      ({ data }: any) => {setDetail(data)},
       (error: Error) => console.log(error)
     )
-    console.log(detail)
   },[router])
 
   return (
@@ -69,19 +66,6 @@ const ActivityDetail = () => {
       <Container>
         <div style={{ position: "relative", width: "100%" }}>
           <Header title="상세보기" hide={false} />
-          {/* <Carousel
-            infiniteLoop
-            showThumbs={false}
-          >
-            {path.map((pic, idx)=>(
-              <div key={idx}>
-                <img 
-                  src={`${BACKEND_IMAGE_URL}/${pic}`}
-                  width={350} height={300}
-                />
-              </div>
-            ))}
-          </Carousel> */}
           <MyCarousel picPath={detail.picPath} />
         </div>
         <ContentContainer>
