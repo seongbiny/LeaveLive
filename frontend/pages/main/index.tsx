@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Seo from "../../components/Seo";
 import Image from "next/image";
 import styled from 'styled-components';
@@ -7,6 +7,7 @@ import { getUserInfo } from "../../api/user";
 import { getDiary } from "../../api/diary";
 import Item from "../../components/main/Item";
 import { useRouter } from "next/router";
+import { postActivity } from "../../api/activity";
 
 interface IProps {
   content: string,
@@ -71,9 +72,8 @@ const Main = () => {
       ({ data }: any) => {console.log(data), setDiaryTom(data)},
       (error: Error) => console.log(error)
     )
-    console.log(day)
   },[])
-  
+
   return (
     <div style={{marginBottom: '13vh'}}>
       <Seo title="Main" />

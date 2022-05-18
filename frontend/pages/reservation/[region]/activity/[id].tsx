@@ -69,19 +69,6 @@ const ActivityDetail = () => {
       <Container>
         <div style={{ position: "relative", width: "100%" }}>
           <Header title="상세보기" hide={false} />
-          {/* <Carousel
-            infiniteLoop
-            showThumbs={false}
-          >
-            {path.map((pic, idx)=>(
-              <div key={idx}>
-                <img 
-                  src={`${BACKEND_IMAGE_URL}/${pic}`}
-                  width={350} height={300}
-                />
-              </div>
-            ))}
-          </Carousel> */}
           <MyCarousel picPath={detail.picPath} />
         </div>
         <ContentContainer>
