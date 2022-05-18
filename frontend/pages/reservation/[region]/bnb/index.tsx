@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import BnbItem from "../../../../components/reservation/bnbItem";
+import BnbItem from "../../../../components/reservation/bnbitem";
 import { likeBnbList, bnbList } from "../../../../api/bnb";
 import Header from "../../../../components/Header";
 interface TypeBnb{
