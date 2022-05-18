@@ -65,22 +65,7 @@ const Schedule = ({ act, bnb }: any) => {
                                 </Typography>
                             </CardContent>
                         </Card>
-                    }) : <Card style={{ margin: "1vh" }}>
-                            <CardMedia
-                                component="img"
-                                height="150"
-                                image="/default.png"
-                                alt="썸네일"
-                            />
-                            <CardContent>
-                                <Typography variant="body1" component="div" style={{padding:'10'}}>
-                                    예약된 일정이 없습니다.
-                                </Typography> 
-                            </CardContent>
-                            <CardActions>
-                                <Button size="small" onClick={()=>{router.push(`/search/map`)}} >예약하러가기</Button>
-                            </CardActions>
-                        </Card>          
+                    }) : null   
                 }
                 {bnb.length !== 0 ?
                     bnb.map((item: any)=>{
@@ -100,22 +85,7 @@ const Schedule = ({ act, bnb }: any) => {
                                 </Typography>
                             </CardContent>
                         </Card>
-                    }) : <Card style={{ margin: "1vh" }}>
-                            <CardMedia
-                                component="img"
-                                height="150"
-                                image="/default.png"
-                                alt="썸네일"
-                            />
-                            <CardContent>
-                                <Typography variant="body1" component="div" style={{padding:'10'}}>
-                                    예약된 숙소가 없습니다.
-                                </Typography> 
-                            </CardContent>
-                            <CardActions>
-                                <Button size="small" onClick={()=>{router.push(`/search/map`)}} >예약하러가기</Button>
-                            </CardActions>
-                        </Card>  
+                    }) : null
                 }
             </Slider>
         </Container>

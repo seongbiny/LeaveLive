@@ -48,7 +48,7 @@ export default function Layout({ children }: any) {
           {showNav ? isUser ? <LabelBottomNavigation /> : <CeoNav /> : null}
         </>
       ) : (
-        <div>모바일로 접속해주세요.</div>
+        <img src="/mobile.png" />
       )}
     </Container>
   );
