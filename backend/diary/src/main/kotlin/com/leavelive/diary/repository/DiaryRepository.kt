@@ -10,7 +10,7 @@ import java.util.*
 @Repository
 interface DiaryRepository : JpaRepository<Diary, Long> {
     fun findByUserIdAndDate(userId: String, date: LocalDate): Optional<Diary>
-    fun findAllByStatusOrderByDateAsc(status: Status) : List<Diary>
-    fun findAllByUserIdOrderByDateAsc(userId: String) : List<Diary>
-    fun findAllByStatusAndTagContainsOrderByDateAsc(status: Status, tag: String): List<Diary>
+    fun findAllByStatusOrderByDateDesc(status: Status) : List<Diary>
+    fun findAllByUserIdOrderByDateDesc(userId: String) : List<Diary>
+    fun findAllByStatusAndTagContainsOrderByDateDesc(status: Status, tag: String): List<Diary>
 }

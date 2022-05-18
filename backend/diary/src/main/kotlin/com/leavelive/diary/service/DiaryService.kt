@@ -37,14 +37,14 @@ class DiaryService(
 
     fun getAllDiaries(token: String): List<DiaryResponse> {
         val userId = JwtUtil.decodeToken(token)
-        return diaryRepository.findAllByUserIdOrderByDateAsc(userId).map { modelMapper.map(it, DiaryResponse::class.java) }
+        return diaryRepository.findAllByUserIdOrderByDateDesc(userId).map { modelMapper.map(it, DiaryResponse::class.java) }
     }
 
     fun getAllPublicDiaries(): List<DiaryResponse> =
-        diaryRepository.findAllByStatusOrderByDateAsc(Status.PUBLIC).map { modelMapper.map(it, DiaryResponse::class.java) }
+        diaryRepository.findAllByStatusOrderByDateDesc(Status.PUBLIC).map { modelMapper.map(it, DiaryResponse::class.java) }
 
     fun getAllPublicDiariesByTag(tag: String): List<DiaryResponse> =
-        diaryRepository.findAllByStatusAndTagContainsOrderByDateAsc(Status.PUBLIC, tag)
+        diaryRepository.findAllByStatusAndTagContainsOrderByDateDesc(Status.PUBLIC, tag)
             .map { modelMapper.map(it, DiaryResponse::class.java) }
 
 
