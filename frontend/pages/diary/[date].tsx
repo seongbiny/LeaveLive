@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { Container, Wrapper } from "../../styles/Basic";
 import Header from "../../components/Header";
 import styled from "styled-components";
-import { getDiary, deleteDiary } from "../../api/diary";
+import { getDiary, deleteDiary, updateDiary } from "../../api/diary";
 import Carousel from "../../components/Carousel";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import LockRoundedIcon from "@mui/icons-material/LockRounded";
@@ -37,11 +37,16 @@ const MenuIconContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   flex: 1;
+
+  & > *:hover {
+    cursor: pointer;
+  }
 `;
 
 const DiaryContentContainer = styled.div`
   width: 100%;
-  line-height: 1.8rem;
+  line-height: 2rem;
+  padding: 0.6rem 0 0.7rem 0;
 `;
 
 const TagContainer = styled.div`
@@ -60,9 +65,45 @@ const DiaryContents = () => {
     id: -1,
     content: "",
     tags: [],
-    status: "",
+    status: "PUBLIC",
     picPath: "",
   });
+
+  const changeDiaryStatus = useCallback(() => {
+    const form = new FormData();
+    const diaryRequest = {
+      date,
+      content: diary.content,
+      tag: diary.tags.join(","),
+      status: diary.status === "PRIVATE" ? "PUBLIC" : "PRIVATE",
+    };
+
+    form.append(
+      "diaryRequest",
+      new Blob([JSON.stringify(diaryRequest)], {
+        type: "application/json",
+      })
+    );
+    form.append("images", new Blob());
+
+    updateDiary(
+      diary.id,
+      form,
+      ({ data }: any) => {
+        const value = {
+          id: data.diaryId,
+          content: data.content,
+          tags: data.tag.split(","),
+          status: data.status,
+          picPath: data.picPath,
+        };
+
+        if (!value.picPath) value.picPath = "/default.png";
+        setDiary(value);
+      },
+      (error: Error) => console.log(error)
+    );
+  }, [diary]);
 
   const removeDiary = useCallback(() => {
     if (confirm("일기를 삭제할까요?")) {
@@ -105,7 +146,7 @@ const DiaryContents = () => {
       <Carousel picPath={diary.picPath} />
       <ContentsWrapper>
         <MenuContainer>
-          <div style={{ flex: 2.5 }}>
+          <div style={{ flex: 2.3 }}>
             {String(router.query.date).split("-").join(".")}
           </div>
           <MenuIconContainer>
@@ -118,9 +159,9 @@ const DiaryContents = () => {
               <EditRoundedIcon />
             </Link>
             {diary.status === "PUBLIC" ? (
-              <LockOpenRoundedIcon />
+              <LockOpenRoundedIcon onClick={changeDiaryStatus} />
             ) : (
-              <LockRoundedIcon />
+              <LockRoundedIcon onClick={changeDiaryStatus} />
             )}
             <CloseRoundedIcon onClick={removeDiary} />
           </MenuIconContainer>
@@ -138,7 +179,7 @@ const DiaryContents = () => {
         </DiaryContentContainer>
         <TagContainer>
           {diary.tags.map((tag, index) => (
-            <Tag text={tag} />
+            <Tag key={index} text={tag} />
           ))}
         </TagContainer>
       </ContentsWrapper>
