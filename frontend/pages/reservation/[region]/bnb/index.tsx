@@ -20,14 +20,25 @@ const BnbList = () => {
   const [like, setLike] = useState<number[]>([]);
 
   useEffect(() => {
-    bnbList(
-      region,
-      ({ data }: any) => {
-        setList(data);
-        console.log(data)
-      },
-      (error: Error) => console.log(error)
-    )
+    if (region==='강원도') {
+      bnbList(
+        "강원",
+        ({ data }: any) => {
+          setList(data);
+          console.log(data)
+        },
+        (error: Error) => console.log(error)
+      )
+    } else {
+      bnbList(
+        region,
+        ({ data }: any) => {
+          setList(data);
+          console.log(data)
+        },
+        (error: Error) => console.log(error)
+      )
+    }
   }, [region]);
 
 
