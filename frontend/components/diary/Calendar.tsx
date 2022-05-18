@@ -225,7 +225,7 @@ const DiaryCalendar = () => {
   }, []);
 
   useEffect(() => {
-    if (bnbs.length !== 0 && activities.length !== 0)
+    if (bnbs.length !== 0 || activities.length !== 0)
       setSchedules([...bnbs, ...activities]);
   }, [bnbs, activities]);
 
