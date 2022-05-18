@@ -129,7 +129,7 @@ const ReservationBnb = () => {
       ({ data }: any) => {
           router.push(`/reservation/bnb/result/${data}`)
       },
-      (error: Error) => console.log(error)
+      (error: Error) => {console.log(error), alert("예약 불가한 날짜입니다.")}
       )
     }
   }
