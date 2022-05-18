@@ -34,26 +34,96 @@ interface TypeActivity{
 
 const Region = () => {
   const router = useRouter();
-  const [region, setRegion] = useState(String(router.query.region));
+  const region = router.query.region;
   const [bnbItem, setBnbItem] = useState<Array<TypeBnb>>([]);
   const [activityItem, setActivityItem] = useState<Array<TypeActivity>>([]);
 
-  const check = (name: any) => {
-    if(name==='전라남도') {setRegion('전남')}
-    else if(name==='전라북도') {setRegion('전북')}
-    else if(name==='경상남도') {setRegion('경남')}
-    else if(name==='경상북도') {setRegion('경북')}
-    else if(name==='충청남도') {setRegion('충남')}
-    else if(name==='충청북도') {setRegion('충북')}
-  }
-
-  useEffect(()=>{
-    check(region);
-    console.log(region)
-  },[])
-  
   useEffect(() => {
-    if(region.length <= 3){
+    if (region === '제주도') {
+      bnbList(
+        '제주특별자치도',
+        ({ data }: any) => {
+          data.sort(()=>Math.random()-0.5);
+          setBnbItem(data.slice(0,1));
+          console.log(data.slice(0,1))
+        },
+        (error: Error) => console.log(error)
+      )
+    } else if (region==='강원도') {
+      bnbList(
+        '강원',
+        ({ data }: any) => {
+          data.sort(()=>Math.random()-0.5);
+          setBnbItem(data.slice(0,1));
+          console.log(data.slice(0,1))
+        },
+        (error: Error) => console.log(error)
+      )
+    } else if (region==='전라남도') {
+      bnbList(
+        '전남',
+        ({ data }: any) => {
+          data.sort(()=>Math.random()-0.5);
+          setBnbItem(data.slice(0,1));
+          console.log(data.slice(0,1))
+        },
+        (error: Error) => console.log(error)
+      )
+    } else if (region==='전라북도') {
+      bnbList(
+        '전북',
+        ({ data }: any) => {
+          data.sort(()=>Math.random()-0.5);
+          setBnbItem(data.slice(0,1));
+          console.log(data.slice(0,1))
+        },
+        (error: Error) => console.log(error)
+      )
+    }
+    else if (region==='경상남도') {
+      bnbList(
+        '경남',
+        ({ data }: any) => {
+          data.sort(()=>Math.random()-0.5);
+          setBnbItem(data.slice(0,1));
+          console.log(data.slice(0,1))
+        },
+        (error: Error) => console.log(error)
+      )
+    }
+    else if (region==='경상북도') {
+      bnbList(
+        '경북',
+        ({ data }: any) => {
+          data.sort(()=>Math.random()-0.5);
+          setBnbItem(data.slice(0,1));
+          console.log(data.slice(0,1))
+        },
+        (error: Error) => console.log(error)
+      )
+    }
+    else if (region==='충청남도') {
+      bnbList(
+        '충남',
+        ({ data }: any) => {
+          data.sort(()=>Math.random()-0.5);
+          setBnbItem(data.slice(0,1));
+          console.log(data.slice(0,1))
+        },
+        (error: Error) => console.log(error)
+      )
+    }
+    else if (region==='충청북도') {
+      bnbList(
+        '충북',
+        ({ data }: any) => {
+          data.sort(()=>Math.random()-0.5);
+          setBnbItem(data.slice(0,1));
+          console.log(data.slice(0,1))
+        },
+        (error: Error) => console.log(error)
+      )
+    } else {
       bnbList(
         region,
         ({ data }: any) => {
@@ -62,24 +132,98 @@ const Region = () => {
           console.log(data.slice(0,1))
         },
         (error: Error) => console.log(error)
-      );
+      )
     }
-    
   }, [region]);
 
   useEffect(()=>{
-    if(region.length <= 3) {
+    if (region === '제주도') {
+      activityList(
+        '제주특별자치도',
+        ({ data }: any) => {
+          setActivityItem(data);
+          console.log(data)
+        },
+        (error: Error) => console.log(error)
+      )
+    } else if (region==='강원도') {
+      activityList(
+        '강원',
+        ({ data }: any) => {
+          setActivityItem(data);
+          console.log(data)
+        },
+        (error: Error) => console.log(error)
+      )
+    } else if (region==='전라남도') {
+      activityList(
+        '전남',
+        ({ data }: any) => {
+          setActivityItem(data);
+          console.log(data)
+        },
+        (error: Error) => console.log(error)
+      )
+    } else if (region==='전라북도') {
+      activityList(
+        '전북',
+        ({ data }: any) => {
+          setActivityItem(data);
+          console.log(data)
+        },
+        (error: Error) => console.log(error)
+      )
+    }
+    else if (region==='경상남도') {
+      activityList(
+        '경남',
+        ({ data }: any) => {
+          setActivityItem(data);
+          console.log(data)
+        },
+        (error: Error) => console.log(error)
+      )
+    }
+    else if (region==='경상북도') {
+      activityList(
+        '경북',
+        ({ data }: any) => {
+          setActivityItem(data);
+          console.log(data)
+        },
+        (error: Error) => console.log(error)
+      )
+    }
+    else if (region==='충청남도') {
+      activityList(
+        '충남',
+        ({ data }: any) => {
+          setActivityItem(data);
+          console.log(data)
+        },
+        (error: Error) => console.log(error)
+      )
+    }
+    else if (region==='충청북도') {
+      activityList(
+        '충북',
+        ({ data }: any) => {
+          setActivityItem(data);
+          console.log(data)
+        },
+        (error: Error) => console.log(error)
+      )
+    } else {
       activityList(
         region,
         ({ data }: any) => {
-          data.sort(()=>Math.random()-0.5);
-          setActivityItem(data.slice(0,1));
-          console.log(data.slice(0,1))
+          setActivityItem(data);
+          console.log(data)
         },
         (error: Error) => console.log(error)
-      );
+      )
     }
-    },[region])
+  },[region])
 
   return (
     <Container>
@@ -91,11 +235,11 @@ const Region = () => {
       <Main>
         <Tab>
           <Box sx={{ '& > :not(style)': { m: 1 }, mb: '1vh' }}>
-            <Fab variant="extended" size="medium" color="primary" aria-label="add" onClick={()=>{router.push(`/reservation/${region}/bnb`)}}>
+            <Fab sx={{ padding: 2 }} variant="extended" size="small" color="primary" aria-label="add" onClick={()=>{router.push(`/reservation/${region}/bnb`)}}>
               <NavigationIcon sx={{ mr: 1 }} />
               숙소
             </Fab>
-            <Fab variant="extended" size="medium" color="primary" aria-label="add" onClick={()=>{router.push(`/reservation/${region}/activity`)}}>
+            <Fab variant="extended" size="small" color="primary" aria-label="add" onClick={()=>{router.push(`/reservation/${region}/activity`)}}>
               <NavigationIcon sx={{ mr: 1 }} />
               액티비티
             </Fab>
@@ -144,9 +288,9 @@ const Text = styled.div`
   // z-index: 100;
   position: absolute;
   color: white;
-  top: 65%;
+  top: 60%;
   left: 10%;
-  font-size: 25px
+  font-size: 1.2rem
 `;
 
 const Main = styled.div`

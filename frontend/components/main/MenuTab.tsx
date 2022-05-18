@@ -5,6 +5,9 @@ import { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
 
 const Container = styled.div`
+    &:hover {
+        cursor: pointer;
+    }
     display: grid;
     text-align: center;
     font-size: 0.8rem;
@@ -14,6 +17,7 @@ const Menu = styled.div`
     justify-content: space-evenly;
     margin-top: 2vh;
     margin-bottom: 3vh;
+
 `;
 
 const MenuTab: NextPage = () => {

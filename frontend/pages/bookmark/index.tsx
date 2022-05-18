@@ -36,16 +36,16 @@ const Bookmark = () => {
   useEffect(()=>{
     likeBnbList(
       null,
-      (data: any) => {
-        setBnbList(data.data);
-        console.log(data.data)
+      ({ data }: any) => {
+        setBnbList(data);
       },
       (error: Error) => console.log(error),
     )
     likeActivityList(
       null,
-      (data: any) => {
-        setActList(data.data);
+      ({ data }: any) => {
+        setActList(data);
+        console.log(data)
       },
       (error: Error) => console.log(error),
     )
@@ -76,10 +76,10 @@ const Bookmark = () => {
                 onClick={()=>{
                   router.push(
                       {
-                          pathname: `/reservation/${bnb.accommodationArticle.loc.split(' ')[0]}/bnb/${bnb.id}`,
-                          query: { loc: bnb.accommodationArticle.loc.split(' ')[0], id: bnb.id },
+                          pathname: `/reservation/${bnb.accommodationArticle.loc.split(' ')[0]}/bnb/${bnb.accommodationArticle.id}`,
+                          query: { loc: bnb.accommodationArticle.loc.split(' ')[0], id: bnb.accommodationArticle.id },
                       },
-                      `/reservation/${bnb.accommodationArticle.loc.split(' ')[0]}/bnb/${bnb.id}`
+                      `/reservation/${bnb.accommodationArticle.loc.split(' ')[0]}/bnb/${bnb.accommodationArticle.id}`
                     )
                   }}
               />
@@ -94,6 +94,15 @@ const Bookmark = () => {
               loc={act.activity.loc}
               like={actList}
               rendering={rendering}
+              onClick={()=>{
+                router.push(
+                    {
+                        pathname: `/reservation/${act.activity.loc.split(' ')[0]}/activity/${act.activity.id}`,
+                        query: { loc: act.activity.loc.split(' ')[0], id: act.activity.id },
+                    },
+                    `/reservation/${act.activity.loc.split(' ')[0]}/activity/${act.activity.id}`
+                  )
+                }}
             />
           )
         })

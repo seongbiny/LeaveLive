@@ -9,7 +9,11 @@ const Box = styled.div`
   position: relative;
   display: grid;
   margin-bottom: 2vh;
-//   border: 1px solid;
+`;
+const Hover = styled.div`
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const Item = ({ list, url }: any) => {
@@ -26,7 +30,6 @@ const Item = ({ list, url }: any) => {
               <div 
                 key={idx} 
                 style={{marginLeft: '5vw', marginRight: '5vw'}}
-                onClick={()=>{router.push(`/reservation/${region}/${url}/${id}`)}}
               >
                 <img 
                   src={`${BACKEND_IMAGE_URL}/${pic}`} 
@@ -35,9 +38,9 @@ const Item = ({ list, url }: any) => {
               </div>
             ))}
           </Carousel>
-          <div style={{marginLeft:'7vw', fontSize: '1rem', paddingTop: '1vh'}}>
+          <Hover onClick={()=>{router.push(`/reservation/${region}/${url}/${id}`)}} style={{marginLeft:'7vw', fontSize: '1rem', paddingTop: '1vh'}}>
               {name}
-          </div>
+          </Hover>
       </Box>
   )
 }
