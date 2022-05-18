@@ -8,7 +8,7 @@ import CalendarMonthRoundedIcon from "@mui/icons-material/CalendarMonthRounded";
 import Paper from "@mui/material/Paper";
 
 const CeoNav = () => {
-  const [value, setValue] = useState<string>();
+  const [value, setValue] = useState<string>("/ceo");
 
   const handleChange = useCallback(
     (event: React.SyntheticEvent, newValue: string) => {

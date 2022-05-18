@@ -15,6 +15,10 @@ const Container = styled.div`
   height: 120px;
   ${flexCenter}
   padding: 1rem 0;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 interface IImageContainer {
