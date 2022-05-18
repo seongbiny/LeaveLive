@@ -37,7 +37,13 @@ function MyApp({ Component, pageProps }: AppProps) {
         getUserInfo(
           null,
           ({ data: { nickname, picPath, type } }: any) => {
-            store.dispatch(setUserInfo({ nickname, picPath, type }));
+            store.dispatch(
+              setUserInfo({
+                nickname,
+                picPath: picPath === "" ? "/profile.png" : picPath,
+                type,
+              })
+            );
           },
           (error: Error) => console.log(error)
         );
