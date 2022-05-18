@@ -29,13 +29,14 @@ const DiaryItem = ({content, date, diaryId, picPath, userId, tag, tagFunction}: 
     },[])
 
     return (
-        <div>
+        <div style={{marginBottom: '2vh'}}>
             <Carousel showThumbs={false}>
                 {picPathList.map((pic: any, idx: Key | null | undefined)=>(
                     <div key={idx}>
                         <img 
                             src={`${BACKEND_IMAGE_URL}/${pic}`}
                             width="100%" height={220}
+                            style={{objectFit: 'contain'}}
                         />
                     </div>
                 ))}
