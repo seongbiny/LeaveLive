@@ -10,6 +10,7 @@ import LocalFloristRoundedIcon from "@mui/icons-material/LocalFloristRounded";
 import SoupKitchenRoundedIcon from "@mui/icons-material/SoupKitchenRounded";
 import Header from "../../../../components/Header";
 import { Button } from "@mui/material";
+import MyCarousel from "../../../../components/Carousel";
 interface IDetail {
   cnt: number;
   contents: string;
@@ -22,54 +23,6 @@ interface IDetail {
   price: number;
   userId: string;
 }
-
-const Container = styled.div`
-  // ${flexCenter}
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  margin-bottom: 75px;
-  line-height: 2.2rem;
-  margin-bottom: 13vh;
-`;
-
-const BnbTitle = styled.div`
-  font-size: 1.2rem;
-  font-weight: bold;
-  padding-top: 1.5rem;
-  padding-bottom: 1rem;
-`;
-
-const BnbContent = styled.div`
-  padding-bottom: 1rem;
-`;
-
-const BnbHeading = styled.div`
-  font-size: 1.1rem;
-  font-weight: bold;
-  padding: 0.6rem 0;
-`;
-
-const AdditionalInfo = styled.div`
-  ${flexCenter}
-  align-items: flex-start;
-`;
-
-const BnbConditionWrapper = styled.div`
-  ${flexCenter}
-  justify-content: flex-start;
-  padding-bottom: 0.5rem;
-
-  span {
-    margin-left: 0.2rem;
-  }
-`;
-
-const ContentContainer = styled.div`
-  width: 90%;
-  justify-content: center;
-  margin: auto;
-`;
 
 const BnbDetail = () => {
   const router = useRouter();
@@ -91,7 +44,7 @@ const BnbDetail = () => {
     const id = router.query.id;
     bnbDetail(
       id,
-      ({ data }: any) => {console.log(data), setDetail(data), setPath(data.picPath.split(","))},
+      ({ data }: any) => {setDetail(data), setPath(data.picPath.split(","))},
       (error: Error) => console.log(error)
     )
     console.log(detail)
@@ -102,7 +55,8 @@ const BnbDetail = () => {
       <Container>
         <div style={{ position: "relative", width: "100%" }}>
           <Header title="상세보기" hide={false} />
-          <Carousel infiniteLoop showThumbs={false}>
+          <MyCarousel picPath={detail.picPath} />
+          {/* <Carousel infiniteLoop showThumbs={false}>
             {path.map((pic, idx)=>(
               <div key={idx}>
                 <img
@@ -111,7 +65,7 @@ const BnbDetail = () => {
                 />
               </div>
             ))}
-          </Carousel>
+          </Carousel> */}
         </div>
         <ContentContainer>
           <BnbTitle>{detail.name}</BnbTitle>
@@ -173,5 +127,52 @@ const Bottom = styled.div`
   position: fixed;
   margin-top: 90vh;
   z-index: 100;
+`;
+const Container = styled.div`
+  // ${flexCenter}
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 75px;
+  line-height: 2.2rem;
+  margin-bottom: 13vh;
+`;
+
+const BnbTitle = styled.div`
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding-top: 1.5rem;
+  padding-bottom: 1rem;
+`;
+
+const BnbContent = styled.div`
+  padding-bottom: 1rem;
+`;
+
+const BnbHeading = styled.div`
+  font-size: 1.1rem;
+  font-weight: bold;
+  padding: 0.6rem 0;
+`;
+
+const AdditionalInfo = styled.div`
+  ${flexCenter}
+  align-items: flex-start;
+`;
+
+const BnbConditionWrapper = styled.div`
+  ${flexCenter}
+  justify-content: flex-start;
+  padding-bottom: 0.5rem;
+
+  span {
+    margin-left: 0.2rem;
+  }
+`;
+
+const ContentContainer = styled.div`
+  width: 90%;
+  justify-content: center;
+  margin: auto;
 `;
 export default BnbDetail;
