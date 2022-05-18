@@ -14,12 +14,6 @@ import Button from '@mui/material/Button';
 import { activityReservation } from "../../../api/activity";
 import { useRouter } from 'next/router';
 
-const Container = styled.div`
-  // display: flex;
-  // flex-direction: column;
-  // align-items: center;
-  // margin-bottom: 10vh;
-`;
 const StyledTab = styled.div`
   display: flex;
   justify-content: space-between;
@@ -100,24 +94,20 @@ const ReservationAct = () => {
         cnt: reservationCnt,
         startDate: reservationStart,
         endDate: reservationEnd,
-        // id: id
       };
-    console.log(dto)
     await activityReservation(
     id,
     dto,
     ({ data }: any) => {
-        console.log(data);
         router.push(`/reservation/activity/result/${data}`)
     },
     (error: Error) => console.log(error)
     )
   }
 
-
   return (
     <>
-      <Container>
+      <div>
         <StyledTab>
           <CloseIcon onClick={()=>(router.back())} />
           <div>예약하기</div>
@@ -176,7 +166,7 @@ const ReservationAct = () => {
           </div>
         </Tabs>
         <hr />
-      </Container>
+      </div>
       <BottomNav>
         <Button 
             variant="contained" 

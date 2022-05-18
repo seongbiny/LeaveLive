@@ -26,7 +26,7 @@ const Container = styled.div`
   height: 100%;
   width: 100%;
   padding-top: 20vh;
-`
+`;
 
 const Confirm = () => {
   const router = useRouter();
@@ -40,7 +40,6 @@ const Confirm = () => {
     getBnbList(
       null,
       ({ data }: any) => {
-        console.log(data);
         {data.map((item: any)=>{
             if(Number(id)===item.id){
                 setList(item)
@@ -52,7 +51,6 @@ const Confirm = () => {
       },
       (error: Error) => console.log(error)
     )
-    console.log(list)
   },[]);
 
   return (

@@ -51,17 +51,14 @@ const ActivityDetail = () => {
     price: 0,
     userId: "",
   });
-  
-  const [path, setPath] = useState([]);
 
   useEffect(()=>{
     const id = router.query.id;
     activityDetail(
       id,
-      ({ data }: any) => {setDetail(data), setPath(data.picPath.split(","))},
+      ({ data }: any) => {setDetail(data)},
       (error: Error) => console.log(error)
     )
-    console.log(detail)
   },[router])
 
   return (

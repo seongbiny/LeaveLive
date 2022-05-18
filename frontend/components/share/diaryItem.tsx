@@ -20,7 +20,6 @@ const DiaryItem = ({content, date, diaryId, picPath, userId, tag, tagFunction}: 
     const tags = tag.split(",");
 
     useEffect(()=>{
-        console.log(content)
         getUserDiary(
             userId,
             ({ data }: any) => {setUserData(data)},

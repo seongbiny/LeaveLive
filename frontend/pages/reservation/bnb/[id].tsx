@@ -18,12 +18,6 @@ import { format } from "date-fns";
 import DotInfo from "../../../components/reservation/dotInfo";
 import { flexCenter } from '../../../styles/Basic';
 
-const Container = styled.div`
-  // display: flex;
-  // flex-direction: column;
-  // align-items: center;
-  // margin-bottom: 10vh;
-`;
 const StyledTab = styled.div`
   display: flex;
   justify-content: space-between;
@@ -55,8 +49,6 @@ const CalendarContainer = styled.div`
   width: 100%;
   margin-top: 1vh;
 `;
-
-
 interface IBnbDates {
   startDate: Date;
   endDate: Date;
@@ -188,7 +180,7 @@ const ReservationBnb = () => {
   return (
     <div style={{marginBottom: '10vh'}}>
     
-      <Container>
+      <div>
         <StyledTab>
           <CloseIcon onClick={()=>(Router.back())} />
           <div>예약하기</div>
@@ -249,7 +241,7 @@ const ReservationBnb = () => {
           </div>
         </Tabs>
         <hr />
-      </Container>
+      </div>
       <BottomNav>
         <Button variant="contained" size="large" sx={{width: '60vw'}} onClick={reservationAxios}>예약하기</Button>
       </BottomNav>

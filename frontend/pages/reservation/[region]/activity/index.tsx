@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import ActivityItem from '../../../../components/reservation/activityItem';
@@ -29,7 +29,6 @@ const ActivityList = () => {
       },
       (error: Error) => console.log(error)
     );
-    console.log({router})
   },[])
 
   useEffect(() => {
@@ -38,7 +37,6 @@ const ActivityList = () => {
         '제주특별자치도',
         ({ data }: any) => {
           setList(data);
-          console.log(data)
         },
         (error: Error) => console.log(error)
       )
@@ -47,7 +45,6 @@ const ActivityList = () => {
         '강원',
         ({ data }: any) => {
           setList(data);
-          console.log(data)
         },
         (error: Error) => console.log(error)
       )
@@ -56,7 +53,6 @@ const ActivityList = () => {
         '전남',
         ({ data }: any) => {
           setList(data);
-          console.log(data)
         },
         (error: Error) => console.log(error)
       )
@@ -65,7 +61,6 @@ const ActivityList = () => {
         '전북',
         ({ data }: any) => {
           setList(data);
-          console.log(data)
         },
         (error: Error) => console.log(error)
       )
@@ -75,7 +70,6 @@ const ActivityList = () => {
         '경남',
         ({ data }: any) => {
           setList(data);
-          console.log(data)
         },
         (error: Error) => console.log(error)
       )
@@ -85,7 +79,6 @@ const ActivityList = () => {
         '경북',
         ({ data }: any) => {
           setList(data);
-          console.log(data)
         },
         (error: Error) => console.log(error)
       )
@@ -95,7 +88,6 @@ const ActivityList = () => {
         '충남',
         ({ data }: any) => {
           setList(data);
-          console.log(data)
         },
         (error: Error) => console.log(error)
       )
@@ -105,7 +97,6 @@ const ActivityList = () => {
         '충북',
         ({ data }: any) => {
           setList(data);
-          console.log(data)
         },
         (error: Error) => console.log(error)
       )
@@ -114,7 +105,6 @@ const ActivityList = () => {
         region,
         ({ data }: any) => {
           setList(data);
-          console.log(data)
         },
         (error: Error) => console.log(error)
       )

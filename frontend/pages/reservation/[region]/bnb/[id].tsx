@@ -47,7 +47,6 @@ const BnbDetail = () => {
       ({ data }: any) => {setDetail(data), setPath(data.picPath.split(","))},
       (error: Error) => console.log(error)
     )
-    console.log(detail)
   },[router])
 
   return(
@@ -56,16 +55,6 @@ const BnbDetail = () => {
         <div style={{ position: "relative", width: "100%" }}>
           <Header title="상세보기" hide={false} />
           <MyCarousel picPath={detail.picPath} />
-          {/* <Carousel infiniteLoop showThumbs={false}>
-            {path.map((pic, idx)=>(
-              <div key={idx}>
-                <img
-                  src={`${BACKEND_IMAGE_URL}/${pic}`}
-                  width={350} height={250} 
-                />
-              </div>
-            ))}
-          </Carousel> */}
         </div>
         <ContentContainer>
           <BnbTitle>{detail.name}</BnbTitle>

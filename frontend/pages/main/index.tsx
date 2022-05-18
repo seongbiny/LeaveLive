@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import Seo from "../../components/Seo";
 import Image from "next/image";
 import styled from 'styled-components';
@@ -7,8 +7,6 @@ import { getUserInfo } from "../../api/user";
 import { getDiary } from "../../api/diary";
 import Item from "../../components/main/Item";
 import { useRouter } from "next/router";
-import { postActivity } from "../../api/activity";
-
 interface IProps {
   content: string,
   date: string,
@@ -64,12 +62,12 @@ const Main = () => {
     )
     getDiary(
       day,
-      ({ data }: any) => {console.log(data), setDiary(data)},
+      ({ data }: any) => {setDiary(data)},
       (error: Error) => console.log(error)
     )
     getDiary(
       tom,
-      ({ data }: any) => {console.log(data), setDiaryTom(data)},
+      ({ data }: any) => {setDiaryTom(data)},
       (error: Error) => console.log(error)
     )
   },[])
