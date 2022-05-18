@@ -61,6 +61,10 @@ const UploadButton = styled.label`
   position: absolute;
   bottom: 5px;
   right: -5px;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const UserMenu = styled.div`
@@ -69,6 +73,10 @@ const UserMenu = styled.div`
   color: gray;
   align-self: flex-end;
   font-size: 0.9rem;
+
+  & > span:hover {
+    cursor: pointer;
+  }
 `;
 
 const Input = styled.input`
