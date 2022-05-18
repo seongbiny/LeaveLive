@@ -45,10 +45,24 @@ const BnbCreate = () => {
   const [addressDetail, setAddressDetail] = useState<String>("");
   const [postcode, setPostcode] = useState<String>("");
   const [images, setImages] = useState<Array<IImages>>([]);
-  const [onScriptLoad, setOnScriptLoad] = useState<boolean>(false);
 
   const router = useRouter();
   const onClick = useCallback(() => {
+    if (!values.name) {
+      alert("숙소 이름을 입력해주세요.");
+      return;
+    }
+
+    if (!values.price) {
+      alert("가격을 입력해주세요.");
+      return;
+    }
+
+    if (!values.people) {
+      alert("최대 인원 수를 입력해주세요.");
+      return;
+    }
+
     if (!address) {
       alert("주소를 입력해주세요.");
       return;
