@@ -105,8 +105,8 @@ const Result = () => {
             <ColoredText style={{fontSize:'30px'}}>충청북도 청주</ColoredText>
           </TextContainer>}
       </div>
-      <div style={{marginTop: '25vh'}} onClick={()=>{router.push(`/search/${name}`)}}>
-        <Button variant="contained" >여행가기</Button>
+      <div style={{marginTop: '25vh', width: "70%", display: "flex", justifyContent: "center", alignItems: "center"}} onClick={()=>{router.push(`/search/${name}`)}}>
+        <Button variant="contained" sx={{width: "100%"}} >여행가기</Button>
       </div>
     </Container>
   )

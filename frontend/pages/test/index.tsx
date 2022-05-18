@@ -240,15 +240,19 @@ const Bar = styled.div< { barWidth:string } >`
   position: relative;
 `;
 const Option = styled.div`
-  border-radius: 20px;
+  border-radius: 15px;
   background: white;
   height: 8vh;
   line-height: 8vh;
-  box-shadow: 10px 10px 10px #808080;
+  /* box-shadow: 10px 10px 10px #808080; */
+  box-shadow: rgba(50, 50, 93, 0.2) 0px 13px 27px -5px, rgba(0, 0, 0, 0.25) 0px 8px 16px -8px;
   margin: auto;
   font-size: 1.1rem;
   &:hover {
     cursor: pointer;
+    background-color: rgb(114,163,80);
+    color: white;
+    transition: 0.2s ease;
   }
 `;
 const Main = styled.div`
