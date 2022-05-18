@@ -45,6 +45,7 @@ const Region = () => {
     else if(name==='경상북도') {setRegion('경북')}
     else if(name==='충청남도') {setRegion('충남')}
     else if(name==='충청북도') {setRegion('충북')}
+    else if(name==='강원도') {setRegion('강원')}
   }
 
   useEffect(()=>{
