@@ -85,13 +85,13 @@ const Main = () => {
 };
 
 const StyledError = styled.div`
-  width: 70%;
-  height: 20vh;
+  width: 85%;
+  height: 25vh;
   color: gray;
   margin: auto;
   text-align: center;
   border-radius: 20px;
-  line-height: 20vh;
+  line-height: 25vh;
   margin-top: 3vh;
   margin-bottom: 3vh;
   border: 1px dashed;
