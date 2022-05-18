@@ -116,7 +116,7 @@ const DiaryContents = () => {
         (error: Error) => console.log(error)
       );
     }
-  }, []);
+  }, [diary]);
 
   useEffect(() => {
     const dateArr = String(router.query.date).split("-");

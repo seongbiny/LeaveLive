@@ -20,8 +20,8 @@ const ProfileWrapper = styled.div`
 `;
 
 const Image = styled.img`
-  width: 65px;
-  height: 65px;
+  width: 55px;
+  height: 55px;
   border-radius: 50%;
   background-color: white;
   margin-right: 1.5rem;
@@ -42,7 +42,13 @@ const Profile = () => {
   return (
     <Container>
       <ProfileWrapper>
-        <Image src={`${BACKEND_IMAGE_URL}/${picPath}`} />
+        <Image
+          src={
+            picPath.startsWith("http") || picPath === "/profile.png"
+              ? picPath
+              : `${BACKEND_IMAGE_URL}/${picPath}`
+          }
+        />
         <BoldText>{nickname}</BoldText>
       </ProfileWrapper>
 

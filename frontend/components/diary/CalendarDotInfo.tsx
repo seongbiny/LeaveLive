@@ -12,8 +12,8 @@ const Container = styled.div`
 const DotContainer = styled.div`
   ${flexCenter}
 
-  &:first-of-type {
-    margin-right: 0.8rem;
+  &:not(:last-of-type) {
+    margin-right: 0.7rem;
   }
 `;
 
@@ -37,8 +37,12 @@ const CalendarDotInfo = () => {
         <div>일기 쓴 날</div>
       </DotContainer>
       <DotContainer>
+        <Dot color="hotpink"></Dot>
+        <div>숙소</div>
+      </DotContainer>
+      <DotContainer>
         <Dot color="skyblue"></Dot>
-        <div>액티비티 예약</div>
+        <div>액티비티</div>
       </DotContainer>
     </Container>
   );

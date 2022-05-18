@@ -8,10 +8,11 @@ import styled from "styled-components";
 import { flexCenter } from "../../styles/Basic";
 import theme from "../../styles/Theme";
 import { getMyAllDiary } from "../../api/diary";
+import { getBnbList } from "../../api/bnb";
 import { getMyAllActivityReservation } from "../../api/reservation";
 import { useRouter } from "next/router";
 import CalendarDotInfo from "../../components/diary/CalendarDotInfo";
-import Activity from "./Activity";
+import Schedule from "./Schedule";
 
 const CalendarContainer = styled.div`
   ${flexCenter}
@@ -20,7 +21,7 @@ const CalendarContainer = styled.div`
   margin-top: 1rem;
 `;
 
-interface IActivityDates {
+interface IDates {
   startDate: Date;
   endDate: Date;
 }
@@ -30,6 +31,15 @@ export interface IActivity {
   cnt: number;
   startDate: Date;
   endDate: Date;
+}
+
+export interface ISchedule {
+  name: string;
+  cnt: number;
+  startDate: Date;
+  endDate: Date;
+  id: number;
+  type: "BNB" | "ACTIVITY";
 }
 
 const ActivityContainer = styled.div`
@@ -46,12 +56,27 @@ const ActivityTitle = styled.div`
   align-self: flex-start;
 `;
 
+const DotContainer = styled.div`
+  position: absolute;
+  width: 100%;
+  right: 6px;
+  ${flexCenter}
+  justify-content: flex-end;
+
+  & > div:not(:last-of-type) {
+    margin-right: 3px;
+  }
+`;
+
 const DiaryCalendar = () => {
   const [date, setDate] = useState<Date>(new Date());
   const [selMonth, setSelMonth] = useState<Date>(new Date());
   const [diaryDates, setDiaryDates] = useState<Array<string>>([]);
-  const [activityDates, setActivityDates] = useState<Array<IActivityDates>>([]);
-  const [activities, setActivities] = useState<Array<IActivity>>([]);
+  const [activityDates, setActivityDates] = useState<Array<IDates>>([]);
+  const [bnbDates, setBnbDates] = useState<Array<IDates>>([]);
+  const [activities, setActivities] = useState<Array<ISchedule>>([]);
+  const [bnbs, setBnbs] = useState<Array<ISchedule>>([]);
+  const [schedules, setSchedules] = useState<Array<ISchedule>>([]);
   const router = useRouter();
   const handleChange = useCallback(
     (item: Date) => {
@@ -85,12 +110,27 @@ const DiaryCalendar = () => {
               width: "5px",
               borderRadius: "100%",
               background: "orange",
-              position: "absolute",
-              top: 2,
-              right: 10,
             }}
           />
         );
+      }
+
+      let bnbDot: any = null;
+      for (let i = 0; i < bnbDates.length; i++) {
+        if (bnbDates[i].startDate <= day && day <= bnbDates[i].endDate) {
+          bnbDot = (
+            <div
+              style={{
+                height: "5px",
+                width: "5px",
+                borderRadius: "100%",
+                background: "hotpink",
+              }}
+            />
+          );
+
+          break;
+        }
       }
 
       let activityDot: any = null;
@@ -106,9 +146,6 @@ const DiaryCalendar = () => {
                 width: "5px",
                 borderRadius: "100%",
                 background: "skyblue",
-                position: "absolute",
-                top: 2,
-                right: 2,
               }}
             />
           );
@@ -116,15 +153,19 @@ const DiaryCalendar = () => {
           break;
         }
       }
+
       return (
         <div>
-          {diaryDot}
-          {activityDot}
+          <DotContainer>
+            {diaryDot}
+            {bnbDot}
+            {activityDot}
+          </DotContainer>
           <span>{format(day, "d")}</span>
         </div>
       );
     },
-    [diaryDates, activityDates]
+    [diaryDates, bnbDates, activityDates]
   );
 
   useEffect(() => {
@@ -136,27 +177,57 @@ const DiaryCalendar = () => {
       (error: Error) => console.log(error)
     );
 
-    getMyAllActivityReservation(
+    getBnbList(
       null,
       ({ data }: any) => {
-        setActivities(
+        const bnbs = data.map((reservation: any) => ({
+          type: "BNB",
+          id: reservation.accommodationArticle.id,
+          name: reservation.accommodationArticle.name,
+          cnt: reservation.cnt,
+          startDate: new Date(reservation.startDate.join("-")),
+          endDate: new Date(reservation.endDate.join("-")),
+        }));
+
+        setBnbs(bnbs);
+        setBnbDates(
           data.map((reservation: any) => ({
-            name: reservation.activity.name,
-            cnt: reservation.cnt,
             startDate: new Date(reservation.startDate.join("-")),
             endDate: new Date(reservation.endDate.join("-")),
           }))
         );
+      },
+      (error: Error) => console.log(error)
+    );
+
+    getMyAllActivityReservation(
+      null,
+      ({ data }: any) => {
+        const activities = data.map((reservation: any) => ({
+          type: "ACTIVITY",
+          id: reservation.activity.id,
+          name: reservation.activity.name,
+          cnt: reservation.cnt,
+          startDate: new Date(reservation.startDate.join("-")),
+          endDate: new Date(reservation.endDate.join("-")),
+        }));
+        setActivities(activities);
+
         setActivityDates(
-          data.map((day: any) => ({
-            startDate: new Date(day.startDate.join("-")),
-            endDate: new Date(day.endDate.join("-")),
+          data.map((reservation: any) => ({
+            startDate: new Date(reservation.startDate.join("-")),
+            endDate: new Date(reservation.endDate.join("-")),
           }))
         );
       },
       (error: Error) => console.log(error)
     );
   }, []);
+
+  useEffect(() => {
+    if (bnbs.length !== 0 && activities.length !== 0)
+      setSchedules([...bnbs, ...activities]);
+  }, [bnbs, activities]);
 
   const handleShownDateChange = useCallback((item: Date) => {
     setSelMonth(item);
@@ -175,14 +246,15 @@ const DiaryCalendar = () => {
       />
       <ActivityContainer>
         <ActivityTitle>{selMonth.getMonth() + 1}월 나의 일정 🚩</ActivityTitle>
-        {activities
+        {schedules
+          .sort((a, b) => a.startDate.getTime() - b.startDate.getTime())
           .filter(
-            (activity) =>
-              activity.startDate.getMonth() <= selMonth.getMonth() &&
-              selMonth.getMonth() <= activity.endDate.getMonth()
+            (schedule) =>
+              schedule.startDate.getMonth() <= selMonth.getMonth() &&
+              selMonth.getMonth() <= schedule.endDate.getMonth()
           )
           .map((activity, index) => (
-            <Activity key={index} activity={activity} />
+            <Schedule key={index} schedule={activity} />
           ))}
       </ActivityContainer>
     </CalendarContainer>

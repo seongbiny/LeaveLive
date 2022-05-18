@@ -21,7 +21,14 @@ const Redirect = () => {
       getUserInfo(
         null,
         ({ data: { nickname, picPath, type } }: any) => {
-          dispatch(setUserInfo({ nickname, picPath, type }));
+          dispatch(
+            setUserInfo({
+              nickname,
+              picPath: picPath === "" ? "/profile.png" : picPath,
+              type,
+            })
+          );
+          router.push(type === "USER" ? "/main" : "/ceo");
         },
         (error: Error) => console.log(error)
       );
@@ -44,7 +51,7 @@ const Redirect = () => {
       );
 
       // 메인 화면으로 이동
-      router.push("/main");
+      // router.push("/main");
     },
     [router, onLoginSuccess]
   );

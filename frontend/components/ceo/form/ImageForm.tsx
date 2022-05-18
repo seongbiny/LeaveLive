@@ -38,6 +38,12 @@ const ImageContainer = styled.div<IImageContainerTypes>`
   margin-right: 1rem;
 `;
 
+const Label = styled.label`
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
 const ImageForm = ({ images, setImages }: IPropTypes) => {
   const handleImage = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,7 +63,7 @@ const ImageForm = ({ images, setImages }: IPropTypes) => {
 
   return (
     <>
-      <label htmlFor="upload">
+      <Label htmlFor="upload">
         <Input
           accept="image/*"
           id="upload"
@@ -69,7 +75,7 @@ const ImageForm = ({ images, setImages }: IPropTypes) => {
           <PhotoCamera />
         </IconButton>
         숙소 사진 첨부
-      </label>
+      </Label>
       <ImageContainerGroup>
         <ImageContainerWrapper>
           {images.map((image, index) => {

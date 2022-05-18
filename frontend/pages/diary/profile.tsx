@@ -100,9 +100,10 @@ const Profile = () => {
     setNextNickname(nickname);
     setNextImage({
       file: null,
-      previewURL: picPath.startsWith("http")
-        ? picPath
-        : `${BACKEND_IMAGE_URL}/${picPath}`,
+      previewURL:
+        picPath.startsWith("http") || picPath === "/profile.png"
+          ? picPath
+          : `${BACKEND_IMAGE_URL}/${picPath}`,
     });
   }, [nickname, picPath]);
 

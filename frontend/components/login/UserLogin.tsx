@@ -29,10 +29,18 @@ export const ButtonContainer = styled.div`
   width: 100%;
   margin-bottom: 15%;
   text-align: center;
+
+  & > *:hover {
+    cursor: pointer;
+  }
 `;
 
 export const NavigatorContainer = styled.div`
   font-size: 0.9rem;
+
+  & > span:hover {
+    cursor: pointer;
+  }
 `;
 
 const UserLogin = ({ setIsUser }: IPropTypes) => {
