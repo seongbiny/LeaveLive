@@ -10,7 +10,7 @@ server:
       charset: UTF-8
       enabled: true
       force: true
-
+  max-http-header-size: 10MB
 #spring:
 #  h2:
 #    console:
@@ -63,3 +63,7 @@ spring:
         order_updates: true
         format_sql: true
         show-sql: true
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 40MB
