@@ -11,5 +11,5 @@ public interface ReservationRepository extends JpaRepository<AccommodationRes,Lo
     @Query(value = "select i from AccommodationRes i where i.userId=:userId")
     List<AccommodationRes> findByUserId(@Param("userId") String userId);
     List<AccommodationRes> findByAccommodationArticleId(@Param("id") Long id);
-    List<AccommodationRes> findAllByAccommodationArticleId(Long id);
+    List<AccommodationRes> findAllByAccommodationArticleIdOrderByStartDateAscEndDateAsc(Long id);
 }

@@ -105,7 +105,7 @@ public class ReservationServiceImpl {
         List<AccommodationArticle> entities=articleRepo.findAllByUserId(userId); //숙소 가져오기
         List<AccommodationResRes> result=new ArrayList<>();
         for(AccommodationArticle article:entities){
-            List<AccommodationRes> list=repo.findAllByAccommodationArticleId(article.getId()); //숙소에 해당하는 예약 목록
+            List<AccommodationRes> list=repo.findAllByAccommodationArticleIdOrderByStartDateAscEndDateAsc(article.getId()); //숙소에 해당하는 예약 목록
             for(AccommodationRes res:list) {
                 AccommodationResRes req= AccommodationResRes.of(res);
                 req.setNickname(getNickName(res.getUserId())); // 이걸로 유저 닉네임 찾고, req에 nickname 설정
