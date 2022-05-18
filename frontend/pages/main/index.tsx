@@ -4,37 +4,19 @@ import Image from "next/image";
 import styled from 'styled-components';
 import MenuTab from '../../components/main/MenuTab';
 import { getUserInfo } from "../../api/user";
-import { getDiary } from "../../api/diary";
-import Item from "../../components/main/Item";
 import { useRouter } from "next/router";
-interface IProps {
-  content: string,
-  date: string,
-  diaryId: number,
-  picPath: string,
-  status: string,
-  tag: string
-}
+import { getBnbReservation } from "../../api/bnb";
+import { getActivityReservation } from "../../api/activity";
+import MainSlider from "../../components/main/MainSlider";
 
 const Main = () => {
   const router = useRouter();
   const [nickName, setNickName] = useState('');
-  const [diary, setDiary] = useState<IProps>({
-    content: '',
-    date: '',
-    diaryId: 0,
-    picPath: '',
-    status: '',
-    tag: ''
-  });
-  const [diaryTom, setDiaryTom] = useState<IProps>({
-    content: '',
-    date: '',
-    diaryId: 0,
-    picPath: '',
-    status: '',
-    tag: ''
-  });
+
+  const [act, setAct] = useState<Array<Object>>([]);
+  const [bnb, setBnb] = useState<Array<Object>>([]);
+  const [actTom, setActTom] = useState<Array<Object>>([]);
+  const [bnbTom, setBnbTom] = useState<Array<Object>>([]);
 
   const getToday = () => {
     const date = new Date();
@@ -60,20 +42,30 @@ const Main = () => {
       ({ data }: any) => {setNickName(data.nickname)},
       (error: Error) => console.log(error)
     )
-    getDiary(
+    getBnbReservation(
       day,
-      ({ data }: any) => {setDiary(data)},
+      ({ data }: any) => {setBnb(data)},
       (error: Error) => console.log(error)
     )
-    getDiary(
+    getActivityReservation(
+      day,
+      ({ data }: any) => {setAct(data)},
+      (error: Error) => console.log(error)
+    )
+    getBnbReservation(
       tom,
-      ({ data }: any) => {setDiaryTom(data)},
+      ({ data }: any) => {setBnbTom(data)},
+      (error: Error) => console.log(error)
+    )
+    getActivityReservation(
+      tom,
+      ({ data }: any) => {setActTom(data)},
       (error: Error) => console.log(error)
     )
   },[])
 
   return (
-    <div style={{marginBottom: '13vh'}}>
+    <div style={{marginBottom: '17vh'}}>
       <Seo title="Main" />
       <Box>
         <Image src="/main-background.png" alt="main" title="main" width="100%" height="56%" layout="responsive" objectFit="contain"/>
@@ -81,14 +73,12 @@ const Main = () => {
       </Box>
       <MenuTab/>
       <div style={{marginBottom:'2vh', marginLeft: '5vw', fontWeight: 'bold'}}>오늘 나의 일정</div>
-      {diary.diaryId !== 0 ? <div style={{ margin: "3vh" }}>
-        <Item diary={diary} onClick={()=>{router.push(`/diary`)}} />
-        </div> : <StyledError>일정이 없습니다.</StyledError>
+      {(act.length !== 0) || (bnb.length !== 0) ?
+        <MainSlider act={act} bnb={bnb} /> : <StyledError>일정이 없습니다.</StyledError>
       }
       <div style={{marginBottom:'2vh', marginLeft: '5vw', fontWeight: 'bold'}}>내일 나의 일정</div>
-      {diaryTom.diaryId !== 0 ? <div style={{ margin: "3vh" }}>
-        <Item diary={diaryTom} onClick={()=>{router.push(`/diary`)}} />
-        </div> : <StyledError>일정이 없습니다.</StyledError>
+      {(actTom.length !== 0) || (bnbTom.length !== 0) ?
+        <MainSlider act={actTom} bnb={bnbTom} /> : <StyledError>일정이 없습니다.</StyledError>
       }
     </div>
   )
