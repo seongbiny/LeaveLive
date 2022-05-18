@@ -55,4 +55,11 @@ public class ReservationController {
         List<AccommodationResRes> result=service.getAllMyReservation(userId);
         return new ResponseEntity(result,HttpStatus.OK);
     }
+    @GetMapping("/{date}")
+    public ResponseEntity<List<AccommodationResDto>> getAllMyAccResByDate(HttpServletResponse response, @PathVariable("date") String date){
+        String userId = response.getHeader("userId");
+        log.info("AccommodationController.getAllMyAccRes.userId:" + userId);
+        List<AccommodationResDto> result=service.getAllMyAccResByDate(date,userId);
+        return new ResponseEntity(result,HttpStatus.OK);
+    }
 }

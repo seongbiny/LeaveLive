@@ -45,6 +45,21 @@ public class ReservationServiceImpl {
         return list;
     }
 
+    public List<AccommodationResDto> getAllMyAccResByDate(String date,String userId){
+        List<AccommodationRes> entities=repo.findByUserId(userId); // 내가 예약한 목록
+        List<AccommodationResDto> list=new ArrayList<>();
+        for(AccommodationRes res:entities){
+            LocalDate start=res.getStartDate();
+            LocalDate end=res.getEndDate();
+            LocalDate cur= LocalDate.parse(date);
+            if(cur.compareTo(start)>=0 && end.compareTo(cur)>=0){
+                log.info("ReservationServiceImpl.getAllMyAccResByDate:범위에 포함됨");
+                list.add(AccommodationResDto.of(res));
+            }
+        }
+        return list;
+    }
+
     /**
      * 예약할 수 있는 날짜인지 확인
      * myStart와 myEnd가 구간 안에 있으면 이미 예약되어있으므로 예약 불가
@@ -112,6 +127,7 @@ public class ReservationServiceImpl {
                 result.add(req);
             }
         }
+
         return result;
     }
     public String getNickName(String userId){
