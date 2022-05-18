@@ -25,7 +25,7 @@ const Item = ({ list, url }: any) => {
   
   return(
       <Box>
-          <Carousel infiniteLoop showThumbs={false}>
+          <Carousel infiniteLoop showThumbs={false} showStatus={false} showArrows={false}>
             {picPath.map((pic, idx)=>(
               <div 
                 key={idx} 

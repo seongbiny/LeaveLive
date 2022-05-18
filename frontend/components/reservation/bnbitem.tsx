@@ -69,12 +69,12 @@ const BnbItem = (props: any) => {
           />}
       </Text>
       <div>
-        <Carousel infiniteLoop showThumbs={false}>
-          {picPath.map((pic, idx)=>(
+        <Carousel infiniteLoop showThumbs={false} showStatus={false} showArrows={false} >
+          {picPath?.map((pic, idx)=>(
             <div 
               key={idx} 
               style={{marginLeft: '5vw', marginRight: '5vw'}} >
-              <img 
+              <img
                 src={`${BACKEND_IMAGE_URL}/${pic}`} 
                 width={300} height={200} 
                 style={{borderRadius: '10px'}} />
