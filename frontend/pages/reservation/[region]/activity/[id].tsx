@@ -4,12 +4,12 @@ import { activityDetail } from "../../../../api/activity";
 import styled from "styled-components";
 import { Carousel } from "react-responsive-carousel";
 import { BACKEND_IMAGE_URL } from "../../../../api";
-import Image from "next/image";
 import Map from "../../../../components/ceo/BnbMap";
 import { flexCenter } from "../../../../styles/Basic";
 import Header from "../../../../components/Header";
 import AddLocationIcon from '@mui/icons-material/AddLocation';
 import { Button } from "@mui/material";
+import MyCarousel from "../../../../components/Carousel";
 interface IDetail {
   cnt: number;
   contents: string;
@@ -58,7 +58,7 @@ const ActivityDetail = () => {
     const id = router.query.id;
     activityDetail(
       id,
-      ({ data }: any) => {console.log(data), setDetail(data), setPath(data.picPath.split(","))},
+      ({ data }: any) => {setDetail(data), setPath(data.picPath.split(","))},
       (error: Error) => console.log(error)
     )
     console.log(detail)
@@ -69,7 +69,7 @@ const ActivityDetail = () => {
       <Container>
         <div style={{ position: "relative", width: "100%" }}>
           <Header title="상세보기" hide={false} />
-          <Carousel
+          {/* <Carousel
             infiniteLoop
             showThumbs={false}
           >
@@ -81,7 +81,8 @@ const ActivityDetail = () => {
                 />
               </div>
             ))}
-          </Carousel>
+          </Carousel> */}
+          <MyCarousel picPath={detail.picPath} />
         </div>
         <ContentContainer>
           <div style={{fontSize:'1.5rem', fontWeight:'bold', paddingBottom: '3vh'}}>{detail.name}</div>

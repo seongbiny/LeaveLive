@@ -30,7 +30,6 @@ const Item = ({ list, url }: any) => {
               <div 
                 key={idx} 
                 style={{marginLeft: '5vw', marginRight: '5vw'}}
-                onClick={()=>{router.push(`/reservation/${region}/${url}/${id}`)}}
               >
                 <img 
                   src={`${BACKEND_IMAGE_URL}/${pic}`} 
@@ -39,7 +38,7 @@ const Item = ({ list, url }: any) => {
               </div>
             ))}
           </Carousel>
-          <Hover style={{marginLeft:'7vw', fontSize: '1rem', paddingTop: '1vh'}}>
+          <Hover onClick={()=>{router.push(`/reservation/${region}/${url}/${id}`)}} style={{marginLeft:'7vw', fontSize: '1rem', paddingTop: '1vh'}}>
               {name}
           </Hover>
       </Box>
