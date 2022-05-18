@@ -15,6 +15,7 @@ const Container = styled.div<IContainer>`
   width: 100%;
   padding: 1rem 0;
   border-bottom: ${({ isLast }) => (isLast ? "none" : "1px solid lightgray")};
+  line-height: 2rem;
 `;
 
 const UserName = styled.div`

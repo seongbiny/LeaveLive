@@ -29,6 +29,10 @@ const Image = styled.img`
 
 const EditLink = styled.a`
   text-decoration: none;
+
+  & > *:hover {
+    cursor: pointer;
+  }
 `;
 
 const Profile = () => {

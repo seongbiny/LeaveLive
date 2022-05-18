@@ -11,6 +11,7 @@ import { getMyAllDiary } from "../../api/diary";
 import { getMyAllActivityReservation } from "../../api/reservation";
 import { useRouter } from "next/router";
 import CalendarDotInfo from "../../components/diary/CalendarDotInfo";
+import Activity from "./Activity";
 
 const CalendarContainer = styled.div`
   ${flexCenter}
@@ -24,10 +25,33 @@ interface IActivityDates {
   endDate: Date;
 }
 
+export interface IActivity {
+  name: string;
+  cnt: number;
+  startDate: Date;
+  endDate: Date;
+}
+
+const ActivityContainer = styled.div`
+  ${flexCenter}
+  flex-direction: column;
+  width: 75%;
+  margin-bottom: 75px;
+`;
+
+const ActivityTitle = styled.div`
+  margin-top: 1rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  align-self: flex-start;
+`;
+
 const DiaryCalendar = () => {
   const [date, setDate] = useState<Date>(new Date());
+  const [selMonth, setSelMonth] = useState<Date>(new Date());
   const [diaryDates, setDiaryDates] = useState<Array<string>>([]);
   const [activityDates, setActivityDates] = useState<Array<IActivityDates>>([]);
+  const [activities, setActivities] = useState<Array<IActivity>>([]);
   const router = useRouter();
   const handleChange = useCallback(
     (item: Date) => {
@@ -115,6 +139,14 @@ const DiaryCalendar = () => {
     getMyAllActivityReservation(
       null,
       ({ data }: any) => {
+        setActivities(
+          data.map((reservation: any) => ({
+            name: reservation.activity.name,
+            cnt: reservation.cnt,
+            startDate: new Date(reservation.startDate.join("-")),
+            endDate: new Date(reservation.endDate.join("-")),
+          }))
+        );
         setActivityDates(
           data.map((day: any) => ({
             startDate: new Date(day.startDate.join("-")),
@@ -126,16 +158,33 @@ const DiaryCalendar = () => {
     );
   }, []);
 
+  const handleShownDateChange = useCallback((item: Date) => {
+    setSelMonth(item);
+  }, []);
+
   return (
     <CalendarContainer>
       <CalendarDotInfo />
       <Calendar
         onChange={(item) => handleChange(item)}
+        onShownDateChange={(item) => handleShownDateChange(item)}
         locale={dateFnsLocales["ko"]}
         date={date}
         color={theme.palette.primary.main}
         dayContentRenderer={customDayContent}
       />
+      <ActivityContainer>
+        <ActivityTitle>{selMonth.getMonth() + 1}월 나의 일정 🚩</ActivityTitle>
+        {activities
+          .filter(
+            (activity) =>
+              activity.startDate.getMonth() <= selMonth.getMonth() &&
+              selMonth.getMonth() <= activity.endDate.getMonth()
+          )
+          .map((activity, index) => (
+            <Activity key={index} activity={activity} />
+          ))}
+      </ActivityContainer>
     </CalendarContainer>
   );
 };
