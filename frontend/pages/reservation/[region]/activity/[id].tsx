@@ -78,7 +78,6 @@ const ActivityDetail = () => {
                 <img 
                   src={`${BACKEND_IMAGE_URL}/${pic}`}
                   width={350} height={300}
-                  style={{borderRadius: '10px'}}
                 />
               </div>
             ))}

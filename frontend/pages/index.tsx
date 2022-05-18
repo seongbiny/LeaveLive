@@ -6,13 +6,15 @@ import AirplanemodeActiveIcon from '@mui/icons-material/AirplanemodeActive';
 
 const Main = styled.div`
   height: 80%;
-  padding-top: 50%;
+  padding-top: 40%;
   text-align: center;
-  font-size: 25px;
+  font-size: 1.3rem;
+  margin-bottom: 30vh;
 `;
 const Text = styled.div`
   display: grid;
   margin-bottom: 5vh;
+  font-size: 1.1rem;
 `;
 
 const StyledText = styled.div`
@@ -26,13 +28,13 @@ const StyledText = styled.div`
 
 const Home: NextPage = () => {
   return (
-    <>
+    <div>
       <Main>
         <Seo title="Home" />
         <Text>
-          <div>낯선 천장이다..</div>
+          <div>「 낯선 장소다..</div>
           <div>기억이 하나도 안나..</div>
-          <div>나는 누구였지..?</div>
+          <div>나는 누구였지..? 」</div>
         </Text>
         <Link
           href={{ pathname: "/login", query: { type: "user" } }}
@@ -50,7 +52,7 @@ const Home: NextPage = () => {
         </Link>
       </Main>
       <Logo><AirplanemodeActiveIcon/> Leave, live</Logo>
-    </>
+    </div>
   );
 };
 

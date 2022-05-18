@@ -108,7 +108,6 @@ const BnbDetail = () => {
                 <img
                   src={`${BACKEND_IMAGE_URL}/${pic}`}
                   width={350} height={250} 
-                  style={{borderRadius: '10px'}}
                 />
               </div>
             ))}

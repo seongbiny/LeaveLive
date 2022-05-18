@@ -50,10 +50,6 @@ export default function Layout({ children }: any) {
       ) : (
         <div>모바일로 접속해주세요.</div>
       )}
-      {/* <>
-        <Main>{children}</Main>
-        {showNav ? isUser ? <LabelBottomNavigation /> : <CeoNav /> : null}
-      </> */}
     </Container>
   );
 }

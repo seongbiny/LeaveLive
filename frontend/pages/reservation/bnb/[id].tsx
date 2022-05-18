@@ -12,9 +12,11 @@ import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import Button from '@mui/material/Button';
-import { bnbReservation, getPossible } from "../../../api/bnb";
+import { bnbDetail, bnbReservation, getPossible } from "../../../api/bnb";
 import { useRouter } from 'next/router';
 import { format } from "date-fns";
+import DotInfo from "../../../components/reservation/dotInfo";
+import { flexCenter } from '../../../styles/Basic';
 
 const Container = styled.div`
   // display: flex;
@@ -47,6 +49,14 @@ const BottomNav = styled.div`
   // border: 1px solid;
 `;
 
+const CalendarContainer = styled.div`
+  ${flexCenter}
+  flex-direction: column;
+  width: 100%;
+  margin-top: 1vh;
+`;
+
+
 interface IBnbDates {
   startDate: Date;
   endDate: Date;
@@ -55,11 +65,8 @@ interface IBnbDates {
 const ReservationBnb = () => {
   const router = useRouter();
   const id = router.query.id;
+  const [cnt, setCnt] = useState(0);
   const [bnbDates, setBnbDates] = useState<Array<IBnbDates>>([]);
-  // const [pickS, setPickS] = useState<Date>(new Date);
-  // const [pickE, setPickE] = useState<Date>(new Date);
-  const [pickS, setPickS] = useState<Array<Date>>([new Date]);
-  const [pickE, setPickE] = useState<Array<Date>>([new Date]);
   const [adult, setAdult] = useState<number>(0);
   const [children, setChildren] = useState<number>(0);
   const [baby, setBaby] = useState(0);
@@ -75,7 +82,6 @@ const ReservationBnb = () => {
   const startDay = String(startDate).split(' ');
   const endDay = String(endDate).split(' ');
   const [reservationCnt, setReservationCnt] = useState(0);
-  // const reservationCnt = children+baby+adult;
   
   const MonChange = (mon: any) => {
     if (mon === 'Jan') {
@@ -109,21 +115,23 @@ const ReservationBnb = () => {
   const reservationEnd = endDay[3]+'-'+MonChange(endDay[1])+'-'+endDay[2]
 
   async function reservationAxios(){
-    const dto = {
-        cnt: reservationCnt,
-        startDate: reservationStart,
-        endDate: reservationEnd,
-        // id: id
-      };
-    console.log(dto)
-    await bnbReservation(
-    id,
-    dto,
-    ({ data }: any) => {
-        router.push(`/reservation/bnb/result/${data}`)
-    },
-    (error: Error) => console.log(error)
-    )
+    if(reservationCnt > cnt){
+      alert(`최대 ${cnt}명 예약 가능합니다.`)
+    } else {
+      const dto = {
+          cnt: reservationCnt,
+          startDate: reservationStart,
+          endDate: reservationEnd,
+        };
+      await bnbReservation(
+      id,
+      dto,
+      ({ data }: any) => {
+          router.push(`/reservation/bnb/result/${data}`)
+      },
+      (error: Error) => console.log(error)
+      )
+    }
   }
 
   useEffect(()=>{
@@ -139,8 +147,12 @@ const ReservationBnb = () => {
       },
       (error: Error) => console.log(error)
     )
+    bnbDetail(
+      id,
+      ({ data }: any) => setCnt(data.cnt),
+      (error: Error) => console.log(error)
+    )
   },[])
-  console.log(bnbDates)
 
   const customDayContent = useCallback((day: Date) => {
     let extraDot: any = null;
@@ -183,22 +195,21 @@ const ReservationBnb = () => {
           <CloseIcon sx={{color:'#60ffc6'}}/>
         </StyledTab>
         
-        <div style={{paddingLeft:'4vw', fontSize: '1.2rem', paddingBottom:'2vh'}}>날짜를 선택하세요.</div>
-        <div style={{textAlign: 'center'}}>
-          {(pickS !== [new Date] && pickE !== [new Date]) &&
-            <DateRange
-              // @ts-ignore
-              locale={locale}
-              editableDateInputs={true}
-              moveRangeOnFirstSelection={false}
-              rangeColors={[theme.palette.primary.main]}
-              ranges={state}
-              months={2}
-              onChange={(range: any) => {setState([range.selection]); setStartDate([range.selection][0].startDate); setEndDate([range.selection][0].endDate)}}
-              dayContentRenderer={customDayContent}
-            />
-          }
-        </div>
+        <div style={{paddingLeft:'4vw', fontSize: '1.2rem'}}>날짜를 선택하세요.</div>
+        <CalendarContainer>
+          <DotInfo />
+          <DateRange
+            // @ts-ignore
+            locale={locale}
+            editableDateInputs={true}
+            moveRangeOnFirstSelection={false}
+            rangeColors={[theme.palette.primary.main]}
+            ranges={state}
+            months={2}
+            onChange={(range: any) => {setState([range.selection]); setStartDate([range.selection][0].startDate); setEndDate([range.selection][0].endDate)}}
+            dayContentRenderer={customDayContent}
+          />
+        </CalendarContainer>
 
         <div style={{paddingLeft:'4vw', fontSize: '1.2rem', paddingBottom:'2vh'}}>인원을 선택하세요.</div>
         <hr />

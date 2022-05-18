@@ -12,11 +12,11 @@ const Text = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 3; 
+  -webkit-line-clamp: 2; 
   -webkit-box-orient: vertical; 
   word-wrap:break-word; 
   line-height: 1.2em; 
-  height: 3.6em;
+  height: 2.4em;
 `;
 
 export default function Item({ diary, onClick }: any) {
@@ -44,7 +44,7 @@ export default function Item({ diary, onClick }: any) {
           </Typography>
         </CardContent>
         <CardActions style={{justifyContent: 'center'}}>
-          <Button size="large" variant="contained" style={{width:'90%'}} onClick={onClick}>바로가기</Button>
+          <Button size="medium" variant="contained" style={{width:'90%'}} onClick={onClick}>바로가기</Button>
         </CardActions>
       </Card>
     </>
