@@ -114,7 +114,6 @@ const Profile = () => {
   const handleImage = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const files = event.target.files;
-      console.log(files);
       if (!files || files!.length < 1) return;
 
       const imageURL = URL.createObjectURL(files[0]);
@@ -129,7 +128,14 @@ const Profile = () => {
       updateUserInfo(
         { nickname: nextNickname.trim() },
         (response: any) => {
-          // console.log(response);
+          getUserInfo(
+            null,
+            ({ data: { nickname, picPath, type } }: any) => {
+              dispatch(setUserInfo({ nickname, picPath, type }));
+            },
+            (error: Error) => console.log(error)
+          );
+          console.log(response);
         },
         (error: Error) => console.log(error)
       );
@@ -142,22 +148,21 @@ const Profile = () => {
       updateProfileImage(
         form,
         (response: any) => {
-          // console.log(response);
+          getUserInfo(
+            null,
+            ({ data: { nickname, picPath, type } }: any) => {
+              dispatch(setUserInfo({ nickname, picPath, type }));
+            },
+            (error: Error) => console.log(error)
+          );
+          console.log(response);
         },
         (error: Error) => console.log(error)
       );
     }
 
     alert("정보가 수정되었습니다.");
-
     // 3. 변경된 정보를 redux에 갱신 후 router push
-    getUserInfo(
-      null,
-      ({ data: { nickname, picPath, type } }: any) => {
-        dispatch(setUserInfo({ nickname, picPath, type }));
-      },
-      (error: Error) => console.log(error)
-    );
 
     router.push("/diary");
   }, [router, nickname, nextNickname, picPath, nextImage]);
