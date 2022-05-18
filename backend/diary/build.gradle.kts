@@ -31,6 +31,8 @@ dependencies {
 	implementation("com.auth0:java-jwt:3.19.1")
 	// https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui
 	implementation("org.springdoc:springdoc-openapi-ui:1.6.8")
+	// https://mvnrepository.com/artifact/commons-io/commons-io
+	implementation("commons-io:commons-io:2.11.0")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }

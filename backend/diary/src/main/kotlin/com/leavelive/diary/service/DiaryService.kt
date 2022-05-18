@@ -6,6 +6,7 @@ import com.leavelive.diary.model.payload.DiaryRequest
 import com.leavelive.diary.model.payload.DiaryResponse
 import com.leavelive.diary.repository.DiaryRepository
 import com.leavelive.diary.utils.JwtUtil
+import org.apache.commons.io.FilenameUtils
 import org.modelmapper.ModelMapper
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
@@ -87,10 +88,12 @@ class DiaryService(
         images.forEach {
             if (!it.isEmpty) {
                 var uniquePath = "${LocalDate.now().format(DateTimeFormatter.ISO_DATE)}${UUID.randomUUID()}"
-                when (it.contentType?.lowercase()) {
-                    "image/png" -> uniquePath += ".png"
-                    "image/jpeg" -> uniquePath += ".jpeg"
-                }
+                val extension = FilenameUtils.getExtension(it.originalFilename)
+//                when (it.contentType?.lowercase()) {
+//                    "image/png" -> uniquePath += ".png"
+//                    "image/jpeg" -> uniquePath += ".jpeg"
+//                }
+                uniquePath += extension
                 val file = File(path)
                 if (!file.exists()) file.mkdirs()
                 it.transferTo(File("$path/${uniquePath}"))
