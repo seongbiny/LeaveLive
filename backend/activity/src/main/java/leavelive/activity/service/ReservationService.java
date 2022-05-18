@@ -44,6 +44,22 @@ public class ReservationService {
         return true;
     }
 
+    public List<ReservationDto> getAllMyResByDate(String date,String userId){
+        List<Reservation> entities=repo.findAllByUserId(userId);
+        List<ReservationDto> list=new ArrayList<>();
+        for(Reservation res:entities){
+            LocalDate start=res.getStartDate();
+            LocalDate end=res.getEndDate();
+            LocalDate cur= LocalDate.parse(date);
+            log.info("ReservationService.getAllMyResByDate:cur"+cur);
+            if(cur.compareTo(start)>=0 && end.compareTo(cur)>=0){
+                log.info("ReservationService.getAllMyResByDate:범위에 포함됨");
+                list.add(ReservationDto.of(res));
+            }
+        }
+        return list;
+    }
+
     /**
      * 예약 날짜에 따라 예약 여부가 결정됨  --> 액티비티는 해당 로직 X
      * @param id
