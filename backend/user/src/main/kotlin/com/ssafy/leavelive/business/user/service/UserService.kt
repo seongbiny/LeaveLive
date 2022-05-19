@@ -1,6 +1,5 @@
 package com.ssafy.leavelive.business.user.service
 
-import com.auth0.jwt.JWT
 import com.ssafy.leavelive.business.user.model.User
 import com.ssafy.leavelive.business.user.model.payload.UserRequest
 import com.ssafy.leavelive.business.user.model.payload.UserResponse
@@ -9,6 +8,12 @@ import com.ssafy.leavelive.business.user.utils.JwtUtil
 import org.modelmapper.ModelMapper
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import org.springframework.web.multipart.MultipartFile
+import java.io.File
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.collections.HashMap
 
 @Service
 class UserService(private val userRepository: UserRepository, private val modelMapper: ModelMapper) {
@@ -17,7 +22,17 @@ class UserService(private val userRepository: UserRepository, private val modelM
         modelMapper.map(userRepository.findByIdOrNull(JwtUtil.decodeToken(token)), UserResponse::class.java)
 
     fun getUsers(): List<UserResponse> =
-        userRepository.findAll().map { modelMapper.map(it, UserResponse::class.java) }.toList()
+        userRepository.findAll().map { modelMapper.map(it, UserResponse::class.java) }
+
+    fun getProfileInfo(userId: String) : Map<String, String> {
+        val user = userRepository.findById(userId)
+        val map = HashMap<String,String>()
+        user.ifPresent {
+            map["nickname"] = it.nickname
+            map["picPath"] = it.picPath.orEmpty()
+        }
+        return map
+    }
 
     fun saveUser(token: String, userRequest: UserRequest): UserResponse {
         // extract decodeToken to token util
@@ -35,22 +50,37 @@ class UserService(private val userRepository: UserRepository, private val modelM
         val userId = JwtUtil.decodeToken(token)
         val user = userRepository.findById(userId).get()
         modelMapper.map(userRequest, user)
-        val userResponse = UserResponse()
-        modelMapper.map(userRepository.save(user), userResponse)
-        return userResponse
+        return modelMapper.map(userRepository.save(user), UserResponse::class.java)
     }
 
-    fun removeUser(userId: String) {
+    fun uploadProfileImage(token: String, image: MultipartFile): String {
+        val userId = JwtUtil.decodeToken(token)
+        val user = userRepository.findById(userId).get()
+        image.let {
+            user.picPath = saveImage(it)
+        }
+        userRepository.save(user)
+        return user.picPath!!
+    }
+
+    fun removeUser(token: String): Boolean {
+        val userId = JwtUtil.decodeToken(token)
         userRepository.deleteById(userId)
+        return true;
     }
 
-    // validate user id, whether it exists or not
-    fun exists(userId: String): Boolean = userRepository.existsById(userId)
+    private fun saveImage(image: MultipartFile): String {
+        var uniquePath = "${LocalDate.now().format(DateTimeFormatter.ISO_DATE)}${UUID.randomUUID()}"
+        val path = "/home/ubuntu/images/profile"
+        when (image.contentType?.lowercase()) {
+            "image/png" -> uniquePath += ".png"
+            "image/jpeg" -> uniquePath += ".jpeg"
+        }
+        val file = File(path)
+        if (!file.exists()) file.mkdirs()
+        image.transferTo(File("$path/$uniquePath"))
 
-    fun validateRefreshToken(token: String): Boolean = userRepository.existsByToken(token)
-
-    fun getRefreshToken(userId: String): String {
-        return userRepository.findById(userId).get().token
+        return "profile/$uniquePath"
     }
 
 }
