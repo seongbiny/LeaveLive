@@ -13,7 +13,8 @@ class AuthController(private val authService: AuthService) {
     fun getAccessToken(@RequestBody body: Map<String, String>): ResponseEntity<Map<String, Any>> {
         // parse code from payload
         val token = body["token"] as String
-        return ResponseEntity(authService.publishAccessToken(token), HttpStatus.OK)
+        val type = body["type"] as String
+        return ResponseEntity(authService.publishAccessToken(token, type), HttpStatus.OK)
     }
 
     @GetMapping("/token")
