@@ -1,18 +1,22 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
-import { bnbDetail, likeBnbList, likeBnb, unlikeBnb } from "../../../../api/bnb";
+import {
+  bnbDetail,
+  likeBnbList,
+  likeBnb,
+  unlikeBnb,
+} from "../../../../api/bnb";
 import Map from "../../../../components/ceo/BnbMap";
 import { flexCenter } from "../../../../styles/Basic";
 import LocalFloristRoundedIcon from "@mui/icons-material/LocalFloristRounded";
 import SoupKitchenRoundedIcon from "@mui/icons-material/SoupKitchenRounded";
 import Header from "../../../../components/Header";
-import { Button } from "@mui/material";
 import MyCarousel from "../../../../components/Carousel";
-import { Carousel } from 'react-responsive-carousel';
-import { BACKEND_IMAGE_URL } from "../../../../api";
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import DetailNav from "../../../../components/ceo/DetailNav";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+
 interface IDetail {
   cnt: number;
   contents: string;
@@ -52,58 +56,73 @@ const BnbDetail = () => {
   });
 
   const likeAxios = () => {
-    likeBnb(id,
+    likeBnb(
+      id,
       (response: any) => console.log(response),
-      (error: Error) => console.log(error))
-  }
+      (error: Error) => console.log(error)
+    );
+  };
 
   const unlikeAxios = () => {
-    unlikeBnb(id,
-      (response: any) => (console.log(response)),
-      (error: Error) => console.log(error))
-  }
+    unlikeBnb(
+      id,
+      (response: any) => console.log(response),
+      (error: Error) => console.log(error)
+    );
+  };
 
-  useEffect(()=>{
+  useEffect(() => {
     bnbDetail(
       id,
-      ({ data }: any) => {setDetail(data)},
+      ({ data }: any) => {
+        setDetail(data);
+      },
       (error: Error) => console.log(error)
-    )
+    );
     likeBnbList(
       null,
-      ({ data }: any) => {setList(data)},
+      ({ data }: any) => {
+        setList(data);
+      },
       (error: Error) => console.log(error)
-    )
-  },[router])
-  
-  useEffect(()=>{
-    console.log(list)
-    list.map((item: any)=>{
-      if(Number(item.accommodationArticle.id) === Number(id)){
-        setLike(true)
+    );
+  }, [router]);
+
+  useEffect(() => {
+    console.log(list);
+    list.map((item: any) => {
+      if (Number(item.accommodationArticle.id) === Number(id)) {
+        setLike(true);
       }
-    })
-  },[list])
+    });
+  }, [list]);
 
-
-  return(
-    detail.id !== 0 &&
+  return (
+    detail.id !== 0 && (
       <Container>
         <div style={{ position: "relative", width: "100%" }}>
           <Header title="상세보기" hide={false} />
           {/* <MyCarousel picPath={detail.picPath} /> */}
           <Text>
-            {like === false ? 
-              <FavoriteBorderIcon 
-                fontSize="medium" 
-                sx={{color: '#FF385C'}} 
-                onClick={() => {setLike(!like); likeAxios();}}
-              /> : 
-              <FavoriteIcon 
-                fontSize="medium" 
-                sx={{color: '#FF385C'}} 
-                onClick={() => {setLike(!like); unlikeAxios();}}
-              />}
+            {like === false ? (
+              <FavoriteBorderIcon
+                fontSize="medium"
+                sx={{ color: "#FF385C" }}
+                onClick={() => {
+                  setLike(!like);
+                  likeAxios();
+                }}
+              />
+            ) : (
+              <FavoriteIcon
+                fontSize="medium"
+                sx={{ color: "#FF385C" }}
+                onClick={() => {
+                  setLike(!like);
+                  unlikeAxios();
+                }}
+              />
+            )}
           </Text>
           {/* <Carousel infiniteLoop showThumbs={false} showStatus={false} showArrows={false} >
             {detail.picPath.split(",").map((pic, idx)=>(
@@ -134,10 +153,7 @@ const BnbDetail = () => {
           <div>
             <BnbHeading>위치</BnbHeading>
             {detail.loc}
-            <Map
-              address={detail.loc}
-              style={{ margin: "1rem 0" }}
-            />
+            <Map address={detail.loc} style={{ margin: "1rem 0" }} />
           </div>
           <AdditionalInfo>
             <div style={{ flex: 1 }}>
@@ -159,27 +175,18 @@ const BnbDetail = () => {
             </div>
           </AdditionalInfo>
         </ContentContainer>
-        <Bottom onClick={()=>{router.push(`/reservation/bnb/${detail.id}`)}}>
-          <div style={{marginRight:'20vw', fontWeight:'bold', fontSize:'1.2rem'}}>{detail.price}원 / 박</div>
-          <div>
-            <Button variant="contained" >예약하기</Button>
-          </div>
-        </Bottom>
+        <DetailNav
+          price={detail.price}
+          text="예약하기"
+          onClick={() => {
+            router.push(`/reservation/bnb/${detail.id}`);
+          }}
+        />
       </Container>
-  )
+    )
+  );
 };
-const Bottom = styled.div`
-  width: 100%;
-  height: 10vh;
-  // border: 1px solid;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #d3d3d3;
-  position: fixed;
-  margin-top: 90vh;
-  z-index: 100;
-`;
+
 const Container = styled.div`
   // ${flexCenter}
   display: flex;
@@ -224,7 +231,7 @@ const BnbConditionWrapper = styled.div`
 `;
 
 const ContentContainer = styled.div`
-  width: 90%;
+  width: 80%;
   justify-content: center;
   margin: auto;
 `;

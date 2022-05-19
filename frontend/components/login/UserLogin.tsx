@@ -57,7 +57,7 @@ const UserLogin = ({ setIsUser }: IPropTypes) => {
           </Typography>
         </Title>
         <SubTitleContainer>
-          <div>국내여행 한달살기, 앱 하나로 끝!</div>
+          <div>국내여행 한달살기, 하나로 끝!</div>
           <ColoredText>리브리브</ColoredText>
         </SubTitleContainer>
       </TextContainer>
