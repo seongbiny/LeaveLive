@@ -23,8 +23,8 @@ public class AccommodationArticleDto {
     private int price;
     private String picPath; //type 뭘로?
     private int cnt;
-    private int garden;
-    private int cooking;
+    private String garden;
+    private String cooking;
     private String contents;
     private String name;
     private String userId;

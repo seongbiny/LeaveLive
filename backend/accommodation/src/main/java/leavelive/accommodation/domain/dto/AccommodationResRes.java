@@ -12,16 +12,17 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @ToString
 @Builder
-public class AccommodationResDto {
+public class AccommodationResRes {
     private Long id;
     private LocalDate startDate;
     private LocalDate endDate;
     private String userId;
+    private String nickname;
     private int cnt;
     private AccommodationArticle accommodationArticle;
 
-    public static AccommodationResDto of(AccommodationRes entity){
-        return AccommodationResDto.builder()
+    public static AccommodationResRes of(AccommodationRes entity){
+        return AccommodationResRes.builder()
                 .id(entity.getId())
                 .startDate(entity.getStartDate())
                 .endDate(entity.getEndDate())

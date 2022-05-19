@@ -12,22 +12,21 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @ToString
 @Builder
-public class AccommodationResDto {
+public class AccommodationResNope {
     private Long id;
     private LocalDate startDate;
     private LocalDate endDate;
     private String userId;
+    private String nickname;
     private int cnt;
-    private AccommodationArticle accommodationArticle;
 
-    public static AccommodationResDto of(AccommodationRes entity){
-        return AccommodationResDto.builder()
+    public static AccommodationResNope of(AccommodationRes entity){
+        return AccommodationResNope.builder()
                 .id(entity.getId())
                 .startDate(entity.getStartDate())
                 .endDate(entity.getEndDate())
                 .userId(entity.getUserId())
                 .cnt(entity.getCnt())
-                .accommodationArticle(entity.getAccommodationArticle())
                 .build();
     }
 }

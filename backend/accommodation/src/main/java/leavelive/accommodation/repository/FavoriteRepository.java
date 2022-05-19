@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface AccommodationFavRepository extends JpaRepository<AccommodationFav,Long> {
+public interface FavoriteRepository extends JpaRepository<AccommodationFav,Long> {
     @Query(value = "delete from AccommodationFav i where i.accommodationArticle.id=:id")
     void deleteByAccommodationId(@Param("id") Long id);
 
@@ -15,4 +15,7 @@ public interface AccommodationFavRepository extends JpaRepository<AccommodationF
     List<AccommodationFav> findAllByAcommodationId(@Param("id") Long id);
 
     List<AccommodationFav> findAllByUserId(String userId);
+
+    @Query(value = "select i from AccommodationFav i where i.accommodationArticle.id=:id and i.userId=:userId")
+    List<AccommodationFav> findByIdAndUserId(@Param("id") Long id, @Param("userId") String userId);
 }

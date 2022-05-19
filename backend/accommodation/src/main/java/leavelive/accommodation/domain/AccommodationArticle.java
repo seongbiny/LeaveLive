@@ -27,9 +27,9 @@ public class AccommodationArticle {
     @Column(name = "pic_path", columnDefinition = "TEXT")
     private String picPath; //,로 구분
     private int cnt;
-    private int garden;
-    private int cooking;
-    @Column(columnDefinition = "TEXT")
+    private String garden;
+    private String cooking;
+    @Column(columnDefinition = "MEDIUMTEXT")
     private String contents;
     private String name;
 
@@ -37,7 +37,7 @@ public class AccommodationArticle {
 //    private List<AccommodationFav> favorite=new ArrayList<>();
 
     // dto -> entity
-    public AccommodationArticle of(AccommodationArticleDto dto){
+    public static AccommodationArticle of(AccommodationArticleDto dto){
         return AccommodationArticle.builder()
                 .loc(dto.getLoc())
                 .price(dto.getPrice())
@@ -51,7 +51,7 @@ public class AccommodationArticle {
                 .build();
     }
     // update용 dto -> entity
-    public AccommodationArticle updateOf(AccommodationArticleDto dto){
+    public static AccommodationArticle updateOf(AccommodationArticleDto dto){
         return AccommodationArticle.builder()
                 .id(dto.getId())
                 .loc(dto.getLoc())
@@ -62,6 +62,7 @@ public class AccommodationArticle {
                 .garden(dto.getGarden())
                 .contents(dto.getContents())
                 .name(dto.getName())
+                .userId(dto.getUserId())
                 .build();
     }
 }
