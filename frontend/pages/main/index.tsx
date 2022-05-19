@@ -157,7 +157,7 @@ const Container = styled.div`
 `;
 
 const ContentsContainer = styled.div`
-  ${flexCenter}
+  // ${flexCenter}
   align-items: flex-start;
   width: 80%;
   flex-direction: column;
