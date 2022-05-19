@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Seo from "../../components/Seo";
 import styled from "styled-components";
 import Box from "@mui/material/Box";
@@ -39,177 +39,50 @@ const Region = () => {
   const [bnbItem, setBnbItem] = useState<Array<TypeBnb>>([]);
   const [activityItem, setActivityItem] = useState<Array<TypeActivity>>([]);
 
-  useEffect(() => {
+  const convertKeyword = useCallback((region: String): String => {
+    let keyword: String = region;
+
     if (region === "제주도") {
-      bnbList(
-        "제주특별자치도",
-        ({ data }: any) => {
-          data.sort(() => Math.random() - 0.5);
-          setBnbItem(data.slice(0, 1));
-        },
-        (error: Error) => console.log(error)
-      );
+      keyword = "제주특별자치도";
     } else if (region === "강원도") {
-      bnbList(
-        "강원",
-        ({ data }: any) => {
-          data.sort(() => Math.random() - 0.5);
-          setBnbItem(data.slice(0, 1));
-        },
-        (error: Error) => console.log(error)
-      );
+      keyword = "강원";
     } else if (region === "전라남도") {
-      bnbList(
-        "전남",
-        ({ data }: any) => {
-          data.sort(() => Math.random() - 0.5);
-          setBnbItem(data.slice(0, 1));
-        },
-        (error: Error) => console.log(error)
-      );
+      keyword = "전남";
     } else if (region === "전라북도") {
-      bnbList(
-        "전북",
-        ({ data }: any) => {
-          data.sort(() => Math.random() - 0.5);
-          setBnbItem(data.slice(0, 1));
-        },
-        (error: Error) => console.log(error)
-      );
+      keyword = "전북";
     } else if (region === "경상남도") {
-      bnbList(
-        "경남",
-        ({ data }: any) => {
-          data.sort(() => Math.random() - 0.5);
-          setBnbItem(data.slice(0, 1));
-        },
-        (error: Error) => console.log(error)
-      );
+      keyword = "경남";
     } else if (region === "경상북도") {
-      bnbList(
-        "경북",
-        ({ data }: any) => {
-          data.sort(() => Math.random() - 0.5);
-          setBnbItem(data.slice(0, 1));
-        },
-        (error: Error) => console.log(error)
-      );
+      keyword = "경북";
     } else if (region === "충청남도") {
-      bnbList(
-        "충남",
-        ({ data }: any) => {
-          data.sort(() => Math.random() - 0.5);
-          setBnbItem(data.slice(0, 1));
-        },
-        (error: Error) => console.log(error)
-      );
+      keyword = "충남";
     } else if (region === "충청북도") {
-      bnbList(
-        "충북",
-        ({ data }: any) => {
-          data.sort(() => Math.random() - 0.5);
-          setBnbItem(data.slice(0, 1));
-        },
-        (error: Error) => console.log(error)
-      );
-    } else {
-      bnbList(
-        region,
-        ({ data }: any) => {
-          data.sort(() => Math.random() - 0.5);
-          setBnbItem(data.slice(0, 1));
-        },
-        (error: Error) => console.log(error)
-      );
+      keyword = "충북";
     }
+
+    return keyword;
+  }, []);
+
+  useEffect(() => {
+    bnbList(
+      convertKeyword(String(region)),
+      ({ data }: any) => {
+        data.sort(() => Math.random() - 0.5);
+        setBnbItem(data.slice(0, 1));
+      },
+      (error: Error) => console.log(error)
+    );
   }, [region]);
 
   useEffect(() => {
-    if (region === "제주도") {
-      activityList(
-        "제주특별자치도",
-        ({ data }: any) => {
-          data.sort(() => Math.random() - 0.5);
-          setActivityItem(data.slice(0, 1));
-        },
-        (error: Error) => console.log(error)
-      );
-    } else if (region === "강원도") {
-      activityList(
-        "강원",
-        ({ data }: any) => {
-          data.sort(() => Math.random() - 0.5);
-          setActivityItem(data.slice(0, 1));
-        },
-        (error: Error) => console.log(error)
-      );
-    } else if (region === "전라남도") {
-      activityList(
-        "전남",
-        ({ data }: any) => {
-          data.sort(() => Math.random() - 0.5);
-          setActivityItem(data.slice(0, 1));
-        },
-        (error: Error) => console.log(error)
-      );
-    } else if (region === "전라북도") {
-      activityList(
-        "전북",
-        ({ data }: any) => {
-          data.sort(() => Math.random() - 0.5);
-          setActivityItem(data.slice(0, 1));
-        },
-        (error: Error) => console.log(error)
-      );
-    } else if (region === "경상남도") {
-      activityList(
-        "경남",
-        ({ data }: any) => {
-          data.sort(() => Math.random() - 0.5);
-          setActivityItem(data.slice(0, 1));
-          console.log(data.slice(0, 1));
-        },
-        (error: Error) => console.log(error)
-      );
-    } else if (region === "경상북도") {
-      activityList(
-        "경북",
-        ({ data }: any) => {
-          data.sort(() => Math.random() - 0.5);
-          setActivityItem(data.slice(0, 1));
-          console.log(data.slice(0, 1));
-        },
-        (error: Error) => console.log(error)
-      );
-    } else if (region === "충청남도") {
-      activityList(
-        "충남",
-        ({ data }: any) => {
-          data.sort(() => Math.random() - 0.5);
-          setActivityItem(data.slice(0, 1));
-          console.log(data.slice(0, 1));
-        },
-        (error: Error) => console.log(error)
-      );
-    } else if (region === "충청북도") {
-      activityList(
-        "충북",
-        ({ data }: any) => {
-          data.sort(() => Math.random() - 0.5);
-          setActivityItem(data.slice(0, 1));
-        },
-        (error: Error) => console.log(error)
-      );
-    } else {
-      activityList(
-        region,
-        ({ data }: any) => {
-          data.sort(() => Math.random() - 0.5);
-          setActivityItem(data.slice(0, 1));
-        },
-        (error: Error) => console.log(error)
-      );
-    }
+    activityList(
+      convertKeyword(String(region)),
+      ({ data }: any) => {
+        data.sort(() => Math.random() - 0.5);
+        setActivityItem(data.slice(0, 1));
+      },
+      (error: Error) => console.log(error)
+    );
   }, [region]);
 
   return (
@@ -302,7 +175,7 @@ interface IStyledBox {
 
 const StyledBox = styled.div<IStyledBox>`
   position: relative;
-  background-image: url(${({ region }) => `/${region}.png`});
+  background-image: url(${({ region }) => `/region/${region}.jpg`});
   background-position: center center;
   background-size: cover;
   background-color: black;
