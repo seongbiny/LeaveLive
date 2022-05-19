@@ -6,31 +6,48 @@ import com.leavelive.diary.model.payload.DiaryRequest
 import com.leavelive.diary.model.payload.DiaryResponse
 import com.leavelive.diary.repository.DiaryRepository
 import com.leavelive.diary.utils.JwtUtil
+import org.apache.commons.io.FilenameUtils
 import org.modelmapper.ModelMapper
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
 import java.io.File
-import java.nio.file.Paths
+import java.net.URLDecoder
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
-import kotlin.io.path.Path
 
 @Service
-class DiaryService(private val diaryRepository: DiaryRepository, private val modelMapper: ModelMapper) {
+class DiaryService(
+    private val diaryRepository: DiaryRepository,
+    private val modelMapper: ModelMapper
+) {
 
     fun get(token: String, date: String): DiaryResponse {
         val userId = JwtUtil.decodeToken(token)
-        return modelMapper.map(
-            diaryRepository.findByUserIdAndDate(
-                userId,
-                LocalDate.parse(date, DateTimeFormatter.ISO_DATE)
-            ).get(), DiaryResponse::class.java
-        )
+        return try {
+            modelMapper.map(
+                diaryRepository.findByUserIdAndDate(
+                    userId,
+                    LocalDate.parse(date, DateTimeFormatter.ISO_DATE)
+                ).get(), DiaryResponse::class.java
+            )
+        } catch (e: NoSuchElementException) {
+            DiaryResponse()
+        }
+    }
+
+    fun getAllDiaries(token: String): List<DiaryResponse> {
+        val userId = JwtUtil.decodeToken(token)
+        return diaryRepository.findAllByUserIdOrderByDateDesc(userId).map { modelMapper.map(it, DiaryResponse::class.java) }
     }
 
     fun getAllPublicDiaries(): List<DiaryResponse> =
-        diaryRepository.findAllByStatus(Status.PUBLIC).map { modelMapper.map(it, DiaryResponse::class.java) }
+        diaryRepository.findAllByStatusOrderByDateDesc(Status.PUBLIC).map { modelMapper.map(it, DiaryResponse::class.java) }
+
+    fun getAllPublicDiariesByTag(tag: String): List<DiaryResponse> =
+        diaryRepository.findAllByStatusAndTagContainsOrderByDateDesc(Status.PUBLIC, tag)
+            .map { modelMapper.map(it, DiaryResponse::class.java) }
+
 
     fun register(token: String, diaryRequest: DiaryRequest, images: List<MultipartFile>): DiaryResponse {
         val userId = JwtUtil.decodeToken(token)
@@ -50,7 +67,9 @@ class DiaryService(private val diaryRepository: DiaryRepository, private val mod
         if (diary.userId != userId) throw RuntimeException("user id doesn't match")
         modelMapper.map(diaryRequest, diary)
         images.let {
-            diary.picPath = saveImages(it)
+            val path = saveImages(it)
+            if (path != "")
+                diary.picPath = path
         }
         return modelMapper.map(diaryRepository.save(diary), DiaryResponse::class.java)
     }
@@ -65,19 +84,25 @@ class DiaryService(private val diaryRepository: DiaryRepository, private val mod
 
     private fun saveImages(images: List<MultipartFile>): String {
         var picPath = ""
-        images.map {
-            var uniquePath = "${LocalDate.now().format(DateTimeFormatter.ISO_DATE)}${UUID.randomUUID()}"
-            val path = "/home/ubuntu/images/diary"
-            when (it.contentType?.lowercase()) {
-                "image/png" -> uniquePath += ".png"
-                "image/jpeg" -> uniquePath += ".jpeg"
+        val path = "/home/ubuntu/images/diary"
+        images.forEach {
+            if (!it.isEmpty) {
+                var uniquePath = "${LocalDate.now().format(DateTimeFormatter.ISO_DATE)}${UUID.randomUUID()}"
+                val extension = FilenameUtils.getExtension(it.originalFilename)
+//                when (it.contentType?.lowercase()) {
+//                    "image/png" -> uniquePath += ".png"
+//                    "image/jpeg" -> uniquePath += ".jpeg"
+//                }
+                uniquePath += extension
+                val file = File(path)
+                if (!file.exists()) file.mkdirs()
+                it.transferTo(File("$path/${uniquePath}"))
+                picPath += "diary/${uniquePath},"
             }
-            val file = File(path)
-            if (!file.exists()) file.mkdirs()
-            it.transferTo(File("$path/${uniquePath}"))
-            picPath += "diary/${uniquePath}, "
         }
-
-        return picPath.substring(0, picPath.length - 2)
+        if (picPath == "") return ""
+        return picPath.substring(0, picPath.length - 1)
     }
+
+
 }

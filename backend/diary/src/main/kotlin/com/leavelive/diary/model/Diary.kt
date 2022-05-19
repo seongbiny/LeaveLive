@@ -11,7 +11,7 @@ class Diary(
     @GeneratedValue(strategy = GenerationType.AUTO)
     var diaryId: Long,
 
-    @Column(name = "CONTENT")
+    @Column(name = "CONTENT", length = 2000)
     var content: String,
 
     @Column(name = "STATUS")

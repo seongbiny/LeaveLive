@@ -9,5 +9,6 @@ data class DiaryResponse(
     val status: Status = Status.PRIVATE,
     val tag: String = "",
     val date: LocalDate = LocalDate.now(),
-    val picPath: String = ""
+    val picPath: String = "",
+    val userId: String = ""
 )
