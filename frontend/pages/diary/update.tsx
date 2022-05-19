@@ -8,6 +8,7 @@ import { InputForm, Switch, ImageForm } from "../../components/diary/form";
 import { WideButton } from "../../components/WideButton";
 import { getDiary, updateDiary } from "../../api/diary";
 import { BACKEND_IMAGE_URL } from "../../api";
+import Seo from '../../components/Seo';
 
 export const ContentsWrapper = styled(Wrapper)`
   justify-content: flex-start;
@@ -86,6 +87,7 @@ const Update = () => {
 
   return (
     <Container>
+      <Seo title="일기수정" />
       <Header title="일기 수정" />
       <ContentsWrapper>
         <InputForm values={values} setValues={setValues} />

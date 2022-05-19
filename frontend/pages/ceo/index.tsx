@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { Container, Wrapper } from "../../styles/Basic";
 import { getMyReservationList } from "../../api/ceo";
 import { IReservation } from "./reservation";
+import Seo from "../../components/Seo";
 
 const TextContainer = styled.div`
   font-size: 1.3rem;
@@ -64,6 +65,7 @@ const Ceo = () => {
 
   return (
     <Container>
+      <Seo title="사장님" />
       <Wrapper>
         <TextContainer>
           <BoldText>

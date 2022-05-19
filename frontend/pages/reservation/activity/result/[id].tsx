@@ -4,6 +4,7 @@ import Router from "next/router";
 import { getActivityList } from "../../../../api/activity";
 import { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
+import Seo from "../../../../components/Seo";
 
 const Box = styled.div`
   display: flex;
@@ -55,6 +56,7 @@ const Confirm = () => {
 
   return (
     <Container>
+      <Seo title="예약완료" />
       <Box>
           {list.length !== 0 &&
             <>

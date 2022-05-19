@@ -13,6 +13,7 @@ import {
   Postcode,
   Switches,
 } from "../../../components/ceo/form";
+import Seo from "../../../components/Seo";
 
 const BnbUpdate = () => {
   const router = useRouter();
@@ -100,6 +101,7 @@ const BnbUpdate = () => {
 
   return (
     <Container>
+      <Seo title="숙소수정" />
       <Header title="숙소 정보 수정" />
       <ContentsWrapper>
         <InputForm values={values} setValues={setValues} />

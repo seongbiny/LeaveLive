@@ -13,6 +13,7 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import Button from '@mui/material/Button';
 import { activityReservation } from "../../../api/activity";
 import { useRouter } from 'next/router';
+import Seo from '../../../components/Seo';
 
 const StyledTab = styled.div`
   display: flex;
@@ -106,7 +107,8 @@ const ReservationAct = () => {
   }
 
   return (
-    <>
+    <> 
+      <Seo title="예약하기" />
       <div>
         <StyledTab>
           <CloseIcon onClick={()=>(router.back())} />

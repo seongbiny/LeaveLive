@@ -7,6 +7,7 @@ import styled from "styled-components";
 import { flexCenter } from "../../../styles/Basic";
 import { useRouter } from "next/router";
 import Header from "../../../components/Header";
+import Seo from "../../../components/Seo";
 
 interface IBnbList {
   id: number;
@@ -56,6 +57,7 @@ const MyBnbList = () => {
 
   return (
     <Container>
+      <Seo title="숙소관리" />
       <Header title="숙소 관리" hide={true} />
       <Wrapper>
         {bnbList?.map((bnb) => (

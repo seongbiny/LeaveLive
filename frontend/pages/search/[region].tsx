@@ -87,7 +87,7 @@ const Region = () => {
 
   return (
     <Container>
-      <Seo title="Main" />
+      <Seo title="지역메인" />
       <StyledBox region={region}>
         <Text>
           <span

@@ -12,7 +12,7 @@ import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import Link from "next/link";
 import { flexCenter } from "../../styles/Basic";
 import Tag from "../../components/diary/Tag";
-
+import Seo from "../../components/Seo";
 interface IDiary {
   id: number;
   content: string;
@@ -142,6 +142,7 @@ const DiaryContents = () => {
 
   return (
     <Container>
+      <Seo title="다이어리" />
       <Header title={title} />
       <Carousel picPath={diary.picPath} />
       <ContentsWrapper>

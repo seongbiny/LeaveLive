@@ -6,6 +6,7 @@ import { likeBnbList } from "../../api/bnb";
 import { likeActivityList } from "../../api/activity";
 import { useRouter } from "next/router";
 import Header from "../../components/Header";
+import Seo from "../../components/Seo";
 
 interface TypeBnb {
   id: number;
@@ -59,6 +60,7 @@ const Bookmark = () => {
 
   return (
     <div style={{ marginBottom: "13vh" }}>
+      <Seo title="Bookmark" />
       <Header title="즐겨찾기" hide={true} />
       <Tabs>
         <TabBox onClick={() => setIndex(0)}>숙소</TabBox>

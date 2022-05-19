@@ -16,6 +16,7 @@ import MyCarousel from "../../../../components/Carousel";
 import DetailNav from "../../../../components/ceo/DetailNav";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import Seo from "../../../../components/Seo";
 
 interface IDetail {
   cnt: number;
@@ -100,9 +101,9 @@ const BnbDetail = () => {
   return (
     detail.id !== 0 && (
       <Container>
+        <Seo title="상세보기" />
         <div style={{ position: "relative", width: "100%" }}>
           <Header title="상세보기" hide={false} />
-          {/* <MyCarousel picPath={detail.picPath} /> */}
           <Text>
             {like === false ? (
               <FavoriteBorderIcon
@@ -124,18 +125,6 @@ const BnbDetail = () => {
               />
             )}
           </Text>
-          {/* <Carousel infiniteLoop showThumbs={false} showStatus={false} showArrows={false} >
-            {detail.picPath.split(",").map((pic, idx)=>(
-              <div 
-                key={idx} 
-                style={{marginLeft: '5vw', marginRight: '5vw'}} >
-                <img
-                  src={`${BACKEND_IMAGE_URL}/${pic}`} 
-                  width={300} height={200} 
-                  style={{borderRadius: '10px'}} />
-              </div>
-            ))}
-          </Carousel> */}
           <MyCarousel picPath={detail.picPath} />
         </div>
         <ContentContainer>

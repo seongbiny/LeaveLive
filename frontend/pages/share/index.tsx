@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { publicDiary,tagDiary  } from "../../api/diary";
 import Header from "../../components/Header";
+import Seo from "../../components/Seo";
 import DiaryItem from "../../components/share/diaryItem";
 
 interface IDiary {
@@ -45,6 +46,7 @@ const Share = () => {
 
     return (
         <div style={{marginBottom: '13vh'}}>
+            <Seo title="여행스타그램" />
             {mode === "diary" ?
                 <Header title="여행스타그램" hide={true} /> :
                 <TagTop>

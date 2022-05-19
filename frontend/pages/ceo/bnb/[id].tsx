@@ -10,6 +10,7 @@ import LocalFloristRoundedIcon from "@mui/icons-material/LocalFloristRounded";
 import SoupKitchenRoundedIcon from "@mui/icons-material/SoupKitchenRounded";
 import Map from "../../../components/ceo/BnbMap";
 import Button from "@mui/material/Button";
+import Seo from "../../../components/Seo";
 
 export interface IDetail {
   cnt: number;
@@ -124,6 +125,7 @@ const BnbDetail = () => {
 
   return (
     <Container>
+      <Seo title="숙소정보" />
       <div style={{ position: "relative", width: "100%" }}>
         <ButtonWrapper>
           <BackButton />

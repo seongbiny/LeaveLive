@@ -17,6 +17,7 @@ import { useRouter } from 'next/router';
 import { format } from "date-fns";
 import DotInfo from "../../../components/reservation/dotInfo";
 import { flexCenter } from '../../../styles/Basic';
+import Seo from '../../../components/Seo';
 
 const StyledTab = styled.div`
   display: flex;
@@ -179,7 +180,7 @@ const ReservationBnb = () => {
 
   return (
     <div style={{marginBottom: '10vh'}}>
-    
+      <Seo title="예약하기" />
       <div>
         <StyledTab>
           <CloseIcon onClick={()=>(Router.back())} />

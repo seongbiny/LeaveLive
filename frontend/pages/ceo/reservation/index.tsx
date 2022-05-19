@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getMyReservationList } from "../../../api/ceo";
 import ReservationList from "../../../components/ceo/ReservationList";
 import Header from "../../../components/Header";
+import Seo from "../../../components/Seo";
 import { Container } from "../../../styles/Basic";
 import { ContentsWrapper } from "../bnb/create";
 
@@ -41,6 +42,7 @@ const MyReservation = () => {
   const [reservations, setReservations] = useState<Array<IReservation>>();
   return (
     <Container>
+      <Seo title="예약확인" />
       <Header title="예약 확인" hide={true} />
       <ContentsWrapper>
         {reservations?.map((reservation, index) => (

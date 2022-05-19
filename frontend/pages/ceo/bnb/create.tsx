@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import { CeoBnbCreate } from "../../../api/ceo";
 import Header from "../../../components/Header";
 import styled from "styled-components";
+import Seo from "../../../components/Seo";
 
 export interface IValues {
   name: string;
@@ -104,6 +105,7 @@ const BnbCreate = () => {
 
   return (
     <Container>
+      <Seo title="숙소등록"/>
       <Header title="숙소 등록" />
       <ContentsWrapper>
         <InputForm values={values} setValues={setValues} />

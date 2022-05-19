@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useRouter } from 'next/router';
 import { KakaoLoginRequest } from '../../api/user';
 import Header from '../../components/Header';
+import Seo from '../../components/Seo';
 
 declare global {
   interface Window {
@@ -122,6 +123,7 @@ function Map() {
 
   return (
     <>
+      <Seo title="편의시설" />
       <Header title='편의시설' />
       <MapContainer id="map" />
     </>

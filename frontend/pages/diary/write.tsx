@@ -6,7 +6,7 @@ import { InputForm, Switch, ImageForm } from "../../components/diary/form";
 import { Container, Wrapper } from "../../styles/Basic";
 import { WideButton } from "../../components/WideButton";
 import { writeDiary } from "../../api/diary";
-
+import Seo from '../../components/Seo';
 export interface IValues {
   date: string;
   content: string;
@@ -74,6 +74,7 @@ const Write = () => {
 
   return (
     <Container>
+      <Seo title="일기작성" />
       <Header title="일기 작성" />
       <ContentsWrapper>
         <InputForm values={values} setValues={setValues} />

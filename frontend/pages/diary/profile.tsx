@@ -15,6 +15,7 @@ import { BACKEND_IMAGE_URL } from "../../api";
 import Header from "../../components/Header";
 import { useAppSelector, useAppDispatch } from "../../hooks";
 import { setUserInfo } from "../../store/slices/userSlice";
+import Seo from "../../components/Seo";
 
 const Container = styled.div`
   ${flexCenter};
@@ -187,6 +188,7 @@ const Profile = () => {
 
   return (
     <Container>
+      <Seo title="프로필" />
       <Header title="내 정보 수정" />
       <Wrapper>
         <ProfileImage url={nextImage?.previewURL}>
