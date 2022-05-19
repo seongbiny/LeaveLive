@@ -21,7 +21,7 @@ const Container = styled.div`
 const Menu = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 0 1rem;
+  /* padding: 0 0.5rem; */
   margin-top: 1vh;
   margin-bottom: 4vh;
   width: 100%;

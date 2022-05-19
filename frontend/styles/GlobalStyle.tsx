@@ -70,6 +70,14 @@ const GlobalStyle = createGlobalStyle`
           format("svg"); /* Legacy iOS */
     }
 
+    /** 낯선 천장이다... 용 폰트. Yoon 지희체 */
+    @font-face {
+    font-family: 'YoonSJH';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/YoonSJH.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
     html, body, body > div:first-child, div#__next, div#__next > div {
       height: 100%;
     }
