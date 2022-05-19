@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import { useEffect } from 'react';
 import { BACKEND_IMAGE_URL } from '../../api';
 import { useRouter } from "next/router";
+import Tooltip from '@mui/material/Tooltip';
 
 const Container = styled.div`
     // border: 1px solid;
@@ -33,6 +34,7 @@ const Text = styled.div`
   display: inline-block;
   width: 99%;
 `;
+
 
 const Schedule = ({ act, bnb }: any) => {
     const router = useRouter();
@@ -61,10 +63,14 @@ const Schedule = ({ act, bnb }: any) => {
                             />
                             <CardContent>
                                 <Typography variant="body1" component="div" style={{padding:'10'}}>
-                                    <Text>{item.activity.name}</Text>
+                                    <Tooltip title={item.activity.name} placement="top">
+                                        <Text>{item.activity.name}</Text>
+                                    </Tooltip>
                                 </Typography> 
                                 <Typography variant="body2" color="text.secondary" style={{padding:'10'}}>
-                                    <Text>{item.activity.loc}</Text>
+                                    <Tooltip title={item.activity.loc}>
+                                        <Text>{item.activity.loc}</Text>
+                                    </Tooltip>
                                 </Typography>
                             </CardContent>
                         </Card>
@@ -81,10 +87,14 @@ const Schedule = ({ act, bnb }: any) => {
                             />
                             <CardContent>
                                 <Typography variant="body1" component="div" style={{padding:'10'}}>
-                                    <Text>{item.accommodationArticle.name}</Text>
+                                    <Tooltip title={item.accommodationArticle.name} placement="top">
+                                        <Text>{item.accommodationArticle.name}</Text>
+                                    </Tooltip>
                                 </Typography> 
                                 <Typography variant="body2" color="text.secondary" style={{padding:'10'}}>
-                                    <Text>{item.accommodationArticle.loc}</Text>
+                                    <Tooltip title={item.accommodationArticle.loc}>
+                                        <Text>{item.accommodationArticle.loc}</Text>
+                                    </Tooltip>
                                 </Typography>
                             </CardContent>
                         </Card>
