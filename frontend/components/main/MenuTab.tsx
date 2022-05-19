@@ -72,7 +72,7 @@ const MenuTab: NextPage = () => {
 
   return (
     <>
-      <div style={{ margin: "3vh 0", fontWeight: "bold" }}>
+      <div style={{ margin: "3vh 0", fontWeight: "bold", fontSize: "1.2rem" }}>
         🏥 주변 편의 시설
       </div>
       <Menu>

@@ -143,7 +143,8 @@ const StyledError = styled.div`
 const Box = styled.div`
   position: relative;
   background-image: url("/main-background.jpg");
-  background-position: center;
+  background-position: center center;
+  background-size: cover;
   background-color: black;
   width: 100%;
   height: 200px;
@@ -188,5 +189,6 @@ const ContentsContainer = styled.div`
 const TitleText = styled.div`
   font-weight: bold;
   margin: 2vh 0;
+  font-size: 1.2rem;
 `;
 export default Main;
