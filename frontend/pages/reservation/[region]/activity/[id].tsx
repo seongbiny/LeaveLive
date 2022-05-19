@@ -118,7 +118,7 @@ const ActivityDetail = () => {
                 onClick={() => {setLike(!like); unlikeAxios();}}
               />}
           </Text>
-          <Carousel infiniteLoop showThumbs={false} showStatus={false} showArrows={false} >
+          {/* <Carousel infiniteLoop showThumbs={false} showStatus={false} showArrows={false} >
             {detail.picPath.split(",").map((pic, idx)=>(
               <div 
                 key={idx} 
@@ -129,7 +129,8 @@ const ActivityDetail = () => {
                   style={{borderRadius: '10px'}} />
               </div>
             ))}
-          </Carousel>
+          </Carousel> */}
+          <MyCarousel picPath={detail.picPath} />
         </div>
         <ContentContainer>
           <div style={{fontSize:'1.5rem', fontWeight:'bold', paddingBottom: '3vh'}}>{detail.name}</div>
