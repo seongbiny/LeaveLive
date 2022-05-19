@@ -23,12 +23,15 @@ const Container = styled.div`
 const Text = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
   display: -webkit-box;
-  -webkit-line-clamp: 2; 
+  -webkit-line-clamp: 1; 
   -webkit-box-orient: vertical; 
   word-wrap:break-word; 
   line-height: 1.2em; 
-  height: 2.4em;
+  height: 1.2em;
+  display: inline-block;
+  width: 99%;
 `;
 
 const Schedule = ({ act, bnb }: any) => {
@@ -58,7 +61,7 @@ const Schedule = ({ act, bnb }: any) => {
                             />
                             <CardContent>
                                 <Typography variant="body1" component="div" style={{padding:'10'}}>
-                                    {item.activity.name}
+                                    <Text>{item.activity.name}</Text>
                                 </Typography> 
                                 <Typography variant="body2" color="text.secondary" style={{padding:'10'}}>
                                     <Text>{item.activity.loc}</Text>
@@ -78,7 +81,7 @@ const Schedule = ({ act, bnb }: any) => {
                             />
                             <CardContent>
                                 <Typography variant="body1" component="div" style={{padding:'10'}}>
-                                    {item.accommodationArticle.name}
+                                    <Text>{item.accommodationArticle.name}</Text>
                                 </Typography> 
                                 <Typography variant="body2" color="text.secondary" style={{padding:'10'}}>
                                     <Text>{item.accommodationArticle.loc}</Text>
