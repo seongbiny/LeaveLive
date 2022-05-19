@@ -28,7 +28,7 @@ public class Favorite {
 
     private Activity activity;
 
-    public Favorite of(FavoriteDto dto){
+    public static Favorite of(FavoriteDto dto){
         return Favorite.builder()
                 .id(dto.getId())
                 .userId(dto.getUserId())

@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
-@RequestMapping("/activity/favorite")
+@RequestMapping("/api/activity/favorite")
 @RequiredArgsConstructor
 @Slf4j
 public class FavoriteController {
@@ -28,11 +28,11 @@ public class FavoriteController {
         return new ResponseEntity(list, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{activity_favorite_id}")
-    public ResponseEntity<String> delFavorite(HttpServletResponse response,@PathVariable("activity_favorite_id") Long id) {
+    @DeleteMapping("/{activity_id}")
+    public ResponseEntity<Boolean> delFavorite(HttpServletResponse response,@PathVariable("activity_id") Long id) {
         String userId = response.getHeader("userId");
         log.info("FavoriteController.delFavorite.userId:" + userId);
-        String result = service.delFav(id,userId);
+        Boolean result = service.delFav(id,userId);
         return new ResponseEntity(result, HttpStatus.OK);
     }
 

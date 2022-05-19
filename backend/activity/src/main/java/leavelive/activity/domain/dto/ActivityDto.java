@@ -15,15 +15,17 @@ public class ActivityDto {
     private int cnt;
     private int price;
     private String picPath;
+    private String picContents;
     private String contents;
     private String name;
     private String userId;
 
-    public ActivityDto of(Activity entity){
+    public static ActivityDto of(Activity entity){
         return ActivityDto.builder()
                 .id(entity.getId())
                 .name(entity.getName())
                 .contents(entity.getContents())
+                .picContents(entity.getPicContents())
                 .cnt(entity.getCnt())
                 .loc(entity.getLoc())
                 .price(entity.getPrice())

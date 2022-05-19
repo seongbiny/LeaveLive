@@ -1,6 +1,9 @@
 package leavelive.activity.controller;
 
+import leavelive.activity.domain.dto.ActivityDto;
 import leavelive.activity.domain.dto.ReservationDto;
+import leavelive.activity.domain.dto.ReservationResDto;
+import leavelive.activity.repository.ActivityRepo;
 import leavelive.activity.service.ReservationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/activity/reservation")
+@RequestMapping("/api/activity/reservation")
 @Slf4j
 public class ReservationController {
     private final ReservationService service;
@@ -27,10 +30,10 @@ public class ReservationController {
     }
 
     @DeleteMapping("/{activity_reservation_id}")
-    public ResponseEntity<String> delReservation(HttpServletResponse response, @PathVariable("activity_reservation_id") Long id) {
+    public ResponseEntity<Boolean> delReservation(HttpServletResponse response, @PathVariable("activity_reservation_id") Long id) {
         String userId = response.getHeader("userId");
         log.info("ReservationController.delReservation.userId:" + userId);
-        String result = service.delRes(id, userId);
+        Boolean result = service.delRes(id, userId);
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
@@ -40,6 +43,20 @@ public class ReservationController {
         log.info("ReservationController.saveReservation.userId:" + userId);
         Long result = service.saveRes(id, userId, dto);
         return new ResponseEntity(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/my")
+    public ResponseEntity<List<ReservationResDto>> getAllMyRes(HttpServletResponse response) {
+        String userId = response.getHeader("userId");
+        List<ReservationResDto> list = service.getAllMyRes(userId);
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
+
+    @GetMapping("/{date}")
+    public ResponseEntity<List<ReservationDto>> getAllMyResByDate(HttpServletResponse response,@PathVariable("date") String date) {
+        String userId = response.getHeader("userId");
+        List<ReservationDto> list = service.getAllMyResByDate(date,userId);
+        return new ResponseEntity(list, HttpStatus.OK);
     }
 
 }

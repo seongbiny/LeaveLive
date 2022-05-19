@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import leavelive.activity.exception.LoginException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpEntity;
@@ -34,16 +35,16 @@ public class HttpInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         System.out.println("preHandler 실행--------");
         String userId="114760122369855290515GOOGLE";
-//        String token=request.getHeader("Authorization");
-//        try{
-//            DecodedJWT decodeToken = JWT.require(Algorithm.HMAC512(SECRET_KEY))
-//                    .build().verify(token);
-//            userId = decodeToken.getClaim("id").asString();
-//            log.info("interceptor id:"+userId);
-//        }catch(TokenExpiredException e){
-//            e.printStackTrace();
-//            log.error("HttpInterceptor.preHandle:error");
-//        }
+        String token=request.getHeader("Authorization");
+        try{
+            DecodedJWT decodeToken = JWT.require(Algorithm.HMAC512(SECRET_KEY))
+                    .build().verify(token);
+            userId = decodeToken.getClaim("id").asString();
+            log.info("interceptor id:"+userId);
+        }catch(TokenExpiredException e){
+            e.printStackTrace();
+            log.error("HttpInterceptor.preHandle:error");
+        }
 
         // 유저가 DB에 있는지 확인
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -51,11 +52,11 @@ public class HttpInterceptor implements HandlerInterceptor {
         HttpEntity<?> requestMessage = new HttpEntity<>(httpHeaders);
         //requestMessage 만들기
         RestTemplate restTemplate = new RestTemplate();
-        String url = "http://k6c105.p.ssafy.io:8083/api/user/"+userId;
+        String url = "https://k6c105.p.ssafy.io:8083/api/user/"+userId;
         try{
             //요청하기
             ResponseEntity<Boolean> responseEntity=restTemplate.getForEntity(url,Boolean.class,requestMessage);
-            if(!responseEntity.getBody()) throw new NullPointerException("존재하지 않는 아이디입니다.");
+            if(!responseEntity.getBody()) throw new LoginException("존재하지 않는 아이디입니다.");
             else {
                 response.addHeader("userId",userId);
                 log.info("HttpInterceptor.preHandle.response:존재하는 아이디입니다.");

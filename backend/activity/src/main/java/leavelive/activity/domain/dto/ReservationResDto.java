@@ -4,7 +4,6 @@ import leavelive.activity.domain.Activity;
 import leavelive.activity.domain.Reservation;
 import lombok.*;
 
-import javax.persistence.Table;
 import java.time.LocalDate;
 
 @Getter
@@ -13,16 +12,17 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @ToString
 @Builder
-public class ReservationDto {
+public class ReservationResDto {
     private Long id;
     private LocalDate startDate;
     private LocalDate endDate;
     private String userId;
+    private String nickname;
     private Activity activity;
     private int cnt;
 
-    public static ReservationDto of(Reservation entity){
-        return ReservationDto.builder()
+    public static ReservationResDto of(Reservation entity){
+        return ReservationResDto.builder()
                 .id(entity.getId())
                 .startDate(entity.getStartDate())
                 .endDate(entity.getEndDate())

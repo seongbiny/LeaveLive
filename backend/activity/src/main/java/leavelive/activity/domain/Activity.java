@@ -25,22 +25,25 @@ public class Activity {
     private String picPath;
     @Column(columnDefinition = "TEXT")
     private String contents;
+    @Column(columnDefinition = "TEXT")
+    private String picContents;
     private String name;
     @Column(name = "user_id")
     private String userId;
 
-    public Activity of(ActivityDto dto){
+    public static Activity of(ActivityDto dto){
         return Activity.builder()
                 .name(dto.getName())
                 .contents(dto.getContents())
                 .cnt(dto.getCnt())
                 .loc(dto.getLoc())
                 .picPath(dto.getPicPath())
+                .picContents(dto.getPicContents())
                 .price(dto.getPrice())
                 .userId(dto.getUserId())
                 .build();
     }
-    public Activity updateOf(ActivityDto dto){
+    public static Activity updateOf(ActivityDto dto){
         return Activity.builder()
                 .id(dto.getId())
                 .name(dto.getName())
@@ -48,6 +51,7 @@ public class Activity {
                 .cnt(dto.getCnt())
                 .loc(dto.getLoc())
                 .picPath(dto.getPicPath())
+                .picContents(dto.getPicContents())
                 .price(dto.getPrice())
                 .userId(dto.getUserId())
                 .build();

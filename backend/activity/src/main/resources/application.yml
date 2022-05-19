@@ -1,12 +1,17 @@
 server:
   port: 8085
-  servlet:
-    context-path: /api
+  ssl:
+    enabled: true
+    key-store: classpath:keystore.p12
+    key-store-type: PKCS12
+    key-store-password: 1234
+  max-http-header-size: 10MB
 spring:
   # DB 설정
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/activity?serverTimezone=Asia/Seoul&useSSL=false&allowPublicKeyRetrieval=true
+#    url: jdbc:mysql://localhost:3306/activity?serverTimezone=Asia/Seoul&useSSL=false&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://localhost:3397/activity?serverTimezone=Asia/Seoul&useSSL=false&allowPublicKeyRetrieval=true
     username: ssafy
     password: ssafy
     hikari:
@@ -42,5 +47,5 @@ spring:
   # 파일 업로드 설정
   servlet:
     multipart:
-      maxFileSize: 10MB
-      maxRequestSize: 20MB
+      maxFileSize: 20MB
+      maxRequestSize: 40MB

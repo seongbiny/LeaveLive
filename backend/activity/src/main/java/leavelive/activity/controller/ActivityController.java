@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/activity")
+@RequestMapping("/api/activity")
 @RequiredArgsConstructor
 @Slf4j
 public class ActivityController {
@@ -35,32 +35,39 @@ public class ActivityController {
     }
 
     @DeleteMapping("/{activity_id}")
-    public ResponseEntity<String> delActivity(HttpServletResponse response, @PathVariable("activity_id") Long id) {
+    public ResponseEntity<Boolean> delActivity(HttpServletResponse response, @PathVariable("activity_id") Long id) {
         String userId = response.getHeader("userId");
         log.info("ReservationController.getAllReservation.userId:" + userId);
-        String result = service.delAct(id, userId);
+        Boolean result = service.delAct(id, userId);
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
     @PostMapping("/")
-    public ResponseEntity<ActivityDto> delActivity(HttpServletResponse response, @RequestPart(value = "dto") ActivityDto dto, @RequestPart(value = "image", required = false) List<MultipartFile> files) {
+    public ResponseEntity<ActivityDto> saveActivity(HttpServletResponse response, @RequestPart(value = "dto") ActivityDto dto, @RequestPart(value = "image", required = false) List<MultipartFile> files, @RequestPart(value = "contentsImage", required = false) MultipartFile contentsImage) {
         String userId = response.getHeader("userId");
         log.info("ReservationController.getAllReservation.userId:" + userId);
-        ActivityDto result = service.saveAct(dto, files, userId);
+        ActivityDto result = service.saveAct(dto, files, userId, contentsImage);
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
     @PatchMapping("/{activity_id}")
-    public ResponseEntity<ActivityDto> updateActivity(HttpServletResponse response, @PathVariable("activity_id") Long id, @RequestBody ActivityDto request) {
+    public ResponseEntity<ActivityDto> updateActivity(HttpServletResponse response, @PathVariable("activity_id") Long id, @RequestPart(value = "request") ActivityDto request, @RequestPart(value = "image", required = false) List<MultipartFile> files) {
         String userId = response.getHeader("userId");
         log.info("ReservationController.getAllReservation.userId:" + userId);
-        ActivityDto result = service.updateAct(id, request, userId);
+        ActivityDto result = service.updateAct(id, request, userId, files);
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
-    @GetMapping("/images")
-    public ResponseEntity<byte[]> getActImg(@RequestParam("image_path") String imagePath) throws IOException {
-        byte[] imageByteArray = service.findImage(imagePath);
-        return new ResponseEntity(imageByteArray, HttpStatus.OK);
+    @GetMapping("/my")
+    public ResponseEntity<List<ActivityDto>> getAllMyActivity(HttpServletResponse response) {
+        String userId = response.getHeader("userId");
+        List<ActivityDto> list = service.getAllMyAct(userId);
+        return new ResponseEntity(list, HttpStatus.OK);
     }
+
+//    @GetMapping("/images")
+//    public ResponseEntity<byte[]> getActImg(@RequestParam("image_path") String imagePath) throws IOException {
+//        byte[] imageByteArray = service.findImage(imagePath);
+//        return new ResponseEntity(imageByteArray, HttpStatus.OK);
+//    }
 }
