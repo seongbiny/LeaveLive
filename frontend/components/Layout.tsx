@@ -6,6 +6,8 @@ import { useState, useEffect } from "react";
 import CeoNav from "./CeoNav";
 import { flexCenter } from "../styles/Basic";
 import { allowedURLs } from "../pages/_app";
+import backgroundImg from "../public/mobile.png";
+import Image from 'next/image';
 
 const Container = styled.div`
   display: flex;
@@ -48,7 +50,7 @@ export default function Layout({ children }: any) {
           {showNav ? isUser ? <LabelBottomNavigation /> : <CeoNav /> : null}
         </>
       ) : (
-        <div>모바일로 접속해주세요.</div>
+        <Image src='/mobile.png' alt='배경' layout='fill' objectFit='cover' objectPosition='center' />
       )}
     </Container>
   );

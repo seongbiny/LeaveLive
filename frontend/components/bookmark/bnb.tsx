@@ -44,7 +44,7 @@ const BnbItem = (props: any) => {
                 <FavoriteIcon fontSize="medium" sx={{color: '#FF385C'}} onClick={()=>{unlikeAxios()}} />
             </Text>
             <div>
-                <Carousel infiniteLoop showThumbs={false}>
+                <Carousel infiniteLoop showThumbs={false} showStatus={false} showArrows={false}>
                     {picPath.map((pic, idx)=>(
                         <div key={idx} style={{marginLeft: '5.5vw', marginRight: '5.5vw'}}>
                             <img src={`${BACKEND_IMAGE_URL}/${pic}`} style={{borderRadius: '10px'}} width="70%" height={230} />

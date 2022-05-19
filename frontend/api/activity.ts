@@ -33,3 +33,7 @@ export const getActivityList = async (params: any, success: any, fail: any) => {
 export const postActivity = async (params: any, success: any, fail: any) => {
     await api.post(`/activity/`, params, {headers: { "Content-Type": "multipart/form-data" }}).then(success).catch(fail);
 };
+
+export const getActivityReservation = async (params: any, success: any, fail: any) => {
+    await api.get(`/activity/reservation/${params}`).then(success).catch(fail);
+}

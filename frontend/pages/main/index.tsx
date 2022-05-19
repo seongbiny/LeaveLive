@@ -3,39 +3,17 @@ import Seo from "../../components/Seo";
 import styled from "styled-components";
 import MenuTab from "../../components/main/MenuTab";
 import { getUserInfo } from "../../api/user";
-import { getDiary } from "../../api/diary";
-import Item from "../../components/main/Item";
-import { useRouter } from "next/router";
+import { getBnbReservation } from "../../api/bnb";
+import { getActivityReservation } from "../../api/activity";
+import MainSlider from "../../components/main/MainSlider";
 import { flexCenter } from "../../styles/Basic";
 
-interface IProps {
-  content: string;
-  date: string;
-  diaryId: number;
-  picPath: string;
-  status: string;
-  tag: string;
-}
-
 const Main = () => {
-  const router = useRouter();
   const [nickName, setNickName] = useState("");
-  const [diary, setDiary] = useState<IProps>({
-    content: "",
-    date: "",
-    diaryId: 0,
-    picPath: "",
-    status: "",
-    tag: "",
-  });
-  const [diaryTom, setDiaryTom] = useState<IProps>({
-    content: "",
-    date: "",
-    diaryId: 0,
-    picPath: "",
-    status: "",
-    tag: "",
-  });
+  const [act, setAct] = useState<Array<Object>>([]);
+  const [bnb, setBnb] = useState<Array<Object>>([]);
+  const [actTom, setActTom] = useState<Array<Object>>([]);
+  const [bnbTom, setBnbTom] = useState<Array<Object>>([]);
 
   const getToday = () => {
     const date = new Date();
@@ -63,17 +41,31 @@ const Main = () => {
       },
       (error: Error) => console.log(error)
     );
-    getDiary(
+    getBnbReservation(
       day,
       ({ data }: any) => {
-        setDiary(data);
+        setBnb(data);
       },
       (error: Error) => console.log(error)
     );
-    getDiary(
+    getActivityReservation(
+      day,
+      ({ data }: any) => {
+        setAct(data);
+      },
+      (error: Error) => console.log(error)
+    );
+    getBnbReservation(
       tom,
       ({ data }: any) => {
-        setDiaryTom(data);
+        setBnbTom(data);
+      },
+      (error: Error) => console.log(error)
+    );
+    getActivityReservation(
+      tom,
+      ({ data }: any) => {
+        setActTom(data);
       },
       (error: Error) => console.log(error)
     );
@@ -95,28 +87,14 @@ const Main = () => {
       <ContentsContainer>
         <MenuTab />
         <TitleText>⛳ 오늘 나의 일정</TitleText>
-        {diary.diaryId !== 0 ? (
-          <div style={{ margin: "3vh" }}>
-            <Item
-              diary={diary}
-              onClick={() => {
-                router.push(`/diary`);
-              }}
-            />
-          </div>
+        {act.length !== 0 || bnb.length !== 0 ? (
+          <MainSlider act={act} bnb={bnb} />
         ) : (
           <StyledError>일정이 없습니다.</StyledError>
         )}
         <TitleText>🚀 내일 나의 일정</TitleText>
-        {diaryTom.diaryId !== 0 ? (
-          <div style={{ margin: "3vh" }}>
-            <Item
-              diary={diaryTom}
-              onClick={() => {
-                router.push(`/diary`);
-              }}
-            />
-          </div>
+        {actTom.length !== 0 || bnbTom.length !== 0 ? (
+          <MainSlider act={actTom} bnb={bnbTom} />
         ) : (
           <StyledError>일정이 없습니다.</StyledError>
         )}
@@ -126,14 +104,14 @@ const Main = () => {
 };
 
 const StyledError = styled.div`
-  width: 100%;
-  height: 20vh;
+  width: 85%;
+  height: 25vh;
   color: gray;
   margin: auto;
   text-align: center;
-  border-radius: 15px;
-  line-height: 20vh;
-  margin-top: 1.2vh;
+  border-radius: 20px;
+  line-height: 25vh;
+  margin-top: 1vh;
   margin-bottom: 3vh;
   border: 1px dashed;
 

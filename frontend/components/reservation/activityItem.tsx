@@ -66,7 +66,7 @@ const ActivityItem = (props: any) => {
                         `/reservation/${loc}/activity/${id}`
                     )}}
                 >
-                    <img src={`${BACKEND_IMAGE_URL}/${picPath[0]}`} height={100} width={100} style={{borderRadius: '10px'}} />
+                    <img src={`${BACKEND_IMAGE_URL}/${picPath[0]}`} height={100} width={100} style={{borderRadius: '10px', objectFit: 'cover'}} />
                     <div style={{width: '100%', display: 'grid', paddingLeft: '5vw', alignContent: 'space-between'}}>
                         <div style={{fontSize:'1rem',  paddingRight:'5vw'}}>{name}</div>
                         <div style={{textAlign:'right', fontWeight:'bold', fontSize:'1.1rem'}}>{price}원</div>

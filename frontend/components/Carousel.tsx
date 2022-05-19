@@ -18,12 +18,13 @@ const MyCarousel = ({ picPath }: IPropTypes) => {
     >
       {picPath?.split(",").map((path, index) => (
         <div key={index}>
-          <Image
+          <img
             src={
               path === "/default.png" ? path : `${BACKEND_IMAGE_URL}/${path}`
             }
-            width={412}
+            width="100%"
             height={250}
+            style={{objectFit: 'contain'}}
           />
         </div>
       ))}

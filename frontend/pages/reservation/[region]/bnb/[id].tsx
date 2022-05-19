@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
-import { bnbDetail } from "../../../../api/bnb";
+import {
+  bnbDetail,
+  likeBnbList,
+  likeBnb,
+  unlikeBnb,
+} from "../../../../api/bnb";
 import Map from "../../../../components/ceo/BnbMap";
 import { flexCenter } from "../../../../styles/Basic";
 import LocalFloristRoundedIcon from "@mui/icons-material/LocalFloristRounded";
@@ -9,6 +14,8 @@ import SoupKitchenRoundedIcon from "@mui/icons-material/SoupKitchenRounded";
 import Header from "../../../../components/Header";
 import MyCarousel from "../../../../components/Carousel";
 import DetailNav from "../../../../components/ceo/DetailNav";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 interface IDetail {
   cnt: number;
@@ -23,8 +30,18 @@ interface IDetail {
   userId: string;
 }
 
+const Text = styled.div`
+  z-index: 100;
+  position: absolute;
+  top: 30%;
+  left: 85%;
+`;
+
 const BnbDetail = () => {
   const router = useRouter();
+  const id = router.query.id;
+  const [like, setLike] = useState(false);
+  const [list, setList] = useState<any>([]);
   const [detail, setDetail] = useState<IDetail>({
     cnt: 0,
     contents: "",
@@ -37,24 +54,88 @@ const BnbDetail = () => {
     price: 0,
     userId: "",
   });
-  const [path, setPath] = useState([]);
+
+  const likeAxios = () => {
+    likeBnb(
+      id,
+      (response: any) => console.log(response),
+      (error: Error) => console.log(error)
+    );
+  };
+
+  const unlikeAxios = () => {
+    unlikeBnb(
+      id,
+      (response: any) => console.log(response),
+      (error: Error) => console.log(error)
+    );
+  };
 
   useEffect(() => {
-    const id = router.query.id;
     bnbDetail(
       id,
       ({ data }: any) => {
-        setDetail(data), setPath(data.picPath.split(","));
+        setDetail(data);
+      },
+      (error: Error) => console.log(error)
+    );
+    likeBnbList(
+      null,
+      ({ data }: any) => {
+        setList(data);
       },
       (error: Error) => console.log(error)
     );
   }, [router]);
+
+  useEffect(() => {
+    console.log(list);
+    list.map((item: any) => {
+      if (Number(item.accommodationArticle.id) === Number(id)) {
+        setLike(true);
+      }
+    });
+  }, [list]);
 
   return (
     detail.id !== 0 && (
       <Container>
         <div style={{ position: "relative", width: "100%" }}>
           <Header title="상세보기" hide={false} />
+          {/* <MyCarousel picPath={detail.picPath} /> */}
+          <Text>
+            {like === false ? (
+              <FavoriteBorderIcon
+                fontSize="medium"
+                sx={{ color: "#FF385C" }}
+                onClick={() => {
+                  setLike(!like);
+                  likeAxios();
+                }}
+              />
+            ) : (
+              <FavoriteIcon
+                fontSize="medium"
+                sx={{ color: "#FF385C" }}
+                onClick={() => {
+                  setLike(!like);
+                  unlikeAxios();
+                }}
+              />
+            )}
+          </Text>
+          {/* <Carousel infiniteLoop showThumbs={false} showStatus={false} showArrows={false} >
+            {detail.picPath.split(",").map((pic, idx)=>(
+              <div 
+                key={idx} 
+                style={{marginLeft: '5vw', marginRight: '5vw'}} >
+                <img
+                  src={`${BACKEND_IMAGE_URL}/${pic}`} 
+                  width={300} height={200} 
+                  style={{borderRadius: '10px'}} />
+              </div>
+            ))}
+          </Carousel> */}
           <MyCarousel picPath={detail.picPath} />
         </div>
         <ContentContainer>
@@ -114,6 +195,7 @@ const Container = styled.div`
   margin-bottom: 75px;
   line-height: 2.2rem;
   margin-bottom: 13vh;
+  position: relative;
 `;
 
 const BnbTitle = styled.div`
