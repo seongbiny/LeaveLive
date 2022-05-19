@@ -5,7 +5,9 @@ import styled from "styled-components";
 import { likeBnbList } from "../../api/bnb";
 import { likeActivityList } from "../../api/activity";
 import { useRouter } from "next/router";
-interface TypeBnb{
+import Header from "../../components/Header";
+
+interface TypeBnb {
   id: number;
   contents: string;
   cooking: string;
@@ -17,14 +19,13 @@ interface TypeBnb{
   userId?: number;
   accommodationArticle?: any;
 }
-interface TypeAct{
+interface TypeAct {
   id: number;
   name: string;
   loc: string;
   picPath: string;
   price: number;
 }
-
 
 const Bookmark = () => {
   const router = useRouter();
@@ -33,87 +34,101 @@ const Bookmark = () => {
   const [actList, setActList] = useState<Array<TypeAct>>([]);
   const [rerender, setRerender] = useState(false);
 
-  useEffect(()=>{
+  useEffect(() => {
     likeBnbList(
       null,
       ({ data }: any) => {
         setBnbList(data);
       },
-      (error: Error) => console.log(error),
-    )
+      (error: Error) => console.log(error)
+    );
     likeActivityList(
       null,
       ({ data }: any) => {
         setActList(data);
-        console.log(data)
+        console.log(data);
       },
-      (error: Error) => console.log(error),
-    )
-  },[rerender])
+      (error: Error) => console.log(error)
+    );
+  }, [rerender]);
 
   const rendering = () => {
     setRerender(!rerender);
-    setBnbList([...bnbList])
-  }
+    setBnbList([...bnbList]);
+  };
 
   return (
-    <div style={{marginBottom: '13vh'}}>
+    <div style={{ marginBottom: "13vh" }}>
+      <Header title="즐겨찾기" hide={true} />
       <Tabs>
-        <TabBox onClick={()=>(setIndex(0))} >숙소</TabBox>
-        <TabBox onClick={()=>(setIndex(1))}>액티비티</TabBox>
+        <TabBox onClick={() => setIndex(0)}>숙소</TabBox>
+        <TabBox onClick={() => setIndex(1)}>액티비티</TabBox>
       </Tabs>
-      { index === 0 ?
-        bnbList.map((bnb: any)=>{
-          return (
-              <BnbItem 
-                key={bnb.id} 
-                name={bnb.accommodationArticle.name} 
-                picPath={bnb.accommodationArticle.picPath} 
+      {index === 0
+        ? bnbList.map((bnb: any) => {
+            return (
+              <BnbItem
+                key={bnb.id}
+                name={bnb.accommodationArticle.name}
+                picPath={bnb.accommodationArticle.picPath}
                 id={bnb.accommodationArticle.id}
                 loc={bnb.accommodationArticle.loc}
                 like={bnbList}
                 rendering={rendering}
-                onClick={()=>{
+                onClick={() => {
                   router.push(
-                      {
-                          pathname: `/reservation/${bnb.accommodationArticle.loc.split(' ')[0]}/bnb/${bnb.accommodationArticle.id}`,
-                          query: { loc: bnb.accommodationArticle.loc.split(' ')[0], id: bnb.accommodationArticle.id },
-                      },
-                      `/reservation/${bnb.accommodationArticle.loc.split(' ')[0]}/bnb/${bnb.accommodationArticle.id}`
-                    )
-                  }}
-              />
-          )
-        }) :  actList.map((act: any)=>{
-          return (
-            <ActivityItem
-              key={act.id}
-              name={act.activity.name}
-              picPath={act.activity.picPath}
-              id={act.activity.id}
-              loc={act.activity.loc}
-              like={actList}
-              rendering={rendering}
-              onClick={()=>{
-                router.push(
                     {
-                        pathname: `/reservation/${act.activity.loc.split(' ')[0]}/activity/${act.activity.id}`,
-                        query: { loc: act.activity.loc.split(' ')[0], id: act.activity.id },
+                      pathname: `/reservation/${
+                        bnb.accommodationArticle.loc.split(" ")[0]
+                      }/bnb/${bnb.accommodationArticle.id}`,
+                      query: {
+                        loc: bnb.accommodationArticle.loc.split(" ")[0],
+                        id: bnb.accommodationArticle.id,
+                      },
                     },
-                    `/reservation/${act.activity.loc.split(' ')[0]}/activity/${act.activity.id}`
-                  )
+                    `/reservation/${
+                      bnb.accommodationArticle.loc.split(" ")[0]
+                    }/bnb/${bnb.accommodationArticle.id}`
+                  );
                 }}
-            />
-          )
-        })
-        
-      }
+              />
+            );
+          })
+        : actList.map((act: any) => {
+            return (
+              <ActivityItem
+                key={act.id}
+                name={act.activity.name}
+                picPath={act.activity.picPath}
+                id={act.activity.id}
+                loc={act.activity.loc}
+                like={actList}
+                rendering={rendering}
+                onClick={() => {
+                  router.push(
+                    {
+                      pathname: `/reservation/${
+                        act.activity.loc.split(" ")[0]
+                      }/activity/${act.activity.id}`,
+                      query: {
+                        loc: act.activity.loc.split(" ")[0],
+                        id: act.activity.id,
+                      },
+                    },
+                    `/reservation/${act.activity.loc.split(" ")[0]}/activity/${
+                      act.activity.id
+                    }`
+                  );
+                }}
+              />
+            );
+          })}
     </div>
-  )
+  );
 };
 
 const TabBox = styled.div`
-  &:hover{
+  &:hover {
     color: #00cf95;
     cursor: pointer;
   }
