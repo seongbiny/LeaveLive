@@ -77,7 +77,7 @@ const BnbItem = (props: any) => {
               <img
                 src={`${BACKEND_IMAGE_URL}/${pic}`} 
                 width={300} height={200} 
-                style={{borderRadius: '10px'}} />
+                style={{borderRadius: '10px', objectFit: 'cover'}} />
             </div>
           ))}
         </Carousel>
