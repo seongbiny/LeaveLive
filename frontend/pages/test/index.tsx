@@ -194,7 +194,7 @@ const Test7: NextPage = () => {
     e.preventDefault();
     router.push({
       pathname: '/test/result',
-      query: { region: '광주광역시' },
+      query: { region: '전라남도 담양' },
     })
   }
   return (
