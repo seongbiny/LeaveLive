@@ -6,7 +6,6 @@ import { useState, useEffect } from "react";
 import CeoNav from "./CeoNav";
 import { flexCenter } from "../styles/Basic";
 import { allowedURLs } from "../pages/_app";
-import backgroundImg from "../public/mobile.png";
 import Image from 'next/image';
 import Seo from "./Seo";
 
