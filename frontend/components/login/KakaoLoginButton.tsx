@@ -9,7 +9,7 @@ interface IPropTypes {
 const KakaoButton = styled.button`
   width: 183px;
   height: 45px;
-  background-image: url("kakao_button.png");
+  background-image: url("/kakao_button.png");
   outline: none;
   border: none;
 `;
