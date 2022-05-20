@@ -14,7 +14,7 @@ interface IPropTypes {
 const GoogleButton = styled.button`
   width: 191px;
   height: 46px;
-  background-image: url("google_button.png");
+  background-image: url("/google_button.png");
   outline: none;
   border: none;
 `;
