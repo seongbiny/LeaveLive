@@ -40,10 +40,10 @@ const Ceo = () => {
     );
 
     function cntReservationInfo(reservationList: Array<IReservation>) {
-      // const today = new Date();
+      const today = new Date();
 
       // 테스트용으로 더미데이터 해당하는 날짜 넣어둔 것.
-      const today = new Date("2022.5.1");
+      // const today = new Date("2022.5.1");
       const result = reservationList.filter(
         (reservation: IReservation) =>
           new Date(reservation.startDate) <= today &&
