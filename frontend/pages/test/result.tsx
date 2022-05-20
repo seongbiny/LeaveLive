@@ -72,13 +72,13 @@ const Result = () => {
             < br />
             <ColoredText style={{fontSize:'30px'}}>강원도 강릉</ColoredText>
           </TextContainer>}
-        {result === '광주광역시' && 
+        {result === '전라남도 담양' && 
           <TextContainer>
             <BoldText>여행지의 <ColoredText>이색적인 음식</ColoredText>과 <ColoredText>역사</ColoredText>를 즐기는 여행 스타일~! </BoldText>
             < br />
             < br />
             < br />
-            <ColoredText style={{fontSize:'30px'}}>광주광역시</ColoredText>
+            <ColoredText style={{fontSize:'30px'}}>전라남도 담양</ColoredText>
           </TextContainer>}
         {result === '전라북도 전주' && 
           <TextContainer>
