@@ -8,6 +8,7 @@ import { flexCenter } from "../styles/Basic";
 import { allowedURLs } from "../pages/_app";
 import backgroundImg from "../public/mobile.png";
 import Image from 'next/image';
+import Seo from "./Seo";
 
 const Container = styled.div`
   display: flex;
@@ -44,6 +45,7 @@ export default function Layout({ children }: any) {
   const isMobile = useIsMobile();
   return (
     <Container>
+      <Seo title="리브리브" />
       {isMobile ? (
         <>
           <Main>{children}</Main>
