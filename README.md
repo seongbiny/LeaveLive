@@ -1,7 +1,7 @@
 <h1 align="center">한달 살기 국내여행 모바일 웹 '리브리브' </h1>
 
 <p align="center">
-    <img src="https://lab.ssafy.com/s06-final/S06P31C105/-/raw/master/img/logo.PNG" height="150"/>
+    <img src="https://lab.ssafy.com/s06-final/S06P31C105/-/raw/master/img/logo2.png" height="150"/>
 </p>
 
 - 개발 기간: 22.04.11~22.05.20 (총 6주)
