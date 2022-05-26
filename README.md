@@ -1,8 +1,9 @@
 <h1 align="center">한달 살기 국내여행 모바일 웹 '리브리브' </h1>
 
 <p align="center">
-    <img src="C:\Users\SSAFY\Desktop\Leavelive\img\logo2.png" height="150"/>
+    <img src="https://github.com/seongbiny/LeaveLive/blob/master/img/logo2.png" height="150"/>
 </p>
+
 
 - 개발 기간: 22.04.11~22.05.20 (총 6주)
 - 삼성 청년 SW아카데미(SSAFY) 2학기 자율프로젝트
