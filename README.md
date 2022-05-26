@@ -92,35 +92,38 @@
 
 ## 서비스 흐름도 및 주요 기능
 <p align="center">
-    <img src="C:\Users\SSAFY\Desktop\Leavelive\img\%ED%9D%90%EB%A6%84%EB%8F%84.png" width="800px" />
-    <img src="C:\Users\SSAFY\Desktop\Leavelive\img\%EC%A0%84%EC%B2%B4%EA%B8%B0%EB%8A%A5.png" width="800px" />
+    <img src="https://github.com/seongbiny/LeaveLive/blob/master/img/%ED%9D%90%EB%A6%84%EB%8F%84.png" width="800px" />
+    <img src="https://github.com/seongbiny/LeaveLive/blob/master/img/%EC%A0%84%EC%B2%B4%EA%B8%B0%EB%8A%A5.png" width="800px" />
 </p>
+
 
 
 
 ## 기능
 
 <p align="center">
-    <img src="C:\Users\SSAFY\Desktop\Leavelive\img\1%EB%9E%9C%EB%94%A9%ED%8E%98%EC%9D%B4%EC%A7%80%EB%B0%8F%EB%A1%9C%EA%B7%B8%EC%9D%B8.PNG" width="800px" />
-    <img src="C:\Users\SSAFY\Desktop\Leavelive\img\2%EB%A9%94%EC%9D%B8.PNG" width="800px" />
-    <img src="C:\Users\SSAFY\Desktop\Leavelive\img\3%EC%97%AC%ED%96%89%EC%A7%80%EC%84%A0%ED%83%9D%EB%B0%8F%ED%85%8C%EC%8A%A4%ED%8A%B8.PNG" width="800px" />
-    <img src="C:\Users\SSAFY\Desktop\Leavelive\img\4%EC%97%AC%ED%96%89%EC%A7%80%EB%A9%94%EC%9D%B8.PNG" width="800px" />
-    <img src="C:\Users\SSAFY\Desktop\Leavelive\img\5%EB%AA%A9%EB%A1%9D.PNG" width="800px" />
-    <img src="C:\Users\SSAFY\Desktop\Leavelive\img\6%EC%83%81%EC%84%B8%EC%A0%95%EB%B3%B4.PNG" width="800px" />
-    <img src="C:\Users\SSAFY\Desktop\Leavelive\img\7%EC%88%99%EC%86%8C%EB%B0%8F%EC%95%A1%ED%8B%B0%EB%B9%84%ED%8B%B0%EC%98%88%EC%95%BD.PNG" width="800px" />
-    <img src="C:\Users\SSAFY\Desktop\Leavelive\img\8%EC%A6%90%EA%B2%A8%EC%B0%BE%EA%B8%B0.PNG" width="800px" />
-    <img src="C:\Users\SSAFY\Desktop\Leavelive\img\9%EB%8B%A4%EC%9D%B4%EC%96%B4%EB%A6%AC.PNG" width="800px" />
-    <img src="C:\Users\SSAFY\Desktop\Leavelive\img\10%EC%82%AC%EC%9E%A5%EB%8B%98%EB%A9%94%EC%9D%B8.PNG" width="800px" />
-    <img src="C:\Users\SSAFY\Desktop\Leavelive\img\11%EC%82%AC%EC%9E%A5%EB%8B%98%EC%88%99%EC%86%8C%EA%B4%80%EB%A6%AC%EB%B0%8F%EB%93%B1%EB%A1%9D.PNG" width="800px" />
-    <img src="C:\Users\SSAFY\Desktop\Leavelive\img\12%EB%93%B1%EB%A1%9D%ED%95%9C%EC%88%99%EC%86%8C%EC%98%88%EC%95%BD%EB%AA%A9%EB%A1%9D.PNG" width="800px" />
+    <img src="https://github.com/seongbiny/LeaveLive/blob/master/img/1%EB%9E%9C%EB%94%A9%ED%8E%98%EC%9D%B4%EC%A7%80%EB%B0%8F%EB%A1%9C%EA%B7%B8%EC%9D%B8.PNG" width="800px" />
+    <img src="https://github.com/seongbiny/LeaveLive/blob/master/img/2%EB%A9%94%EC%9D%B8.PNG" width="800px" />
+    <img src="https://github.com/seongbiny/LeaveLive/blob/master/img/3%EC%97%AC%ED%96%89%EC%A7%80%EC%84%A0%ED%83%9D%EB%B0%8F%ED%85%8C%EC%8A%A4%ED%8A%B8.PNG" width="800px" />
+    <img src="https://github.com/seongbiny/LeaveLive/blob/master/img/4%EC%97%AC%ED%96%89%EC%A7%80%EB%A9%94%EC%9D%B8.PNG" width="800px" />
+    <img src="https://github.com/seongbiny/LeaveLive/blob/master/img/5%EB%AA%A9%EB%A1%9D.PNG" width="800px" />
+    <img src="https://github.com/seongbiny/LeaveLive/blob/master/img/6%EC%83%81%EC%84%B8%EC%A0%95%EB%B3%B4.PNG" width="800px" />
+    <img src="https://github.com/seongbiny/LeaveLive/blob/master/img/7%EC%88%99%EC%86%8C%EB%B0%8F%EC%95%A1%ED%8B%B0%EB%B9%84%ED%8B%B0%EC%98%88%EC%95%BD.PNG" width="800px" />
+    <img src="https://github.com/seongbiny/LeaveLive/blob/master/img/8%EC%A6%90%EA%B2%A8%EC%B0%BE%EA%B8%B0.PNG" width="800px" />
+    <img src="https://github.com/seongbiny/LeaveLive/blob/master/img/9%EB%8B%A4%EC%9D%B4%EC%96%B4%EB%A6%AC.PNG" width="800px" />
+    <img src="https://github.com/seongbiny/LeaveLive/blob/master/img/10%EC%82%AC%EC%9E%A5%EB%8B%98%EB%A9%94%EC%9D%B8.PNG" width="800px" />
+    <img src="https://github.com/seongbiny/LeaveLive/blob/master/img/11%EC%82%AC%EC%9E%A5%EB%8B%98%EC%88%99%EC%86%8C%EA%B4%80%EB%A6%AC%EB%B0%8F%EB%93%B1%EB%A1%9D.PNG" width="800px" />
+    <img src="https://github.com/seongbiny/LeaveLive/blob/master/img/12%EB%93%B1%EB%A1%9D%ED%95%9C%EC%88%99%EC%86%8C%EC%98%88%EC%95%BD%EB%AA%A9%EB%A1%9D.PNG" width="800px" />
 </p>
+
 
 
 
 ## 아키텍처
 <p align="center">
-    <img src="C:\Users\SSAFY\Desktop\Leavelive\img\%EC%95%84%ED%82%A4%ED%85%8D%EC%B3%90.png" width="800px" />
+    <img src="https://github.com/seongbiny/LeaveLive/blob/master/img/%EC%95%84%ED%82%A4%ED%85%8D%EC%B3%90.png" width="800px" />
 </p>
+
 
 
 
